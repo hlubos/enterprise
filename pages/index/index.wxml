@@ -1,0 +1,4 @@
+<!--index.wxml-->
+<view class="home-container">
+  <web-view src="{{webUrl}}"></web-view>
+</view>

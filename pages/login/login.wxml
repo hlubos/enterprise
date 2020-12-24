@@ -1,0 +1,24 @@
+<!--pages/login/login.wxml-->
+<view class="login-container">
+  <view class="section inputSection">
+    <label class='inputIcon' style='background-image:url(https://ssl-pubpic.51yund.com/1040072462.png);'></label>
+    <input placeholder="请输入手机号码" value="{{username}}" type="text" bindinput="toPhoneBlur" focus/>
+  </view>
+
+  <view class="section inputSection">
+    <label class='inputIcon' style='background-image:url(https://ssl-pubpic.51yund.com/1040072484.png);'></label>
+    <input class="validInput" value="{{validateCode}}" type="text" placeholder="请输入验证码" bindinput="toCodeBlur" />
+    <view class="code-box {{isCountDown ? 'grey': ''}}" catchtap='getCode'>
+      {{isCountDown ? '重新获取（' + downText + 's）' : '获取验证码'}}
+    </view>
+  </view>
+  <view class="login-btn" bindtap="goPhoneLogin">登录</view>
+
+  <login-btn class="waChatBtn" bindsuccess="wxloginCabk">
+    <view class='weChatIcon'></view>
+    <text> 微信登录</text>
+  </login-btn>
+</view>
+
+<!-- 顶部提示语 -->
+<toast title="{{tipContent}}" isShow="{{isShowTip}}"></toast>

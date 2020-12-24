@@ -1,0 +1,5 @@
+<!--components/LoginBtn/LoginBtn.wxml-->
+<view class="login-btn-container">
+  <button class='logBtnSetting' open-type="getUserInfo" bindgetuserinfo="getUserInfo"></button>
+  <slot></slot>
+</view>
