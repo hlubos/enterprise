@@ -159,13 +159,11 @@ Page({
 
   // 计算分数
   calculateScore: function (pose) {
-    var a = this
-    var m = null
+    var a = this, item = pose
     if (Array.isArray(pose)) {
-      m = pose[0].keypoints
-    } else {
-      m = pose.keypoints
+      item = pose[0]
     }
+    var m = item.keypoints
     this.saveFrameToArray(m);
     var g = [5, 11, 15, 6, 12, 16];
     if (!a.satisfyConf(m, .2, g)) {
