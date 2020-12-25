@@ -1,5 +1,13 @@
 <!-- pages/tabBar/home/home.wxml -->
-<text>这是首页，添加Ai运动</text>
-<view>
-    <button bindtap="gotoSport" data-kindid="19">去跳绳1</button>
+<view class="header">
+    <view class="left">
+        <view class="title"><text>AI动作库</text></view>
+        <view class="desc"><text>Yodo exercises</text></view>
+    </view>
+    <image class="right" src="https://ssl-pubpic.51yund.com/1040424039.png"></image>
 </view>
+
+<view class="kind-list">
+    <kind-item class="item" wx:for="{{kindList}}" info="{{item}}"></kind-item>
+</view>
+<!-- <button bindtap="gotoSport" data-kindid="19">去跳绳1</button> -->

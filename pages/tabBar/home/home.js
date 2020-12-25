@@ -5,13 +5,63 @@ Page({
    * 页面的初始数据
    */
   data: {
-    kindList: {
-      '19': {
+    kindList: [{
         kind_id: 19,
         name: '跳绳',
-        path: '/pages/AI/TiaoSheng/TiaoSheng'
-      }
-    }
+        path: '/pages/AI/TiaoSheng/TiaoSheng',
+        pic_url: 'https://ssl-pubpic.51yund.com/1040424110.jpeg',
+        cnt: 100
+      },
+      {
+        kind_id: 19,
+        name: '跳绳',
+        path: '/pages/AI/TiaoSheng/TiaoSheng',
+        pic_url: 'https://ssl-pubpic.51yund.com/1040424110.jpeg',
+        cnt: 100
+      }, {
+        kind_id: 19,
+        name: '跳绳',
+        path: '/pages/AI/TiaoSheng/TiaoSheng',
+        pic_url: 'https://ssl-pubpic.51yund.com/1040424110.jpeg',
+        cnt: 100
+      }, {
+        kind_id: 19,
+        name: '跳绳',
+        path: '/pages/AI/TiaoSheng/TiaoSheng',
+        pic_url: 'https://ssl-pubpic.51yund.com/1040424110.jpeg',
+        cnt: 100
+      }, {
+        kind_id: 19,
+        name: '跳绳',
+        path: '/pages/AI/TiaoSheng/TiaoSheng',
+        pic_url: 'https://ssl-pubpic.51yund.com/1040424110.jpeg',
+        cnt: 100
+      }, {
+        kind_id: 19,
+        name: '跳绳',
+        path: '/pages/AI/TiaoSheng/TiaoSheng',
+        pic_url: 'https://ssl-pubpic.51yund.com/1040424110.jpeg',
+        cnt: 100
+      }, {
+        kind_id: 19,
+        name: '跳绳',
+        path: '/pages/AI/TiaoSheng/TiaoSheng',
+        pic_url: 'https://ssl-pubpic.51yund.com/1040424110.jpeg',
+        cnt: 100
+      }, {
+        kind_id: 19,
+        name: '跳绳',
+        path: '/pages/AI/TiaoSheng/TiaoSheng',
+        pic_url: 'https://ssl-pubpic.51yund.com/1040424110.jpeg',
+        cnt: 100
+      }, {
+        kind_id: 19,
+        name: '跳绳',
+        path: '/pages/AI/TiaoSheng/TiaoSheng',
+        pic_url: 'https://ssl-pubpic.51yund.com/1040424110.jpeg',
+        cnt: 100
+      },
+    ]
   },
 
   /**
@@ -69,12 +119,4 @@ Page({
   onShareAppMessage: function () {
 
   },
-
-  gotoSport: function (t) {
-    let kindId = t.currentTarget.dataset.kindid;
-    console.log(`kindId === `, kindId)
-    wx.navigateTo({
-      url: `${this.data.kindList[String(kindId)].path}`
-    })
-  }
 })
