@@ -1,4 +1,0 @@
-<!--index.wxml-->
-<view class="mine-container">
-  <web-view src="{{webUrl}}"></web-view>
-</view>

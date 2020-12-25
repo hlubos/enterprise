@@ -1,9 +1,0 @@
-/**index.wxss**/
-page{
-  height: 100%;
-}
-
-.mine-container {
-  width: 100%;
-  height: 100%;
-}

@@ -69,11 +69,19 @@
         {
           "name": "姿态识别demo页面",
           "pathName": "pages/test/tensorflow/demo",
+          "query": "",
           "scene": null
         },
         {
           "name": "跳绳",
           "pathName": "pages/AI/TiaoSheng/TiaoSheng",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "企业tab",
+          "pathName": "pages/tabBar/work/work",
+          "query": "a=1",
           "scene": null
         }
       ]

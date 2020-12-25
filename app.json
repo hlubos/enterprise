@@ -4,8 +4,6 @@
     "pages/tabBar/work/work",
     "pages/index/index",
     "pages/login/login",
-    "pages/topic/topic",
-    "pages/mine/mine",
     "pages/test/tensorflow/demo",
     "pages/AI/TiaoSheng/TiaoSheng",
     "pages/AI/FuWoCheng/FuWoCheng"

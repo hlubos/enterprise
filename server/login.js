@@ -22,4 +22,8 @@ export default class LoginMember {
         return $http.post(url.register, params);
     }
 
+    static getUserDayStep(params) {
+        return $http.post(url.getUserDayStep, params);
+    }
+
 }
