@@ -1,10 +1,14 @@
 {
   "pages": [
+    "pages/tabBar/home/home",
+    "pages/tabBar/work/work",
     "pages/index/index",
     "pages/login/login",
-    "pages/test/tensorflow/demo",
     "pages/topic/topic",
-    "pages/mine/mine"
+    "pages/mine/mine",
+    "pages/test/tensorflow/demo",
+    "pages/AI/TiaoSheng/TiaoSheng",
+    "pages/AI/FuWoCheng/FuWoCheng"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -15,22 +19,20 @@
   "tabBar": {
     "color": "#BFC2C7",
     "selectedColor": "#11d59c",
-    "list": [{
-      "pagePath": "pages/index/index",
-      "iconPath": "assets/image/home_default.jpg",
-      "selectedIconPath": "assets/image/home_active.jpg",
-      "text": "活动"
-    }, {
-      "pagePath": "pages/topic/topic",
-      "iconPath": "assets/image/topic_default.jpg",
-      "selectedIconPath": "assets/image/topic_active.jpg",
-      "text": "话题"
-    }, {
-      "pagePath": "pages/mine/mine",
-      "iconPath": "assets/image/mine_default.jpg",
-      "selectedIconPath": "assets/image/mine_active.jpg",
-      "text": "我的"
-    }]
+    "list": [
+      {
+        "pagePath": "pages/tabBar/home/home",
+        "iconPath": "assets/image/home_default.jpg",
+        "selectedIconPath": "assets/image/home_active.jpg",
+        "text": "运动"
+      },
+      {
+        "pagePath": "pages/tabBar/work/work",
+        "iconPath": "assets/image/mine_default.jpg",
+        "selectedIconPath": "assets/image/mine_active.jpg",
+        "text": "企业"
+      }
+    ]
   },
   "plugins": {
     "tfjsPlugin": {

@@ -9,9 +9,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@tensorflow-models/posenet": "^2.2.1",
+    "@tensorflow-models/posenet": "2.2.1",
     "@tensorflow/tfjs-backend-cpu": "2.0.1",
-    "@tensorflow/tfjs-backend-webgl": "^2.0.1",
+    "@tensorflow/tfjs-backend-webgl": "2.0.1",
     "@tensorflow/tfjs-converter": "2.0.1",
     "@tensorflow/tfjs-core": "2.0.1",
     "crypto-js": "^4.0.0",

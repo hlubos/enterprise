@@ -1,0 +1,4 @@
+<!--pages/tabBar/work/work.wxml-->
+<view class="home-container">
+  <web-view src="{{webUrl}}"></web-view>
+</view>
