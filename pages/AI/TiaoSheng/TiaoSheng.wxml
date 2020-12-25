@@ -1,0 +1,6 @@
+<cu-custom>
+    <view style="color: red;" slot="content">个数：{{num}}</view>
+</cu-custom>
+<camera device-position="back" flash="off" binderror="error" frame-size="medium" class="camera" style="height:{{cameraBlockHeight}}px;">
+    <canvas id="canvas" canvas-id="canvas" class="canvas"></canvas>
+</camera>
