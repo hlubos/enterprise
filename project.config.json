@@ -8,16 +8,19 @@
     "es6": true,
     "enhance": true,
     "postcss": true,
+    "preloadBackgroundData": false,
     "minified": true,
     "newFeature": true,
     "coverView": true,
-    "nodeModules": true,
+    "nodeModules": false,
     "autoAudits": false,
     "showShadowRootInWxmlPanel": true,
     "scopeDataCheck": false,
+    "uglifyFileName": false,
     "checkInvalidKey": true,
     "checkSiteMap": true,
     "uploadWithSourceMap": true,
+    "compileHotReLoad": false,
     "useMultiFrameRuntime": false,
     "useApiHook": true,
     "babelSetting": {
@@ -25,6 +28,7 @@
       "disablePlugins": [],
       "outputPath": ""
     },
+    "enableEngineNative": false,
     "bundle": false,
     "useIsolateContext": true,
     "useCompilerModule": true,
@@ -35,7 +39,7 @@
     "minifyWXSS": true
   },
   "compileType": "miniprogram",
-  "libVersion": "2.12.2",
+  "libVersion": "2.14.1",
   "appid": "wx6beecc00b14f8817",
   "projectname": "tensorflow",
   "debugOptions": {
@@ -65,6 +69,11 @@
         {
           "name": "姿态识别demo页面",
           "pathName": "pages/test/tensorflow/demo",
+          "scene": null
+        },
+        {
+          "name": "跳绳",
+          "pathName": "pages/AI/TiaoSheng/TiaoSheng",
           "scene": null
         }
       ]

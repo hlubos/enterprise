@@ -1,10 +1,10 @@
 import errStorage from './common/errStorage'
 import tool from './common/tool'
 
-const fetchWechat = require('fetch-wechat');
-const tf = require('@tensorflow/tfjs-core');
-const webgl = require('@tensorflow/tfjs-backend-webgl');
-const plugin = requirePlugin('tfjsPlugin');
+import * as fetchWechat from 'fetch-wechat'
+import * as tf from '@tensorflow/tfjs-core'
+import * as webgl from '@tensorflow/tfjs-backend-webgl'
+const plugin = requirePlugin('tfjsPlugin')
 
 App({
   globalData: {
@@ -15,12 +15,25 @@ App({
     wxScene: 0, 	 //扫码参数信息字符串
     shareFromId: 0,  //别人的分享id，从谁的分享链接进来
     shareFrom: '',   //用户来源,比如从app，从公众号，从分享
+    localStorageIO: plugin.localStorageIO,
+    fileStorageIO: plugin.fileStorageIO,
   },
 
-  onLaunch: async function () {
+  onLaunch: function () {
     // await this.initUserInfo()
     this.reportErr()
     this.initPlugin()
+    // 记录状态栏高度
+    wx.getSystemInfo({
+      success: e => {
+        this.globalData.StatusBar = e.statusBarHeight
+        let custom = wx.getMenuButtonBoundingClientRect()
+        let systemInfo = wx.getSystemInfoSync()
+        this.globalData.Custom = custom
+        this.globalData.CustomBar = custom.bottom + custom.top - e.statusBarHeight
+        this.globalData.systemInfo = systemInfo
+      }
+    })
   },
 
   // 初始化插件
@@ -33,7 +46,8 @@ App({
       // inject webgl backend
       webgl,
       // provide webgl canvas
-      canvas: wx.createOffscreenCanvas()
+      canvas: wx.createOffscreenCanvas(),
+      backendName: 'wechat-webgl-' + Math.random()
     });
   },
 
