@@ -5,7 +5,13 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    kindList: {
+      '19': {
+        kind_id: 19,
+        name: '跳绳',
+        path: '/pages/AI/TiaoSheng/TiaoSheng'
+      }
+    }
   },
 
   /**
@@ -62,5 +68,13 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+
+  gotoSport: function (t) {
+    let kindId = t.currentTarget.dataset.kindid;
+    console.log(`kindId === `, kindId)
+    wx.navigateTo({
+      url: `${this.data.kindList[String(kindId)].path}`
+    })
   }
 })
