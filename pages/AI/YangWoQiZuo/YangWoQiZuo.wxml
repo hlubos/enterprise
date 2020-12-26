@@ -34,14 +34,16 @@
                 </cover-view>
                 <cover-image class="result_bg" src="https://go-ran-pic.lovedabai.com/static/resultBackgroundHead.png"></cover-image>
             </cover-view>
-            <cover-view class="shoulder_elbow_mid_line" style="top:{{shoulder_elbow_mid_line}}px !important" wx:if="{{shoulder_elbow_mid_line&&!show_tip&&!gameEnd}}"></cover-view>
+            <cover-view class="blue point top_mid {{top_mid?'green':''}}" wx:if="{{!doClose&&!gameEnd||1}}"></cover-view>
+            <cover-view class="blue point bot_mid {{bot_mid?'green':''}}" wx:if="{{doClose&&!gameEnd||1}}"></cover-view>
+            <cover-view class="blue point left_mid {{left_mid?'green':''}}" style="left:{{left_point_pos}}px" wx:if="{{!doClose&&!gameEnd||1}}"></cover-view>
+            <cover-view class="blue point right_mid {{right_mid?'green':''}}" style="left:{{right_point_pos}}px" wx:if="{{!doClose&&!gameEnd||1}}"></cover-view>
             <cover-view class="fetch-box" wx:if="{{!gameEnd&&!gameStart}}"></cover-view>
-            <cover-view class="img_tips" wx:if="{{show_tip&&!gameEnd}}">
-                <cover-view style="width:100%;">
-                    <cover-image class="img_tips_img" src="https://go-ran.oss-cn-shanghai.aliyuncs.com/static/FWC_tips.png"></cover-image>
-                </cover-view>
+            <cover-view class="img_tips" wx:if="{{show_tip&&!gameEnd&&!gameStart}}">
+                <cover-image class="img_tips_img" src="https://go-ran.oss-cn-shanghai.aliyuncs.com/static/YWQZ_tips.png"></cover-image>
             </cover-view>
-            <cover-image class="img_tips_img_pose" src="https://go-ran.oss-cn-shanghai.aliyuncs.com/static/FWC_tips_pose.png" wx:if="{{show_tip&&!gameEnd}}"></cover-image>
+            <cover-image class="img_tips_img_pose" src="https://go-ran.oss-cn-shanghai.aliyuncs.com/static/YWQZ_tips_pose.png" wx:if="{{show_tip&&!gameEnd&&!gameStart}}"></cover-image>
+            <cover-image class="img_in_box" src="https://go-ran.oss-cn-shanghai.aliyuncs.com/static/backOff-tips.png" wx:if="{{show_in_box}}"></cover-image>
             <start-countdown startCountdown="{{countDownSrc}}" wx:if="{{countDown}}"></start-countdown>
             <cover-image class="img_start" src="https://go-ran.oss-cn-shanghai.aliyuncs.com/static/countdown-start.png" wx:if="{{countDown===0}}"></cover-image>
         </cover-view>

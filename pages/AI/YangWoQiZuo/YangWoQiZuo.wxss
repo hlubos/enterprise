@@ -29,20 +29,39 @@
 }
 
 .stage {
+  top: 0;
+  height: 100%;
   z-index: 10000;
 }
 
-.stage,.stage_info {
+.stage,.stage_hd {
   position: absolute;
-  top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+}
+
+.stage_hd {
+  top: 60rpx;
+  justify-content: space-between;
+  z-index: 5;
+}
+
+.stage_hd,.stage_hd_left {
+  display: flex;
+}
+
+.stage_hd_left {
+  align-items: center;
 }
 
 .stage_info {
   color: #00f;
   font-size: 16px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 
 .stage_tip_blue {
@@ -97,38 +116,29 @@
 
 .point {
   display: block;
+  opacity: 0;
   border-radius: 50%;
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
 }
 
 .countdown {
-  position: absolute;
   top: 20%;
-  left: 50%;
   color: #87ceeb;
   font-size: 108px;
   font-weight: 700;
 }
 
-.countdown,.gameEnd_box {
+.countdown,.fetch-box {
+  position: absolute;
+  left: 50%;
   transform: translateX(-50%);
-}
-
-.gameEnd_box {
-  z-index: 9999999;
-  color: #fff;
-  font-size: 36px;
-  top: 30%;
 }
 
 .fetch-box {
-  position: absolute;
   width: 85%;
   height: 85%;
   border: 3px solid #fff;
-  left: 50%;
-  transform: translateX(-50%);
   top: 10%;
 }
 
@@ -157,35 +167,19 @@
 .img_start {
   width: 40%;
   height: 60%;
+  top: 50%;
+}
+
+.img_in_box,.img_start {
   position: absolute;
   left: 50%;
-  top: 50%;
   transform: translate(-50%,-50%);
 }
 
-.stage_hd {
-  position: absolute;
-  left: 0;
-  top: 60rpx;
-  justify-content: space-between;
-  width: 100%;
-  z-index: 5;
-}
-
-.stage_hd,.stage_hd_left {
-  display: flex;
-}
-
-.stage_hd_left {
-  align-items: center;
-}
-
-.shoulder_elbow_mid_line {
-  z-index: 99999;
-  position: absolute;
-  width: 100%;
-  height: 0;
-  border-top: 3px dashed #fb0d1e;
+.img_in_box {
+  width: 30%;
+  height: 80%;
+  top: 55%;
 }
 
 .result_bg {
@@ -281,7 +275,7 @@
 }
 
 .img_tips {
-  width: 73%;
+  width: 50%;
   height: 80%;
   position: absolute;
   left: 50%;
@@ -295,11 +289,15 @@
   overflow: visible;
 }
 
+.img_tips_img {
+  height: 360rpx;
+}
+
 .img_tips_img_pose {
-  height: 490rpx;
+  height: 630rpx;
   position: absolute;
-  left: 50%;
-  top: 69%;
+  left: 44%;
+  top: 74%;
   transform: translate(-50%,-50%);
-  width: 75%;
+  width: 86%;
 }

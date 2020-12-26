@@ -2,10 +2,10 @@
     <view class="page__bd">
         <background-video id="backgroundVideo"></background-video>
         <camera binderror="error" class="camera" devicePosition="front" flash="off" frameSize="medium">
+            <canvas canvasId="imageCanvas" class="imageCanvas" hidden="{{true}}" id="imageCanvas"></canvas>
             <canvas canvasId="canvas" class="canvas" id="canvas"></canvas>
         </camera>
         <cover-view class="stage">
-            <inner-device-angle angleRange="{{angleRange}}" bind:angleSuccess="angleSuccess" bind:stopGame="stopGame" code="{{code}}" gameEnd="{{gameEnd}}" gameStart="{{gameStart}}" id="inner-device-angle" wx:if="{{showDevicePage}}"></inner-device-angle>
             <skin skinCode="{{userInfo.skinCode}}" wx:if="{{userInfo.skinCode}}"></skin>
             <game-column gameDuration="{{time}}" score="{{num&&num-1}}" wx:if="{{gameStart}}"></game-column>
             <cover-view class="gameEnd_box" wx:if="{{gameEnd}}">

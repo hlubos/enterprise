@@ -18,6 +18,12 @@
   z-index: 100;
 }
 
+.imageCanvas {
+  width: 100%;
+  z-index: -10;
+  height: 100%;
+}
+
 .result {
   position: absolute;
   top: 50%;

@@ -1,0 +1,15 @@
+<cover-view class="topColumn">
+    <cover-view class="topItem left">
+        <cover-image src="https://go-ran.oss-cn-shanghai.aliyuncs.com/static/game_defen.png" style="width:90rpx"></cover-image>
+        <cover-view class="top_item_num" style="text-align: center;">{{score}}</cover-view>
+    </cover-view>
+    <cover-view class="topItem right progress" wx:if="{{type=='progress'}}">
+        <cover-image src="https://go-ran.oss-cn-shanghai.aliyuncs.com/static/game_shijian.png"></cover-image>
+        <cover-image class="progressImg" src="https://go-ran-pic.lovedabai.com/static/progress_{{gameDuration>10?'green':gameDuration>5?'yellow':'red'}}.png"></cover-image>
+        <cover-view class="progressInner" style="width:{{339/40*gameDuration}}rpx;background:{{gameDuration>10?'#22FE76':gameDuration>5?'#FDD429':'#FF3B00'}}"></cover-view>
+    </cover-view>
+    <cover-view class="topItem right" wx:else>
+        <cover-image src="https://go-ran.oss-cn-shanghai.aliyuncs.com/static/game_shijian.png"></cover-image>
+        <cover-view class="top_item_num">{{gameDuration}}’</cover-view>
+    </cover-view>
+</cover-view>
