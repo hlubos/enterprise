@@ -81,5 +81,10 @@ Page({
         noLogin: false
       })
     }
+  },
+  gotoRecords(){
+    wx.navigateTo({
+      url: '/pages/history/history'
+    })
   }
 })

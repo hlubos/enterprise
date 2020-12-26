@@ -39,3 +39,28 @@
 .kind-list .item:nth-child(2n) {
   margin-left: 14rpx;
 }
+
+.records {
+  position: relative;
+  font-size: 36rpx;
+  height: 100rpx;
+  line-height: 100rpx;
+  color: #999999;
+  padding: 8rpx 0;
+  margin: 24rpx;
+  background-color: #ffffff;
+  border-radius: 12rpx;
+  box-shadow: 0 0 10rpx 0 rgba(0,0,0,0.09);
+}
+
+.records-left {
+  margin-left: 24rpx;
+  display: inline-block;
+}
+
+.records-right {
+  float: right;
+  margin: 36rpx 24rpx;
+  width: 28rpx;
+  height: 28rpx;
+}
