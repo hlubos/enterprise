@@ -1,0 +1,5 @@
+<cover-view class="countDownBgView">
+    <cover-view class="imgView">
+        <cover-image class="countDownBg" src="https://go-ran.oss-cn-shanghai.aliyuncs.com/static/countdown-{{startCountdown}}.png"></cover-image>
+    </cover-view>
+</cover-view>

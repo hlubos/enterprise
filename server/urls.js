@@ -10,4 +10,5 @@ export default {
   getUserDayStep: '/wx_app/get_user_day_step',  // 同步步数
   
   getHomePage: '/match_burger_king/homepage', // 获取首页信息
+  reportUserAISportData: '/yd_ai_coach/report_user_sport_data',  // 上报AI训练运动数据
 }

@@ -70,7 +70,7 @@ export class Classifier {
 
             this.poseNet.estimateMultiplePoses(video, { flipHorizontal }).then(pose => {
                 video.dispose()
-                console.log(`estimateMultiplePoses == `, pose)
+                // console.log(`estimateMultiplePoses == `, pose)
                 resolve(pose)
             }).catch(err => {
                 reject(err)
