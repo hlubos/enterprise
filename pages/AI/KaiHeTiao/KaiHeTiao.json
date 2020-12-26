@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "开合跳",
+  "usingComponents": {
+      "start-countdown": "/components/startCountdown/startCountdown",
+      "game-column": "/components/gameColumn/gameColumn",
+      "skin": "/components/sportSkin/sportSkin",
+      "background-video": "/components/backgroundVideo/backgroundVideo",
+      "inner-device-angle": "/components/innerDeviceAngleCheck/innerDeviceAngleCheck"
+  }
+}

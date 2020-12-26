@@ -37,7 +37,7 @@ Page({
       }, {
         kind_id: 19,
         name: '开合跳',
-        path: '/pages/AI/TiaoSheng/TiaoSheng',
+        path: '/pages/AI/KaiHeTiao/KaiHeTiao',
         pic_url: 'https://ssl-pubpic.51yund.com/1010293849.jpg',
         video_id:2,
         cnt: 100
