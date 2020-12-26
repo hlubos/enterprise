@@ -25,6 +25,7 @@ Page({
 
   onLoad: function (option) {
     this.initUserInfo()
+
     //webview页面合并完账号后跳转回小程序
     if ('loginAagin' in option) {
       let {
@@ -49,7 +50,7 @@ Page({
       } = option;
       this.enterprise_id = enterprise_id
       this.invitor_user_id = invitor_user_id
-      if (this.noLogin) {
+      if (this.data.noLogin) {
         wx.showToast({
           title: '还未登录，请登录~',
           icon: 'none'
@@ -59,7 +60,7 @@ Page({
       this.goInvite();
       return;
     }
-    this.initUserInfo()
+    if(this.data.noLogin) return
     this.getSteps()
   },
 
@@ -80,17 +81,11 @@ Page({
     }
   },
 
-  initWebview () {
-    let { user_id, xyy } = app.globalData.userInfo
-    console.log(user_id, xyy)
-    this.setData({
-      webUrl: `https://work.51yund.com/vapps/new_work/appHome?user_id=${user_id}&xyy=${xyy}&is_login=true`
-    })
-  },
-
   async goInvite() {
-    tool.getSessionKey(wx.getStorageSync('user_id'), wx.getStorageSync('xyy'), (userId, xyy) => {
-      wx.switchTab({
+    let user_id = await tool.getYdStorage('user_id') || 0
+    let xyy = await tool.getYdStorage('xyy') || 'zache'
+    tool.getSessionKey(user_id, xyy, (userId, xyy) => {
+      wx.navigateTo({
         url: "/pages/index/index?to=invite&enterprise_id=" + this.enterprise_id + '&invitor_user_id=' + this.invitor_user_id + "&user_id=" + userId + "&xyy=" + xyy
       })
     }, () => {
@@ -100,13 +95,15 @@ Page({
       })
     });
   },
-  jumpTo(user_id = this.user_id, xyy = this.xyy) {
+  async jumpTo() {
+    let user_id = await tool.getYdStorage('user_id') || 0
+    let xyy = await tool.getYdStorage('xyy') || 'zache'
     if (this.enterprise_id && this.invitor_user_id) { //要跳回邀请加入页的情况
-      wx.switchTab({
+      wx.navigateTo({
         url: "/pages/index/index?to=login&enterprise_id=" + this.enterprise_id + '&invitor_user_id=' + this.invitor_user_id + '&user_id=' + user_id + '&xyy=' + xyy
       })
     } else {
-      wx.switchTab({
+      wx.navigateTo({
         url: "/pages/index/index?user_id=" + user_id + '&xyy=' + xyy + '&to=login'
       })
     }
@@ -188,7 +185,6 @@ Page({
   },
   //登录成功后获取微信步数
   getSteps() {
-    if (this.noLogin) return
     let _this = this
     wx.getWeRunData({
       success(res) {

@@ -23,6 +23,7 @@ App({
     // await this.initUserInfo()
     this.reportErr()
     this.initPlugin()
+
     // 记录状态栏高度
     wx.getSystemInfo({
       success: e => {

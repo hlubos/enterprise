@@ -6,12 +6,14 @@
     "pages/login/login",
     "pages/test/tensorflow/demo",
     "pages/AI/TiaoSheng/TiaoSheng",
-    "pages/AI/FuWoCheng/FuWoCheng"
+    "pages/AI/FuWoCheng/FuWoCheng",
+    "pages/tabBar/work/second/second",
+    "pages/dialog/dialog"
   ],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "Weixin",
+    "navigationBarTitleText": "悦动圈",
     "navigationBarTextStyle": "black"
   },
   "tabBar": {

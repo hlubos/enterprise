@@ -10,4 +10,3 @@
 <view class="kind-list">
     <kind-item class="item" wx:for="{{kindList}}" info="{{item}}"></kind-item>
 </view>
-<!-- <button bindtap="gotoSport" data-kindid="19">去跳绳1</button> -->

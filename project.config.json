@@ -83,6 +83,12 @@
           "pathName": "pages/tabBar/work/work",
           "query": "a=1",
           "scene": null
+        },
+        {
+          "name": "dialog页面",
+          "pathName": "pages/dialog/dialog",
+          "query": "dialogType=isStep&level=3",
+          "scene": null
         }
       ]
     }
