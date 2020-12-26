@@ -13,6 +13,8 @@ Page({
    */
   classifier: null,
   keypointStack: [],
+  audios: ["appear", "tooClose", "start", "timeOut", "comeOn", "5", "4", "3", "2", "1", "keepMoving", "endsoon", "adjustAngle"],
+  audioSrcs: {},
   ctx: null,
   data: {
     cameraBlockHeight: app.globalData.systemInfo.screenHeight - app.globalData.CustomBar,
@@ -72,6 +74,12 @@ Page({
       this.initClassifier()
 
       const context = wx.createCameraContext(this)
+
+      this.audioCtx = wx.createInnerAudioContext()
+      this.appearCtx = wx.createInnerAudioContext()
+      this.downloadAudios()
+      this.backgroundVideo = this.selectComponent("#backgroundVideo")
+
       const listener = context.onCameraFrame((frame) => {
         this.executeClassify(frame)
       })
@@ -213,7 +221,7 @@ Page({
 
   // 计算分数
   calculateScore: function (pose) {
-    this.classifier.drawSinglePose(this.ctx, pose)
+    // this.classifier.drawSinglePose(this.ctx, pose)
     var a = this, item = pose
     if (Array.isArray(pose)) {
       item = pose[0]
@@ -237,7 +245,7 @@ Page({
           c > A && d > 0 ? (C = 0, u = 0) : l > A && h > 0 && u < 3 ? C = 1 : (C = -1, u++),
             0 == r && 1 == C && (a.setData({
               num: a.data.num + 1
-            }), console.error(`a.data.num===`, a.data.num, a.data.costTime)), C > -1 && (r = C), y, n = T, o = M;
+            }), console.error(`a.data.num===`, a.data.num, a.data.costTime), a.data.num && a.playMusic("appear")), C > -1 && (r = C), y, n = T, o = M;
         }
       } else {
         if (i.judgeIsStand(m)) {
@@ -290,9 +298,10 @@ Page({
       startTs: parseInt(Date.parse(new Date()) / 1000)
     })
     that.costTimer = setInterval(function () {
+      let timeProgress = that.data.limitTime ? that.data.costTime * (100 / that.data.limitTime) : 0
       that.setData({
         costTime: that.data.costTime + 1,
-        timeProgress: that.data.costTime * (that.data.limitTime / 100)
+        timeProgress: timeProgress
       })
     }, 1000);
   },
@@ -428,11 +437,25 @@ Page({
     }, 1000);
   },
   playMusic: function (t) {
-    return
     if ("appear" === t) {
-      var e = wx.createInnerAudioContext();
-      e.src = this.audioSrcs[t + ""], e.play();
-    } else this.audioCtx.src = this.audioSrcs[t + ""], this.audioCtx.play();
+      this.appearCtx.src = this.audioSrcs[t + ""]
+      this.appearCtx.play();
+      return
+    }
+    this.audioCtx.src = this.audioSrcs[t + ""]
+    this.audioCtx.play();
+  },
+  downloadAudios: function () {
+    var t = this;
+    t.audios.forEach(function (e) {
+      var i = "appear" === e ? "Sport_Ball_appear" : e;
+      wx.downloadFile({
+        url: "https://go-ran-pic.lovedabai.com/sound/" + i + ".mp3",
+        success: function (i) {
+          200 === i.statusCode && (t.audioSrcs[e] = i.tempFilePath);
+        }
+      });
+    });
   },
   uploadScore: function (t) {
     console.error(`====uploadScore====`, t)
@@ -537,6 +560,7 @@ Page({
       costTime: 0,
       lastTime: this.data.limitTime,
       tipsText: '请站在识别框内',
+      timeProgress: 0,
     });
   },
   angleSuccess: function (t) {
