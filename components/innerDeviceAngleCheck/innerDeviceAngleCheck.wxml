@@ -1,0 +1,22 @@
+<cover-view class="gyroscopePage">
+    <cover-view class="tit">{{titleText}}</cover-view>
+    <cover-view class="gyroscope_body">
+        <cover-image class="coverBg" src="https://go-ran.oss-cn-shanghai.aliyuncs.com/static/deviceBg.png"></cover-image>
+    </cover-view>
+    <cover-view class="scopeBar">
+        <cover-image class="region" src="https://go-ran.oss-cn-shanghai.aliyuncs.com/static/grayScope_zone.png"></cover-image>
+        <cover-view class="countDownNum" wx:if="{{canCountDown}}">{{countDownNum}}</cover-view>
+        <cover-image class="point" src="https://go-ran.oss-cn-shanghai.aliyuncs.com/static/garyScope_arrow.png" style="top:{{offestTop}}rpx" wx:else></cover-image>
+    </cover-view>
+</cover-view>
+<cover-view class="gyroscopePage">
+    <cover-view class="tit">{{titleText}}</cover-view>
+    <cover-view class="gyroscope_body">
+        <cover-image class="coverBg" src="https://go-ran.oss-cn-shanghai.aliyuncs.com/static/deviceBg.png"></cover-image>
+    </cover-view>
+    <cover-view class="scopeBar">
+        <cover-image class="region" src="https://go-ran.oss-cn-shanghai.aliyuncs.com/static/grayScope_zone.png"></cover-image>
+        <cover-view class="countDownNum" wx:if="{{canCountDown}}">{{countDownNum}}</cover-view>
+        <cover-image class="point" src="https://go-ran.oss-cn-shanghai.aliyuncs.com/static/garyScope_arrow.png" style="top:{{offestTop}}rpx" wx:else></cover-image>
+    </cover-view>
+</cover-view>

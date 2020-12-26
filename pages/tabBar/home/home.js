@@ -23,7 +23,7 @@ Page({
       }, {
         kind_id: 19,
         name: '俯卧撑',
-        path: '/pages/AI/TiaoSheng/TiaoSheng',
+        path: '/pages/AI/FuWoCheng/FuWoCheng',
         pic_url: 'https://ssl-pubpic.51yund.com/1010293806.jpg',
         video_id:33,
         cnt: 100

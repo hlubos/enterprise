@@ -1,0 +1,42 @@
+function ballType(val) {
+  switch (val) {
+      case 1:
+          ;
+      case 2:
+          ;
+      case 3:
+          ;
+      case 4:
+          ;
+      case 5:
+          ;
+      case 6:
+          ;
+      case 7:
+          return (({
+              type: 'ballProfectUrl',
+              name: '加分球',
+          }));
+          break;
+      case 8:
+          ;
+      case 9:
+          return (({
+              type: 'ballBadUrl',
+              name: '减分球',
+          }));
+          break;
+      case 10:
+          return (({
+              type: 'die',
+              name: '死亡球',
+          }));
+          break;
+      default:
+          return ('');
+          break;
+  }
+};
+module.exports = ({
+  ballType: ballType,
+});
