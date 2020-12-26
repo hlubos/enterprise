@@ -1,4 +1,4 @@
-require("../../@babel/runtime/helpers/Arrayincludes");
+// require("../../@babel/runtime/helpers/Arrayincludes");
 
 Component({
   properties: {

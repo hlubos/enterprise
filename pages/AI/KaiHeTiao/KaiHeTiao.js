@@ -40,17 +40,17 @@ Page({
           angleRange: t.angleRange,
           code: t.code
       });
-      try {
-          this.setData({
-              "userInfo.skinCode": getApp().globalData.userInfo.skinCode
-          });
-      } catch (t) {
-          e.getUserInfo({}, function(t) {
-              i.setData({
-                  "userInfo.skinCode": getApp().globalData.userInfo.skinCode
-              });
-          });
-      }
+      // try {
+      //     this.setData({
+      //         "userInfo.skinCode": getApp().globalData.userInfo.skinCode
+      //     });
+      // } catch (t) {
+      //     e.getUserInfo({}, function(t) {
+      //         i.setData({
+      //             "userInfo.skinCode": getApp().globalData.userInfo.skinCode
+      //         });
+      //     });
+      // }
   },
   onReady: function() {
       wx.setKeepScreenOn({

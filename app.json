@@ -6,6 +6,10 @@
     "pages/login/login",
     "pages/test/tensorflow/demo",
     "pages/AI/TiaoSheng/TiaoSheng",
+    "pages/AI/ShuangBiZhiCheng/ShuangBiZhiCheng",
+    "pages/AI/ShenDun/ShenDun",
+    "pages/AI/KaiHeTiao/KaiHeTiao",
+    "pages/AI/YangWoQiZuo/YangWoQiZuo",
     "pages/AI/FuWoCheng/FuWoCheng"
   ],
   "window": {

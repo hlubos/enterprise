@@ -17,6 +17,9 @@ App({
     shareFrom: '',   //用户来源,比如从app，从公众号，从分享
     localStorageIO: plugin.localStorageIO,
     fileStorageIO: plugin.fileStorageIO,
+    angleSuccess: !1,
+    bgMusic: !0,
+    timeGap: 0
   },
 
   onLaunch: function () {
@@ -34,6 +37,8 @@ App({
         this.globalData.systemInfo = systemInfo
       }
     })
+
+    this.globalData.bgMusic = !1 !== wx.getStorageSync("bgMusic");
   },
 
   // 初始化插件
