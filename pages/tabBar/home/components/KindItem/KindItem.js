@@ -22,9 +22,13 @@ Component({
    */
   methods: {
     goSport () {
-      wx.navigateTo({
-        url: `${this.data.info.path}`
-      })
+      let user_id = wx.getStorageSync('user_id')
+      console.log(111)
+      if (user_id) {
+        wx.navigateTo({
+          url: `${this.data.info.path}`
+        })
+      }
     }
   }
 })

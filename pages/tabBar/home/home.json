@@ -1,5 +1,7 @@
 {
   "usingComponents": {
-    "kind-item": "./components/KindItem/KindItem"
+    "kind-item": "./components/KindItem/KindItem",
+    "login-btn": "../../../components/LoginBtn/LoginBtn"
+
   }
 }

@@ -25,6 +25,11 @@ Component({
   methods: {
     // 微信授权登录
     async getUserInfo (e) {
+      let user_id = wx.getStorageSync('user_id')
+      if (user_id) {
+        this.triggerEvent('success')
+        return
+      }
       if(this.loading) return
       this.loading = true
       let userInfo = e.detail.userInfo;
@@ -52,8 +57,7 @@ Component({
         }
         let params = {
           "code": res.code,
-          "nickname": userInfo.nickName,
-          "avatarurl": userInfo.avatarUrl,
+          "wxapp_source": "wx_ydenterprise",
         }
         this.goWxLogin(params)
       } catch (err) {
