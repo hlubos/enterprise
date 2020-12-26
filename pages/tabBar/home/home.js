@@ -44,7 +44,7 @@ Page({
       }, {
         kind_id: 19,
         name: '仰卧起坐',
-        path: '/pages/AI/TiaoSheng/TiaoSheng',
+        path: '/pages/AI/YangWoQiZuo/YangWoQiZuo',
         pic_url: 'https://17yd-common.51yund.com/ai_coach/icon_index_yangwoqizuo%403x.png',
         video_id:40,
         cnt: 100
