@@ -30,7 +30,7 @@ Page({
       }, {
         kind_id: 19,
         name: '深蹲',
-        path: '/pages/AI/TiaoSheng/TiaoSheng',
+        path: '/pages/AI/ShenDun/ShenDun',
         pic_url: 'https://ssl-pubpic.51yund.com/1010293895.jpg',
         video_id:1,
         cnt: 100

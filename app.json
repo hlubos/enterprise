@@ -6,8 +6,7 @@
     "pages/login/login",
     "pages/test/tensorflow/demo",
     "pages/AI/TiaoSheng/TiaoSheng",
-    "pages/AI/FuWoCheng/FuWoCheng",
-    "pages/AI/ShenDun"
+    "pages/AI/FuWoCheng/FuWoCheng"
   ],
   "window": {
     "backgroundTextStyle": "light",
