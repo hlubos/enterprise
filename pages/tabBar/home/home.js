@@ -16,7 +16,7 @@ Page({
       {
         kind_id: 19,
         name: '平板支撑',
-        path: '/pages/AI/TiaoSheng/TiaoSheng',
+        path: '/pages/AI/ShuangBiZhiCheng/ShuangBiZhiCheng',
         pic_url: 'https://ssl-pubpic.51yund.com/1010293873.jpg',
         video_id:29,
         cnt: 100
