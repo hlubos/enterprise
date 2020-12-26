@@ -58,6 +58,7 @@ Page({
       videoId: videoId,
       videoName: videoName
     })
+    this.clearTimerAll()
   },
 
   /**
@@ -93,6 +94,7 @@ Page({
     if (this.classifier && this.classifier.isReady()) {
       this.classifier.dispose()
     }
+    this.clearTimerAll()
   },
 
   /**
@@ -293,7 +295,7 @@ Page({
     clearInterval(this[timer])
     this[timer] = null
   },
-  clearTimer: function () {
+  clearTimerAll: function () {
     let timers = ['costTimer', 'timerDown', 'reStartTimer',
       'startTimer', 'endTimer', 'notMovingTimer', 'countDownTimer']
     for (const item of timers) {
@@ -340,7 +342,7 @@ Page({
     var t = this, i = this
     var e = arguments.length > 0 && void 0 !== arguments[0] && arguments[0]
     if (this.data.sportEnd) {
-      this.clearTimer();
+      this.clearTimerAll();
     } else {
       var a = [5, 6], n = i.isMoving(a);
       console.log(`isMoving==`, n)
@@ -441,7 +443,7 @@ Page({
     this.ctx.clearRect(0, 0, this.videoWidth, this.videoHeight)
     this.ctx.draw()
     e.timerDown = null
-    e.clearTimer()
+    e.clearTimerAll()
 
     if (e.data.num > 1) {
       this.setData({
@@ -505,7 +507,7 @@ Page({
     wx.navigateBack();
   },
   reStart: function () {
-    this.clearTimer()
+    this.clearTimerAll()
     this.timerDown = null
     this.timer = null
     this.setData({
