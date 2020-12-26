@@ -10,4 +10,6 @@ export default {
   getUserDayStep: '/wx_app/get_user_day_step',  // 同步步数
   
   getHomePage: '/match_burger_king/homepage', // 获取首页信息
+  pushWxRemind: '/enterprise/push_wx_remind', // 提醒员工的接口
+  getUserHistory: '/yd_ai_coach/get_user_history_data', // 获取历史记录
 }

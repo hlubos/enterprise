@@ -170,7 +170,7 @@ Page({
       });
       var a = 3, e = function() {
           a > 0 ? (t.playMusic(a), a--) : (t.playMusic("start"), clearInterval(i.startTimer), 
-          i.backgroundVideo && i.backgroundVideo.play());
+          i.backgroundVi  deo && i.backgroundVideo.play());
       };
       e(), clearInterval(i.startTimer), i.startTimer = setInterval(e, 1e3), i.timer = setInterval(function() {
           i.data.countDown > 0 ? i.setData({

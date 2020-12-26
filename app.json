@@ -10,12 +10,15 @@
     "pages/AI/ShenDun/ShenDun",
     "pages/AI/KaiHeTiao/KaiHeTiao",
     "pages/AI/YangWoQiZuo/YangWoQiZuo",
-    "pages/AI/FuWoCheng/FuWoCheng"
+    "pages/AI/FuWoCheng/FuWoCheng",
+    "pages/tabBar/work/second/second",
+    "pages/dialog/dialog",
+    "pages/history/history"
   ],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "Weixin",
+    "navigationBarTitleText": "悦动圈",
     "navigationBarTextStyle": "black"
   },
   "tabBar": {

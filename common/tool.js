@@ -21,9 +21,18 @@ const tool = {
 
   // 去登录
   toLogin: () => {
+    wx.removeStorageSync('user_id')
+    wx.removeStorageSync('xyy')
+    wx.removeStorageSync('session_key')
     wx.navigateTo({
       url: '/pages/login/login',
     })
+  },
+
+  //事件上报（比如记录某个按钮点击了多少次，某个页面访问了多少次）
+  eventBiz: function (data) {
+    let param = {"detail": data, islog:true};
+    return $http.post(config.logPath + "/ydlog/event", param);
   },
   
   getYdStorage: async (key) => {
@@ -125,9 +134,8 @@ const tool = {
                 await tool.setYdStorage('user_id', userId)
                 await tool.setYdStorage('xyy', xyy)
                 await tool.setYdStorage('session_key', sessionkey)
+                if(cb){cb(userId,xyy)};
             }
-            let hasLogin = userId == 0? false : true;
-            if(cb) cb(hasLogin);
             return sessionkey;
         } else if(res.code !== 7007) { //userId和xyy不匹配或其它异常情况，最常见的场景是首次进来时，用户之前本地存储的xyy过期，7007的情况在http层统一处理
             tool.toLogin();

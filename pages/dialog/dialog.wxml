@@ -1,0 +1,66 @@
+<!-- pages/dialog/dialog.wxml -->
+<view class="content-wrap">
+  <view class="content">
+    <!-- 提醒弹窗 -->
+    <view class="remind" wx:if="{{dialogType == 'isRemind'}}">
+      <view class="title">
+        <view class="title-content">{{remind_text}}</view>
+        <icon class="icon" type="clear" size="16" bindtap="cancel" />
+      </view>
+      <view wx:if="{{level < 2}}">
+        <view>已为关注公众号的{{officialAccountsFollows}}位员工预备发送了消息提醒。保存二维码图片号召团队关注，一键提醒更多员工记录运动数据。</view>
+      </view>
+      <view wx:else class="text">
+        管理员提醒您关注服务号，不再忘记数据上报
+      </view>
+      <view class="qr-inner">
+        <image mode="{{item.mode}}" src="{{imgUrl}}" show-menu-by-longpress="true"></image>
+      </view>
+      <text class="long-press-save-pic">长按保存图片</text>
+      <button class="btn1" bindtap="remindStaff" wx:if="{{level < 2}}">提醒员工关注</button>
+      <button class="btn1" bindtap="remindStaffSavePic" wx:else>去关注</button>
+    </view>
+    <!-- 上传图片弹窗 -->
+    <view class="upload" wx:if="{{dialogType == 'isUpload'}}">
+      <view class="title">
+        <view class="text-content">点击上传图片</view>
+      </view>
+      <view class="qr-inner" wx:if="{{uploadUrl}}">
+        <image src="{{uploadUrl}}"></image>
+      </view>
+      <view class="space"></view>
+      <button class="btn1" bindtap="chooseImage" wx:if="{{!uploadUrl}}">选择图片</button>
+      <button class="btn1" bindtap="upload" wx:else>上传图片</button>
+      <button class="btn2" bindtap="cancel">取消</button>
+    </view>
+    <!-- 分享弹窗 -->
+    <view class="share" wx:if="{{dialogType == 'isShare'}}">
+      <view class="title">
+        <view class="text-content">分享邀请链接</view>
+      </view>
+      <button class="btn1" open-type="share">点击分享</button>
+      <button class="btn2" bindtap="cancel">取消</button>
+    </view>
+    <!-- 同步步数的弹窗 -->
+    <view wx:if="{{dialogType == 'isStep'}}">
+      <view class="title">
+        <view class="text-content">是否同步数据</view>
+        <view class="space"></view>
+        <icon class="icon" type="clear" size="16" bindtap="cancel" />
+      </view>
+
+      <button class="btn1" bindtap="unifyStep" open-type="launchApp">确定</button>
+    </view>
+    <!-- 是否打开其他小程序的弹框 -->
+    <view wx:if="{{dialogType == 'isDirectMini'}}">
+      <view class="title">
+        <view class="text-content">是否打开小程序</view>
+        <view class="space"></view>
+        <icon class="icon" type="clear" size="16" bindtap="cancel" />
+      </view>
+
+      <button class="btn1" bindtap="goOtherProgram" open-type="launchApp">确定</button>
+    </view>
+  </view>
+  <official-account wx:if="{{dialogType == 'isRemind' || dialogType == 'isVip'}}"></official-account>
+</view>

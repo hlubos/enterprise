@@ -18,7 +18,12 @@ const utils = {
   // 去除首尾空格
   trimStr (str) {
     return str.replace(/^\s*|\s*$/g, '')
-  }
+  },
+
+  // 补零
+  addZero (str) {
+    return String(str).length === 1 ? '0' + str : str
+  } 
 }
 
 export default utils

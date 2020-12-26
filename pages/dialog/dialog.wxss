@@ -1,0 +1,102 @@
+/* pages/dialog/dialog.wxss */
+.content-wrap {
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 100;
+  background: rgba(0, 0, 0, 0.6);
+  overflow: hidden;
+}
+
+.content {
+  position: absolute;
+  width: 232px;
+  left: 50%;
+  top: 50%;
+  background-color: #fff;
+  transform: translate(-50%, -50%);
+  padding: 24px;
+  border-radius: 4px;
+}
+
+.title{
+  position: relative;
+}
+.title .title-content {
+  text-align: center;
+  padding: 5px;
+  font-size: 18px;
+  color: #333333;
+  letter-spacing: 0;
+  text-align: center;
+  margin-bottom: 10px;
+}
+.title .icon{
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+.text-content {
+  text-align: center;
+  padding: 10px 0 16px 0;
+  font-size: 16px;
+}
+
+view {
+  font-size: 16px;
+  color: #666666;
+  letter-spacing: 0;
+}
+
+.text {
+  text-align: center;
+}
+
+.qr-inner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.qr-inner image {
+  width: 180px;
+  height: 180px;
+}
+
+.long-press-save-pic{
+  color: #999;
+  font-size: 14px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+.vip-text{
+  margin-bottom: 24px;
+}
+
+.space{
+  height: 10px;
+}
+
+.btn1 {
+  background: #11D59C;
+  border-radius: 26px;
+  font-size: 18px;
+  color: #FFFFFF;
+  letter-spacing: 0;
+  text-align: center;
+}
+
+.btn2 {
+  border-radius: 26px;
+  font-size: 18px;
+  letter-spacing: 0;
+  color: #11D59C;
+  text-align: center;
+  background-color: FFFFFF;
+  border: 1px solid #11D59C;
+  margin-top: 10px;
+}

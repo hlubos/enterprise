@@ -45,16 +45,17 @@ Page({
 
   initWebview () {
     let { user_id, xyy } = app.globalData.userInfo
+    // Todo
     this.setData({
       noLogin: false,
-      webUrl: `https://work.51yund.com/vapps/new_work/appHome?user_id=${user_id}&xyy=${xyy}&is_login=true`
+      webUrl: `https://test-hd.51yund.com/vapps/new_work/index?user_id=${user_id}&xyy=${xyy}&is_login=true&from_tab=true`
     })
   },
 
   async goInvite() {
     tool.getSessionKey(wx.getStorageSync('user_id'), wx.getStorageSync('xyy'), (userId, xyy) => {
       wx.switchTab({
-        url: "/pages/index/index?to=invite&enterprise_id=" + this.enterprise_id + '&invitor_user_id=' + this.invitor_user_id + "&user_id=" + userId + "&xyy=" + xyy
+        url: "/pages/index/index?to=invite&enterprise_id=" + this.data.enterprise_id + '&invitor_user_id=' + this.data.invitor_user_id + "&user_id=" + userId + "&xyy=" + xyy
       })
     }, () => {
       wx.showToast({
@@ -123,7 +124,9 @@ Page({
     }
     let newUserInfo = await api.register(parms)
     if (newUserInfo.code != 0) return;
-    this.showAuthBtn = false
+    this.setData({
+      showAuthBtn: false
+    })
     newUserInfo.openid = newUserInfo.open_id; //【特别注意】这里返回的是open_id不是openid
     this.storageWXlogin(newUserInfo);
     this.getSteps()
