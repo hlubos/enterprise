@@ -3,7 +3,7 @@
         <background-video id="backgroundVideo"></background-video>
         <camera binderror="error" class="camera" devicePosition="front" flash="off" frameSize="medium">
             <canvas canvasId="canvas" class="canvas" id="canvas"></canvas>
-        </camera>
+        </camera> 
         <cover-view class="stage">
             <inner-device-angle angleRange="{{angleRange}}" bind:angleSuccess="angleSuccess" bind:stopGame="stopGame" code="{{code}}" gameEnd="{{gameEnd}}" gameStart="{{gameStart}}" id="inner-device-angle" wx:if="{{showDevicePage}}"></inner-device-angle>
             <skin skinCode="{{userInfo.skinCode}}" wx:if="{{userInfo.skinCode}}"></skin>
