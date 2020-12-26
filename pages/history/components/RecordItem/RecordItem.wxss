@@ -1,0 +1,58 @@
+/* pages/history/components/RecordItem/RecordItem.wxss */
+.record-item {
+  margin: 0 28rpx;
+  height: 144rpx;
+  display: flex;
+  align-items: center;
+}
+
+.border {
+  border-bottom: 1rpx solid #eee;
+}
+
+.left {
+  margin-right: 20rpx;
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 100%;
+  overflow: hidden;
+}
+
+.center {
+  flex: 1;
+}
+
+.center .title {
+  margin-bottom: 12rpx;
+  font-size: 16px;
+  color: #333333;
+}
+
+.center .calories {
+  font-family: PingFangSC-Regular;
+  font-size: 12px;
+  color: #666666;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  font-family: DINPro-Black;
+  font-size: 18px;
+  color: #333333;
+  text-align: right;
+  font-weight: bold;
+}
+
+.right .content {
+  display: flex;
+  align-items: center;
+}
+
+.right .unit {
+  margin-left: 4rpx;
+  font-family: PingFangSC-Regular;
+  font-size: 12px;
+  color: #999999;
+  text-align: right;
+}

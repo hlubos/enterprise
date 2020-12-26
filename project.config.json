@@ -89,6 +89,12 @@
           "pathName": "pages/dialog/dialog",
           "query": "dialogType=isStep&level=3",
           "scene": null
+        },
+        {
+          "name": "历史记录页面",
+          "pathName": "pages/history/history",
+          "query": "",
+          "scene": null
         }
       ]
     }
