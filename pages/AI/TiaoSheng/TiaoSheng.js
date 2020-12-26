@@ -30,13 +30,13 @@ Page({
     countDownSrc: "", //  倒数文案
     countDownSrcAry: ["1", "2", "3"], // 倒数文案数组
     show_tip: false, // 身体引导
-    limitTime: 10, // 限制时长
+    limitTime: 60, // 限制时长
     timeProgress: 0, // 进度条
     costTimer: null,  // 耗时计时器
     costTime: 0, // 耗时
     recordTime: 0, // 记录时长
     lastTime: 0, // 剩余时长
-    reStartCountDown: 10, // 结束后倒计时重新开始
+    reStartCountDown: 60, // 结束后倒计时重新开始
     sportStart: false,  // 开始运动
     sportEnd: false, // 运动完成
     angleSuc: false, // 角度判断是否成功
@@ -69,6 +69,9 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
+    wx.setKeepScreenOn({
+      keepScreenOn: true
+    })
     setTimeout(() => {
       this.ctx = wx.createCanvasContext(CANVAS_ID)
       this.initClassifier()
@@ -106,6 +109,9 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
+    wx.setKeepScreenOn({
+      keepScreenOn: false
+    })
     if (this.classifier && this.classifier.isReady()) {
       this.classifier.dispose()
     }
