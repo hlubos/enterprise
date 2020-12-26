@@ -8,5 +8,5 @@
 </view>
 
 <view class="kind-list">
-    <kind-item class="item" wx:for="{{kindList}}" info="{{item}}"></kind-item>
+    <kind-item class="item" wx:for="{{kindList}}" wx:key="video_id" info="{{item}}"></kind-item>
 </view>
