@@ -40,6 +40,7 @@ Page({
     angleSuc: false, // 角度判断是否成功
     showScoreView: false, // 顶部成绩黑条
     startTs: 0, // 开始运动的时间戳
+    showDevicePage: false,  // 展示角度判断
   },
 
   /**
@@ -56,7 +57,8 @@ Page({
     let videoName = options.videoName || "跳绳"
     this.setData({
       videoId: videoId,
-      videoName: videoName
+      videoName: videoName,
+      angleRange: options.angleRange,
     })
     this.clearTimerAll()
   },
@@ -80,7 +82,12 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () { },
+  onShow: function () {
+    // this.angleSuccess()
+    this.setData({
+      showDevicePage: !0
+    });
+  },
 
   /**
    * 生命周期函数--监听页面隐藏
@@ -218,7 +225,6 @@ Page({
     this.saveFrameToArray(m);
     var g = [5, 11, 15, 6, 12, 16];
     if (a.satisfyConf(m, .2, g) && a.isInBox(g)) {
-      console.log(`a.data.sportStart===`, `${a.data.sportStart}`, a.countDownTimer)
       if (a.data.sportStart || a.countDownTimer) {
         if (!a.data.countDown) {
           a.isOutScreen();
@@ -532,5 +538,11 @@ Page({
       lastTime: this.data.limitTime,
       tipsText: '请站在识别框内',
     });
+  },
+  angleSuccess: function (t) {
+    this.clearIntervalItem('timerDown')
+    this.backgroundVideo && this.backgroundVideo.play()
+    this.playMusic("keepMoving")
+    this.setTimeDown();
   },
 })

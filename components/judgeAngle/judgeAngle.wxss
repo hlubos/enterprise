@@ -1,0 +1,162 @@
+@font-face {
+  font-family: "iconfont";
+  src: url('iconfont.eot?t=1608961034240');
+  /* IE9 */
+  src: url('iconfont.eot?t=1608961034240#iefix') format('embedded-opentype'),
+    /* IE6-IE8 */
+    url('data:application/x-font-woff2;charset=utf-8;base64,d09GMgABAAAAAANwAAsAAAAAB2AAAAMkAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHEIGVgCDBgqCNIIbATYCJAMMCwgABCAFhG0HSRt0BhEVlPVkPw5jx/RJ4k4g2jLLaOpo6DTxnyN43K+cl2SX1YG8UwwW0DK1VTUWVY0FVeeAJBvxh9+fvT9Y7VgBbju7EkhygpRu6aB8W9Mx3J9HR6hO1/OtZ/mO5Ed3mi48TqMUQiIkB9fU/63F8mw2xwqKLi0c4Lh1QFFNAxnIGmRAvmHsgpa4nkDboCmxZe+qBk2F2S0Qz+Njw0EzI1MakkNTqFeMLStQnZpmepMOAG+D78d/sBAYklpm9t2LsYsCa6/41xR4XpXnykNwptOATSJjCoW4qdSdgRz5pmRtVVyao+uKkKZy/lcEbE1a3+gfLxF1ZmIXjEF/4hfeYRL8ShkngQzqHqP6EvBigtsglPogg0ZNjonVi4rOrDzkavCXlxpE3sfVHRylYm99GkJ+uvbF+3Ye48MJatzQOw4i772SWjnJR3Z8UOHUlxdmHS1Lz1Hra+S4dA0iZQEatbHJfIVGqL7KejTGm5I+RP7M3RfMH+bJ1OvK4HBbcBEI2fClFY+jkhDp6GOGlA/ZGPdhC+4VwUdqaVliuUXfRNgDUsg+9AxnPTBFyEOvKe413UpUGBaRL7OmFsTl+DS3+OjcvsOozrackBdjrE9Li7cu5SOYaWfLDvpwYDHsZCVxkWV8G+41WANQPScdXPobfmM3N8onlGz618QX8J3whgs6VHllIOeheZL64KWnIPqp/ssA55nyXBSRRrZhz47ByN6EtmZUAdPU4+dwaX/nREJTfwJJwwBkTUNowU9BTccS1DWtQtukWza5g46dQaUFmPAGAKH4AAzJBsBRfFEE/gdILH9AocQZcLRBnxNPFVbZMOaCFRQ72LLvyFaKCpOvqOcm5zQvoDyRJ+uE0AvywQw75CkGTIuORAiI+xZSsBk2TQ8D9w5L8YzIkPg+VV3JK/v2oNhgKCdQBRR2wCr1OuTlF6rw+SukzRo5bsiqsj4hNrG1g5An6IBm4q5T1q1cMlloESEIIKzXAinQoMby9cBQ3cpBJeExAzyDhI9yUVext7y0fb8F0GYOzJEiR4F6lndmthdf8KJL5N1m8047W6Al7OLDAQ==') format('woff2'), url('iconfont.woff?t=1608961034240') format('woff'), url('iconfont.ttf?t=1608961034240') format('truetype'),
+    /* chrome, firefox, opera, Safari, Android, iOS 4.2+ */
+    url('iconfont.svg?t=1608961034240#iconfont') format('svg');
+  /* iOS 4.1- */
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-fanhui:before {
+  content: "\e60b";
+}
+
+.icon-fanzhuanxiangjibeifen3:before {
+  content: "\e676";
+}
+
+.content {
+  height: 100vh;
+  background-size: 100% 100%;
+}
+
+.content .content_opacity {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.content .content_opacity .camera {
+  width: 100vw;
+  height: 100vh;
+  z-index: -5;
+  position: relative;
+}
+
+.content .content_opacity .camera .canvas {
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.content .content_opacity .content_remind {
+  position: fixed;
+  background-color: rgba(51, 55, 68, 0.8);
+  text-align: center;
+  line-height: 160rpx;
+  color: #ffffff;
+  font-size: 72rpx;
+  height: 160rpx;
+  width: 100%;
+  top: 0;
+  z-index: 10;
+}
+
+.content .content_opacity .content_text {
+  width: calc(36rpx*2);
+  height: calc(260rpx*2);
+  border-radius: 260rpx;
+  background-size: 100% 100%;
+  background-color: rgba(255, 255, 255, 0.5);
+  position: absolute;
+  left: 45.3%;
+  top: 33.3%;
+  z-index: 10;
+}
+
+.content .content_opacity .content_text .content_top {
+  position: absolute;
+  left: -12rpx;
+}
+
+.content .content_opacity .content_text .content_top .content_top_left {
+  position: absolute;
+  left: -135rpx;
+  top: 16rpx;
+  display: inline-block;
+  width: calc(40rpx*2);
+  height: calc(32rpx*2);
+  background: url("https://ssl-pubpic.51yund.com/1040234039.png") no-repeat;
+  background-size: 100% 100%;
+}
+
+.content .content_opacity .content_text .content_top .content_top_right {
+  position: absolute;
+  display: inline;
+  background-size: 100% 100%;
+  width: calc(48rpx*2);
+  height: calc(48rpx*2);
+}
+
+.content .content_opacity .content_text .content_buttom {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 114rpx;
+  height: 114rpx;
+}
+
+.content .content_opacity .content_text .content_buttom .content_buttom_circular {
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.9);
+  background: url("https://ssl-pubpic.51yund.com/1040233265.png") no-repeat;
+  background-size: 100% 100%;
+  border-radius: 100%;
+  left: -21rpx;
+  width: 114rpx;
+  height: 114rpx;
+}
+
+.content .content_opacity .content_text .content_buttom .canvas_time {
+  left: -21rpx;
+  width: 114rpx;
+  height: 114rpx;
+  border-radius: 100%;
+  text-align: center;
+  background-color: #FFFFFF;
+  line-height: 114rpx;
+  position: absolute;
+  z-index: 99;
+}
+
+.content .content_opacity .button_buttom {
+  position: fixed;
+  bottom: 48rpx;
+  width: 100%;
+  height: 64rpx;
+  z-index: 10;
+}
+
+.content .content_opacity .button_buttom button {
+  padding: 0;
+  width: 140rpx;
+  height: 64rpx;
+  font-size: 28rpx;
+  text-align: center;
+  line-height: 64rpx;
+  border-radius: 32rpx;
+  color: #FFFFFF;
+  background-color: #333744;
+}
+
+.content .content_opacity .button_buttom .buttom_left {
+  position: absolute;
+  left: 16rpx;
+}
+
+.content .content_opacity .button_buttom .buttom_right {
+  position: absolute;
+  right: 16rpx;
+}
