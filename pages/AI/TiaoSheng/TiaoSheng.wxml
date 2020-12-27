@@ -1,6 +1,6 @@
 <view>
     <background-video id="backgroundVideo"></background-video>
-    <camera device-position="back" flash="off" binderror="error" frame-size="medium" class="camera" style="height:{{cameraBlockHeight}}px;">
+    <camera device-position="front" flash="off" binderror="error" frame-size="medium" class="camera" style="height:{{cameraBlockHeight}}px;">
         <canvas id="canvas" canvas-id="canvas" class="canvas"></canvas>
     </camera>
     <!-- <judge-angle angleRange="{{angleRange}}" bind:angleSuccess="angleSuccess" bind:stopGame="stopGame" sportEnd="{{sportEnd}}" sportEnd="{{sportEnd}}" id="judge-angle" ></judge-angle> -->

@@ -52,9 +52,10 @@ Page({
   onLoad: function (options) {
     console.log(`options==`, options)
     if (options.limit_time > 0) {
+      let limitTime = parseInt(options.limit_time)
       this.setData({
-        lastTime: options.limit_time,
-        limitTime: options.limit_time
+        lastTime: limitTime,
+        limitTime: limitTime
       })
     }
 
@@ -495,9 +496,7 @@ Page({
       video_name: this.data.videoName,
       start_ts: this.data.startTs,
       cost_time: this.data.costTime,
-      score: this.data.num,
-      action_times: 1,
-      status: 1
+      action_times: this.data.num,
     }
     api.reportUserAISportData(param).then(res => {
       e.doUpload = false
