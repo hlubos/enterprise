@@ -34,9 +34,10 @@ Page({
     timeProgress: 0, // 进度条
     costTimer: null,  // 耗时计时器
     costTime: 0, // 耗时
+    costTimeStr: '00:00',
     recordTime: 0, // 记录时长
-    lastTime: 0, // 剩余时长
-    reStartCountDown: 60, // 结束后倒计时重新开始
+    lastTime: 60, // 剩余时长
+    reStartCountDown: 10, // 结束后倒计时重新开始
     sportStart: false,  // 开始运动
     sportEnd: false, // 运动完成
     angleSuc: false, // 角度判断是否成功
@@ -49,18 +50,22 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    if (this.data.limitTime > 0) {
+    console.log(`options==`, options)
+    if (options.limit_time > 0) {
       this.setData({
-        lastTime: this.data.limitTime
+        lastTime: options.limit_time,
+        limitTime: options.limit_time
       })
     }
 
-    let videoId = options.videoId || 45
-    let videoName = options.videoName || "跳绳"
+    let videoId = options.video_id || 45
+    let videoName = options.video_name || "跳绳"
+    var windowWidth = wx.getSystemInfoSync().windowWidth >= 768
     this.setData({
       videoId: videoId,
       videoName: videoName,
-      angleRange: options.angleRange,
+      angleRange: windowWidth ? "70-80" : "65-75",
+      showDevicePage: false
     })
     this.clearTimerAll()
   },
@@ -307,6 +312,7 @@ Page({
       let timeProgress = that.data.limitTime ? that.data.costTime * (100 / that.data.limitTime) : 0
       that.setData({
         costTime: that.data.costTime + 1,
+        costTimeStr: utils.formatDuration(that.data.costTime + 1, 'mm:ss'),
         timeProgress: timeProgress
       })
     }, 1000);
@@ -455,8 +461,10 @@ Page({
     var t = this;
     t.audios.forEach(function (e) {
       var i = "appear" === e ? "Sport_Ball_appear" : e;
+      let url = "https://go-ran-pic.lovedabai.com/sound/" + i + ".mp3"
+      url = "appear" != e ? url : 'https://ydcommon.51yund.com/AI/audio/appear.mp3'
       wx.downloadFile({
-        url: "https://go-ran-pic.lovedabai.com/sound/" + i + ".mp3",
+        url: url,
         success: function (i) {
           200 === i.statusCode && (t.audioSrcs[e] = i.tempFilePath);
         }
@@ -465,9 +473,6 @@ Page({
   },
   uploadScore: function (t) {
     console.error(`====uploadScore====`, t)
-    this.setData({
-      costTimeStr: utils.formatDuration(this.data.costTime, 'mm:ss')
-    })
     if (this.doUpload || this.data.num <= 0) {
       return
     }
@@ -567,6 +572,8 @@ Page({
       lastTime: this.data.limitTime,
       tipsText: '请站在识别框内',
       timeProgress: 0,
+      costTime: 0,
+      costTimeStr: '00:00',
     });
   },
   angleSuccess: function (t) {
