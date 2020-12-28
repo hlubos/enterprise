@@ -30,7 +30,7 @@ Page({
     countDownSrc: "", //  倒数文案
     countDownSrcAry: ["1", "2", "3"], // 倒数文案数组
     show_tip: false, // 身体引导
-    limitTime: 60, // 限制时长
+    limitTime: 0, // 限制时长
     timeProgress: 0, // 进度条
     costTimer: null,  // 耗时计时器
     costTime: 0, // 耗时
@@ -568,7 +568,7 @@ Page({
       stopGame: !1,
       showDevicePage: !1,
       costTime: 0,
-      lastTime: this.data.limitTime,
+      lastTime: this.data.limitTime > 0 ? this.data.limitTime : 60,
       tipsText: '请站在识别框内',
       timeProgress: 0,
       costTime: 0,
