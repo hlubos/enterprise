@@ -1,22 +1,21 @@
 <!-- index.wxml -->
-<view class="content">
-    <view class="content_opacity">
-        <view class="content_remind">{{titleText}}</view>
-        <view class="content_text" style="background-image: url({{bgImageTo}});">
-            <view class="content_buttom">
-                <view class="content_buttom_circular"></view>
+<cover-view class="content">
+    <cover-view class="content_opacity">
+        <cover-view class="content_text" style="background-image: url({{bgImageTo}});">
+            <cover-view class="content_buttom">
+                <cover-view class="content_buttom_circular"></cover-view>
                 <cover-view wx:if="{{canvas}}" class="canvas_time" scroll-top="0">
                     {{countDownNum}}
                 </cover-view>
-            </view>
-            <view class="content_top" style="top:{{styleTop}}rpx">
-                <view class="content_top_left"></view>
-                <view class="content_top_right" style="background-image: url({{bgImage}});"></view>
-            </view>
-        </view>
-        <view class="button_buttom">
+            </cover-view>
+            <cover-view class="content_top" style="top:{{styleTop}}rpx">
+                <cover-view class="content_top_left"></cover-view>
+                <cover-view class="content_top_right" style="background-image: url({{bgImage}});"></cover-view>
+            </cover-view>
+        </cover-view>
+        <cover-view class="button_buttom">
             <button class="buttom_left iconfont .icon-fanhui">退出</button>
             <button class="buttom_right iconfont .icon-fanzhuanxiangjibeifen3">切换</button>
-        </view>
-    </view>
-</view>
+        </cover-view>
+    </cover-view>
+</cover-view>

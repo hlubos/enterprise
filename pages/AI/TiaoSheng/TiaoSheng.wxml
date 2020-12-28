@@ -3,7 +3,7 @@
     <camera device-position="front" flash="off" binderror="error" frame-size="medium" class="camera" style="height:{{cameraBlockHeight}}px;">
         <canvas id="canvas" canvas-id="canvas" class="canvas"></canvas>
     </camera>
-    <!-- <judge-angle angleRange="{{angleRange}}" bind:angleSuccess="angleSuccess" bind:stopGame="stopGame" sportEnd="{{sportEnd}}" sportEnd="{{sportEnd}}" id="judge-angle" ></judge-angle> -->
+    <judge-angle angleRange="{{angleRange}}" bind:angleSuccess="angleSuccess" bind:stopGame="stopGame" sportEnd="{{sportEnd}}" sportEnd="{{sportEnd}}" id="judge-angle" ></judge-angle>
     <cover-view wx:if="{{showScoreView&&!sportEnd}}" class="score-view">
         <cover-view class="score-bg"></cover-view>
         <cover-view wx:if="{{limitTime>0}}" class="time-progress" style="width: {{timeProgress}}%"></cover-view>
