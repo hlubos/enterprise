@@ -19,7 +19,7 @@ Page({
         query.push(str)
       }
     }
-    let url = `https://test-hd.51yund.com/vapps/new_work/${options.path}?user_id=${user_id}&xyy=${xyy}&is_login=true&${query.join('&')}`
+    let url = `https://test-lip.51yund.com/vapps/new_work/${options.path}?user_id=${user_id}&xyy=${xyy}&is_login=true&${query.join('&')}`
     this.setData({
       webUrl: url
     })
