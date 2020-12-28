@@ -4,7 +4,9 @@ import * as posenet from '@tensorflow-models/posenet'
 import { getFrameSliceOptions } from '../utils/util'
 import { drawKeypoints, drawSkeleton } from './util'
 
-const POSENET_URL = 'https://www.gstaticcnapps.cn/tfjs-models/savedmodel/posenet/mobilenet/float/050/model-stride16.json';
+// const POSENET_URL = 'https://www.gstaticcnapps.cn/tfjs-models/savedmodel/posenet/mobilenet/float/050/model-stride16.json';
+const POSENET_URL = 'https://ydcommon.51yund.com/tfjs-models/savedmodel/posenet/mobilenet/float/050/model-stride16.json';
+
 const POSENET_BIN_URL = ''
 const STORAGE_KEY = 'posenet_model';
 
