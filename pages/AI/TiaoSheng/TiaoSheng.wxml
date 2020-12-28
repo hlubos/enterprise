@@ -1,7 +1,9 @@
 <view>
-    <camera device-position="back" flash="off" binderror="error" frame-size="medium" class="camera" style="height:{{cameraBlockHeight}}px;">
+    <background-video id="backgroundVideo"></background-video>
+    <camera device-position="front" flash="off" binderror="error" frame-size="medium" class="camera" style="height:{{cameraBlockHeight}}px;">
         <canvas id="canvas" canvas-id="canvas" class="canvas"></canvas>
     </camera>
+    <!-- <judge-angle angleRange="{{angleRange}}" bind:angleSuccess="angleSuccess" bind:stopGame="stopGame" sportEnd="{{sportEnd}}" sportEnd="{{sportEnd}}" id="judge-angle" ></judge-angle> -->
     <cover-view wx:if="{{showScoreView&&!sportEnd}}" class="score-view">
         <cover-view class="score-bg"></cover-view>
         <cover-view wx:if="{{limitTime>0}}" class="time-progress" style="width: {{timeProgress}}%"></cover-view>
@@ -11,9 +13,10 @@
         <cover-view wx:if="{{sportStart}}">
             <cover-view class="score-detail">
                 <cover-view class="score-cur">{{num}}</cover-view>
-                <cover-view class="score-unit">个{{costTime}}</cover-view>
+                <cover-view class="score-unit">个</cover-view>
             </cover-view>
-            <cover-view class="score-highest">{{lastTime}}最高记录：{{notMovingTime}}个</cover-view>
+            <!-- <cover-view class="score-highest">最高记录：{{notMovingTime}}个</cover-view> -->
+            <cover-view class="score-highest">用时：{{costTimeStr}}</cover-view> 
         </cover-view>
     </cover-view>
     <cover-view wx:if="{{!sportEnd&&!sportStart}}" class="fetch-box"></cover-view>

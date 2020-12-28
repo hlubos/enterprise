@@ -1,10 +1,14 @@
 import * as tf from '@tensorflow/tfjs-core'
+import * as tfc from '@tensorflow/tfjs-converter';
 import * as posenet from '@tensorflow-models/posenet'
 import { getFrameSliceOptions } from '../utils/util'
 import { drawKeypoints, drawSkeleton } from './util'
 
-const POSENET_URL = 'https://www.gstaticcnapps.cn/tfjs-models/savedmodel/posenet/mobilenet/float/050/model-stride16.json';
+// const POSENET_URL = 'https://www.gstaticcnapps.cn/tfjs-models/savedmodel/posenet/mobilenet/float/050/model-stride16.json';
+const POSENET_URL = 'https://ydcommon.51yund.com/tfjs-models/savedmodel/posenet/mobilenet/float/050/model-stride16.json';
+
 const POSENET_BIN_URL = ''
+const STORAGE_KEY = 'posenet_model';
 
 export class Classifier {
     // 指明前置或后置 front|back
@@ -23,17 +27,17 @@ export class Classifier {
         }
         this.ready = false
     }
-
     load () {
-        return new Promise((resolve, reject) => {
-            posenet
-                .load({
-                    architecture: 'MobileNetV1',
-                    outputStride: 16,
-                    inputResolution: 193,
-                    multiplier: 0.5,
-                    modelUrl: POSENET_URL
-                })
+        return new Promise(async (resolve, reject) => {
+            const localStorageHandler = getApp().globalData.localStorageIO(STORAGE_KEY);
+            try {
+                this.loadModel = await tfc.loadGraphModel(localStorageHandler);
+            } catch (e) {
+                this.loadModel =
+                    await tfc.loadGraphModel(POSENET_URL);
+                this.loadModel.save(localStorageHandler);
+            }
+            posenet.load(this.loadModel)
                 .then(model => {
                     this.poseNet = model
                     this.ready = true

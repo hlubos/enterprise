@@ -13,6 +13,8 @@ Page({
    */
   classifier: null,
   keypointStack: [],
+  audios: ["appear", "tooClose", "start", "sportOver", "comeOn", "5", "4", "3", "2", "1", "keepMoving", "endsoon", "adjustAngle"],
+  audioSrcs: {},
   ctx: null,
   data: {
     cameraBlockHeight: app.globalData.systemInfo.screenHeight - app.globalData.CustomBar,
@@ -28,58 +30,81 @@ Page({
     countDownSrc: "", //  倒数文案
     countDownSrcAry: ["1", "2", "3"], // 倒数文案数组
     show_tip: false, // 身体引导
-    limitTime: 10, // 限制时长
+    limitTime: 0, // 限制时长
     timeProgress: 0, // 进度条
     costTimer: null,  // 耗时计时器
     costTime: 0, // 耗时
+    costTimeStr: '00:00',
     recordTime: 0, // 记录时长
-    lastTime: 0, // 剩余时长
+    lastTime: 60, // 剩余时长
     reStartCountDown: 10, // 结束后倒计时重新开始
     sportStart: false,  // 开始运动
     sportEnd: false, // 运动完成
     angleSuc: false, // 角度判断是否成功
     showScoreView: false, // 顶部成绩黑条
     startTs: 0, // 开始运动的时间戳
+    showDevicePage: false,  // 展示角度判断
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    if (this.data.limitTime > 0) {
+    console.log(`options==`, options)
+    if (options.limit_time > 0) {
+      let limitTime = parseInt(options.limit_time)
       this.setData({
-        lastTime: this.data.limitTime
+        lastTime: limitTime,
+        limitTime: limitTime
       })
     }
 
-    let videoId = options.videoId || 45
-    let videoName = options.videoName || "跳绳"
+    let videoId = options.video_id || 45
+    let videoName = options.video_name || "跳绳"
+    var windowWidth = wx.getSystemInfoSync().windowWidth >= 768
     this.setData({
       videoId: videoId,
-      videoName: videoName
+      videoName: videoName,
+      angleRange: windowWidth ? "70-80" : "65-75",
+      showDevicePage: false
     })
+    this.clearTimerAll()
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
+    wx.setKeepScreenOn({
+      keepScreenOn: true
+    })
     setTimeout(() => {
       this.ctx = wx.createCanvasContext(CANVAS_ID)
       this.initClassifier()
 
       const context = wx.createCameraContext(this)
+
+      this.audioCtx = wx.createInnerAudioContext()
+      this.appearCtx = wx.createInnerAudioContext()
+      this.downloadAudios()
+      this.backgroundVideo = this.selectComponent("#backgroundVideo")
+
       const listener = context.onCameraFrame((frame) => {
         this.executeClassify(frame)
       })
       listener.start()
-    }, 500)
+    }, 1000)
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () { },
+  onShow: function () {
+    // this.angleSuccess()
+    this.setData({
+      showDevicePage: !0
+    });
+  },
 
   /**
    * 生命周期函数--监听页面隐藏
@@ -90,9 +115,13 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
+    wx.setKeepScreenOn({
+      keepScreenOn: false
+    })
     if (this.classifier && this.classifier.isReady()) {
       this.classifier.dispose()
     }
+    this.clearTimerAll()
   },
 
   /**
@@ -123,7 +152,7 @@ Page({
   initClassifier () {
     this.showLoadingToast()
     var i = app.globalData.systemInfo
-    this.classifier = new Classifier('back', {
+    this.classifier = new Classifier('front', {
       width: app.globalData.systemInfo.screenWidth,
       height: this.data.cameraBlockHeight
     })
@@ -204,7 +233,7 @@ Page({
 
   // 计算分数
   calculateScore: function (pose) {
-    this.classifier.drawSinglePose(this.ctx, pose)
+    // this.classifier.drawSinglePose(this.ctx, pose)
     var a = this, item = pose
     if (Array.isArray(pose)) {
       item = pose[0]
@@ -216,7 +245,6 @@ Page({
     this.saveFrameToArray(m);
     var g = [5, 11, 15, 6, 12, 16];
     if (a.satisfyConf(m, .2, g) && a.isInBox(g)) {
-      console.log(`a.data.sportStart===`, `${a.data.sportStart}`, a.countDownTimer)
       if (a.data.sportStart || a.countDownTimer) {
         if (!a.data.countDown) {
           a.isOutScreen();
@@ -229,7 +257,7 @@ Page({
           c > A && d > 0 ? (C = 0, u = 0) : l > A && h > 0 && u < 3 ? C = 1 : (C = -1, u++),
             0 == r && 1 == C && (a.setData({
               num: a.data.num + 1
-            }), console.error(`a.data.num===`, a.data.num, a.data.costTime)), C > -1 && (r = C), y, n = T, o = M;
+            }), console.log(`a.data.num===`, a.data.num, a.data.costTime), a.data.num && a.playMusic("appear")), C > -1 && (r = C), y, n = T, o = M;
         }
       } else {
         if (i.judgeIsStand(m)) {
@@ -282,9 +310,11 @@ Page({
       startTs: parseInt(Date.parse(new Date()) / 1000)
     })
     that.costTimer = setInterval(function () {
+      let timeProgress = that.data.limitTime ? that.data.costTime * (100 / that.data.limitTime) : 0
       that.setData({
         costTime: that.data.costTime + 1,
-        timeProgress: that.data.costTime * (that.data.limitTime / 100)
+        costTimeStr: utils.formatDuration(that.data.costTime + 1, 'mm:ss'),
+        timeProgress: timeProgress
       })
     }, 1000);
   },
@@ -293,7 +323,7 @@ Page({
     clearInterval(this[timer])
     this[timer] = null
   },
-  clearTimer: function () {
+  clearTimerAll: function () {
     let timers = ['costTimer', 'timerDown', 'reStartTimer',
       'startTimer', 'endTimer', 'notMovingTimer', 'countDownTimer']
     for (const item of timers) {
@@ -340,7 +370,7 @@ Page({
     var t = this, i = this
     var e = arguments.length > 0 && void 0 !== arguments[0] && arguments[0]
     if (this.data.sportEnd) {
-      this.clearTimer();
+      this.clearTimerAll();
     } else {
       var a = [5, 6], n = i.isMoving(a);
       console.log(`isMoving==`, n)
@@ -370,7 +400,7 @@ Page({
                   }
                   e--
                 } else {
-                  t.playMusic("timeOut")
+                  t.playMusic("sportOver")
                   // clearInterval(i.endTimer)
                   i.clearIntervalItem('endTimer')
                   i.setData({
@@ -408,7 +438,7 @@ Page({
           lastTime: t.data.lastTime - 1
         })
         if (0 == t.data.lastTime) {
-          t.playMusic("timeOut", !0)
+          t.playMusic("sportOver", !0)
         } else {
           if (t.data.lastTime <= 5) {
             t.playMusic(t.data.lastTime, !0)
@@ -420,17 +450,33 @@ Page({
     }, 1000);
   },
   playMusic: function (t) {
-    return
     if ("appear" === t) {
-      var e = wx.createInnerAudioContext();
-      e.src = this.audioSrcs[t + ""], e.play();
-    } else this.audioCtx.src = this.audioSrcs[t + ""], this.audioCtx.play();
+      this.appearCtx.src = this.audioSrcs[t + ""]
+      this.appearCtx.play();
+      return
+    }
+    this.audioCtx.src = this.audioSrcs[t + ""]
+    this.audioCtx.play();
+  },
+  downloadAudios: function () {
+    var t = this;
+    t.audios.forEach(function (e) {
+      let i = e
+      let ft = '.mp3'
+      if (['start'].indexOf(i) > -1) {
+        ft = '.aac'
+      }
+      let url = "https://ydcommon.51yund.com/AI/YD/audio/" + i + ft
+      wx.downloadFile({
+        url: url,
+        success: function (i) {
+          200 === i.statusCode && (t.audioSrcs[e] = i.tempFilePath);
+        }
+      });
+    });
   },
   uploadScore: function (t) {
     console.error(`====uploadScore====`, t)
-    this.setData({
-      costTimeStr: utils.formatDuration(this.data.costTime, 'mm:ss')
-    })
     if (this.doUpload || this.data.num <= 0) {
       return
     }
@@ -441,7 +487,7 @@ Page({
     this.ctx.clearRect(0, 0, this.videoWidth, this.videoHeight)
     this.ctx.draw()
     e.timerDown = null
-    e.clearTimer()
+    e.clearTimerAll()
 
     if (e.data.num > 1) {
       this.setData({
@@ -453,9 +499,7 @@ Page({
       video_name: this.data.videoName,
       start_ts: this.data.startTs,
       cost_time: this.data.costTime,
-      score: this.data.num,
-      action_times: 1,
-      status: 1
+      action_times: this.data.num,
     }
     api.reportUserAISportData(param).then(res => {
       e.doUpload = false
@@ -505,7 +549,7 @@ Page({
     wx.navigateBack();
   },
   reStart: function () {
-    this.clearTimer()
+    this.clearTimerAll()
     this.timerDown = null
     this.timer = null
     this.setData({
@@ -527,8 +571,17 @@ Page({
       stopGame: !1,
       showDevicePage: !1,
       costTime: 0,
-      lastTime: this.data.limitTime,
+      lastTime: this.data.limitTime > 0 ? this.data.limitTime : 60,
       tipsText: '请站在识别框内',
+      timeProgress: 0,
+      costTime: 0,
+      costTimeStr: '00:00',
     });
+  },
+  angleSuccess: function (t) {
+    this.clearIntervalItem('timerDown')
+    this.backgroundVideo && this.backgroundVideo.play()
+    this.playMusic("keepMoving")
+    this.setTimeDown();
   },
 })

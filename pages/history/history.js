@@ -16,9 +16,10 @@ const imgMap = {
 Page({
 
   data: {
-    lastRecordId: 0, 
+    lastRecordId: 0,
     recordList: [], // 历史列表
     hasMore: true, // 是否还有更多
+    isLoading: false,
   },
 
   onLoad: function (options) {
@@ -31,15 +32,17 @@ Page({
 
   // 获取历史记录
   getHistory () {
-    if (!this.data.hasMore) {
+    if (!this.data.hasMore || this.data.isLoading) {
       return
     }
+    this.data.isLoading = true
     api.getUserHistory({
       last_record_id: this.data.lastRecordId
     }).then((res) => {
       if (res.code === 0) {
         let list = this.data.recordList.concat(res.infos)
         let recordList = this.dealList(list)
+        this.data.isLoading = false
         this.setData({
           recordList: recordList,
           hasMore: res.has_more,
@@ -55,22 +58,33 @@ Page({
     let res = []
     for (let i = 0; i < list.length; i++) {
       let item = this.dealItem(list[i])
-      let date = this.getDate(item.start_ts)
+      let isGroup = !item.start_ts || false
+      let start_ts = item.start_ts ? item.start_ts : item.list[0].start_ts
+      let date = this.getDate(start_ts)
 
       if (map.has(date)) {
         let index = map.get(date)
         res[index].calories += item.calories
         res[index].cost_time += item.cost_time
-        res[index].list.push(item)
-      } else {
-        map.set(date, res.length)
-        res[res.length] = {
-          date: this.formateDate(item.start_ts),
-          calories: item.calories,
-          cost_time: item.cost_time,
-          list: [item]
+        if (!isGroup) {
+          res[index].list.push(item)
+          continue
         }
+        res[index].list.unshift(...item.list)
+        continue
       }
+      map.set(date, res.length)
+      if (isGroup) {
+        res[res.length] = item
+        continue
+      }
+      res[res.length] = {
+        date: this.formateDate(item.start_ts),
+        calories: item.calories,
+        cost_time: item.cost_time,
+        list: [item]
+      }
+
     }
     return res
   },
@@ -92,7 +106,7 @@ Page({
   },
 
   formateDate (ts) {
-    let date = new Date(ts * 1000) 
+    let date = new Date(ts * 1000)
     let month = date.getMonth() + 1
     let day = date.getDate()
     let weekDay = date.getDay()
@@ -124,7 +138,7 @@ Page({
   },
 
   // 返回时间20201226
-  getDate (ts) {  
+  getDate (ts) {
     let date = new Date(ts * 1000)
     let year = date.getFullYear()
     let month = date.getMonth() + 1

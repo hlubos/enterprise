@@ -115,7 +115,7 @@
     left: 50%;
     font-weight: 700;
     transform: translate(-50%, -50%);
-    top: 50%;
+    top: 40%;
     padding: 5%;
     color: #000;
 }

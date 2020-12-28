@@ -3,7 +3,7 @@
   <record-box 
     class="day-list"
     wx:for="{{recordList}}" 
-    wx:for-index="index" 
+    wx:key="index" 
     wx:for-item="element"
     info="{{element}}"></record-box>
 </view>

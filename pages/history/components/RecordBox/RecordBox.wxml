@@ -6,6 +6,7 @@
   <view class="list">
     <record-item 
       wx:for="{{info.list}}" 
+      wx:key="index"
       info="{{item}}"
       isLast="{{index == info.list.length - 1}}"></record-item>
   </view>

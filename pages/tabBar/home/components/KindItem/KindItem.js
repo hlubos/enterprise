@@ -23,10 +23,16 @@ Component({
   methods: {
     goSport () {
       let user_id = wx.getStorageSync('user_id')
-      console.log(111)
+      let info = this.data.info
+      if (info.video_id <= 0) {
+        return wx.showToast({
+          title: '敬请期待',
+          icon: 'none'
+        })
+      }
       if (user_id) {
         wx.navigateTo({
-          url: `${this.data.info.path}`
+          url: `${info.path}?video_id=${info.video_id}&video_name=${info.name}`
         })
       }
     }
