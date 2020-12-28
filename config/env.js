@@ -2,7 +2,7 @@
 let logFlag = {
   dev: false,    			// 开发和测试环境是否上报log
   from: false,   			// 是否上传页面来源
-  packageName: 'com.sport.web.wx_test'
+  packageName: 'com.yuedong.mp.ydenterprise'
 };
 let basePath = 'https://api.51yund.com'; 	// api请求地址
 let jumpPath = 'https://d.51yund.com';		// 跳转登录地址
