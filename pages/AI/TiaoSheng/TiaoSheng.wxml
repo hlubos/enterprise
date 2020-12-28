@@ -1,6 +1,41 @@
-<cu-custom>
-    <view style="color: red;" slot="content">个数：{{num}}</view>
-</cu-custom>
-<camera device-position="back" flash="off" binderror="error" frame-size="medium" class="camera" style="height:{{cameraBlockHeight}}px;">
-    <canvas id="canvas" canvas-id="canvas" class="canvas"></canvas>
-</camera>
+<view>
+    <camera device-position="back" flash="off" binderror="error" frame-size="medium" class="camera" style="height:{{cameraBlockHeight}}px;">
+        <canvas id="canvas" canvas-id="canvas" class="canvas"></canvas>
+    </camera>
+    <cover-view wx:if="{{showScoreView&&!sportEnd}}" class="score-view">
+        <cover-view class="score-bg"></cover-view>
+        <cover-view wx:if="{{limitTime>0}}" class="time-progress" style="width: {{timeProgress}}%"></cover-view>
+        <cover-view wx:if="{{!sportEnd&&!sportStart}}" class="tips-text-center">
+            {{tipsText}}
+        </cover-view>
+        <cover-view wx:if="{{sportStart}}">
+            <cover-view class="score-detail">
+                <cover-view class="score-cur">{{num}}</cover-view>
+                <cover-view class="score-unit">个{{costTime}}</cover-view>
+            </cover-view>
+            <cover-view class="score-highest">{{lastTime}}最高记录：{{notMovingTime}}个</cover-view>
+        </cover-view>
+    </cover-view>
+    <cover-view wx:if="{{!sportEnd&&!sportStart}}" class="fetch-box"></cover-view>
+    <start-countdown wx:if="{{countDown}}" startCountdown="{{countDownSrc}}"></start-countdown>
+    <!-- <cover-image wx:if="{{show_tip&&!sportEnd}}" class="start-tips" src="https://ydcommon.51yund.com/AI/ready_tips_positive.png"></cover-image> -->
+    <cover-view class="sport-end-dailog" wx:if="{{sportEnd}}">
+        <cover-view class="sport-end-container">
+            <cover-view class="sport-end-title">恭喜你完成本次跳绳</cover-view>
+            <cover-view class="sport-end-socre">
+                <cover-view class="sport-end-item">
+                    <cover-view class="sport-end-item-title">{{costTimeStr}}</cover-view>
+                    <cover-view class="sport-end-item-sub">分:秒</cover-view>
+                </cover-view>
+                <cover-view class="sport-end-item">
+                    <cover-view class="sport-end-item-title">{{num}}</cover-view>
+                    <cover-view class="sport-end-item-sub">个</cover-view>
+                </cover-view>
+            </cover-view>
+            <cover-view class="sport-end-btn-info">
+                <cover-view bindtap="goBack" class="sport-end-btn-item">结束运动</cover-view>
+                <cover-view bindtap="reStart" class="sport-end-btn-item active">重新开始</cover-view>
+            </cover-view>
+        </cover-view>
+    </cover-view>
+</view>

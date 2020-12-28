@@ -1,10 +1,12 @@
 <!--pages/tabBar/home/components/KindItem/KindItem.wxml-->
-<view class="kind-item" bindtap="goSport">
-  <view class="title">
-    <text>{{info.name}}</text>
+<login-btn bindsuccess="goSport">
+  <view class="kind-item" bindtap="goSport">
+    <view class="title">
+      <text>{{info.name}}</text>
+    </view>
+    <view class="cnt">
+      <text>{{info.cnt}}人参与</text>
+    </view>
+    <image class="kind-img" src="{{info.pic_url}}"></image>
   </view>
-  <view class="cnt">
-    <text>{{info.cnt}}人参与</text>
-  </view>
-  <image class="kind-img" src="{{info.pic_url}}"></image>
-</view>
+</login-btn>
