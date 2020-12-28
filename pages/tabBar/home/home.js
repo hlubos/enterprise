@@ -15,6 +15,23 @@ Page({
         cnt: 100
       },
       {
+        kind_id: -1,
+        name: '敬请期待',
+        path: '',
+        pic_url: 'https://ssl-pubpic.51yund.com/1040424039.png',
+        video_id: -1,
+        cnt: 0
+      },
+    ],
+    kindListMode: [{
+        kind_id: 19,
+        name: '跳绳',
+        path: '/pages/AI/TiaoSheng/TiaoSheng',
+        pic_url: 'https://17yd-common.51yund.com/ai_coach/icon_index_tiaoshen%403x.png',
+        video_id:45,
+        cnt: 100
+      },
+      {
         kind_id: 19,
         name: '平板支撑',
         path: '/pages/AI/ShuangBiZhiCheng/ShuangBiZhiCheng',

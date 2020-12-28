@@ -24,6 +24,7 @@ Component({
     goSport () {
       let user_id = wx.getStorageSync('user_id')
       let info = this.data.info
+      if (info.video_id <= 0) return
       if (user_id) {
         wx.navigateTo({
           url: `${info.path}?video_id=${info.video_id}&video_name=${info.name}`
