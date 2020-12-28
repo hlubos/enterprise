@@ -13,7 +13,7 @@ Page({
    */
   classifier: null,
   keypointStack: [],
-  audios: ["appear", "tooClose", "start", "timeOut", "comeOn", "5", "4", "3", "2", "1", "keepMoving", "endsoon", "adjustAngle"],
+  audios: ["appear", "tooClose", "start", "sportOver", "comeOn", "5", "4", "3", "2", "1", "keepMoving", "endsoon", "adjustAngle"],
   audioSrcs: {},
   ctx: null,
   data: {
@@ -93,7 +93,7 @@ Page({
         this.executeClassify(frame)
       })
       listener.start()
-    }, 500)
+    }, 1000)
   },
 
   /**
@@ -152,7 +152,7 @@ Page({
   initClassifier () {
     this.showLoadingToast()
     var i = app.globalData.systemInfo
-    this.classifier = new Classifier('back', {
+    this.classifier = new Classifier('front', {
       width: app.globalData.systemInfo.screenWidth,
       height: this.data.cameraBlockHeight
     })
@@ -257,7 +257,7 @@ Page({
           c > A && d > 0 ? (C = 0, u = 0) : l > A && h > 0 && u < 3 ? C = 1 : (C = -1, u++),
             0 == r && 1 == C && (a.setData({
               num: a.data.num + 1
-            }), console.error(`a.data.num===`, a.data.num, a.data.costTime), a.data.num && a.playMusic("appear")), C > -1 && (r = C), y, n = T, o = M;
+            }), console.log(`a.data.num===`, a.data.num, a.data.costTime), a.data.num && a.playMusic("appear")), C > -1 && (r = C), y, n = T, o = M;
         }
       } else {
         if (i.judgeIsStand(m)) {
@@ -400,7 +400,7 @@ Page({
                   }
                   e--
                 } else {
-                  t.playMusic("timeOut")
+                  t.playMusic("sportOver")
                   // clearInterval(i.endTimer)
                   i.clearIntervalItem('endTimer')
                   i.setData({
@@ -438,7 +438,7 @@ Page({
           lastTime: t.data.lastTime - 1
         })
         if (0 == t.data.lastTime) {
-          t.playMusic("timeOut", !0)
+          t.playMusic("sportOver", !0)
         } else {
           if (t.data.lastTime <= 5) {
             t.playMusic(t.data.lastTime, !0)
@@ -461,9 +461,12 @@ Page({
   downloadAudios: function () {
     var t = this;
     t.audios.forEach(function (e) {
-      var i = "appear" === e ? "Sport_Ball_appear" : e;
-      let url = "https://go-ran-pic.lovedabai.com/sound/" + i + ".mp3"
-      url = "appear" != e ? url : 'https://ydcommon.51yund.com/AI/audio/appear.mp3'
+      let i = e
+      let ft = '.mp3'
+      if (['start'].indexOf(i) > -1) {
+        ft = '.aac'
+      }
+      let url = "https://ydcommon.51yund.com/AI/YD/audio/" + i + ft
       wx.downloadFile({
         url: url,
         success: function (i) {
