@@ -62,7 +62,7 @@ Component({
                           }); else {
                               clearInterval(o.countDownInterVal);
                               var e = "";
-                              e = "back" == o.properties.type ? "back" : [ "ChuQiu", "ShuZiWangZhe" ].includes(o.properties.code) ? "/pages/games/" + o.properties.code + "/game/game" : "/pages/sports/".concat(o.properties.code, "/").concat(o.properties.code, "?angleRange=").concat(o.properties.angleRange, "&code=").concat(o.properties.code), 
+                              // e = "back" == o.properties.type ? "back" : [ "ChuQiu", "ShuZiWangZhe" ].includes(o.properties.code) ? "/pages/games/" + o.properties.code + "/game/game" : "/pages/sports/".concat(o.properties.code, "/").concat(o.properties.code, "?angleRange=").concat(o.properties.angleRange, "&code=").concat(o.properties.code), 
                               o.triggerEvent("angleSuccess", e);
                           }
                       }, 1e3)) : 0 == e.trueTime && (e.setData({

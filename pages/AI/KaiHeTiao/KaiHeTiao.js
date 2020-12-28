@@ -31,13 +31,13 @@ Page({
       countDownSrcAry: [ "1", "2", "3" ],
       show_in_box: !1,
       stopGame: !1,
-      showDevicePage: !1,
+      showDevicePage: !0,
       canAdd: !0
   },
   onLoad: function(t) {
       var i = this;
       this.setData({
-          angleRange: t.angleRange,
+          angleRange: "90-110",
           code: t.code
       });
       // try {
@@ -170,7 +170,7 @@ Page({
       });
       var a = 3, e = function() {
           a > 0 ? (t.playMusic(a), a--) : (t.playMusic("start"), clearInterval(i.startTimer), 
-          i.backgroundVi  deo && i.backgroundVideo.play());
+          i.backgroundVideo && i.backgroundVideo.play());
       };
       e(), clearInterval(i.startTimer), i.startTimer = setInterval(e, 1e3), i.timer = setInterval(function() {
           i.data.countDown > 0 ? i.setData({
