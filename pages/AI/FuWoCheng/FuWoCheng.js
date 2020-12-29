@@ -324,7 +324,7 @@ Page({
                         // }) : (clearInterval(e.reStartTimer), e.reStart());
                     }, 1e3);
                 });
-                e.classifier.drawSinglePose(e.ctx, t)
+                // e.classifier.drawSinglePose(e.ctx, t)
                 if (!e.data.gameEnd) {
                     var o = t[0].keypoints;
                     e.saveFrameToArray(o);
