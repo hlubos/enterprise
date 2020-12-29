@@ -1,7 +1,7 @@
 <view class="page" style="height: 100vh">
     <view class="page__bd">
         <background-video id="backgroundVideo"></background-video>
-        <camera binderror="error" class="camera" devicePosition="back" flash="off" frameSize="medium">
+        <camera binderror="error" class="camera" devicePosition="front" flash="off" frameSize="medium">
             <canvas canvasId="canvas" class="canvas" id="canvas"></canvas>
         </camera>
         <cover-view class="stage">
