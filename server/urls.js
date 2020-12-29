@@ -13,4 +13,5 @@ export default {
   pushWxRemind: '/enterprise/push_wx_remind', // 提醒员工的接口
   getUserHistory: '/yd_ai_coach/get_user_history_data', // 获取历史记录
   reportUserAISportData: '/yd_ai_coach/report_user_sport_data',  // 上报AI训练运动数据
+  getAISportActionList: '/yd_ai_coach/action_list',  // AI动作数据列表
 }

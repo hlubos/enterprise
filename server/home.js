@@ -9,4 +9,9 @@ export default class Home {
     static reportUserAISportData (params) {
         return $http.post(url.reportUserAISportData, params);
     }
+
+    static getAISportActionList (params) {
+        return $http.post(url.getAISportActionList, params);
+    }
+
 }
