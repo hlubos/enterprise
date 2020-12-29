@@ -40,6 +40,7 @@ Page({
         canAdd: !0,
         startTs: 0, // 开始运动的时间戳
         timeProgress: 0,
+        costTimeStr: '00:00',
     },
     onLoad: function (t) {
         var i = this;
@@ -114,6 +115,7 @@ Page({
                 showDevicePage: !1,
                 startTs: 0, // 开始运动的时间戳
                 timeProgress: 0,
+                costTimeStr: '00:00',
             });
     },
     setTimeDown: function () {
@@ -260,8 +262,7 @@ Page({
         if (t.data.num <= 1) {
             t.setData({
                 rate: 0,
-                integral: 0,
-                costTimeStr: '00:00',
+                integral: 0
             })
             return
         }
@@ -277,7 +278,7 @@ Page({
             cost_time: costTime,
             action_times: this.data.num,
         }
-        api.reportUserAISportData(param).then(i => {
+        t.data.num >= 1 && api.reportUserAISportData(param).then(i => {
             // do
         })
     },
