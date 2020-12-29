@@ -7,7 +7,11 @@
     "pages/tabBar/work/second/second",
     "pages/dialog/dialog",
     "pages/history/history",
-    "pages/AI/TiaoSheng/TiaoSheng"
+    "pages/AI/TiaoSheng/TiaoSheng",
+    "pages/AI/FuWoCheng/FuWoCheng",
+    "pages/AI/ShenDun/ShenDun",
+    "pages/AI/YangWoQiZuo/YangWoQiZuo",
+    "pages/AI/KaiHeTiao/KaiHeTiao"
   ],
   "window": {
     "backgroundTextStyle": "light",

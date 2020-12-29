@@ -9,7 +9,8 @@
   position: relative;
 }
 
-.canvas,.page__bd {
+.canvas,
+.page__bd {
   width: 100%;
   height: 100%;
 }
@@ -34,7 +35,8 @@
   z-index: 10000;
 }
 
-.stage,.stage_hd {
+.stage,
+.stage_hd {
   position: absolute;
   left: 0;
   width: 100%;
@@ -46,7 +48,8 @@
   z-index: 5;
 }
 
-.stage_hd,.stage_hd_left {
+.stage_hd,
+.stage_hd_left {
   display: flex;
 }
 
@@ -89,7 +92,9 @@
   left: 50%;
 }
 
-.bot_mid,.left_mid,.right_mid {
+.bot_mid,
+.left_mid,
+.right_mid {
   position: absolute;
   bottom: 10%;
   transform: translateX(-50%) translateY(50%);
@@ -103,7 +108,7 @@
 }
 
 .green {
-  background: #3cf42f!important;
+  background: #3cf42f !important;
 }
 
 .red {
@@ -129,7 +134,8 @@
   font-weight: 700;
 }
 
-.countdown,.fetch-box {
+.countdown,
+.fetch-box {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
@@ -152,11 +158,12 @@
   height: 15%;
 }
 
-.img_back,.img_countdown {
+.img_back,
+.img_countdown {
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%, -50%);
 }
 
 .img_countdown {
@@ -170,10 +177,11 @@
   top: 50%;
 }
 
-.img_in_box,.img_start {
+.img_in_box,
+.img_start {
   position: absolute;
   left: 50%;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%, -50%);
 }
 
 .img_in_box {
@@ -200,7 +208,7 @@
   background: #fff;
   padding-top: 100rpx;
   border-radius: 20rpx;
-  overflow: hidden!important;
+  overflow: hidden !important;
 }
 
 .gameEnd_box-bd {
@@ -227,7 +235,7 @@
   position: absolute;
   left: 50%;
   font-weight: 700;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%, -50%);
   top: 50%;
   padding: 5%;
 }
@@ -241,7 +249,8 @@
   margin-bottom: 30rpx;
 }
 
-.gameEnd_box-ft,.gameEnd_box-hd {
+.gameEnd_box-ft,
+.gameEnd_box-hd {
   display: flex;
   align-items: center;
 }
@@ -280,7 +289,7 @@
   position: absolute;
   left: 50%;
   top: 55%;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%, -50%);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -298,6 +307,6 @@
   position: absolute;
   left: 44%;
   top: 74%;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%, -50%);
   width: 86%;
 }

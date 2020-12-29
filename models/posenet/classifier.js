@@ -53,7 +53,7 @@ export class Classifier {
         return this.ready
     }
 
-    detectSinglePose (frame) {
+    detectSinglePose (frame, type) {
         return new Promise((resolve, reject) => {
             const video = tf.tidy(() => {
                 const temp = tf.tensor(new Uint8Array(frame.data), [frame.height, frame.width, 4])
@@ -63,23 +63,21 @@ export class Classifier {
 
             // since images are being fed from a webcam
             const flipHorizontal = false
-
-            // this.poseNet.estimateSinglePose(video, { flipHorizontal }).then(pose => {
-            //     video.dispose()
-            //     console.log(`estimateSinglePose == `, pose)
-            //     resolve(pose)
-            // }).catch(err => {
-            //     reject(err)
-            // })
-
-            this.poseNet.estimateMultiplePoses(video, { flipHorizontal }).then(pose => {
-                video.dispose()
-                // console.log(`estimateMultiplePoses == `, pose)
-                resolve(pose)
-            }).catch(err => {
-                reject(err)
-            })
-
+            if (type == 'multiple') {
+                this.poseNet.estimateMultiplePoses(video, { flipHorizontal }).then(pose => {
+                    video.dispose()
+                    resolve(pose)
+                }).catch(err => {
+                    reject(err)
+                })
+            } else {
+                this.poseNet.estimateSinglePose(video, { flipHorizontal }).then(pose => {
+                    video.dispose()
+                    resolve(pose)
+                }).catch(err => {
+                    reject(err)
+                })
+            }
         })
     }
 

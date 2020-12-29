@@ -15,6 +15,38 @@ Page({
       cnt: 100
     },
     {
+      kind_id: 15,
+      name: '俯卧撑',
+      path: '/pages/AI/FuWoCheng/FuWoCheng',
+      pic_url: 'https://ssl-pubpic.51yund.com/1010293806.jpg',
+      video_id: 33,
+      cnt: 100
+    },
+    {
+      kind_id: 22,
+      name: '深蹲',
+      path: '/pages/AI/ShenDun/ShenDun',
+      pic_url: 'https://ssl-pubpic.51yund.com/1010293895.jpg',
+      video_id: 1,
+      cnt: 100
+    },
+    {
+      kind_id: 17,
+      name: '仰卧起坐',
+      path: '/pages/AI/YangWoQiZuo/YangWoQiZuo',
+      pic_url: 'https://17yd-common.51yund.com/ai_coach/icon_index_yangwoqizuo%403x.png',
+      video_id: 40,
+      cnt: 100
+    },
+    {
+      kind_id: 16,
+      name: '开合跳',
+      path: '/pages/AI/KaiHeTiao/KaiHeTiao',
+      pic_url: 'https://ssl-pubpic.51yund.com/1010293849.jpg',
+      video_id: 2,
+      cnt: 100
+    },
+    {
       kind_id: -1,
       name: '敬请期待',
       path: '',

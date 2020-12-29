@@ -2,9 +2,8 @@
   "navigationBarTitleText": "深蹲",
   "usingComponents": {
       "start-countdown": "/components/startCountdown/startCountdown",
-      "game-column": "/components/gameColumn/gameColumn",
-      "skin": "/components/sportSkin/sportSkin",
       "background-video": "/components/backgroundVideo/backgroundVideo",
-      "inner-device-angle": "/components/innerDeviceAngleCheck/innerDeviceAngleCheck"
+      "sport-end-score-dailog": "/components/SportEndScoreDailog/SportEndScoreDailog",
+      "sport-score-view": "/components/SportScoreView/SportScoreView"
   }
 }
