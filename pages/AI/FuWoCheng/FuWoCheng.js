@@ -312,7 +312,7 @@ Page({
         this.classifier && this.classifier.isReady() && !this.data.predicting && this.setData({
             predicting: !0
         }, function () {
-            i.classifier.detectSinglePose(t).then(function (t) {
+            i.classifier.detectSinglePose(t, "multiple").then(function (t) {
                 if (e.data.time <= 0) return e.uploadScore(), void e.setData({
                     gameEnd: !0,
                     shoulder_elbow_mid_line: null

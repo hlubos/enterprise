@@ -1,4 +1,8 @@
 var t = require("../../../models/posenet/classifier.js"), a = require("../utils");
+
+import utils from '../../../common/utils'
+import api from '../../../server/home'
+
 Page({
     classifier: null,
     ctx: null,
@@ -14,6 +18,7 @@ Page({
         gameEnd: !1,
         curPose: "",
         num: 0,
+        limitTime: 60,
         time: 60,
         doClose: !0,
         bot_mid: !1,
@@ -30,14 +35,21 @@ Page({
         countDownSrcAry: ["1", "2", "3"],
         show_in_box: !1,
         stopGame: !1,
-        showDevicePage: !1
+        showDevicePage: !1,
+        canAdd: !0,
+        startTs: 0, // 开始运动的时间戳
+        timeProgress: 0,
     },
     onLoad: function (t) {
         var e = this;
+        t.angleRange = "70-85"
         this.setData({
             angleRange: t.angleRange,
-            code: t.code
+            code: 'YangWoQiZuo',
+            videoId: t.video_id || "40",
+            videoName: t.video_name || "仰卧起坐",
         });
+
         try {
             this.setData({
                 "userInfo.skinCode": getApp().globalData.userInfo.skinCode
@@ -68,11 +80,16 @@ Page({
             this.appearCtx.play()) : (this.audioCtx.src = this.audioSrcs[t + ""], this.audioCtx.play());
     },
     downloadAudios: function () {
-        var t = this;
+        let t = this;
         t.audios.forEach(function (e) {
-            var i = "appear" === e ? "Sport_Ball_appear" : e;
+            let i = e
+            let ft = '.mp3'
+            if (['start'].indexOf(i) > -1) {
+                ft = '.aac'
+            }
+            let url = "https://ydcommon.51yund.com/AI/YD/audio/" + i + ft
             wx.downloadFile({
-                url: "https://go-ran-pic.lovedabai.com/sound/" + i + ".mp3",
+                url: url,
                 success: function (i) {
                     200 === i.statusCode && (t.audioSrcs[e] = i.tempFilePath);
                 }
@@ -112,7 +129,10 @@ Page({
                 show_tip: !0,
                 show_in_box: !1,
                 stopGame: !1,
-                showDevicePage: !1
+                showDevicePage: !1,
+                startTs: 0, // 开始运动的时间戳
+                timeProgress: 0,
+                costTimeStr: '00:00',
             });
     },
     goBack: function () {
@@ -148,12 +168,18 @@ Page({
                 showDevicePage: !0
             }), e.setTimeDown());
         }, 1e3);
+        t.setData({
+            startTs: parseInt(Date.parse(new Date()) / 1000)
+        })
     },
     setTimeDown: function () {
         var t = this;
         t.timerDown = setInterval(function () {
+            let costTime = t.data.limitTime - t.data.time + 1
             t.data.time > 0 ? (21 === t.data.time && t.playMusic("comeOn"), t.setData({
-                time: t.data.time - 1
+                time: t.data.time - 1,
+                costTimeStr: utils.formatDuration(costTime, 'mm:ss'),
+                timeProgress: t.data.limitTime ? costTime * (100 / t.data.limitTime) : 0
             }), 0 == t.data.time ? t.playMusic("timeOut", !0) : t.data.time <= 5 && t.playMusic(t.data.time, !0)) : clearInterval(t.timerDown);
         }, 1e3);
     },
@@ -246,28 +272,34 @@ Page({
         t.reStartTimer = setInterval(function () {
             t.data.reStartCountDown > 1 ? t.setData({
                 reStartCountDown: t.data.reStartCountDown - 1
-            }) : (clearInterval(t.reStartTimer), t.reStart());
+            }) : (clearInterval(t.reStartTimer));
+            // }) : (clearInterval(t.reStartTimer), t.reStart());
         }, 1e3);
     },
     uploadScore: function () {
         var t = this;
         clearInterval(t.timerDown), this.backgroundVideo && this.backgroundVideo.stop(),
             this.ctx.clearRect(0, 0, this.videoWidth, this.videoHeight), this.ctx.draw(), t.timerDown = null,
-            t.clearTimer(), t.data.num <= 1 ? t.setData({
-                rate: 0,
-                integral: 0
-            }) : (this.setData({
-                showDevicePage: !1
-            }), i.gameFinish({
-                code: "YangWoQiZuo",
-                score: this.data.num > 0 ? this.data.num - 1 : 0,
-                time: 60 - this.data.time
-            }, function (e) {
-                e.result && t.setData({
-                    rate: (100 * e.result.exceedRate).toFixed(2),
-                    integral: e.result.integral
-                });
-            }));
+            t.clearTimer()
+        if (t.data.num <= 1) return
+        this.setData({
+            showDevicePage: !1
+        })
+        let costTime = this.data.limitTime - this.data.time
+        this.setData({
+            showDevicePage: !1,
+            costTimeStr: utils.formatDuration(costTime, 'mm:ss'),
+        })
+        let param = {
+            video_id: this.data.videoId,
+            video_name: this.data.videoName,
+            start_ts: this.data.startTs,
+            cost_time: costTime,
+            action_times: this.data.num - 1,
+        }
+        api.reportUserAISportData(param).then(i => {
+            // do
+        })
     },
     isOutScreen: function () {
         var t = this, e = arguments.length > 0 && void 0 !== arguments[0] && arguments[0], i = this;
@@ -310,6 +342,7 @@ Page({
                             }) : (clearInterval(i.reStartTimer), i.reStart());
                         }, 1e3);
                     });
+                e.classifier.drawSinglePose(e.ctx, t)
                 if (!i.data.gameEnd) {
                     var a = t.keypoints;
                     i.saveFrameToArray(a);

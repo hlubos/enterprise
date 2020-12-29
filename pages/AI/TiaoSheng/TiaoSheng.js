@@ -190,7 +190,7 @@ Page({
       this.setData({
         predicting: true
       }, () => {
-        this.classifier.detectSinglePose(frame)
+        this.classifier.detectSinglePose(frame, "multiple")
           .then((pose) => {
             this.setData({
               predicting: false,

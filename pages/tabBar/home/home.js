@@ -31,6 +31,14 @@ Page({
       cnt: 100
     },
     {
+      kind_id: 17,
+      name: '仰卧起坐',
+      path: '/pages/AI/YangWoQiZuo/YangWoQiZuo',
+      pic_url: 'https://17yd-common.51yund.com/ai_coach/icon_index_yangwoqizuo%403x.png',
+      video_id: 40,
+      cnt: 100
+    },
+    {
       kind_id: -1,
       name: '敬请期待',
       path: '',
