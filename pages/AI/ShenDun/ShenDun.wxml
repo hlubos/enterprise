@@ -9,7 +9,7 @@
             <sport-score-view wx:if="{{gameStart}}" limitTime="{{limitTime}}" costTimeStr="{{costTimeStr}}" num="{{num&&num-1}}" timeProgress="{{timeProgress}}"></sport-score-view>
             <cover-view class="hip_knee_mid_line" style="top:{{hip_knee_mid_line}}px !important" wx:if="{{hip_knee_mid_line&&!gameEnd&&!stopGame}}"></cover-view>
             <cover-view class="fetch-box" wx:if="{{!gameEnd&&!gameStart&&!stopGame}}"></cover-view>
-            <cover-image class="img_tips" src="https://ydcommon.51yund.com/AI/ready_tips_positive.png " wx:if="{{show_tip&&!gameEnd&&!stopGame}}"></cover-image>
+            <cover-image class="img_tips" src="https://ydcommon.51yund.com/AI/ready_tips_positive.png" wx:if="{{show_tip&&!gameEnd&&!stopGame}}"></cover-image>
             <start-countdown startCountdown="{{countDownSrc}}" wx:if="{{countDown}}"></start-countdown>
             <!-- <cover-image class="img_start" src="https://go-ran.oss-cn-shanghai.aliyuncs.com/static/countdown-start.png" wx:if="{{countDown===0}}"></cover-image> -->
             <sport-end-score-dailog num="{{num&&num-1}}" costTimeStr="{{costTimeStr}}" bind:goBack="goBack" bind:reStart="reStart" id="sport-end-score-dailog" wx:if="{{gameEnd}}"></sport-end-score-dailog>

@@ -39,6 +39,14 @@ Page({
       cnt: 100
     },
     {
+      kind_id: 16,
+      name: '开合跳',
+      path: '/pages/AI/KaiHeTiao/KaiHeTiao',
+      pic_url: 'https://ssl-pubpic.51yund.com/1010293849.jpg',
+      video_id: 2,
+      cnt: 100
+    },
+    {
       kind_id: -1,
       name: '敬请期待',
       path: '',

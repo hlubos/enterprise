@@ -1,5 +1,8 @@
 var t = require("../../../models/posenet/classifier.js"), a = require("../utils")/*, new i.PageModel()*/;
 
+import utils from '../../../common/utils'
+import api from '../../../server/home'
+
 Page({
     classifier: null,
     ctx: null,
@@ -15,6 +18,7 @@ Page({
         gameEnd: !1,
         curPose: "",
         num: 0,
+        limitTime: 60,
         time: 60,
         doClose: !0,
         bot_mid: !1,
@@ -32,13 +36,19 @@ Page({
         show_in_box: !1,
         stopGame: !1,
         showDevicePage: !0,
-        canAdd: !0
+        canAdd: !0,
+        startTs: 0, // 开始运动的时间戳
+        timeProgress: 0,
     },
     onLoad: function (t) {
         var i = this;
+        const n = wx.getSystemInfoSync().windowWidth >= 768
+        t.angleRange = n ? "70-80" : "65-75"
         this.setData({
-            angleRange: "90-110",
-            code: t.code
+            angleRange: t.angleRange,
+            code: 'ShenDun',
+            videoId: t.video_id || "2",
+            videoName: t.video_name || "开合跳",
         });
         // try {
         //     this.setData({
@@ -68,8 +78,11 @@ Page({
     setTimeDown: function () {
         var t = this;
         t.timerDown = setInterval(function () {
+            let costTime = t.data.limitTime - t.data.time + 1
             t.data.time > 0 ? (21 === t.data.time && t.playMusic("comeOn"), t.setData({
-                time: t.data.time - 1
+                time: t.data.time - 1,
+                costTimeStr: utils.formatDuration(costTime, 'mm:ss'),
+                timeProgress: t.data.limitTime ? costTime * (100 / t.data.limitTime) : 0
             }), 0 == t.data.time ? t.playMusic("timeOut", !0) : t.data.time <= 5 && t.playMusic(t.data.time, !0)) : clearInterval(t.timerDown);
         }, 1e3);
     },
@@ -98,13 +111,18 @@ Page({
             this.appearCtx.play()) : (this.audioCtx.src = this.audioSrcs[t + ""], this.audioCtx.play());
     },
     downloadAudios: function () {
-        var t = this;
-        t.audios.forEach(function (i) {
-            var a = "appear" === i ? "Sport_Ball_appear" : i;
+        let t = this;
+        t.audios.forEach(function (e) {
+            let i = e
+            let ft = '.mp3'
+            if (['start'].indexOf(i) > -1) {
+                ft = '.aac'
+            }
+            let url = "https://ydcommon.51yund.com/AI/YD/audio/" + i + ft
             wx.downloadFile({
-                url: "https://go-ran-pic.lovedabai.com/sound/" + a + ".mp3",
-                success: function (a) {
-                    200 === a.statusCode && (t.audioSrcs[i] = a.tempFilePath);
+                url: url,
+                success: function (i) {
+                    200 === i.statusCode && (t.audioSrcs[e] = i.tempFilePath);
                 }
             });
         });
@@ -142,7 +160,10 @@ Page({
                 show_tip: !0,
                 show_in_box: !1,
                 stopGame: !1,
-                showDevicePage: !1
+                showDevicePage: !1,
+                startTs: 0, // 开始运动的时间戳
+                timeProgress: 0,
+                costTimeStr: '00:00',
             });
     },
     goBack: function () {
@@ -182,6 +203,9 @@ Page({
                 showDevicePage: !0
             }), i.setTimeDown());
         }, 1e3);
+        t.setData({
+            startTs: parseInt(Date.parse(new Date()) / 1000)
+        })
     },
     matchPoint: function (t, i, a) {
         var e = this, n = !0;
@@ -242,28 +266,30 @@ Page({
         t.reStartTimer = setInterval(function () {
             t.data.reStartCountDown > 1 ? t.setData({
                 reStartCountDown: t.data.reStartCountDown - 1
-            }) : (clearInterval(t.reStartTimer), t.reStart());
+            }) : (clearInterval(t.reStartTimer));
+            // }) : (clearInterval(t.reStartTimer), t.reStart());
         }, 1e3);
     },
     uploadScore: function () {
         var t = this;
         clearInterval(t.timerDown), this.backgroundVideo && this.backgroundVideo.stop(),
             this.ctx.clearRect(0, 0, this.videoWidth, this.videoHeight), this.ctx.draw(), t.timerDown = null,
-            this.clearTimer(), t.data.num <= 1 ? t.setData({
-                rate: 0,
-                integral: 0
-            }) : (this.setData({
-                showDevicePage: !1
-            }), e.gameFinish({
-                code: "KaiHeTiao",
-                score: this.data.num > 0 ? this.data.num - 1 : 0,
-                time: 60 - this.data.time
-            }, function (i) {
-                i.result && t.setData({
-                    rate: (100 * i.result.exceedRate).toFixed(2),
-                    integral: i.result.integral
-                });
-            }));
+            this.clearTimer()
+        if (t.data.num <= 1) return
+        this.setData({
+            showDevicePage: !1
+        })
+        let costTime = this.data.limitTime - this.data.time
+        let param = {
+            video_id: this.data.videoId,
+            video_name: this.data.videoName,
+            start_ts: this.data.startTs,
+            cost_time: costTime,
+            action_times: this.data.num - 1,
+        }
+        api.reportUserAISportData(param).then(t => {
+            // do
+        })
     },
     isOutScreen: function () {
         var t = this, i = arguments.length > 0 && void 0 !== arguments[0] && arguments[0], a = this;
@@ -302,9 +328,11 @@ Page({
                     e.reStartTimer = setInterval(function () {
                         e.data.reStartCountDown > 1 ? e.setData({
                             reStartCountDown: e.data.reStartCountDown - 1
-                        }) : (clearInterval(e.reStartTimer), e.reStart());
+                        }) : (clearInterval(e.reStartTimer));
+                        // }) : (clearInterval(e.reStartTimer), e.reStart());
                     }, 1e3);
                 });
+                e.classifier.drawSinglePose(e.ctx, t)
                 if (!e.data.gameEnd) {
                     var n = t[0].keypoints;
                     e.saveFrameToArray(n);
@@ -421,10 +449,5 @@ Page({
     },
     hideLoadingToast: function () {
         wx.hideLoading();
-    },
-    onShareAppMessage: function () {
-        return {
-            title: "企业悦动"
-        };
     }
 });
