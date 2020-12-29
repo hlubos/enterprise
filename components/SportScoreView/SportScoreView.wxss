@@ -1,0 +1,68 @@
+/* components/SportScoreView/SportScoreView.wxss */
+.score-view {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    z-index: 20;
+    color: #ffffff;
+}
+
+.tips-text-center {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    line-height: 80px;
+    font-size: 36px;
+    text-align: center;
+}
+
+.score-bg {
+    position: absolute;
+    height: 80px;
+    top: 0;
+    left: 0;
+    width: 100%;
+    opacity: 0.8;
+    background: #333744;
+}
+
+.time-progress {
+    position: absolute;
+    height: 80px;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: #11D59C;
+}
+
+.score-detail {
+    position: relative;
+    margin-left: 10%;
+    height: 80px;
+    color: #ffffff;
+    display: inline-block;
+}
+
+.score-cur {
+    font-size: 48px;
+    height: 80px;
+    line-height: 80px;
+    display: inline-block;
+}
+
+.score-unit {
+    display: inline-block;
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+.score-highest {
+    position: relative;
+    float: right;
+    font-size: 18px;
+    line-height: 30px;
+    height: 30px;
+    margin: 30px 12px 0;
+}

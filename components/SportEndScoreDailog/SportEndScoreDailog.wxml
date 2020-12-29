@@ -1,0 +1,20 @@
+<!-- components/SportEndScoreDailog/SportEndScoreDailog.wxml -->
+<cover-view class="sport-end-dailog">
+    <cover-view class="sport-end-container">
+        <cover-view class="sport-end-title">恭喜你完成本次锻炼</cover-view>
+        <cover-view class="sport-end-socre">
+            <cover-view class="sport-end-item">
+                <cover-view class="sport-end-item-title">{{costTimeStr}}</cover-view>
+                <cover-view class="sport-end-item-sub">分:秒</cover-view>
+            </cover-view>
+            <cover-view class="sport-end-item">
+                <cover-view class="sport-end-item-title">{{num}}</cover-view>
+                <cover-view class="sport-end-item-sub">个</cover-view>
+            </cover-view>
+        </cover-view>
+        <cover-view class="sport-end-btn-info">
+            <cover-view bindtap="goBack" class="sport-end-btn-item">结束运动</cover-view>
+            <cover-view bindtap="reStart" class="sport-end-btn-item active">重新开始</cover-view>
+        </cover-view>
+    </cover-view>
+</cover-view>

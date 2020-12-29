@@ -1,0 +1,13 @@
+<!-- components/SportScoreView/SportScoreView.wxml -->
+<cover-view class="score-view">
+    <cover-view class="score-bg"></cover-view>
+    <cover-view wx:if="{{limitTime>0}}" class="time-progress" style="width: {{timeProgress}}%"></cover-view>
+    <cover-view>
+        <cover-view class="score-detail">
+            <cover-view class="score-cur">{{num}}</cover-view>
+            <cover-view class="score-unit">个</cover-view>
+        </cover-view>
+        <!-- <cover-view class="score-highest">最高记录：{{notMovingTime}}个</cover-view> -->
+        <cover-view class="score-highest">用时：{{costTimeStr}}</cover-view>
+    </cover-view>
+</cover-view>
