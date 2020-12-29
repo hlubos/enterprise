@@ -276,9 +276,9 @@ Page({
             video_name: this.data.videoName,
             start_ts: this.data.startTs,
             cost_time: costTime,
-            action_times: this.data.num,
+            action_times: this.data.num - 1,
         }
-        t.data.num >= 1 && api.reportUserAISportData(param).then(i => {
+        api.reportUserAISportData(param).then(i => {
             // do
         })
     },

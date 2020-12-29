@@ -1,5 +1,8 @@
 var t = require("../../../models/posenet/classifier.js"), a = require("../utils")/*, new i.PageModel()*/;
 
+import utils from '../../../common/utils'
+import api from '../../../server/home'
+
 Page({
     doUpload: !1,
     classifier: null,
@@ -15,6 +18,7 @@ Page({
         gameStart: !1,
         gameEnd: !1,
         num: 0,
+        limitTime: 60,
         time: 60,
         bot_mid: !1,
         left_mid: !1,
@@ -31,14 +35,21 @@ Page({
         countDownSrcAry: ["1", "2", "3"],
         stopGame: !1,
         showDevicePage: !1,
-        canAdd: !0
+        canAdd: !0,
+        startTs: 0, // 开始运动的时间戳
+        timeProgress: 0,
     },
     onLoad: function (t) {
         var i = this;
+        const n = wx.getSystemInfoSync().windowWidth >= 768
+        t.angleRange = n ? "70-80" : "65-75"
         this.setData({
             angleRange: t.angleRange,
-            code: t.code
+            code: 'ShenDun',
+            videoId: t.video_id || "1",
+            videoName: t.video_name || "深蹲",
         });
+
         try {
             this.setData({
                 "userInfo.skinCode": getApp().globalData.userInfo.skinCode
@@ -54,8 +65,11 @@ Page({
     setTimeDown: function () {
         var t = this;
         t.timerDown = setInterval(function () {
+            let costTime = t.data.limitTime - t.data.time + 1
             t.data.time > 0 ? (21 === t.data.time && t.playMusic("comeOn"), t.setData({
-                time: t.data.time - 1
+                time: t.data.time - 1,
+                costTimeStr: utils.formatDuration(costTime, 'mm:ss'),
+                timeProgress: t.data.limitTime ? costTime * (100 / t.data.limitTime) : 0
             }), 0 == t.data.time ? t.playMusic("timeOut", !0) : t.data.time <= 5 && t.playMusic(t.data.time, !0)) : clearInterval(t.timerDown);
         }, 1e3);
     },
@@ -113,13 +127,18 @@ Page({
             this.appearCtx.play()) : (this.audioCtx.src = this.audioSrcs[t + ""], this.audioCtx.play());
     },
     downloadAudios: function () {
-        var t = this;
-        t.audios.forEach(function (i) {
-            var a = "appear" === i ? "Sport_Ball_appear" : i;
+        let t = this;
+        t.audios.forEach(function (e) {
+            let i = e
+            let ft = '.mp3'
+            if (['start'].indexOf(i) > -1) {
+                ft = '.aac'
+            }
+            let url = "https://ydcommon.51yund.com/AI/YD/audio/" + i + ft
             wx.downloadFile({
-                url: "https://go-ran-pic.lovedabai.com/sound/" + a + ".mp3",
-                success: function (a) {
-                    200 === a.statusCode && (t.audioSrcs[i] = a.tempFilePath);
+                url: url,
+                success: function (i) {
+                    200 === i.statusCode && (t.audioSrcs[e] = i.tempFilePath);
                 }
             });
         });
@@ -132,7 +151,7 @@ Page({
                 gameStart: !1,
                 gameEnd: !1,
                 num: 0,
-                time: 60,
+                time: this.data.limitTime,
                 doStand: !0,
                 bot_mid: !1,
                 left_mid: !1,
@@ -143,7 +162,10 @@ Page({
                 halfLegLength: 0,
                 show_tip: !0,
                 stopGame: !1,
-                showDevicePage: !1
+                showDevicePage: !1,
+                startTs: 0, // 开始运动的时间戳
+                timeProgress: 0,
+                costTimeStr: '00:00',
             });
     },
     goBack: function () {
@@ -183,6 +205,9 @@ Page({
                 showDevicePage: !0
             }), i.setTimeDown());
         }, 1e3);
+        t.setData({
+            startTs: parseInt(Date.parse(new Date()) / 1000)
+        })
     },
     matchPoint: function (t, i, a) {
         var e = this, n = !0;
@@ -222,7 +247,8 @@ Page({
         t.reStartTimer = setInterval(function () {
             t.data.reStartCountDown > 1 ? t.setData({
                 reStartCountDown: t.data.reStartCountDown - 1
-            }) : (clearInterval(t.reStartTimer), t.reStart());
+            }) : (clearInterval(t.reStartTimer));
+            // }) : (clearInterval(t.reStartTimer), t.reStart());
         }, 1e3);
     },
     uploadScore: function (t) {
@@ -231,23 +257,24 @@ Page({
             var i = this;
             this.backgroundVideo && this.backgroundVideo.stop(), clearInterval(i.timerDown),
                 this.ctx.clearRect(0, 0, this.videoWidth, this.videoHeight), this.ctx.draw(), i.timerDown = null,
-                i.clearTimer(), i.data.num <= 1 ? i.setData({
-                    rate: 0,
-                    integral: 0
-                }) : (this.setData({
-                    showDevicePage: !1
-                }), e.gameFinish({
-                    code: "ShenDun",
-                    score: this.data.num > 0 ? this.data.num - 1 : 0,
-                    time: 60 - this.data.time
-                }, function (t) {
-                    t.result && i.setData({
-                        rate: (100 * t.result.exceedRate).toFixed(2),
-                        integral: t.result.integral
-                    }), i.doUpload = !1;
-                }, function (t) {
-                    console.log("错误", t), i.doUpload = !1;
-                }));
+                i.clearTimer()
+            if (i.data.num <= 1) return i.doUpload = !1
+            this.setData({
+                showDevicePage: !1
+            })
+
+            let costTime = this.data.limitTime - this.data.time
+            let param = {
+                video_id: this.data.videoId,
+                video_name: this.data.videoName,
+                start_ts: this.data.startTs,
+                cost_time: costTime,
+                action_times: this.data.num - 1,
+            }
+            api.reportUserAISportData(param).then(t => {
+                // do
+                i.doUpload = !1;
+            })
         }
     },
     isOutScreen: function () {
@@ -289,7 +316,8 @@ Page({
                     e.reStartTimer = setInterval(function () {
                         e.data.reStartCountDown > 1 ? e.setData({
                             reStartCountDown: e.data.reStartCountDown - 1
-                        }) : (clearInterval(e.reStartTimer), e.reStart());
+                        }) : (clearInterval(e.reStartTimer));
+                        // }) : (clearInterval(e.reStartTimer), e.reStart());
                     }, 1e3);
                 });
                 if (!e.data.gameEnd) {

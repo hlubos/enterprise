@@ -23,6 +23,14 @@ Page({
       cnt: 100
     },
     {
+      kind_id: 22,
+      name: '深蹲',
+      path: '/pages/AI/ShenDun/ShenDun',
+      pic_url: 'https://ssl-pubpic.51yund.com/1010293895.jpg',
+      video_id: 1,
+      cnt: 100
+    },
+    {
       kind_id: -1,
       name: '敬请期待',
       path: '',

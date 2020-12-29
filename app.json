@@ -8,7 +8,8 @@
     "pages/dialog/dialog",
     "pages/history/history",
     "pages/AI/TiaoSheng/TiaoSheng",
-    "pages/AI/FuWoCheng/FuWoCheng"
+    "pages/AI/FuWoCheng/FuWoCheng",
+    "pages/AI/ShenDun/ShenDun"
   ],
   "window": {
     "backgroundTextStyle": "light",
