@@ -2,6 +2,7 @@
   "navigationBarTitleText": "跳绳",
   "usingComponents": {
     "start-countdown": "/components/startCountdown/startCountdown",
+    "background-video": "/components/backgroundVideo/backgroundVideo",
     "judge-angle": "/components/judgeAngle/judgeAngle"
   }
 }
