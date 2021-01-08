@@ -82,15 +82,15 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage() {
+  onShareAppMessage () {
     return {
       title: "关爱员工健康，提高团队活力，快来加入企业悦动！",
-      imageUrl: 'https://ssl-pubpic.51yund.com/997613364.jpg',
+      imageUrl: 'https://ssl-pubpic.51yund.com/1042417257.png',
       path: '/pages/login/login?to=invite&enterprise_id=' + this.data.enterprise_id + '&invitor_user_id=' + this.data.invitor_user_id
     }
   },
   //提醒员工
-  async remindStaffSavePic() {
+  async remindStaffSavePic () {
     //获取相册授权
     let _this = this
     let getSetting = tool.promisify('getSetting')
@@ -98,7 +98,7 @@ Page({
     let res = await getSetting()
     if (!res.authSetting['scope.writePhotosAlbum']) {
       try {
-        await authorize({scope: 'scope.writePhotosAlbum'})
+        await authorize({ scope: 'scope.writePhotosAlbum' })
         _this.savePic()
       } catch (err) {
         wx.showToast({
@@ -111,7 +111,7 @@ Page({
     }
   },
   //提醒员工的接口
-  async remindStaff() {
+  async remindStaff () {
     if (this.data.level > 2) return;
     let parms = {
       user_id: wx.getStorageSync("user_id"),
@@ -143,15 +143,15 @@ Page({
       wx.setStorageSync('isAlreadyRemind', JSON.stringify(remindedEnterprises));
     }
   },
-  async savePic() {
+  async savePic () {
     let _this = this
     let downloadFile = tool.promisify('downloadFile')
     let saveImageToPhotosAlbum = tool.promisify('saveImageToPhotosAlbum')
     try {
-      let res = await downloadFile({url: _this.data.imgUrl})
+      let res = await downloadFile({ url: _this.data.imgUrl })
       if (res.statusCode == 200) {
         try {
-          await saveImageToPhotosAlbum({filePath: res.tempFilePath})
+          await saveImageToPhotosAlbum({ filePath: res.tempFilePath })
           wx.showToast({
             title: '二维码保存成功，快去关注吧！',
             icon: 'none'
@@ -171,10 +171,10 @@ Page({
     }
   },
   //点击弹窗取消的按钮，返回到小程序index页面
-  cancel() {
+  cancel () {
     wx.navigateBack()
   },
-  chooseImage() {
+  chooseImage () {
     let _this = this
     wx.chooseImage({
       count: 1, //默认9
@@ -187,18 +187,18 @@ Page({
     });
   },
   //上传图片
-  upload() {
+  upload () {
     let _this = this
     uploadFile.upload({
       source: 'wx_ydenterprise',
       file: _this.data.uploadUrl,
-      fail() {
+      fail () {
         wx.showToast({
           title: '使用图片失败，请重试',
           icon: 'none'
         })
       },
-      success(obj) {
+      success (obj) {
         wx.showToast({
           title: '上传成功',
           icon: 'none'
@@ -211,21 +211,21 @@ Page({
     });
   },
   //同步步数
-  unifyStep() {
+  unifyStep () {
     let _this = this
     wx.getWeRunData({
-      success(res) {
+      success (res) {
         wx.showLoading({
           title: "同步数据中"
         })
         // 拿 encryptedData 到开发者后台解密开放数据
         _this.analyticalSteps(res)
       },
-      fail() {}
+      fail () { }
     })
   },
   //后台解析步数
-  async analyticalSteps(res) {
+  async analyticalSteps (res) {
     let parms = {
       open_id: wx.getStorageSync('openid'),
       wxapp_source: "wx_ydenterprise",
@@ -256,12 +256,12 @@ Page({
     }
     wx.hideLoading()
   },
-  goOtherProgram() {
+  goOtherProgram () {
 
     wx.navigateToMiniProgram({
       appId: this.data.miniAppId,
       path: this.data.miniPathUrl,
-      success(res) {}
+      success (res) { }
     })
   }
 })

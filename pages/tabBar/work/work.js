@@ -30,8 +30,8 @@ Page({
   onShareAppMessage: function (options) {
     return {
       title: "关爱员工健康，提高团队活力，快来加入企业悦动！",
-      path: '/pages/tabBar/home/home',
-      imageUrl: 'https://ssl-pubpic.51yund.com/997613364.jpg'
+      path: '/pages/tabBar/work/work',
+      imageUrl: 'https://ssl-pubpic.51yund.com/1042417257.png'
     }
   },
 
@@ -60,7 +60,7 @@ Page({
     })
   },
 
-  async goInvite() {
+  async goInvite () {
     tool.getSessionKey(wx.getStorageSync('user_id'), wx.getStorageSync('xyy'), (userId, xyy) => {
       wx.switchTab({
         url: "/pages/index/index?to=invite&enterprise_id=" + this.data.enterprise_id + '&invitor_user_id=' + this.data.invitor_user_id + "&user_id=" + userId + "&xyy=" + xyy
@@ -72,17 +72,17 @@ Page({
       })
     });
   },
-  jumpTo() {
+  jumpTo () {
     this.initWebview()
   },
-  login() {
+  login () {
     let _this = this
     wx.showLoading({
       title: "正在登录中"
     })
     wx.login({
       provider: "weixin",
-      success(res) {
+      success (res) {
         if (!res.code) {
           wx.showToast({
             title: '登录失败',
@@ -95,7 +95,7 @@ Page({
     })
   },
   //悦动登录接口
-  async ydLogin(res) {
+  async ydLogin (res) {
     let parms = {
       code: res.code,
       wxapp_source: "wx_ydenterprise",
@@ -118,12 +118,12 @@ Page({
     }
   },
   //wx授权用户信息
-  getUserInfo(e) {
+  getUserInfo (e) {
     let resgistInfo = e.detail
     this.ydRegister(resgistInfo)
   },
   //悦动账号注册
-  async ydRegister(resgistInfo) {
+  async ydRegister (resgistInfo) {
     let parms = {
       openid: this.openid,
       wxapp_source: "wx_ydenterprise",
@@ -140,7 +140,7 @@ Page({
     this.getSteps()
   },
   //保存登录信息
-  storageWXlogin(userInfo) {
+  storageWXlogin (userInfo) {
     let loginObj = {
       session_key: userInfo.session_key,
       user_id: userInfo.user_id,
@@ -158,14 +158,14 @@ Page({
     }
   },
   //登录成功后获取微信步数
-  getSteps() {
+  getSteps () {
     let _this = this
     wx.getWeRunData({
-      success(res) {
+      success (res) {
         // 拿 encryptedData 到开发者后台解密开放数据
         _this.analyticalSteps(res)
       },
-      fail() {
+      fail () {
         wx.showToast({
           title: '获取步数失败',
           icon: 'none'
@@ -175,7 +175,7 @@ Page({
     })
   },
   //后台解析步数，同步数据
-  async analyticalSteps(res) {
+  async analyticalSteps (res) {
     this.loginCount++;
     let parms = {
       open_id: await tool.getYdStorage('openid'),

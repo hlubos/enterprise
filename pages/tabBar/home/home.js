@@ -129,7 +129,7 @@ Page({
     return {
       title: "关爱员工健康，提高团队活力，快来加入企业悦动！",
       path: '/pages/tabBar/home/home',
-      imageUrl: 'https://ssl-pubpic.51yund.com/997613364.jpg'
+      imageUrl: 'https://ssl-pubpic.51yund.com/1042417257.png'
     }
   },
 
