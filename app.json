@@ -1,17 +1,12 @@
 {
   "pages": [
-    "pages/tabBar/home/home",
     "pages/tabBar/work/work",
+    "pages/tabBar/home/home",
     "pages/index/index",
     "pages/login/login",
     "pages/tabBar/work/second/second",
     "pages/dialog/dialog",
-    "pages/history/history",
-    "pages/AI/TiaoSheng/TiaoSheng",
-    "pages/AI/FuWoCheng/FuWoCheng",
-    "pages/AI/ShenDun/ShenDun",
-    "pages/AI/YangWoQiZuo/YangWoQiZuo",
-    "pages/AI/KaiHeTiao/KaiHeTiao"
+    "pages/history/history"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -19,21 +14,33 @@
     "navigationBarTitleText": "悦动圈",
     "navigationBarTextStyle": "black"
   },
+  "subPackages": [
+    {
+      "root": "pages/AI/",
+      "pages": [
+        "ShenDun/ShenDun",
+        "TiaoSheng/TiaoSheng",
+        "KaiHeTiao/KaiHeTiao",
+        "FuWoCheng/FuWoCheng",
+        "YangWoQiZuo/YangWoQiZuo"
+      ]
+    }
+  ],
   "tabBar": {
     "color": "#BFC2C7",
     "selectedColor": "#11d59c",
     "list": [
       {
-        "pagePath": "pages/tabBar/home/home",
-        "iconPath": "assets/image/home_default.jpg",
-        "selectedIconPath": "assets/image/home_active.jpg",
-        "text": "运动"
-      },
-      {
         "pagePath": "pages/tabBar/work/work",
         "iconPath": "assets/image/mine_default.jpg",
         "selectedIconPath": "assets/image/mine_active.jpg",
         "text": "企业"
+      },
+      {
+        "pagePath": "pages/tabBar/home/home",
+        "iconPath": "assets/image/home_default.jpg",
+        "selectedIconPath": "assets/image/home_active.jpg",
+        "text": "运动"
       }
     ]
   },
