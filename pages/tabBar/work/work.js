@@ -218,7 +218,7 @@ Page({
   },
   openSuspension(){
     let appID = 'wxa04d36164f2f64c9'
-    let path = 'pages/tabBar/home/home'
+    let path = ''
     wx.navigateToMiniProgram({
       appId: appID,
       path: path,
