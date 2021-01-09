@@ -1,14 +1,21 @@
-<!--pages/tabBar/work/work.wxml-->
+<!-- pages/tabBar/work/work.wxml -->
 <view class="content" wx:if="{{noLogin && isComplete}}">
   <view class="orgs-bg">
     <view class="login-wrap">
       <button class="btn-bottom" bindtap="login" wx:if="{{!showAuthBtn}}">登录企业</button>
-      <button wx:else class="btn-bottom2" bindtap="login" :loading="loading" open-type="getUserInfo"
-        bindgetuserinfo="getUserInfo">授权登录</button>
+      <button wx:else class="btn-bottom2" bindtap="login" :loading="loading" open-type="getUserInfo" bindgetuserinfo="getUserInfo">
+        授权登录
+      </button>
     </view>
   </view>
+  <cover-view class="suspension" wx:if="{{showSuspension}}">
+    <cover-image class="suspension-img" bindtap="openSuspension" src="{{suspensionImg}}"></cover-image>
+  </cover-view>
 </view>
-
 <view class="container" wx:elif="{{isComplete}}">
-  <web-view src="{{webUrl}}"></web-view>
+  <web-view src="{{webUrl}}">
+    <cover-view class="suspension" wx:if="{{showSuspension}}">
+      <cover-image class="suspension-img" bindtap="openSuspension" src="{{suspensionImg}}"></cover-image>
+    </cover-view>
+  </web-view>
 </view>

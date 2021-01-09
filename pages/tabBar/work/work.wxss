@@ -1,72 +1,87 @@
 /* pages/tabBar/work/work.wxss */
 page {
-    height: 100%;
+  height: 100%;
 }
 
 .home-container {
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
 }
 
 .orgs-bg {
-    height: 100vh;
-    padding-top: 55vh;
-    text-align: center;
-    font-size: 28rpx;
-    color: #11d59c;
-    box-sizing: border-box;
-    background: url("https://ssl-pubpic.51yund.com/992567646.jpg") center -4em no-repeat;
-    background-size: cover;
-    overflow: hidden;
-  }
-  
-  .login-wrap {
-    display: flex;
-    margin: 0 32rpx 62rpx;
-    flex-direction: column;
-    border: none;
-    align-items: center;
-    border: none;
-  }
-  
-  .head-url {
-    width: 128rpx;
-    height: 128rpx;
-    border-radius: 50%;
-    margin-bottom: 40rpx;
-  }
-  
-  .right-arrow {
-    float: right;
-    width: 30rpx;
-    height: 30rpx;
-  }
-  
-  .txt {
-    font-size: 32rpx;
-    padding: 10rpx 20rpx;
-    color: #333;
-  }
-  
-  .btn-bottom {
-    width: 72%;
-    line-height: 46rpx;
-    font-size: 36rpx;
-    color: #fff;
-    text-align: center;
-    background: #11d59c;
-    border-radius: 46rpx;
-    margin: 0 auto 36rpx;
-  }
-  
-  .btn-bottom2 {
-    width: 72%;
-    line-height: 46rpx;
-    font-size: 36rpx;
-    color: #11D59C;
-    text-align: center;
-    background: #fff;
-    border-radius: 46rpx;
-    margin: 0 auto 36rpx;
-    border: 1rpx solid #11D59C;
-  }
+  height: 100vh;
+  padding-top: 55vh;
+  text-align: center;
+  font-size: 28rpx;
+  color: #11d59c;
+  box-sizing: border-box;
+  background: url("https://ssl-pubpic.51yund.com/992567646.jpg") center -4em no-repeat;
+  background-size: cover;
+  overflow: hidden;
+}
+
+.login-wrap {
+  display: flex;
+  margin: 0 32rpx 62rpx;
+  flex-direction: column;
+  border: none;
+  align-items: center;
+  border: none;
+}
+
+.head-url {
+  width: 128rpx;
+  height: 128rpx;
+  border-radius: 50%;
+  margin-bottom: 40rpx;
+}
+
+.right-arrow {
+  float: right;
+  width: 30rpx;
+  height: 30rpx;
+}
+
+.txt {
+  font-size: 32rpx;
+  padding: 10rpx 20rpx;
+  color: #333;
+}
+
+.btn-bottom {
+  width: 72%;
+  line-height: 46rpx;
+  font-size: 36rpx;
+  color: #fff;
+  text-align: center;
+  background: #11d59c;
+  border-radius: 46rpx;
+  margin: 0 auto 36rpx;
+}
+
+.btn-bottom2 {
+  width: 72%;
+  line-height: 46rpx;
+  font-size: 36rpx;
+  color: #11D59C;
+  text-align: center;
+  background: #fff;
+  border-radius: 46rpx;
+  margin: 0 auto 36rpx;
+  border: 1rpx solid #11D59C;
+}
+
+.suspension {
+  position: fixed;
+  right: 0;
+  bottom: 28rpx;
+  z-index: 99999999;
+}
+
+
+.suspension-img {
+  display: block;
+  width: 184rpx;
+  height: 184rpx;
+  z-index: 998;
+}

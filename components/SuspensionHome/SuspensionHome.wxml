@@ -1,4 +1,0 @@
-<!-- components/SuspensionHome/SuspensionHome.wxml -->
-<view>
-  <image class="work-img" bindtap="open" src="{{img}}" />
-</view>
