@@ -32,14 +32,14 @@
     "list": [
       {
         "pagePath": "pages/tabBar/work/work",
-        "iconPath": "assets/image/mine_default.jpg",
-        "selectedIconPath": "assets/image/mine_active.jpg",
+        "iconPath": "assets/image/work_default.png",
+        "selectedIconPath": "assets/image/work_active.png",
         "text": "企业"
       },
       {
         "pagePath": "pages/tabBar/home/home",
-        "iconPath": "assets/image/home_default.jpg",
-        "selectedIconPath": "assets/image/home_active.jpg",
+        "iconPath": "assets/image/AI_default.png",
+        "selectedIconPath": "assets/image/AI_active.png",
         "text": "运动"
       }
     ]

@@ -52,7 +52,7 @@ Page({
       kind_id: -1,
       name: '敬请期待',
       path: '',
-      pic_url: 'https://ssl-pubpic.51yund.com/1040424039.png',
+      pic_url: 'https://ssl-pubpic.51yund.com/1042427947.png',
       video_id: -1,
       cnt: 0
     },
