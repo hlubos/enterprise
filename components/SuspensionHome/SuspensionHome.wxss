@@ -1,0 +1,9 @@
+/* components/SuspensionHome/SuspensionHome.wxss */
+.work-img {
+  position: fixed;
+  bottom: 28rpx;
+  right: 0;
+  display: block;
+  width: 184rpx;
+  height: 184rpx;
+}
