@@ -47,6 +47,7 @@ Page({
     app.globalData.userInfo.xyy = loginInfo.xyy
     if (loginInfo.user_id && loginInfo.xyy) {
       this.initWebview()
+      this.getSteps()
     }else{
       this.showSuspension()
     }
@@ -191,10 +192,10 @@ Page({
     }
     let data = await api.getUserDayStep(parms)
     if (data.code == 0) {
-      wx.showToast({
-        title: '数据同步成功',
-        icon: 'none'
-      })
+      // wx.showToast({
+      //   title: '数据同步成功',
+      //   icon: 'none'
+      // })
       this.jumpTo();
     } else if (data.code == 2 && this.loginCount < 3) {
       //openid过期，需要重新登录
