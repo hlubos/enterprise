@@ -47,7 +47,7 @@ Page({
     app.globalData.userInfo.xyy = loginInfo.xyy
     if (loginInfo.user_id && loginInfo.xyy) {
       this.initWebview()
-      this.getSteps()
+      this.login()
     }else{
       this.showSuspension()
     }
