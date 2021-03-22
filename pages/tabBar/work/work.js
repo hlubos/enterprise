@@ -19,9 +19,7 @@ Page({
     enterprise_id: '',
     invitor_user_id: "",
     loginCount: 0, //请求登录次数
-    noLogin: true,
-    suspensionImg: 'https://ssl-pubpic.51yund.com/1042507673.png',  // 浮窗 图片
-    showSuspension: false, // 是否展示右下角浮窗，兼容webview做延迟展示
+    noLogin: true
   },
 
   // tab页没有option
@@ -48,8 +46,6 @@ Page({
     if (loginInfo.user_id && loginInfo.xyy) {
       this.initWebview()
       this.login()
-    }else{
-      this.showSuspension()
     }
     this.setData({
       isComplete: true
@@ -64,7 +60,6 @@ Page({
       noLogin: false,
       webUrl: `https://work.51yund.com/vapps/new_work/index?user_id=${user_id}&xyy=${xyy}&is_login=true&from_tab=true`
     })
-    this.showSuspension()
   },
 
   async goInvite () {
@@ -208,28 +203,5 @@ Page({
       wx.removeStorageSync('session_key')
       this.login()
     }
-  },
-  showSuspension(){
-    setTimeout(() => {
-      this.setData({
-        suspensionImg: this.data.suspensionImg,
-        showSuspension: true
-      })
-    }, 300);
-  },
-  openSuspension(){
-    let appID = 'wxa04d36164f2f64c9'
-    let path = ''
-    wx.navigateToMiniProgram({
-      appId: appID,
-      path: path,
-      extraData: {
-        from: 'work'
-      },
-      // envVersion: 'develop',
-      success (res) {
-        // 打开成功
-      }
-    })
   }
 })

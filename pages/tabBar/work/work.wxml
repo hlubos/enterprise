@@ -8,14 +8,8 @@
       </button>
     </view>
   </view>
-  <cover-view class="suspension" wx:if="{{showSuspension}}">
-    <cover-image class="suspension-img" bindtap="openSuspension" src="{{suspensionImg}}"></cover-image>
-  </cover-view>
 </view>
 <view class="container" wx:elif="{{isComplete}}">
   <web-view src="{{webUrl}}">
-    <cover-view class="suspension" wx:if="{{showSuspension}}">
-      <cover-image class="suspension-img" bindtap="openSuspension" src="{{suspensionImg}}"></cover-image>
-    </cover-view>
   </web-view>
 </view>
