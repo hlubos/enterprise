@@ -23,9 +23,13 @@ Page({
     suspensionImg: 'https://ssl-pubpic.51yund.com/1042507673.png',  // 浮窗 图片
     showSuspension: false, // 是否展示右下角浮窗，兼容webview做延迟展示
   },
-
+  onShow: function() {
+    if(!this.data.noLogin&&this.data.isComplete) {
+      this.getSteps();
+    }
+  },
   // tab页没有option
-  onLoad: function () {
+  onLoad: function() {
     this.initUserInfo()
   },
 
@@ -62,7 +66,7 @@ Page({
     // Todo
     this.setData({
       noLogin: false,
-      webUrl: `https://work.51yund.com/vapps/new_work/index?user_id=${user_id}&xyy=${xyy}&is_login=true&from_tab=true`
+      webUrl: `https://work.51yund.com/vapps/new_work/index?user_id=${user_id}&xyy=${xyy}&is_login=true&from_tab=true`,
     })
     this.showSuspension()
   },
