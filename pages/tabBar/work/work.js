@@ -21,9 +21,13 @@ Page({
     loginCount: 0, //请求登录次数
     noLogin: true
   },
-
+  onShow: function() {
+    if(!this.data.noLogin&&this.data.isComplete) {
+      this.getSteps();
+    }
+  },
   // tab页没有option
-  onLoad: function () {
+  onLoad: function() {
     this.initUserInfo()
   },
 
