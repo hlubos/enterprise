@@ -1,0 +1,4 @@
+<!--run_packege/pages/run_final/components/runSpeedChart/runSpeedChart.wxml-->
+<view class="chart-container">
+  <ec-canvas id="mychart-dom-pie" canvas-id="mychart-pie" ec="{{ ec }}"></ec-canvas>
+</view>

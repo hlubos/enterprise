@@ -1,0 +1,35 @@
+<!--plugin/pages/run_set/index.wxml-->
+<!--语言播报设置-->
+<mp-cells ext-class="my-cells" title="语言播报设置">
+    <mp-cell>
+        <view>语言播报开关</view>
+        <view slot="footer">
+            <switch></switch>
+        </view>
+    </mp-cell>
+    <mp-cell value="语言类型" footer="国语女声>"></mp-cell>
+    <mp-cell value="播报频率" footer="1公里>"></mp-cell>
+</mp-cells>
+<!-- 地图设置 -->
+<mp-cells ext-class="my-cells" title="地图设置">
+    <mp-cell value="标题文字" footer="说明文字"></mp-cell>
+    <mp-cell>
+        <view>标题文字（使用slot）</view>
+        <view slot="footer">说明文字</view>
+    </mp-cell>
+</mp-cells>
+<!-- 跑步异常检测 -->
+<mp-cells ext-class="my-cells" title="地图设置">
+    <mp-cell>
+        <view>网络检测</view>
+        <!-- <view slot="footer">点击重新检测></view> -->
+        <view slot="footer" bindtap="checkNet">
+            <text wx:if="{{netType}}">当前网络类型：{{netType}}</text>
+            <text wx:else>点击重新检测></text>
+        </view>
+    </mp-cell>
+    <mp-cell>
+        <view>权限检测</view>
+        <view slot="footer">></view>
+    </mp-cell>
+</mp-cells>

@@ -3,6 +3,7 @@
     <view class="left">
         <view class="title">
             <text>AI动作库</text>
+            <navigator url="/run_packege/pages/index/index">跑步</navigator>
         </view>
         <view class="desc">
             <text>Yodo exercises</text>

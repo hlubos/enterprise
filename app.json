@@ -24,6 +24,17 @@
         "FuWoCheng/FuWoCheng",
         "YangWoQiZuo/YangWoQiZuo"
       ]
+    },
+    {
+        "root":"run_packege",
+        "pages": [
+          "pages/index/index",
+          "pages/run_FAQ/index",
+          "pages/run_log/index",
+          "pages/run_page/index",
+          "pages/run_set/index",
+          "pages/run_final/index"
+        ]
     }
   ],
   "tabBar": {
@@ -43,6 +54,11 @@
         "text": "运动"
       }
     ]
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将用于小程序位置接口的效果展示" 
+    }
   },
   "plugins": {
     "tfjsPlugin": {

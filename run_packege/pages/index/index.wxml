@@ -1,0 +1,63 @@
+<!--plugin/pages/index/index.wxml-->
+<view class="run_index">
+    <navigator id="nav" url="../run_FAQ/index">
+        <image class="FAQ-btn" src="https://ssl-pubpic.51yund.com/1220976601.png"></image>
+    </navigator>
+    <navigator id="nav" url="../run_set/index">
+        <image class="set-btn" src="https://ssl-pubpic.51yund.com/1220976582.png"></image>
+    </navigator>
+    <view class="sumkilometre">
+        <text class="sumkilometre-txt">7.48</text>
+        <navigator id="nav" url="../run_log/index" class="runlog-btn">
+            <text>累计公里</text>
+            <image class="runlog-btn-img" src="https://ssl-pubpic.51yund.com/1220976698.png"></image>
+        </navigator>
+    </view>
+    <view class="auth-hint">
+        <view class="auth-hint-box" wx:if="{{!auth.hasAuthUserLocation}}" bindtap="toastAuthUserLocation">
+            <text class="auth-hint-txt">未授权地理位置</text>
+        </view>
+        <view class="auth-hint-box" wx:if="{{!auth.hasAuthUserLocationBackground}}" bindtap="toastAuthUserLocationBac">
+            <text class="auth-hint-txt">未授权后台定位</text>
+        </view>
+    </view>
+    <!-- <navigator id="nav" url="../run_page/index">开始</navigator> -->
+    <view class="start-run-btn-box">
+        <view bindtap="startRun" class="start-run-btn">开始</view>
+    </view>
+</view>
+<!-- <runTypeModal id="runTypeModal" frameTitle="请选择你的跑步模式">
+    <view class="run-type-modal-box">
+        <view class='run-type-modal-item {{runType=="0"?"run-type-modal-item-active":""}}' data-runtype="0" bindtap="selectRunType">
+            室外跑
+            <image hidden="{{runType=='1'}}" class="active-icon" src="https://ssl-pubpic.51yund.com/1221474398.png"></image>
+        </view>
+        <view class='run-type-modal-item {{runType=="1"?"run-type-modal-item-active":""}}' data-runtype="1" bindtap="selectRunType">
+            室内跑
+            <image hidden="{{runType=='0'}}" class="active-icon" src="https://ssl-pubpic.51yund.com/1221474398.png"></image>
+        </view>
+    </view>
+    <view class="run-open-btn-box">
+        <view class="run-open-btn" bindtap="gotoRunPage">
+            开始跑步
+        </view>
+    </view>
+</runTypeModal> -->
+<page-container show="{{showRunCheckModal}}" close-on-slideDown round position="bottom">
+    <view class="run-type-modal-title">请选择你的跑步模式</view>
+    <view class="run-type-modal-box">
+        <view class='run-type-modal-item {{runType=="0"?"run-type-modal-item-active":""}}' data-runtype="0" bindtap="selectRunType">
+            室外跑
+            <image hidden="{{runType=='1'}}" class="active-icon" src="https://ssl-pubpic.51yund.com/1221474398.png"></image>
+        </view>
+        <view class='run-type-modal-item {{runType=="1"?"run-type-modal-item-active":""}}' data-runtype="1" bindtap="selectRunType">
+            室内跑
+            <image hidden="{{runType=='0'}}" class="active-icon" src="https://ssl-pubpic.51yund.com/1221474398.png"></image>
+        </view>
+    </view>
+    <view class="run-open-btn-box">
+        <view class="run-open-btn" bindtap="gotoRunPage">
+            开始跑步
+        </view>
+    </view>
+</page-container>
