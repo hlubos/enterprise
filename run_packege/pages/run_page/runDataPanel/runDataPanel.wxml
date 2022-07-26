@@ -7,7 +7,7 @@
     </view>
     <view class="run-data-box">
         <view class="run-data-item1">
-            <view class="run-data-num">11'13'</view>
+            <view class="run-data-num">{{runShowData.avePace}}</view>
             <view class="run-data-txt">平均配速</view>
         </view>
         <view class="run-data-item2">
@@ -15,7 +15,7 @@
             <view class="run-data-txt">总计时间</view>
         </view>
         <view class="run-data-item2">
-            <view class="run-data-num">14</view>
+            <view class="run-data-num">{{runShowData.kiloCalorie}}</view>
             <view class="run-data-txt">消耗千卡</view>
         </view>
     </view>

@@ -1,1 +1,24 @@
 /* plugin/pages/run_set/index.wxss */
+.map-style-list {
+    margin: 20rpx auto;
+    width: 688rpx;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.map-style-item{
+    /* width: 33.3%; */
+    text-align: center;
+    margin-top: 20rpx;
+}
+.map-icon{
+    width: 216rpx;
+    height: 130rpx;
+    background: #F7F8FA;
+    border-radius: 8rpx;
+}
+.map-txt{
+    font-size: 26rpx;
+    color: #000000;
+}

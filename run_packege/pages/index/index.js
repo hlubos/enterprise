@@ -7,12 +7,14 @@ import {
     startLocationUpdateBackground,
     navigateTo 
 } from '../../utils/wxApi'
+import api from '../../server/run'
 Page({
 
     /**
      * 页面的初始数据
      */
     data: {
+        totalDistance:'0.00',
         auth:{
             // 地理定位是否授权
             hasAuthUserLocation:true,
@@ -124,7 +126,17 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad(options) {
-
+        let params = {
+            user_id:13368385,
+        }
+        api.getRunnerInfo(params).then(res=>{
+            if(res.code == 0){
+                console.log(res)
+                this.setData({
+                    totalDistance:(res.total_distance/1000).toFixed(2)
+                })
+            }
+        })
     },
 
     /**

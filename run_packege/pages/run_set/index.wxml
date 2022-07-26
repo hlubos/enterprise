@@ -12,14 +12,20 @@
 </mp-cells>
 <!-- 地图设置 -->
 <mp-cells ext-class="my-cells" title="地图设置">
-    <mp-cell value="标题文字" footer="说明文字"></mp-cell>
+    <!-- <mp-cell value="标题文字" footer="说明文字"></mp-cell>
     <mp-cell>
         <view>标题文字（使用slot）</view>
         <view slot="footer">说明文字</view>
-    </mp-cell>
+    </mp-cell> -->
+    <view class="map-style-list">
+        <view wx:for="{{mapStyleList}}" wx:key="item" class="map-style-item">
+            <view class="map-icon"></view>
+            <view class="map-txt">样式{{item}}</view>
+        </view>
+    </view>
 </mp-cells>
 <!-- 跑步异常检测 -->
-<mp-cells ext-class="my-cells" title="地图设置">
+<mp-cells ext-class="my-cells" title="跑步异常检测">
     <mp-cell>
         <view>网络检测</view>
         <!-- <view slot="footer">点击重新检测></view> -->

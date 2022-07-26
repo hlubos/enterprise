@@ -12,7 +12,8 @@ Component({
      * 组件的初始数据
      */
     data: {
-        netType:''
+        netType:'',
+        mapStyleList:[1,2,3,4,5,6]
     },
 
     /**

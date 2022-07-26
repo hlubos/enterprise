@@ -1,5 +1,5 @@
 // plugin/pages/run_page/index.js
-import { getLocation , onLocationChange } from '../../utils/wxApi'
+import { getLocation , onLocationChange , offLocationChange,startLocationUpdate } from '../../utils/wxApi'
 import myFormats from '../../utils/format'
 Page({
     data: {
@@ -20,6 +20,8 @@ Page({
         },
         // 跑步计时时长(秒)
         runTime:0,
+        // 跑步距离(米m)
+        runMiles:0,
         // 跑步计时器
         runTimer:null,
         // 位置获取计时器
@@ -27,26 +29,47 @@ Page({
         // 跑步显示的数据
         runShowData:{
             // 公里数
-            runKmiles:'1122',
+            runKmiles:'0',
             // 总计时间
             sumTime:'0:00:00',
             // 平均配速
-            avePace:'',
+            avePace:`0'00''`,
             // 消耗千卡
-            kilocalorie:'',
+            kiloCalorie:'0.0',
         },
         // 位置点保存数组
         locaDotArr:[],
+        // 是否能够获取位置（5s获取一次）
+        canGetLocation:false
     },
     // 获取跑步数据可视化信息
     getRunShowData(){
-        let sumTime = myFormats.secTranlateTime(this.data.runTime)
+        // 跑步公里数
+        let runKmiles = (this._calculateRunMiles(this.data.locaDotArr)/1000).toFixed(2)
+        let runMiles = this._calculateRunMiles(this.data.locaDotArr)
         this.setData({
-            "runShowData.runKmiles":"1222",
-            "runShowData.sumTime":sumTime,
-            "runShowData.avePace":"11\'13\"",
-            "runShowData.kilocalorie":"14",
+            runMiles:runMiles,
         })
+        // 跑步时长
+        // let sumTime = myFormats.secTranlateTime(this.data.runTime)
+        // 平均配速
+        let avePace = myFormats.formatAvg(this.data.runTime,runMiles)
+        // 消耗千卡
+        let kiloCalorie = (55 * 1.036 * (runMiles / 1000)).toFixed(1);
+        this.setData({
+            "runShowData.runKmiles":runKmiles,
+            // "runShowData.sumTime":sumTime,
+            "runShowData.avePace":avePace,
+            "runShowData.kiloCalorie":kiloCalorie,
+        })
+    },
+    // 计算总距离（米m）
+    _calculateRunMiles(pointArr){
+        let sumRunMiles = 0
+        for(let i = 0;i<pointArr.length-1;i++){
+            sumRunMiles+=myFormats.calcDistance(pointArr[i].longitude,pointArr[i].latitude,pointArr[i+1].longitude,pointArr[i+1].latitude)
+        }
+        return sumRunMiles
     },
     // 显示地图
     showMap(){
@@ -65,7 +88,10 @@ Page({
         // 开始计时
         let that = this
         let second = this.data.runTime
-        let canGetLocation = true
+        // let canGetLocation = true
+        this.setData({
+            canGetLocation: true
+        })
         // 跑步计时
         var runTimer = setInterval(()=>{
             // 累计跑步时间
@@ -73,34 +99,57 @@ Page({
             that.setData({
                 runTime:second
             })
-            that.getRunShowData()
+            // 跑步时长+1
+            let sumTime = myFormats.secTranlateTime(this.data.runTime)
+            this.setData({
+                "runShowData.sumTime":sumTime,
+            })
+            // that.getRunShowData()
         },1000)
         that.setData({
             runTimer:runTimer
         })
-        // 监听位置变化，5秒返回一次结果
-        wx.startLocationUpdate({
-            success: (res) => {},
-            fail: (err) => {
-              console.log(err);
-            },
-        });
-        wx.onLocationChange((res)=>{
-            // 判断离上一次获取位置的时间是否超过五秒
-            if(!canGetLocation){
+        // 开启监听位置变化，5秒返回一次结果
+        startLocationUpdate().then(res=>{
+            onLocationChange(this._mylocationChangeFn)
+        })
+    },
+    // 监听位置变化的操作
+    _mylocationChangeFn(res){
+        // 判断离上一次获取位置的时间是否超过5s
+        if(!this.data.canGetLocation){
+            return false
+        }
+        // 判断当前点位与上个点位的距离是否超过10m
+        if(this.data.locaDotArr.length > 0){
+            let finalDoc = this.data.locaDotArr[this.data.locaDotArr.length-1]
+            if(myFormats.calcDistance(res.longitude,res.latitude,finalDoc.longitude,finalDoc.latitude)<10){
                 return false
             }
-            canGetLocation = false
-            console.log(res)
-            var locaTimer = setTimeout(()=>{
-                // 5秒才能获取一次当前位置
-                canGetLocation = true
-            },5000)
-            that.setData({
-                locaTimer:locaTimer
-            })
+        }
+        // 时间5s,移动距离超过10m,可以获取点位信息
+        this.setData({
+            canGetLocation: false
         })
-        
+        console.log(res)
+        let locaDotArr = this.data.locaDotArr
+        locaDotArr.push({
+            latitude:res.latitude,
+            longitude:res.longitude
+        })
+        this.setData({
+            locaDotArr:locaDotArr
+        })
+        var locaTimer = setTimeout(()=>{
+            // 5秒才能获取一次当前位置
+            this.setData({
+                canGetLocation: true
+            })
+            this.getRunShowData()
+        },5000)
+        this.setData({
+            locaTimer:locaTimer
+        })
     },
     // 跑步暂停
     runPause(){
@@ -111,6 +160,7 @@ Page({
             runStatus:1
         })
         // 关闭定位追踪
+        offLocationChange(this._mylocationChangeFn)
         wx.stopLocationUpdate({
             success: (res) => {
               console.log("停止追踪", res);
@@ -135,6 +185,7 @@ Page({
             runStatus:1,
         })
         // 关闭定位追踪
+        offLocationChange(this._mylocationChangeFn)
         wx.stopLocationUpdate({
             success: (res) => {
               console.log("停止追踪", res);

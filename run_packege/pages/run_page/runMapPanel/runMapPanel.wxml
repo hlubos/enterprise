@@ -3,19 +3,19 @@
     <view class="map-data-box">
         <view class="map-data">
             <view>
-                <view class="map-data-num">7.48</view>
+                <view class="map-data-num">{{runShowData.runKmiles}}</view>
                 <view class="map-data-unit">公里</view>
             </view>
             <view>
-                <view class="map-data-num">11'12"</view>
+                <view class="map-data-num">{{runShowData.avePace}}</view>
                 <view class="map-data-unit">平均配速</view>
             </view>
             <view>
-                <view class="map-data-num">30:31</view>
+                <view class="map-data-num">{{runShowData.sumTime}}</view>
                 <view class="map-data-unit">总用时</view>
             </view>
             <view>
-                <view class="map-data-num">123.45</view>
+                <view class="map-data-num">{{runShowData.kiloCalorie}}</view>
                 <view class="map-data-unit">消耗千卡</view>
             </view>
         </view>
@@ -33,6 +33,8 @@
             longitude="{{newLongitude}}"
             latitude="{{newLatitude}}"
             show-location="true"
+            polyline="{{polylines}}"
+            include-points="{{locaDotArrv}}"
         ></map>
         <view class="back-icon">
             <image bindtap="hideMap" src="https://ssl-pubpic.51yund.com/1221737968.png"></image>

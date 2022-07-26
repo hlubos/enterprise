@@ -6,8 +6,11 @@ Page({
      * 页面的初始数据
      */
     data: {
-        begin_cnt: 20,
-        end_cnt: 40,
+        total_cnt: 1113,
+        total_cost_time: '0:00:00',
+        total_distance: '0.00',
+        begin_cnt: 0,
+        end_cnt: 20,
         runLogList:[1,2,3,4]
     },
 
@@ -26,7 +29,7 @@ Page({
         //     },
         // })
         let params = {
-            // user_id:13368385,
+            user_id:13368385,
             begin_cnt: this.data.begin_cnt,
             end_cnt: this.data.end_cnt,
         }
@@ -34,7 +37,10 @@ Page({
             if(res.code == 0){
                 console.log(res)
                 this.setData({
-                    
+                    total_cnt: res.total_cnt,
+                    total_cost_time: res.total_cost_time,
+                    total_distance: (res.total_distance/1000).toFixed(2),
+                    runLogList: res.infos,
                 })
             }
         })

@@ -30,6 +30,7 @@
             newLatitude="{{mapCenterLocation.latitude}}"
             bind:hideRunMap="hideMap"
             runShowData="{{runShowData}}"
+            locaDotArr="{{locaDotArr}}"
         ></run-map-panel>
     </view>
 </page-container>

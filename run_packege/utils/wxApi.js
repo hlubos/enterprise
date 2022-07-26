@@ -32,13 +32,30 @@ export const startLocationUpdateBackground = () => {
     })
 }
 
+export const startLocationUpdate= () => {
+    return new Promise((resolve, reject) => {
+        wx.startLocationUpdate({
+            success: (result) => {
+                resolve(result);
+            },
+            fail: (err) => {
+                reject(err);
+            }
+        });
+    })
+}
+
 /**
  *  wx.onLocationChange 
  *  监听实时地理位置变化事件，
  *  需结合 wx.startLocationUpdateBackground、wx.startLocationUpdate使用。
  */
-export const onLocationChange = ()=>{
-    return wx.onLocationChange
+export const onLocationChange = (fn)=>{
+    return wx.onLocationChange(fn)
+}
+
+export const offLocationChange = (fn)=>{
+    return wx.offLocationChange(fn)
 }
 
 /**
