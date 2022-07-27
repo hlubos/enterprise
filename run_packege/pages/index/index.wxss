@@ -1,11 +1,19 @@
 /* plugin/pages/index/index.wxss */
+.run-index-map {
+    width: 100vw;
+    height: 100vh;
+}
+
 .run_index {
-    position: relative;
+    position: absolute;
+    top: 0;
     width: 100%;
     height: 100vh;
     /* background-image: linear-gradient(180deg, #FFFFFF 0%, rgba(255, 255, 255, 0.00) 100%); */
-    background-color: darkcyan;
+    background-color: rgba(255, 255, 255, 0.7);
+    /* opacity: 0.5; */
     overflow: hidden;
+    z-index: 1000;
 }
 
 .FAQ-btn {

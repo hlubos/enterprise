@@ -52,7 +52,9 @@
     text-align: center;
 }
 
-/* .runlog-list {} */
+.runlog-list {
+    height: calc( 100vh - 520rpx);
+}
 
 .runlog-item {
     display: flex;

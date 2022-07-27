@@ -50,6 +50,7 @@ Component({
         //         latitude: this.data.newLatitude,
         //     }
         // });
+        this._toLocation()
       },
       moved: function () { 
       },

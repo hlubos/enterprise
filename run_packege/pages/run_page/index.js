@@ -29,7 +29,7 @@ Page({
         // 跑步显示的数据
         runShowData:{
             // 公里数
-            runKmiles:'0',
+            runKmiles:'0.00',
             // 总计时间
             sumTime:'0:00:00',
             // 平均配速

@@ -24,7 +24,13 @@ Page({
         // 跑步模式： '0'：室外跑 ，'1'：室内跑
         runType:'0',
         // 是否显示跑步模式选择框
-        showRunCheckModal: false
+        showRunCheckModal: false,
+        // 地图样式
+        mapStyle:{
+            // subkey:'L4JBZ-YJ56D-GAO47-P6UQY-ODB46-M2FD2',
+            'subkey':'V5JBZ-RY5EJ-Z7AFP-FP7OM-YXSFE-P7F4J',
+            'layer-style':'2'
+        }
     },
     // 授权地理定位
     toastAuthUserLocation(){
@@ -127,7 +133,7 @@ Page({
      */
     onLoad(options) {
         let params = {
-            user_id:13368385,
+            user_id:284209535,
         }
         api.getRunnerInfo(params).then(res=>{
             if(res.code == 0){
@@ -165,7 +171,24 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow() {
-
+        // 读取缓存
+        let that = this
+        // wx.getStorage({
+        //     key:"run_set_infos",
+        //     success(res) {
+        //         console.log(res.data)
+        //         that.setData({
+        //             mapStyle:res.data.nowMapStyInfo
+        //         })
+        //     }
+        // })
+        try {
+            let res = getStorageSync('run_set_infos')
+            console.log(res)
+            that.setData({
+                mapStyle:res.nowMapStyInfo
+            })
+        } catch (e) { }
     },
 
     /**

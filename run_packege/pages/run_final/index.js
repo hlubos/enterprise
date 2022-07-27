@@ -50,7 +50,7 @@ Page({
     onReady() {
         let mapFinalCtx = wx.createMapContext('run-final-map',this) // mapId对应地图id属性
         mapFinalCtx.includePoints({
-            padding: [ 70,], // padding类似我们css中的padding，可以有四个值
+            padding: [ 70,70,70,70 ], // padding类似我们css中的padding，可以有四个值
             points: this.data.pointsList
         })
     },
