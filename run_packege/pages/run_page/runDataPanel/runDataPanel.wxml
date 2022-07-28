@@ -31,11 +31,9 @@
                 <image src="https://ssl-pubpic.51yund.com/1221493943.png"></image>
             </view>
             <!-- 结束 -->
-            <navigator id="nav" url="../run_final/index">
-                <view class="stop-btn" hidden="{{runStatus == 0}}" bindtap="runStop">
-                    <image src="https://ssl-pubpic.51yund.com/1221493926.png"></image>
-                </view>
-            </navigator>
+            <view class="stop-btn" hidden="{{runStatus == 0}}" bindtap="runStop">
+                <image src="https://ssl-pubpic.51yund.com/1221493926.png"></image>
+            </view>
             <!-- 暂停 -->
             <view class="pause-btn" hidden="{{runStatus == 1}}" bindtap="runPause">
                 <image src="https://ssl-pubpic.51yund.com/1221493962.png"></image>

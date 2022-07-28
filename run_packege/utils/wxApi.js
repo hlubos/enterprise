@@ -45,6 +45,19 @@ export const startLocationUpdate= () => {
     })
 }
 
+export const stopLocationUpdate= () => {
+    return new Promise((resolve, reject) => {
+        wx.stopLocationUpdate({
+            success: (result) => {
+                resolve(result);
+            },
+            fail: (err) => {
+                reject(err);
+            }
+        });
+    })
+}
+
 /**
  *  wx.onLocationChange 
  *  监听实时地理位置变化事件，
@@ -184,4 +197,56 @@ export const setStorageSync = (key,data) =>{
 }
 export const getStorageSync = (key) =>{
     return wx.getStorageSync(key)
+}
+
+/**
+ *  wx.redirectTo 从本地缓存中异步获取指定 key 的内容。
+ */
+export const redirectTo = (url) => {
+    return new Promise((resolve, reject) => {
+        wx.redirectTo({
+            url,
+            success: (result) => {
+                resolve(result);
+            },
+            fail: (err) => {
+                reject(err);
+            }
+        });
+    })
+}
+
+/**
+ *  wx.showToast 显示消息提示框
+ */
+export const showToast = (title) => {
+    return new Promise((resolve, reject) => {
+        wx.showToast({
+            title,
+            success: (result) => {
+                resolve(result);
+            },
+            fail: (err) => {
+                reject(err);
+            }
+        });
+    })
+}
+
+/**
+ *  wx.showModal 显示模态对话框
+ */
+export const showModal = (title,content) => {
+    return new Promise((resolve, reject) => {
+        wx.showModal({
+            title,
+            content,
+            success: (result) => {
+                resolve(result);
+            },
+            fail: (err) => {
+                reject(err);
+            }
+        });
+    })
 }

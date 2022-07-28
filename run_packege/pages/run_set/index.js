@@ -34,46 +34,46 @@ Page({
                     "layer-style":"1",
                 }
             },
-            {
-                title:"白浅",
-                icon:"https://ssl-pubpic.51yund.com/1223520701.png",
-                mapStyInfo:{
-                    "subkey":"L4JBZ-YJ56D-GAO47-P6UQY-ODB46-M2FD2",
-                    "layer-style":"2",
-                }
-            },
+            // {
+            //     title:"白浅",
+            //     icon:"https://ssl-pubpic.51yund.com/1223520701.png",
+            //     mapStyInfo:{
+            //         "subkey":"L4JBZ-YJ56D-GAO47-P6UQY-ODB46-M2FD2",
+            //         "layer-style":"2",
+            //     }
+            // },
             {
                 title:"玉露",
                 icon:"https://ssl-pubpic.51yund.com/1223520743.png",
                 mapStyInfo:{
                     "subkey":"L4JBZ-YJ56D-GAO47-P6UQY-ODB46-M2FD2",
-                    "layer-style":"3",
-                }
-            },
-            {
-                title:"烟翠",
-                icon:"https://ssl-pubpic.51yund.com/1223520762.png",
-                mapStyInfo:{
-                    // subkey:'L4JBZ-YJ56D-GAO47-P6UQY-ODB46-M2FD2',
-                    "subkey":"V5JBZ-RY5EJ-Z7AFP-FP7OM-YXSFE-P7F4J",
-                    "layer-style":"1",
-                }
-            },
-            {
-                title:"澹月",
-                icon:"https://ssl-pubpic.51yund.com/1223520780.png",
-                mapStyInfo:{
-                    // subkey:'L4JBZ-YJ56D-GAO47-P6UQY-ODB46-M2FD2',
-                    "subkey":"V5JBZ-RY5EJ-Z7AFP-FP7OM-YXSFE-P7F4J",
                     "layer-style":"2",
                 }
             },
+            // {
+            //     title:"烟翠",
+            //     icon:"https://ssl-pubpic.51yund.com/1223520762.png",
+            //     mapStyInfo:{
+            //         // subkey:'L4JBZ-YJ56D-GAO47-P6UQY-ODB46-M2FD2',
+            //         "subkey":"V5JBZ-RY5EJ-Z7AFP-FP7OM-YXSFE-P7F4J",
+            //         "layer-style":"1",
+            //     }
+            // },
+            // {
+            //     title:"澹月",
+            //     icon:"https://ssl-pubpic.51yund.com/1223520780.png",
+            //     mapStyInfo:{
+            //         // subkey:'L4JBZ-YJ56D-GAO47-P6UQY-ODB46-M2FD2',
+            //         "subkey":"V5JBZ-RY5EJ-Z7AFP-FP7OM-YXSFE-P7F4J",
+            //         "layer-style":"2",
+            //     }
+            // },
             {
                 title:"墨渊",
                 icon:"https://ssl-pubpic.51yund.com/1223520834.png",
                 mapStyInfo:{
-                    // subkey:'L4JBZ-YJ56D-GAO47-P6UQY-ODB46-M2FD2',
-                    "subkey":"V5JBZ-RY5EJ-Z7AFP-FP7OM-YXSFE-P7F4J",
+                    subkey:'L4JBZ-YJ56D-GAO47-P6UQY-ODB46-M2FD2',
+                    // "subkey":"V5JBZ-RY5EJ-Z7AFP-FP7OM-YXSFE-P7F4J",
                     "layer-style":"3",
                 }
             },
@@ -81,7 +81,7 @@ Page({
         // 当前地图样式
         nowMapStyInfo:{
             "subkey":"L4JBZ-YJ56D-GAO47-P6UQY-ODB46-M2FD2",
-            "layer-style":"2",
+            "layer-style":"1",
         }
     },
     // 缓存设置的数据
@@ -169,8 +169,14 @@ Page({
      */
     onLoad(options) {
         try {
-            let value = getStorageSync('run_set_infos')
-            console.log(value)
+            let res = getStorageSync('run_set_infos')
+            // console.log(res)
+            this.setData({
+                freIndex: res.freIndex,
+                openVoice:res.openVoice,
+                voiceIndex: res.voiceIndex,
+                nowMapStyInfo: res.nowMapStyInfo,
+            })
         } catch (e) { }
     },
 

@@ -1,6 +1,20 @@
 // plugin/pages/run_page/index.js
-import { getLocation , onLocationChange , offLocationChange,startLocationUpdate } from '../../utils/wxApi'
+import { 
+    getLocation , 
+    onLocationChange , 
+    offLocationChange,
+    startLocationUpdate,
+    redirectTo,
+    stopLocationUpdate,
+    startLocationUpdateBackground,
+} from '../../utils/wxApi'
 import myFormats from '../../utils/format'
+import api from '../../server/run'
+// const backgroundAudioManager = wx.getBackgroundAudioManager()
+const innerAudioContext = wx.createInnerAudioContext({
+    useWebAudioImplement:true
+})
+innerAudioContext.autoplay = true
 Page({
     data: {
         // 引导页显示
@@ -110,7 +124,9 @@ Page({
             runTimer:runTimer
         })
         // 开启监听位置变化，5秒返回一次结果
-        startLocationUpdate().then(res=>{
+        stopLocationUpdate()
+        startLocationUpdateBackground().then(res=>{
+            console.log(res)
             onLocationChange(this._mylocationChangeFn)
         })
     },
@@ -156,19 +172,15 @@ Page({
         // 清除跑步计时器
         clearInterval(this.data.runTimer)
         clearTimeout(this.data.locaTimer)
+        innerAudioContext.src = "run_packege/assets/voice/zantingpaobu.mp3"
         this.setData({
             runStatus:1
         })
         // 关闭定位追踪
         offLocationChange(this._mylocationChangeFn)
-        wx.stopLocationUpdate({
-            success: (res) => {
-              console.log("停止追踪", res);
-            },
-            fail: (err) => {
-              console.log(err);
-            },
-        });
+        stopLocationUpdate().then(res=>{
+            console.log("停止追踪", res);
+        })
     },
     // 继续跑步
     runContinue(){
@@ -176,25 +188,48 @@ Page({
             runStatus:0
         })
         this.runStart()
+        innerAudioContext.src = "run_packege/assets/voice/jixupaobu.mp3"
     },
     // 结束跑步
     runStop(){
         clearInterval(this.data.runTimer)
+        innerAudioContext.src = "run_packege/assets/voice/paobujieshu.mp3"
         this.setData({
             runTime:0,
             runStatus:1,
         })
         // 关闭定位追踪
         offLocationChange(this._mylocationChangeFn)
-        wx.stopLocationUpdate({
-            success: (res) => {
-              console.log("停止追踪", res);
-            },
-            fail: (err) => {
-              console.log(err);
-            },
-        });
+        stopLocationUpdate().then(res=>{
+            console.log("停止追踪", res);
+        })
+        // 上报跑步数据
+        api.reportRunnerInfo({
+            kind_id:0,
+            distance,
+            cost_time,
+            time,
+            caloric,
+            run_source:"wx_mini_program",
+            avg_pace,
+            avg_speed,
+        }).then(res=>{
+            console.log(res)
+            if(res.code == 0){
+                // 跳转到跑步结算页
+                redirectTo('../run_final/index')
+            }
+        })
     },
+    // 播放音频
+    // playRunVoice(){
+    //     const innerAudioContext = wx.createInnerAudioContext({
+    //         useWebAudioImplement:true
+    //     })
+    //     innerAudioContext.autoplay = true
+    //     innerAudioContext.src = "/run_packege/assets/voice/kaishipaobu.mp3"
+    //     // innerAudioContext.play()
+    // },
     /**
      * 生命周期函数--监听页面加载
      */
@@ -213,12 +248,15 @@ Page({
                 }
             })
         })
+        // 
+        
     },
 
     /**
      * 生命周期函数--监听页面初次渲染完成
      */
     onReady() {
+        // 
         this.setData({
             guidePageShow:false
         })
@@ -227,6 +265,7 @@ Page({
             guidePageShow:true,
             runGuideCount: 3,
         })
+        innerAudioContext.src = "run_packege/assets/voice/3.mp3"
         // 开始倒计时
         var runGuideCountTimer = setInterval(()=>{
             this.setData({
@@ -235,6 +274,11 @@ Page({
             this.setData({
                 runGuideCount: this.data.runGuideCount - 1
             })
+            if(this.data.runGuideCount == 2){
+                innerAudioContext.src = "run_packege/assets/voice/2.mp3"
+            }else if(this.data.runGuideCount == 1){
+                innerAudioContext.src = "run_packege/assets/voice/1.mp3"
+            }
             // 倒计时结束后隐藏引导页，清除定时器，开始跑步计时
             if(this.data.runGuideCount == 0){
                 this.setData({
@@ -242,6 +286,7 @@ Page({
                 })
                 clearInterval(this.data.runGuideCountTimer)
                 this.runStart()
+                innerAudioContext.src = "run_packege/assets/voice/kaishipaobu.mp3"
             }
         },1000)
     },
@@ -250,13 +295,10 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow() {
+        // let a = wx.getBackgroundAudioManager()
+        // backgroundAudioManager.src="../../assets/voice/kaishipaobu.mp3"
         // 
-        wx.startLocationUpdate({
-            success: (res) => {},
-            fail: (err) => {
-              console.log(err);
-            },
-        })
+        startLocationUpdate()
     },
 
     /**

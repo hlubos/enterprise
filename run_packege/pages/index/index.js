@@ -5,7 +5,10 @@ import {
     authorize,
     openSetting,
     startLocationUpdateBackground,
-    navigateTo 
+    navigateTo,
+    getStorageSync,
+    showToast,
+    showModal,
 } from '../../utils/wxApi'
 import api from '../../server/run'
 Page({
@@ -27,9 +30,9 @@ Page({
         showRunCheckModal: false,
         // 地图样式
         mapStyle:{
-            // subkey:'L4JBZ-YJ56D-GAO47-P6UQY-ODB46-M2FD2',
-            'subkey':'V5JBZ-RY5EJ-Z7AFP-FP7OM-YXSFE-P7F4J',
-            'layer-style':'2'
+            subkey:'L4JBZ-YJ56D-GAO47-P6UQY-ODB46-M2FD2',
+            // 'subkey':'V5JBZ-RY5EJ-Z7AFP-FP7OM-YXSFE-P7F4J',
+            'layer-style':'1'
         }
     },
     // 授权地理定位
@@ -99,39 +102,56 @@ Page({
     },
     // 开始运动
     startRun(){
-        // 打开运动类型选择弹窗
         // this.selectComponent('#runTypeModal').showFrame();
-        this.setData({
-            showRunCheckModal: true
+        // 运动前首先检查权限是否满足，权限满足则允许跑步，不满足则弹出弹框（去设置）
+        getSetting().then(res=>{
+            console.log(res)
+            if(res.authSetting['scope.userLocation'] != true || res.authSetting['scope.userLocationBackground'] != true){
+                showModal('未授权后台定位','是否前往设置？').then(res=>{
+                    if(res.confirm){
+                        openSetting().then(ress=>{
+                            // console.log(ress)
+                            this.setData({
+                                "auth.hasAuthUserLocation":ress.authSetting['scope.userLocation'],
+                                "auth.hasAuthUserLocationBackground":ress.authSetting['scope.userLocationBackground'],
+                            })
+                        })
+                    }
+                })
+            }else {
+                this.setData({
+                    showRunCheckModal: true
+                })
+            }
         })
     },
     // 进入跑步页面
     gotoRunPage(){
         let that = this
-        // 运动前首先检查权限是否满足，权限满足则允许跑步，不满足则弹出弹框（去设置）
-        getSetting().then(res=>{
-            console.log(res)
-            if(res.authSetting['scope.userLocation'] == true){
-                // that.selectComponent('#runTypeModal').hideFrame();
-                this.setData({
-                    showRunCheckModal: false
-                })
-                navigateTo("../run_page/index").then((res)=>{
-                    console.log(res)
-                })
-            }else{
-                console.log("未授予定位权限")
-                // that.selectComponent('#runTypeModal').hideFrame();
-                this.setData({
-                    showRunCheckModal: false
-                })
-            }
+        // that.selectComponent('#runTypeModal').hideFrame();
+        this.setData({
+            showRunCheckModal: false
         })
+        navigateTo("../run_page/index").then((res)=>{
+            console.log(res)
+        })
+        
     },
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad(options) {
+        // 
+        startLocationUpdateBackground().then(res=>{
+            console.log(res)
+            if(res.errMsg == "startLocationUpdateBackground:ok"){
+                this.setData({
+                    "auth.hasAuthUserLocation":true,
+                    "auth.hasAuthUserLocationBackground":true,
+                })
+            }
+        })
+        // 
         let params = {
             user_id:284209535,
         }
@@ -173,21 +193,13 @@ Page({
     onShow() {
         // 读取缓存
         let that = this
-        // wx.getStorage({
-        //     key:"run_set_infos",
-        //     success(res) {
-        //         console.log(res.data)
-        //         that.setData({
-        //             mapStyle:res.data.nowMapStyInfo
-        //         })
-        //     }
-        // })
         try {
             let res = getStorageSync('run_set_infos')
-            console.log(res)
-            that.setData({
+            // console.log(res)
+            this.setData({
                 mapStyle:res.nowMapStyInfo
             })
+            // console.log(this.data.mapStyle.subkey)
         } catch (e) { }
     },
 

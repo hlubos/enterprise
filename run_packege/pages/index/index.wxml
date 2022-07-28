@@ -25,9 +25,9 @@
         <view class="auth-hint-box" wx:if="{{!auth.hasAuthUserLocation}}" bindtap="toastAuthUserLocation">
             <text class="auth-hint-txt">未授权地理位置</text>
         </view>
-        <!-- <view class="auth-hint-box" wx:if="{{!auth.hasAuthUserLocationBackground}}" bindtap="toastAuthUserLocationBac">
+        <view class="auth-hint-box" wx:if="{{!auth.hasAuthUserLocationBackground}}" bindtap="toastAuthUserLocationBac">
             <text class="auth-hint-txt">未授权后台定位</text>
-        </view> -->
+        </view>
     </view>
     <!-- <navigator id="nav" url="../run_page/index">开始</navigator> -->
     <view class="start-run-btn-box">

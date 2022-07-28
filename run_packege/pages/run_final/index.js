@@ -1,4 +1,6 @@
 // run_packege/pages/run_final/index.js
+import QRCode from '../../utils/weapp.qrcode.esm.js'
+import api from '../../server/run'
 Page({
 
     /**
@@ -37,11 +39,21 @@ Page({
     handleMap(e){
         console.log(e.detail)
     },
+    // 生成二维码
+    createQrcode() {
+    },
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad(options) {
-
+        api.runnerFinishDetail({
+            sport_type: 0
+        }).then(res=>{
+            console.log(res)
+            if(res.code == 0){
+                
+            }
+        })
     },
 
     /**

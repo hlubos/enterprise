@@ -177,12 +177,16 @@
   color: #333333;
 }
 
+.qrcode-box {
+    width: 100%;
+}
+
 .share-btn {
   display: flex;
   justify-content: center;
   width: 552rpx;
   height: 104rpx;
-  margin-top: 120rpx;
+  margin-top: 60rpx;
   margin-bottom: 80rpx;
 }
 
