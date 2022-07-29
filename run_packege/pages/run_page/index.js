@@ -7,13 +7,16 @@ import {
     redirectTo,
     stopLocationUpdate,
     startLocationUpdateBackground,
+    createInnerAudioContext,
+    setStorage,
+    setStorageSync,
+    getStorageSync,
+    removeStorageSync,
 } from '../../utils/wxApi'
 import myFormats from '../../utils/format'
 import api from '../../server/run'
 // const backgroundAudioManager = wx.getBackgroundAudioManager()
-const innerAudioContext = wx.createInnerAudioContext({
-    useWebAudioImplement:true
-})
+const innerAudioContext = createInnerAudioContext(true)
 innerAudioContext.autoplay = true
 Page({
     data: {
@@ -32,10 +35,16 @@ Page({
             longitude:0,
             latitude:0,
         },
-        // 跑步计时时长(秒)
+        // 跑步类型 类型id(0:室外跑; 1:室内跑; 2:自动记步; 3: 骑行)
+        kind_id:0,
+        // 跑步开始时间(时间戳)
+        runStartTime: 0,
+        // 跑步持续时间(秒)
         runTime:0,
         // 跑步距离(米m)
         runMiles:0,
+        // 消耗卡路里
+        calorie: 0,
         // 跑步计时器
         runTimer:null,
         // 位置获取计时器
@@ -65,16 +74,19 @@ Page({
             runMiles:runMiles,
         })
         // 跑步时长
-        // let sumTime = myFormats.secTranlateTime(this.data.runTime)
+        let sumTime = myFormats.secTranlateTime(this.data.runTime)
         // 平均配速
         let avePace = myFormats.formatAvg(this.data.runTime,runMiles)
         // 消耗千卡
         let kiloCalorie = (55 * 1.036 * (runMiles / 1000)).toFixed(1);
+        // 消耗卡路里
+        let calorie = 55 * 1.036 * runMiles
         this.setData({
             "runShowData.runKmiles":runKmiles,
-            // "runShowData.sumTime":sumTime,
+            "runShowData.sumTime":sumTime,
             "runShowData.avePace":avePace,
             "runShowData.kiloCalorie":kiloCalorie,
+            calorie:calorie
         })
     },
     // 计算总距离（米m）
@@ -114,17 +126,20 @@ Page({
                 runTime:second
             })
             // 跑步时长+1
-            let sumTime = myFormats.secTranlateTime(this.data.runTime)
-            this.setData({
-                "runShowData.sumTime":sumTime,
-            })
-            // that.getRunShowData()
+            // let sumTime = myFormats.secTranlateTime(this.data.runTime)
+            // this.setData({
+            //     "runShowData.sumTime":sumTime,
+            // })
+            // 更新跑步信息
+            that.getRunShowData()
+            // 缓存跑步数据
+            that.setRunDataCache()
         },1000)
         that.setData({
             runTimer:runTimer
         })
         // 开启监听位置变化，5秒返回一次结果
-        stopLocationUpdate()
+        // stopLocationUpdate()
         startLocationUpdateBackground().then(res=>{
             console.log(res)
             onLocationChange(this._mylocationChangeFn)
@@ -161,7 +176,7 @@ Page({
             this.setData({
                 canGetLocation: true
             })
-            this.getRunShowData()
+            // this.getRunShowData()
         },5000)
         this.setData({
             locaTimer:locaTimer
@@ -204,23 +219,66 @@ Page({
             console.log("停止追踪", res);
         })
         // 上报跑步数据
-        api.reportRunnerInfo({
+        let params = {
             kind_id:0,
-            distance,
-            cost_time,
-            time,
-            caloric,
+            distance:this.data.runMiles,
+            cost_time:this.data.runTime,
+            time:this.data.runStartTime,
+            caloric:this.data.calorie,
             run_source:"wx_mini_program",
-            avg_pace,
-            avg_speed,
-        }).then(res=>{
+            // 步数
+            u_steps:100,
+        }
+        if(this.data.runTime == 0 || this.data.runMiles == 0){
+            params.avg_pace = 0
+            params.avg_speed = 0
+        }else {
+            // 均速(公里/小时)
+            params.avg_pace = (this.data.runTime/this.data.runMiles/1000).toFixed(2)
+            // 配速(秒/公里)
+            params.avg_speed = ((this.data.runMiles*1000)/(this.data.runTime*3600)).toFixed(2)
+        }
+        api.reportRunnerInfo(params).then(res=>{
             console.log(res)
             if(res.code == 0){
                 // 跳转到跑步结算页
                 redirectTo('../run_final/index')
             }
         })
+        // redirectTo('../run_final/index')
     },
+    // 缓存运动数据
+    setRunDataCache(){
+        let user_id = getStorageSync('user_id')
+        let storageKey = 'run_data_' + user_id
+        setStorage(storageKey,{
+            kind_id:this.data.kind_id,
+            // 跑步持续时间(秒)
+            runTime:this.data.runTime,
+            // 跑步轨迹点数组
+            locaDotArr:this.data.locaDotArr,
+            // 跑步开始时间(时间戳)
+            runStartTime: this.data.runStartTime,
+            // 跑步距离(米m)
+            runMiles:this.data.runMiles,
+            // 消耗卡路里
+            calorie: this.data.calorie,
+        })
+    },
+    // 获取缓存数据
+    // getRunDataCache(){
+    //     let user_id = getStorageSync('user_id')
+    //     let storageKey = 'run_data_' + user_id
+    //     try {
+    //         let cacheData = getStorageSync(storageKey)
+    //         if(cacheData){
+    //             console.log(cacheData)
+    //             console.log("上次运动未完成")
+    //         }else {
+    //             console.log("上次运动已完成")
+    //         }
+    //     } catch (e) { }
+    // },
     // 播放音频
     // playRunVoice(){
     //     const innerAudioContext = wx.createInnerAudioContext({
@@ -256,6 +314,8 @@ Page({
      * 生命周期函数--监听页面初次渲染完成
      */
     onReady() {
+        // 查看缓存，是否有上次未完成的运动
+        // this.getRunDataCache()
         // 
         this.setData({
             guidePageShow:false
@@ -279,10 +339,11 @@ Page({
             }else if(this.data.runGuideCount == 1){
                 innerAudioContext.src = "run_packege/assets/voice/1.mp3"
             }
-            // 倒计时结束后隐藏引导页，清除定时器，开始跑步计时
+            // 倒计时结束后隐藏引导页，设置跑步开始时间,清除定时器，开始跑步计时
             if(this.data.runGuideCount == 0){
                 this.setData({
-                    guidePageShow:false
+                    guidePageShow:false,
+                    runStartTime: parseInt(new Date().getTime()/1000)
                 })
                 clearInterval(this.data.runGuideCountTimer)
                 this.runStart()
@@ -295,10 +356,6 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow() {
-        // let a = wx.getBackgroundAudioManager()
-        // backgroundAudioManager.src="../../assets/voice/kaishipaobu.mp3"
-        // 
-        startLocationUpdate()
     },
 
     /**

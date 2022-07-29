@@ -27,7 +27,7 @@ Page({
         })
         console.log("加载数据")
         let params = {
-            user_id:284209535,
+            // user_id:284209535,
             begin_cnt: this.data.begin_cnt,
             end_cnt: this.data.end_cnt,
         }

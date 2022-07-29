@@ -1,3 +1,7 @@
+import {
+    startLocationUpdate,
+    startLocationUpdateBackground
+} from '../../../utils/wxApi'
 Component({
 
     behaviors: [],
@@ -51,6 +55,7 @@ Component({
         //     }
         // });
         this._toLocation()
+        // startLocationUpdateBackground()
       },
       moved: function () { 
       },
@@ -59,7 +64,9 @@ Component({
 
     pageLifetimes: {
       // 组件所在页面的生命周期函数
-      show: function () { },
+      show: function () {
+        // startLocationUpdate()
+      },
       hide: function () { },
       resize: function () { },
     },

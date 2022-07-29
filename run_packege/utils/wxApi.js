@@ -198,9 +198,29 @@ export const setStorageSync = (key,data) =>{
 export const getStorageSync = (key) =>{
     return wx.getStorageSync(key)
 }
+/**
+ *  wx.removeStorage 从本地缓存中移除指定 key。
+ *  wx.removeStorageSync(string key) wx.removeStorage 的同步版本
+ */
+export const removeStorage = (key) => {
+    return new Promise((resolve, reject) => {
+        wx.removeStorage({
+            key,
+            success: (result) => {
+                resolve(result);
+            },
+            fail: (err) => {
+                reject(err);
+            }
+        });
+    })
+}
+export const removeStorageSync = (key) =>{
+    return wx.removeStorageSync(key)
+}
 
 /**
- *  wx.redirectTo 从本地缓存中异步获取指定 key 的内容。
+ *  wx.redirectTo
  */
 export const redirectTo = (url) => {
     return new Promise((resolve, reject) => {
@@ -215,14 +235,32 @@ export const redirectTo = (url) => {
         });
     })
 }
+/**
+ *  wx.navigateBack
+ *  关闭当前页面，返回上一页面或多级页面。可通过 getCurrentPages 获取当前的页面栈，决定需要返回几层。
+ */
+export const navigateBack = (delta = 1) => {
+    return new Promise((resolve, reject) => {
+        wx.navigateBack({
+            delta,
+            success: (result) => {
+                resolve(result);
+            },
+            fail: (err) => {
+                reject(err);
+            }
+        });
+    })
+}
 
 /**
  *  wx.showToast 显示消息提示框
  */
-export const showToast = (title) => {
+export const showToast = (title,icon) => {
     return new Promise((resolve, reject) => {
         wx.showToast({
             title,
+            icon,
             success: (result) => {
                 resolve(result);
             },
@@ -248,5 +286,15 @@ export const showModal = (title,content) => {
                 reject(err);
             }
         });
+    })
+}
+
+
+/**
+ *  wx.createInnerAudioContext 创建内部 audio 上下文 InnerAudioContext 对象。
+ */
+export const createInnerAudioContext = (useWebAudioImplement) => {
+    return wx.createInnerAudioContext({
+        useWebAudioImplement,
     })
 }

@@ -1,0 +1,11 @@
+<!--run_packege/pages/index/components/runCacheDialog/runCacheDialog.wxml-->
+<view class="mask">
+    <view class="dialog-box">
+        <view class="dialog-title">
+            <view>上次跑步进程被异常中断</view>
+            <view>是否要继续跑步</view>
+        </view>
+        <view class="giveup-btn" bindtap="giveUpRun">放弃跑步</view>
+        <view class="continue-btn" bindtap="continueRun">继续跑步</view>
+    </view>
+</view>

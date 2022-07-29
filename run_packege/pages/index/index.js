@@ -28,6 +28,8 @@ Page({
         runType:'0',
         // 是否显示跑步模式选择框
         showRunCheckModal: false,
+        // 显示跑步异常中断弹框
+        showRunBreakDialog:false,
         // 地图样式
         mapStyle:{
             subkey:'L4JBZ-YJ56D-GAO47-P6UQY-ODB46-M2FD2',
@@ -127,6 +129,14 @@ Page({
     },
     // 进入跑步页面
     gotoRunPage(){
+        // 室内跑暂未开发
+        if(this.data.runType == 1){
+            showToast('敬请期待！','none')
+            this.setData({
+                showRunCheckModal: false
+            })
+            return false
+        }
         let that = this
         // that.selectComponent('#runTypeModal').hideFrame();
         this.setData({
@@ -136,6 +146,39 @@ Page({
             console.log(res)
         })
         
+    },
+    // 放弃跑步
+    giveUpRun(){
+        // 清缓存
+        console.log("清缓存")
+        this.setData({
+            showRunBreakDialog: false
+        })
+    },
+    continueRun(){
+        // 不清缓存
+        console.log("不清缓存")
+        this.setData({
+            showRunBreakDialog: false
+        })
+    },
+    // 继续跑步
+    // 获取缓存数据,读取缓存查看是否存在未完成的运动
+    getRunDataCache(){
+        try {
+            let user_id = getStorageSync('user_id')
+            let storageKey = 'run_data_' + user_id
+            let cacheData = getStorageSync(storageKey)
+            if(cacheData){
+                console.log(cacheData)
+                console.log("上次运动未完成")
+                this.setData({
+                    showRunBreakDialog: true
+                })
+            }else {
+                console.log("上次运动已完成")
+            }
+        } catch (e) { }
     },
     /**
      * 生命周期函数--监听页面加载
@@ -184,14 +227,15 @@ Page({
                 })
             }
         })
-        
+        // 读取缓存查看是否存在未完成的运动
+        this.getRunDataCache()
     },
 
     /**
      * 生命周期函数--监听页面显示
      */
     onShow() {
-        // 读取缓存
+        // 读取缓存,应用设置
         let that = this
         try {
             let res = getStorageSync('run_set_infos')

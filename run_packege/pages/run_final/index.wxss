@@ -1,11 +1,14 @@
 /* run_packege/pages/run_final/index.wxss */
 .fina-map-box {
   position: relative;
+  transition: all ease 0.5s;
 }
 
 .run-final-map {
   width: 100%;
-  height: 40vh;
+  /* height: 40vh; */
+  height: 100%;
+  transition: all ease 0.5s;
 }
 
 .data-panel-btn {
@@ -32,6 +35,7 @@
   justify-content: center;
   flex-wrap: wrap;
   /* height: 60vh; */
+  transition: all ease 0.5s;
 }
 
 .title {
@@ -109,11 +113,13 @@
 }
 
 .title2-right-name {
+  width: 100%;
   font-size: 28rpx;
   color: #333333;
 }
 
 .title2-right-id {
+  width: 100%;
   font-size: 24rpx;
   color: #999999;
 }
@@ -178,7 +184,21 @@
 }
 
 .qrcode-box {
-    width: 100%;
+    /* width: 100%; */
+    width: 654rpx;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: flex-end;
+}
+.qrcode-img {
+    width: 160rpx;
+    height: 160rpx;
+    margin-left: 24rpx;
+}
+.qrcode-txt{
+    font-size: 32rpx;
+    color: #333333;
+    text-align: right;
 }
 
 .share-btn {

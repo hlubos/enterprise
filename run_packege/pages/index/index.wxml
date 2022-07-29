@@ -52,6 +52,12 @@
         </view>
     </page-container>
 </view>
+<view hidden="{{!showRunBreakDialog}}">
+    <runCacheDialog 
+        bind:giveUpRun="giveUpRun"
+        bind:continueRun="continueRun"
+    ></runCacheDialog>
+</view>
 <!-- <runTypeModal id="runTypeModal" frameTitle="请选择你的跑步模式">
     <view class="run-type-modal-box">
         <view class='run-type-modal-item {{runType=="0"?"run-type-modal-item-active":""}}' data-runtype="0" bindtap="selectRunType">

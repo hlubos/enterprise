@@ -50,6 +50,7 @@ function formatAvg(secs,miles){
 }
 
 // 日期格式化 日期格式重置   页面用法：{{formatDate(1646209697,'yyyy/MM/dd hh:mm')}}  返回值：'2017/08/22 18:30'
+// yyyy-MM-dd hh:mm:ss
 function formatDate(value, fmt){
     if (!value) return value;
     let timeSc = new Date(value * 1000);
