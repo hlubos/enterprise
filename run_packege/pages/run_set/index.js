@@ -17,11 +17,12 @@ Page({
         // 网络状态
         netType:'',
         // 当前语音类型索引
-        voiceIndex: 1,
+        voiceIndex: 0,
         // 当前播报频率索引
-        freIndex: [0,1],
+        freIndex: [0,0],
         // 语音类型列表
-        voiceList: ['国语女声', '国语男声', '英语女声', '英语男声'],
+        // voiceList: ['国语女声', '国语男声', '英语女声', '英语男声'],
+        voiceList: ['国语女声'],
         // 播报频率 ['10分钟', '20分钟', '30分钟', '40分钟']
         frequencyArray: [['按距离播报', '按时间播报'], ['0.5公里', '1公里', '2公里', '3公里']],
         // 地图样式列表
@@ -87,7 +88,9 @@ Page({
     // 缓存设置的数据
     cacheSetData(){
         try {
-            setStorageSync('run_set_infos',{
+            let user_id = getStorageSync('user_id')
+            let storageKey = 'run_set_infos_' + user_id
+            setStorageSync(storageKey,{
                 openVoice:this.data.openVoice,
                 voiceIndex:this.data.voiceIndex,
                 freIndex:this.data.freIndex,
@@ -164,6 +167,20 @@ Page({
             })
         }
     },
+    // 读取跑步设置缓存
+    getRunSetCache(){
+        try {
+            let user_id = getStorageSync('user_id')
+            let storageKey = 'run_set_infos_' + user_id
+            let res = getStorageSync(storageKey)
+            if(res.nowMapStyInfo){
+                this.setData({
+                    nowMapStyInfo:res.nowMapStyInfo
+                })
+            }
+            // console.log(this.data.mapStyle.subkey)
+        } catch (e) { }
+    },
     /**
      * 生命周期函数--监听页面加载
      */
@@ -191,7 +208,8 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow() {
-
+        // 读取设置缓存
+        this.getRunSetCache()
     },
 
     /**

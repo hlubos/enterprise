@@ -12,24 +12,50 @@ Page({
         total_distance: '0.00',
         total_caloric: '0.0',
         begin_cnt: 0,
-        end_cnt: 20,
+        end_cnt: 60,
         runLogList:[],
+        thumbImgList:[],
         // 节流阀
         canLoadData:true,
+        // has_more
+        has_more: 1,
     },
     // 加载数据
     loadData(){
-        if(!this.data.canLoadData){
+        if(!this.data.canLoadData || this.data.has_more == 0){
             return false
         }
         this.setData({
             canLoadData: false
         })
         console.log("加载数据")
+        // 获取缩略图接口
+        api.getDayPeakRecord({
+            // user_id:284209535,
+            kind_id: 100,
+        }).then(res=>{
+            if(res.code == 0){
+                console.log(res)
+                this.setData({
+                    has_more: res.has_more
+                })
+                if(this.data.thumbImgList.length == 0){
+                    this.setData({
+                        thumbImgList:res.runner_extra_infos
+                    })
+                }else if(this.data.thumbImgList.length == 0) {
+                    this.setData({
+                        thumbImgList:[...this.data.thumbImgList,...res.runner_extra_infos]
+                    })
+                }
+            }
+        })
+        // 
         let params = {
             // user_id:284209535,
             begin_cnt: this.data.begin_cnt,
             end_cnt: this.data.end_cnt,
+            kind_id: 100,
         }
         api.getRunnerInfo(params).then(res=>{
             if(res.code == 0){
@@ -38,6 +64,11 @@ Page({
                 let newInfos = res.infos
                 for(let i = 0;i<newInfos.length;i++){
                     newInfos[i].time = myFormats.formatDate(newInfos[i].time,'yyyy/MM/dd hh:mm:ss')
+                    newInfos[i].distance = (newInfos[i].distance/1000).toFixed(2)
+                    newInfos[i].caloric = (newInfos[i].caloric/1000).toFixed(2)
+                    newInfos[i].cost_time = myFormats.secTranlateTime(newInfos[i].cost_time)
+                    // avg_pace formatAvg
+                    newInfos[i].avg_pace = myFormats.formatShowAvg(newInfos[i].avg_pace)
                 }
                 this.setData({
                     total_cnt: res.total_cnt,

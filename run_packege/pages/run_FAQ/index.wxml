@@ -1,2 +1,23 @@
 <!--plugin/pages/FAQ/index.wxml-->
-<text>常见问题</text>
+<view class="faq-nav">
+    <view 
+        class="nav-item {{selectedNavIndex==index?'active-item':''}}" 
+        wx:for="{{navList}}"
+        wx:key="{{index}}"
+        data-index="{{index}}"
+        bindtap="selectedNav"
+    >{{item.name}}</view>
+</view>
+<view class="faq-box">
+    <view class="faq-content">
+        <view class="faq-title">{{faqList[selectedNavIndex].title}}</view>
+        <view class="faq-text">{{faqList[selectedNavIndex].text}}</view>
+        <view class="faq-solve-tle">{{faqList[selectedNavIndex].solveTle}}</view>
+        <view class="faq-solve-con">{{faqList[selectedNavIndex].solveCon}}</view>
+        <image class="faq-img" src="{{faqList[selectedNavIndex].img}}"></image>
+    </view>
+</view>
+<view class="next-btn-box">
+    <view class="next-btn" bindtap="nextTip" hidden="{{selectedNavIndex >= 3}}">下一步</view>
+    <view class="next-btn" bindtap="finishTip" hidden="{{selectedNavIndex < 3}}">完成</view>
+</view>

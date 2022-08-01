@@ -7,4 +7,6 @@ export default {
     runnerFinishDetail:'/sport_history/runner_finish_detail',
     // 用户历史数据总结
     userSportSummary:'/sport_history/user_sport_summary',
+    // 运动轨迹缩略图 
+    getDayPeakRecord:'/yd_runner/get_day_peak_record',
 }

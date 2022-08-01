@@ -1,4 +1,12 @@
 /* run_packege/pages/run_final/index.wxss */
+.backImg{
+    /* width: 100%;
+    height: 100vh; */
+    display: block;
+}
+.shareCanvas{
+
+}
 .fina-map-box {
   position: relative;
   transition: all ease 0.5s;
@@ -36,6 +44,7 @@
   flex-wrap: wrap;
   /* height: 60vh; */
   transition: all ease 0.5s;
+  /* background-color: #F7F8FA; */
 }
 
 .title {
@@ -189,6 +198,7 @@
     display: flex;
     flex-direction: row-reverse;
     align-items: flex-end;
+    transition: all ease 0.5s;
 }
 .qrcode-img {
     width: 160rpx;
@@ -201,6 +211,13 @@
     text-align: right;
 }
 
+.share-btn-box{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all ease 0.5s;
+}
 .share-btn {
   display: flex;
   justify-content: center;
@@ -230,4 +247,27 @@
   background: #4CDDB4;
   opacity: 0.6;
   border-radius: 0 52rpx 52rpx 0;
+}
+
+.share-type-box{
+    width: 100%;
+    height: 226rpx;
+    background: #FFFFFF;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 20rpx;
+    transition: all ease 0.5s;
+}
+.type-btn{
+    text-align: center;
+}
+.type-btn image{
+    width: 88rpx;
+    height: 88rpx;
+}
+.type-btn view{
+    font-weight: 400;
+    font-size: 24rpx;
+    color: #333333;
 }

@@ -49,6 +49,16 @@ function formatAvg(secs,miles){
     return total_m+"'"+add0(lest_sec)+"''";
 }
 
+// 配速格式化（秒/公里->）
+function formatShowAvg(avg_pace){
+    if(avg_pace == 0){
+        return "0'00''"
+    }
+    var total_m = Math.floor(avg_pace / 60) > 59 ? 59 : Math.floor(avg_pace / 60);
+    var lest_sec = avg_pace % 60;
+    return total_m+"'"+add0(lest_sec)+"''";
+}
+
 // 日期格式化 日期格式重置   页面用法：{{formatDate(1646209697,'yyyy/MM/dd hh:mm')}}  返回值：'2017/08/22 18:30'
 // yyyy-MM-dd hh:mm:ss
 function formatDate(value, fmt){
@@ -91,4 +101,5 @@ export default {
     secTranlateTime,
     formatAvg,
     formatDate,
+    formatShowAvg,
 }

@@ -1,1 +1,77 @@
 /* plugin/pages/FAQ/index.wxss */
+.faq-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 88rpx;
+    font-weight: 400;
+    font-size: 28rpx;
+    color: #999999;
+}
+.nav-item{
+    width: 25%;
+    display: flex;
+    justify-content: center;
+}
+.active-item{
+    font-weight: 500;
+    font-size: 28rpx;
+    color: #4CDDB4;
+    /* border-bottom: 6rpx solid #4CDDB4; */
+}
+.faq-box{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.faq-content{
+    width: 654rpx;
+}
+.faq-title{
+    font-weight: 500;
+    font-size: 32rpx;
+    color: #333333;
+    margin-top: 48rpx;
+}
+.faq-text{
+    font-weight: 400;
+    font-size: 28rpx;
+    color: #666666;
+    margin-top: 24rpx;
+}
+.faq-solve-tle{
+    font-weight: 500;
+    font-size: 32rpx;
+    color: #F86254;
+    margin-top: 48rpx;
+}
+.faq-solve-con{
+    font-weight: 400;
+    font-size: 28rpx;
+    color: #F86254;
+    margin-top: 24rpx;
+}
+.faq-img{
+    width: 100%;
+    height: 560rpx;
+}
+.next-btn-box{
+    position: absolute;
+    bottom: 148rpx;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.next-btn{
+    width: 552rpx;
+    height: 104rpx;
+    background: #4CDDB4;
+    border-radius: 52rpx;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+    font-size: 34rpx;
+    color: #FFFFFF;
+}

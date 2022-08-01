@@ -15,6 +15,9 @@ Page({
      */
     data: {
         // 
+        shareFlag:0,
+        canvasWidth:0,
+        canvasHeight:0,
         mapHeight:'600rpx',
         isShowPanel:true,
         pointsList:[],
@@ -87,10 +90,87 @@ Page({
         } catch (error) {}
         navigateBack()
     },
+    // 分享按钮,显示二维码
+    createQrcode(){
+        this.setData({
+            shareFlag: 1
+        })
+        this.setCanvasSize()
+    },
+    // 调整canvas宽高
+    setCanvasSize(){
+        let shareBox = wx.createSelectorQuery()
+        console.log(shareBox.select('.share-img-box'))
+        shareBox.select('.share-img-box').boundingClientRect(res=>{
+            // myCanvasHeight = res.height
+            this.setData({
+                canvasHeight: res.height
+            })
+        }).exec()
+    },
+    // 保存图片
+    clickSaveImg(){
+        wx.canvasToTempFilePath({     //将canvas生成图片
+            canvasId: 'shareCanvas',
+            x: 0,
+            y: 0,
+            success: function (res) {
+                // _this._data.imgUrl = res.tempFilePath
+                wx.saveImageToPhotosAlbum({  //保存图片到相册
+                    filePath: res.tempFilePath, //生成图片临时路径
+                    success: function () {
+                        wx.showToast({
+                            title: "图片已保存！",
+                            duration: 2000
+                        })
+                    }
+                })
+            },
+            fail: error => {
+                wx.showToast({
+                    title: "保存图片失败",
+                    duration: 2000
+                })
+                if (error.errMsg === "saveImageToPhotosAlbum:fail:auth denied" || error.errMsg === "saveImageToPhotosAlbum:fail auth deny" || error.errMsg === "saveImageToPhotosAlbum:fail authorize no response") {
+                    // 这边微信做过调整，必须要在按钮中触发，因此需要在弹框回调中进行调用
+                    wx.showModal({
+                        title: '提示',
+                        content: '需要您授权保存相册',
+                        showCancel: false,
+                        success: modalSuccess => {
+                            wx.openSetting({
+                                success(settingdata) {
+                                    console.log("settingdata", settingdata)
+                                    if (settingdata.authSetting['scope.writePhotosAlbum']) {
+                                        wx.showModal({
+                                            title: '提示',
+                                            content: '获取权限成功',
+                                            showCancel: false,
+                                        })
+                                    } else {
+                                        wx.showModal({
+                                            title: '提示',
+                                            content: '获取权限失败，将无法保存到相册哦~',
+                                            showCancel: false,
+                                        })
+                                    }
+                                },
+                            })
+                        }
+                    })
+                }
+            }
+        },this)
+    },
+    // 微信分享
+    wxShare(){
+
+    },
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad(options) {
+        this.setCanvasSize()
         api.runnerFinishDetail({
             sport_type: 0
         }).then(res=>{
@@ -143,7 +223,7 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow() {
-
+        
     },
 
     /**
@@ -157,7 +237,10 @@ Page({
      * 生命周期函数--监听页面卸载
      */
     onUnload() {
-
+        // 清除运动数据缓存
+        let user_id = getStorageSync('user_id')
+        let storageKey = 'run_data_' + user_id
+        removeStorageSync(storageKey)
     },
 
     /**

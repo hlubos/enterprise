@@ -9,6 +9,7 @@ import {
     getStorageSync,
     showToast,
     showModal,
+    removeStorageSync,
 } from '../../utils/wxApi'
 import api from '../../server/run'
 Page({
@@ -143,7 +144,7 @@ Page({
             showRunCheckModal: false
         })
         navigateTo("../run_page/index").then((res)=>{
-            console.log(res)
+            // console.log(res)
         })
         
     },
@@ -154,15 +155,23 @@ Page({
         this.setData({
             showRunBreakDialog: false
         })
+        // 清除运动数据缓存
+        let user_id = getStorageSync('user_id')
+        let storageKey = 'run_data_' + user_id
+        removeStorageSync(storageKey)
     },
+    // 继续跑步
     continueRun(){
         // 不清缓存
         console.log("不清缓存")
         this.setData({
             showRunBreakDialog: false
         })
+        // 跳转到跑步页面
+        navigateTo("../run_page/index").then((res)=>{
+            // console.log(res)
+        })
     },
-    // 继续跑步
     // 获取缓存数据,读取缓存查看是否存在未完成的运动
     getRunDataCache(){
         try {
@@ -179,6 +188,32 @@ Page({
                 console.log("上次运动已完成")
             }
         } catch (e) { }
+    },
+    // 读取跑步设置缓存
+    getRunSetCache(){
+        try {
+            let user_id = getStorageSync('user_id')
+            let storageKey = 'run_set_infos_' + user_id
+            let res = getStorageSync(storageKey)
+            if(res){
+                this.setData({
+                    mapStyle:res.nowMapStyInfo
+                })
+            }
+            // console.log(this.data.mapStyle.subkey)
+        } catch (e) { }
+    },
+    // 读取用户缓存，判断是否为新用户
+    judgeNewUser(){
+        let user_id = getStorageSync('user_id')
+        let storageKey = 'isNewUser_' + user_id
+        let res = getStorageSync(storageKey)
+        if(res != 1){
+            // 新用户，跳转到常见问题（引导）页
+            navigateTo("../run_FAQ/index").then((res)=>{
+                // console.log(res)
+            })
+        }
     },
     /**
      * 生命周期函数--监听页面加载
@@ -227,8 +262,6 @@ Page({
                 })
             }
         })
-        // 读取缓存查看是否存在未完成的运动
-        this.getRunDataCache()
     },
 
     /**
@@ -236,15 +269,11 @@ Page({
      */
     onShow() {
         // 读取缓存,应用设置
-        let that = this
-        try {
-            let res = getStorageSync('run_set_infos')
-            // console.log(res)
-            this.setData({
-                mapStyle:res.nowMapStyInfo
-            })
-            // console.log(this.data.mapStyle.subkey)
-        } catch (e) { }
+        this.getRunSetCache()
+        // 读取缓存查看是否存在未完成的运动
+        this.getRunDataCache()
+        // 读缓存判断是否为新用户
+        this.judgeNewUser()
     },
 
     /**
@@ -258,7 +287,6 @@ Page({
      * 生命周期函数--监听页面卸载
      */
     onUnload() {
-
     },
 
     /**

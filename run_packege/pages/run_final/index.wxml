@@ -1,68 +1,85 @@
 <!--run_packege/pages/run_final/index.wxml-->
-<view class="fina-map-box" style="height: {{mapHeight}};">
-  <map id="run-final-map" class="run-final-map" name="run_final_map" latitude="39.92082670727589" longitude:="116.45972113140078" show-location="true" bindtap="handleMap" polyline="{{polylines}}"></map>
-  <view class="data-panel-btn" bindtap="switchPanel">
-    <view class="data-panel-btn-line"></view>
-  </view>
+<canvas canvas-id="shareCanvas" class="shareCanvas" style="width: 100%; height:{{canvasHeight}}px;">
+    <view class="share-img-box">
+        <view class="fina-map-box" style="height: {{mapHeight}};">
+            <map id="run-final-map" class="run-final-map" name="run_final_map" latitude="39.92082670727589" longitude:="116.45972113140078" show-location="true" bindtap="handleMap" polyline="{{polylines}}"></map>
+            <view class="data-panel-btn" bindtap="switchPanel">
+                <view class="data-panel-btn-line"></view>
+            </view>
+        </view>
+        <!-- <page-container show="true" overlay="false"> 
+        </page-container> -->
+        <view class="final-chart-box" hidden="{{!isShowPanel}}">
+            <view class="title">
+                <view class="title1">
+                    <view class="logo">
+                        <image src="https://ssl-pubpic.51yund.com/1221778105.png"></image>
+                    </view>
+                    <view class="finish-time">{{showRunData.runStartTime}}</view>
+                    <view class="avatar">
+                        <image src="{{userInfo.head_url}}"></image>
+                    </view>
+                </view>
+                <view class="title2">
+                    <view class="title2-left">
+                        <view class="title2-left-kmeter">{{showRunData.runKMiles}}</view>
+                        <view class="title2-left-unit">公里</view>
+                    </view>
+                    <view class="title2-right">
+                        <view class="title2-right-name">{{userInfo.nick}}</view>
+                        <view class="title2-right-id">用户ID：278334567</view>
+                    </view>
+                </view>
+                <view class="title3">
+                    <view class="title3-item1">
+                        <view class="title3-num">{{showRunData.avgPace}}</view>
+                        <view class="title3-unit">平均配速</view>
+                    </view>
+                    <view class="title3-item2">
+                        <view class="title3-num">{{showRunData.sumTime}}</view>
+                        <view class="title3-unit">总计时间</view>
+                    </view>
+                    <view class="title3-item3">
+                        <view class="title3-num">{{showRunData.kCalorie}}</view>
+                        <view class="title3-unit">消耗千卡</view>
+                    </view>
+                </view>
+            </view>
+            <view class="count-line">
+                <view class="count-line-txt">第{{userInfo.run_day_cnt}}次跑步</view>
+            </view>
+            <view class="visual-chart-box">
+                <!-- <view class="visual-chart-title">配速</view> -->
+                <view class="visual-chart">
+                    <run-speed-chart></run-speed-chart>
+                </view>
+            </view>
+            <!-- 二维码 -->
+            <view class="qrcode-box" hidden="{{shareFlag == 0}}">
+                <!-- <canvas type="2d" id='myQrcode' style="width: 160rpx;height: 160rpx;"></canvas> -->
+                <image class="qrcode-img" src="{{qrcodeImg}}"></image>
+                <view class="qrcode-txt">
+                    <view>全民数字化</view>
+                    <view>运动健康管理平台</view>
+                </view>
+            </view>
+        </view>
+    </view>
+</canvas>
+<view class="share-btn-box" hidden="{{shareFlag == 1}}">
+    <view class="share-btn">
+        <view class="btn1" bindtap="runFinish">完成运动</view>
+        <view class="btn2" bindtap="createQrcode">分享</view>
+    </view>
 </view>
-<!-- <page-container show="true" overlay="false"> 
-</page-container> -->
-<view class="final-chart-box" hidden="{{!isShowPanel}}">
-  <view class="title">
-    <view class="title1">
-      <view class="logo">
-        <image src="https://ssl-pubpic.51yund.com/1221778105.png"></image>
-      </view>
-      <view class="finish-time">{{showRunData.runStartTime}}</view>
-      <view class="avatar">
-        <image src="{{userInfo.head_url}}"></image>
-      </view>
+
+<view class="share-type-box" hidden="{{shareFlag == 0}}">
+    <view class="type-btn" bindtap="wxShare">
+        <image src="https://ssl-pubpic.51yund.com/1225058005.png"></image>
+        <view>微信分享</view>
     </view>
-    <view class="title2">
-      <view class="title2-left">
-        <view class="title2-left-kmeter">{{showRunData.runKMiles}}</view>
-        <view class="title2-left-unit">公里</view>
-      </view>
-      <view class="title2-right">
-        <view class="title2-right-name">{{userInfo.nick}}</view>
-        <view class="title2-right-id">用户ID：278334567</view>
-      </view>
+    <view class="type-btn" bindtap="clickSaveImg">
+        <image src="https://ssl-pubpic.51yund.com/1225058151.png"></image>
+        <view>保存图片</view>
     </view>
-    <view class="title3">
-      <view class="title3-item1">
-        <view class="title3-num">{{showRunData.avgPace}}</view>
-        <view class="title3-unit">平均配速</view>
-      </view>
-      <view class="title3-item2">
-        <view class="title3-num">{{showRunData.sumTime}}</view>
-        <view class="title3-unit">总计时间</view>
-      </view>
-      <view class="title3-item3">
-        <view class="title3-num">{{showRunData.kCalorie}}</view>
-        <view class="title3-unit">消耗千卡</view>
-      </view>
-    </view>
-  </view>
-  <view class="count-line">
-    <view class="count-line-txt">第{{userInfo.run_day_cnt}}次跑步</view>
-  </view>
-  <view class="visual-chart-box">
-    <!-- <view class="visual-chart-title">配速</view> -->
-    <view class="visual-chart">
-      <run-speed-chart></run-speed-chart>
-    </view>
-  </view>
-  <!-- 二维码 -->
-  <view class="qrcode-box">
-    <!-- <canvas type="2d" id='myQrcode' style="width: 160rpx;height: 160rpx;"></canvas> -->
-    <image class="qrcode-img" src="{{qrcodeImg}}"></image>
-    <view class="qrcode-txt">
-        <view>全民数字化</view>
-        <view>运动健康管理平台</view>
-    </view>
-  </view>
-  <view class="share-btn">
-    <view class="btn1" bindtap="runFinish">完成运动</view>
-    <view class="btn2" bindtap="createQrcode">分享</view>
-  </view>
 </view>

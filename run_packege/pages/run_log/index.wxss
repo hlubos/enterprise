@@ -63,7 +63,7 @@
 .runlog-item-icon {
     width: 160rpx;
     height: 160rpx;
-    background-color: darkgreen;
+    /* background-color: darkgreen; */
     margin-right: 20rpx;
 }
 

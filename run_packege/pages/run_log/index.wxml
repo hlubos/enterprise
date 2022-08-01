@@ -23,7 +23,7 @@
             <mp-cells ext-class="my-cells">
                 <mp-cell wx:for="{{runLogList}}" wx:key="time">
                     <view class="runlog-item-icon">
-                        <image src=""></image>
+                        <image src="{{thumbImgList[index].pic_url}}"></image>
                     </view>
                     <view class="runlog-item-info" slot="footer">
                         <view class="runlog-item-info-line1">
@@ -33,7 +33,7 @@
                         </view>
                         <view class="runlog-item-info-line2">
                             <view>
-                                <text class="runlog-item-info-line2-txt1">{{(item.distance/1000)}} 公里</text>
+                                <text class="runlog-item-info-line2-txt1">{{(item.distance)}} 公里</text>
                                 <text class="runlog-item-info-line2-txt2">{{item.kind_id==0?'室外跑':'室内跑'}}</text>
                             </view>
                             <image class="right-icon" src="https://ssl-pubpic.51yund.com/1221022777.png"></image>
@@ -41,11 +41,11 @@
                         <view class="runlog-item-info-line3">
                             <view class="line3-item">
                                 <image class="run-info-icon" src="https://ssl-pubpic.51yund.com/1221022887.png"></image>
-                                <text class="run-info-txt">{{item.caloric/1000}}kcal</text>
+                                <text class="run-info-txt">{{item.caloric}}kcal</text>
                             </view>
                             <view class="line3-item">
                                 <image class="run-info-icon" src="https://ssl-pubpic.51yund.com/1221023870.png"></image>
-                                <text class="run-info-txt">{{item.cost_time}}s</text>
+                                <text class="run-info-txt">{{item.cost_time}}</text>
                             </view>
                             <view class="line3-item">
                                 <image class="run-info-icon" src="https://ssl-pubpic.51yund.com/1221024269.png"></image>

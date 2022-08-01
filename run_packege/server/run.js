@@ -23,4 +23,7 @@ export default class LoginMember {
     static userSportSummary(params) {
         return $http.post(url.userSportSummary, params);
     }
+    static getDayPeakRecord(params) {
+        return $http.post(url.getDayPeakRecord, params);
+    }
 }

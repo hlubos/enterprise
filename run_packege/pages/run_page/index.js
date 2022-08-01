@@ -12,6 +12,7 @@ import {
     setStorageSync,
     getStorageSync,
     removeStorageSync,
+    showModal,
 } from '../../utils/wxApi'
 import myFormats from '../../utils/format'
 import api from '../../server/run'
@@ -226,8 +227,8 @@ Page({
             time:this.data.runStartTime,
             caloric:this.data.calorie,
             run_source:"wx_mini_program",
-            // 步数
-            u_steps:100,
+            // 步数(可不传)
+            // u_steps:100,
         }
         if(this.data.runTime == 0 || this.data.runMiles == 0){
             params.avg_pace = 0
@@ -266,19 +267,20 @@ Page({
         })
     },
     // 获取缓存数据
-    // getRunDataCache(){
-    //     let user_id = getStorageSync('user_id')
-    //     let storageKey = 'run_data_' + user_id
-    //     try {
-    //         let cacheData = getStorageSync(storageKey)
-    //         if(cacheData){
-    //             console.log(cacheData)
-    //             console.log("上次运动未完成")
-    //         }else {
-    //             console.log("上次运动已完成")
-    //         }
-    //     } catch (e) { }
-    // },
+    getRunDataCache(){
+        let user_id = getStorageSync('user_id')
+        let storageKey = 'run_data_' + user_id
+        try {
+            let cacheData = getStorageSync(storageKey)
+            if(cacheData){
+                console.log(cacheData)
+                console.log("上次运动未完成")
+            }else {
+                console.log("上次运动已完成")
+            }
+            return cacheData
+        } catch (e) { }
+    },
     // 播放音频
     // playRunVoice(){
     //     const innerAudioContext = wx.createInnerAudioContext({
@@ -315,41 +317,59 @@ Page({
      */
     onReady() {
         // 查看缓存，是否有上次未完成的运动
-        // this.getRunDataCache()
-        // 
-        this.setData({
-            guidePageShow:false
-        })
-        // 开启跑步引导页
-        this.setData({
-            guidePageShow:true,
-            runGuideCount: 3,
-        })
-        innerAudioContext.src = "run_packege/assets/voice/3.mp3"
-        // 开始倒计时
-        var runGuideCountTimer = setInterval(()=>{
+        let cacheData = this.getRunDataCache()
+        // 有残留的运动记录时
+        if(cacheData){
+            // console.log(cacheData)
+            console.log("上次运动未完成")
+            let { calorie,kind_id,locaDotArr,runMiles,runStartTime,runTime } = cacheData
             this.setData({
-                runGuideCountTimer:runGuideCountTimer
+                calorie,
+                kind_id,
+                locaDotArr,
+                runMiles,
+                runStartTime,
+                runTime,
             })
+            this.runStart()
+            innerAudioContext.src = "run_packege/assets/voice/kaishipaobu.mp3"
+        }else {
+            // 没有残留的运动记录时
+            console.log("上次运动已完成")
             this.setData({
-                runGuideCount: this.data.runGuideCount - 1
+                guidePageShow:false
             })
-            if(this.data.runGuideCount == 2){
-                innerAudioContext.src = "run_packege/assets/voice/2.mp3"
-            }else if(this.data.runGuideCount == 1){
-                innerAudioContext.src = "run_packege/assets/voice/1.mp3"
-            }
-            // 倒计时结束后隐藏引导页，设置跑步开始时间,清除定时器，开始跑步计时
-            if(this.data.runGuideCount == 0){
+            // 开启跑步引导页
+            this.setData({
+                guidePageShow:true,
+                runGuideCount: 3,
+            })
+            innerAudioContext.src = "run_packege/assets/voice/3.mp3"
+            // 开始倒计时
+            var runGuideCountTimer = setInterval(()=>{
                 this.setData({
-                    guidePageShow:false,
-                    runStartTime: parseInt(new Date().getTime()/1000)
+                    runGuideCountTimer:runGuideCountTimer
                 })
-                clearInterval(this.data.runGuideCountTimer)
-                this.runStart()
-                innerAudioContext.src = "run_packege/assets/voice/kaishipaobu.mp3"
-            }
-        },1000)
+                this.setData({
+                    runGuideCount: this.data.runGuideCount - 1
+                })
+                if(this.data.runGuideCount == 2){
+                    innerAudioContext.src = "run_packege/assets/voice/2.mp3"
+                }else if(this.data.runGuideCount == 1){
+                    innerAudioContext.src = "run_packege/assets/voice/1.mp3"
+                }
+                // 倒计时结束后隐藏引导页，设置跑步开始时间,清除定时器，开始跑步计时
+                if(this.data.runGuideCount == 0){
+                    this.setData({
+                        guidePageShow:false,
+                        runStartTime: parseInt(new Date().getTime()/1000)
+                    })
+                    clearInterval(this.data.runGuideCountTimer)
+                    this.runStart()
+                    innerAudioContext.src = "run_packege/assets/voice/kaishipaobu.mp3"
+                }
+            },1000)
+        }
     },
 
     /**
@@ -369,7 +389,18 @@ Page({
      * 生命周期函数--监听页面卸载
      */
     onUnload() {
-        console.log('跑步页面卸载')
+        // showModal('您的运动记录将不会被保存','是否退出跑步？').then(res=>{
+        //     if(res.confirm){
+        //         // 清除运动数据缓存
+        //         let user_id = getStorageSync('user_id')
+        //         let storageKey = 'run_data_' + user_id
+        //         removeStorageSync(storageKey)
+        //         console.log('跑步页面卸载')
+        //         // 清除定时器
+        //     }else{
+        //         return false
+        //     }
+        // })
         clearInterval(this.data.runTimer)
         clearInterval(this.data.runGuideCountTimer)
     },
