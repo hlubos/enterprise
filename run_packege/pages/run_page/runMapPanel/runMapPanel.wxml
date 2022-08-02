@@ -35,6 +35,8 @@
             show-location="true"
             polyline="{{polylines}}"
             include-points="{{locaDotArrv}}"
+            subkey="{{mapStyle.subkey}}"
+            layer-style="{{mapStyle['layer-style']}}"
         ></map>
         <view class="back-icon">
             <image bindtap="hideMap" src="https://ssl-pubpic.51yund.com/1221737968.png"></image>

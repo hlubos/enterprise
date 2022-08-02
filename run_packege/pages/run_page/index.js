@@ -64,7 +64,13 @@ Page({
         // 位置点保存数组
         locaDotArr:[],
         // 是否能够获取位置（5s获取一次）
-        canGetLocation:false
+        canGetLocation:false,
+        // 超出一公里的距离
+        outMiles: 0,
+        // 超出一公里的时间
+        outTime: 0,
+        // 当前是第几公里
+        kmilesCount: 1,
     },
     // 获取跑步数据可视化信息
     getRunShowData(){
@@ -74,6 +80,16 @@ Page({
         this.setData({
             runMiles:runMiles,
         })
+        // 每公里缓存一次配速(秒/公里)
+        let cut = parseInt(runMiles / 1000)
+        let outMiles = runMiles % 1000
+        if( cut+1 > this.data.kmilesCount){
+            this.setKmilesCache()
+            this.setData({
+                kmilesCount: this.data.kmilesCount+1,
+                outTime:0,
+            })
+        }
         // 跑步时长
         let sumTime = myFormats.secTranlateTime(this.data.runTime)
         // 平均配速
@@ -87,7 +103,8 @@ Page({
             "runShowData.sumTime":sumTime,
             "runShowData.avePace":avePace,
             "runShowData.kiloCalorie":kiloCalorie,
-            calorie:calorie
+            calorie:calorie,
+            outMiles:outMiles,
         })
     },
     // 计算总距离（米m）
@@ -124,7 +141,8 @@ Page({
             // 累计跑步时间
             second++
             that.setData({
-                runTime:second
+                runTime:second,
+                outTime:this.data.outTime+1,
             })
             // 跑步时长+1
             // let sumTime = myFormats.secTranlateTime(this.data.runTime)
@@ -219,6 +237,8 @@ Page({
         stopLocationUpdate().then(res=>{
             console.log("停止追踪", res);
         })
+        // 缓存最后一公里的配速
+        this.setKmilesCache()
         // 上报跑步数据
         let params = {
             kind_id:0,
@@ -264,7 +284,27 @@ Page({
             runMiles:this.data.runMiles,
             // 消耗卡路里
             calorie: this.data.calorie,
+            // 最新一公里的跑步时间
+            outTime: this.data.outTime,
         })
+    },
+    // 缓存每公里配速
+    setKmilesCache(){
+        let user_id = getStorageSync('user_id')
+        let key = 'run_kmiles_pace_arr_'+user_id
+        let oldArr = []
+        if(getStorageSync(key)){
+            oldArr = getStorageSync(key)
+            // console.log(oldArr)
+        }
+        let newData = {
+            kmiles_cut: this.data.kmilesCount,
+            avg_pace: this.data.outTime/1000,
+            usetime: this.data.outTime,
+            outMiles: this.data.outMiles,
+        }
+        let newArr = [...oldArr,newData]
+        setStorage(key,newArr)
     },
     // 获取缓存数据
     getRunDataCache(){
@@ -281,15 +321,6 @@ Page({
             return cacheData
         } catch (e) { }
     },
-    // 播放音频
-    // playRunVoice(){
-    //     const innerAudioContext = wx.createInnerAudioContext({
-    //         useWebAudioImplement:true
-    //     })
-    //     innerAudioContext.autoplay = true
-    //     innerAudioContext.src = "/run_packege/assets/voice/kaishipaobu.mp3"
-    //     // innerAudioContext.play()
-    // },
     /**
      * 生命周期函数--监听页面加载
      */
@@ -308,8 +339,6 @@ Page({
                 }
             })
         })
-        // 
-        
     },
 
     /**
@@ -322,7 +351,7 @@ Page({
         if(cacheData){
             // console.log(cacheData)
             console.log("上次运动未完成")
-            let { calorie,kind_id,locaDotArr,runMiles,runStartTime,runTime } = cacheData
+            let { calorie,kind_id,locaDotArr,runMiles,runStartTime,runTime,outTime } = cacheData
             this.setData({
                 calorie,
                 kind_id,
@@ -330,6 +359,7 @@ Page({
                 runMiles,
                 runStartTime,
                 runTime,
+                outTime,
             })
             this.runStart()
             innerAudioContext.src = "run_packege/assets/voice/kaishipaobu.mp3"

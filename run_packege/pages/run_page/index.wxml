@@ -12,6 +12,8 @@
         bind:runStop="runStop"
         runShowData="{{runShowData}}"
         runStatus="{{runStatus}}"
+        runTime="{{runTime}}"
+        runMiles="{{runMiles}}"
     ></run-data-panel>
 </view>
 <!-- 地图面板 -->

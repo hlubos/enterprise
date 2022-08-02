@@ -158,7 +158,9 @@ Page({
         // 清除运动数据缓存
         let user_id = getStorageSync('user_id')
         let storageKey = 'run_data_' + user_id
+        let key = 'run_kmiles_pace_arr_'+user_id
         removeStorageSync(storageKey)
+        removeStorageSync(key)
     },
     // 继续跑步
     continueRun(){

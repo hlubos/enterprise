@@ -2,6 +2,8 @@
 import {
     startLocationUpdate,
     startLocationUpdateBackground,
+    setStorageSync,
+    getStorageSync,
 } from '../../../utils/wxApi'
 Component({
 
@@ -13,9 +15,20 @@ Component({
         },
         runStatus: {
             type: Number
+        },
+        runTime: {
+            type: Number
+        },
+        runMiles: {
+            type: Number
         }
     },
-
+    observers: {
+        runTime: function() {
+        },
+        runMiles: function(runMiles) {
+        },
+    },
     data: {
         // 是否锁定
         isLock: false,

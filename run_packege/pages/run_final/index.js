@@ -15,6 +15,8 @@ Page({
      */
     data: {
         // 
+        showPosterImage:false,
+        posterImgUrl:'',
         shareFlag:0,
         canvasWidth:0,
         canvasHeight:0,
@@ -54,10 +56,29 @@ Page({
             run_day_cnt: 0,
             user_id: 0,
             nick:'',
-        }
+        },
+        mapStyle: {
+            subkey: 'L4JBZ-YJ56D-GAO47-P6UQY-ODB46-M2FD2',
+            // 'subkey':'V5JBZ-RY5EJ-Z7AFP-FP7OM-YXSFE-P7F4J',
+            'layer-style': '1'
+        },
     },
     handleMap(e){
         console.log(e.detail)
+    },
+    // 读取跑步设置缓存
+    getRunSetCache() {
+        try {
+            let user_id = getStorageSync('user_id')
+            let storageKey = 'run_set_infos_' + user_id
+            let res = getStorageSync(storageKey)
+            if (res) {
+                this.setData({
+                    mapStyle: res.nowMapStyInfo
+                })
+            }
+            // console.log(this.data.mapStyle.subkey)
+        } catch (e) { }
     },
     // 打开/关闭面板
     switchPanel(){
@@ -85,17 +106,23 @@ Page({
         try {
             let user_id = getStorageSync('user_id')
             let storageKey = 'run_data_' + user_id
+            let key = 'run_kmiles_pace_arr_'+user_id
             // 清除运动数据缓存
             removeStorageSync(storageKey)
+            removeStorageSync(key)
         } catch (error) {}
         navigateBack()
     },
-    // 分享按钮,显示二维码
+    // 分享按钮,显示海报
     createQrcode(){
         this.setData({
             shareFlag: 1
         })
         this.setCanvasSize()
+        this.createPoster()
+        this.setData({
+            showPosterImage:true
+        })
     },
     // 调整canvas宽高
     setCanvasSize(){
@@ -108,63 +135,43 @@ Page({
             })
         }).exec()
     },
-    // 保存图片
-    clickSaveImg(){
+    // 生成海报
+    createPoster(){
+        let _this = this
         wx.canvasToTempFilePath({     //将canvas生成图片
             canvasId: 'shareCanvas',
             x: 0,
             y: 0,
             success: function (res) {
-                // _this._data.imgUrl = res.tempFilePath
-                wx.saveImageToPhotosAlbum({  //保存图片到相册
-                    filePath: res.tempFilePath, //生成图片临时路径
-                    success: function () {
-                        wx.showToast({
-                            title: "图片已保存！",
-                            duration: 2000
-                        })
-                    }
+                console.log("海报")
+                console.log(res)
+                _this.setData({
+                    posterImgUrl: res.tempFilePath
                 })
-            },
-            fail: error => {
+                console.log(_this.data.posterImgUrl)
+            },   
+        })
+    },
+    // 保存图片
+    clickSaveImg(){
+        wx.saveImageToPhotosAlbum({  //保存图片到相册
+            filePath: this.data.posterImgUrl, //生成图片临时路径
+            success: function () {
                 wx.showToast({
-                    title: "保存图片失败",
+                    title: "图片已保存！",
                     duration: 2000
                 })
-                if (error.errMsg === "saveImageToPhotosAlbum:fail:auth denied" || error.errMsg === "saveImageToPhotosAlbum:fail auth deny" || error.errMsg === "saveImageToPhotosAlbum:fail authorize no response") {
-                    // 这边微信做过调整，必须要在按钮中触发，因此需要在弹框回调中进行调用
-                    wx.showModal({
-                        title: '提示',
-                        content: '需要您授权保存相册',
-                        showCancel: false,
-                        success: modalSuccess => {
-                            wx.openSetting({
-                                success(settingdata) {
-                                    console.log("settingdata", settingdata)
-                                    if (settingdata.authSetting['scope.writePhotosAlbum']) {
-                                        wx.showModal({
-                                            title: '提示',
-                                            content: '获取权限成功',
-                                            showCancel: false,
-                                        })
-                                    } else {
-                                        wx.showModal({
-                                            title: '提示',
-                                            content: '获取权限失败，将无法保存到相册哦~',
-                                            showCancel: false,
-                                        })
-                                    }
-                                },
-                            })
-                        }
-                    })
-                }
             }
-        },this)
+        })
     },
     // 微信分享
     wxShare(){
-
+        this.setData({
+            shareFlag: 0
+        })
+        this.setData({
+            showPosterImage:false
+        })
     },
     /**
      * 生命周期函数--监听页面加载
@@ -223,7 +230,7 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow() {
-        
+        this.getRunSetCache()
     },
 
     /**

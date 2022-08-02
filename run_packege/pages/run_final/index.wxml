@@ -2,7 +2,17 @@
 <canvas canvas-id="shareCanvas" class="shareCanvas" style="width: 100%; height:{{canvasHeight}}px;">
     <view class="share-img-box">
         <view class="fina-map-box" style="height: {{mapHeight}};">
-            <map id="run-final-map" class="run-final-map" name="run_final_map" latitude="39.92082670727589" longitude:="116.45972113140078" show-location="true" bindtap="handleMap" polyline="{{polylines}}"></map>
+            <map id="run-final-map" 
+                class="run-final-map" 
+                name="run_final_map" 
+                latitude="39.92082670727589" 
+                longitude:="116.45972113140078" 
+                show-location="true" 
+                bindtap="handleMap" 
+                polyline="{{polylines}}"
+                subkey="{{mapStyle.subkey}}"
+                layer-style="{{mapStyle['layer-style']}}"
+            ></map>
             <view class="data-panel-btn" bindtap="switchPanel">
                 <view class="data-panel-btn-line"></view>
             </view>
@@ -73,7 +83,7 @@
     </view>
 </view>
 
-<view class="share-type-box" hidden="{{shareFlag == 0}}">
+<!-- <view class="share-type-box" hidden="{{shareFlag == 0}}">
     <view class="type-btn" bindtap="wxShare">
         <image src="https://ssl-pubpic.51yund.com/1225058005.png"></image>
         <view>微信分享</view>
@@ -82,4 +92,22 @@
         <image src="https://ssl-pubpic.51yund.com/1225058151.png"></image>
         <view>保存图片</view>
     </view>
+</view> -->
+
+<view class="poster-page" hidden="{{!showPosterImage}}">
+    <scroll-view scroll-y class="poster-page-scroll" style="height:{{canvasHeight}}px;">
+        <view class="poster-content">
+            <image src="{{posterImgUrl}}"></image>
+        </view>
+        <view class="share-type-box" hidden="{{shareFlag == 0}}">
+            <view class="type-btn" bindtap="wxShare">
+                <image src="https://ssl-pubpic.51yund.com/1225058005.png"></image>
+                <view>微信分享</view>
+            </view>
+            <view class="type-btn" bindtap="clickSaveImg">
+                <image src="https://ssl-pubpic.51yund.com/1225058151.png"></image>
+                <view>保存图片</view>
+            </view>
+        </view>
+    </scroll-view>
 </view>

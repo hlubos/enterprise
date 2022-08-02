@@ -250,13 +250,17 @@
 }
 
 .share-type-box{
+    position: absolute;
+    bottom: 226rpx;
+    left: 0;
+    z-index: 99;
     width: 100%;
     height: 226rpx;
     background: #FFFFFF;
     display: flex;
     justify-content: space-around;
     align-items: center;
-    margin-top: 20rpx;
+    /* margin-top: 20rpx; */
     transition: all ease 0.5s;
 }
 .type-btn{
@@ -270,4 +274,27 @@
     font-weight: 400;
     font-size: 24rpx;
     color: #333333;
+}
+
+.poster-page{
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+}
+.poster-page-scroll {
+    width: 100%;
+    height: 100%;
+}
+
+.poster-content{
+    position: absolute;
+    top: 15vh;
+    left: 13vw;
+    overflow: hidden;
+    height: 62vh;
+    width: 74vw;
+    background-color: #2E7DE3;
 }
