@@ -173,9 +173,12 @@ Page({
             let user_id = getStorageSync('user_id')
             let storageKey = 'run_set_infos_' + user_id
             let res = getStorageSync(storageKey)
-            if(res.nowMapStyInfo){
+            if(res){
                 this.setData({
-                    nowMapStyInfo:res.nowMapStyInfo
+                    nowMapStyInfo:res.nowMapStyInfo,
+                    freIndex: res.freIndex,
+                    openVoice:res.openVoice,
+                    voiceIndex: res.voiceIndex,
                 })
             }
             // console.log(this.data.mapStyle.subkey)
@@ -185,16 +188,16 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad(options) {
-        try {
-            let res = getStorageSync('run_set_infos')
-            // console.log(res)
-            this.setData({
-                freIndex: res.freIndex,
-                openVoice:res.openVoice,
-                voiceIndex: res.voiceIndex,
-                nowMapStyInfo: res.nowMapStyInfo,
-            })
-        } catch (e) { }
+        // try {
+        //     let res = getStorageSync('run_set_infos')
+        //     // console.log(res)
+        //     this.setData({
+        //         freIndex: res.freIndex,
+        //         openVoice:res.openVoice,
+        //         voiceIndex: res.voiceIndex,
+        //         nowMapStyInfo: res.nowMapStyInfo,
+        //     })
+        // } catch (e) { }
     },
 
     /**

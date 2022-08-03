@@ -22,6 +22,10 @@ Component({
         runShowData: {
             type: Object,
             value: {}
+        },
+        mapStyle:{
+            type: Object,
+            value: {}
         }
     },
 
@@ -36,12 +40,7 @@ Component({
                 borderWidth: 0//线的边框宽度，还有很多参数，请看文档 
             }
         ],
-        // 地图样式
-        mapStyle: {
-            subkey: 'L4JBZ-YJ56D-GAO47-P6UQY-ODB46-M2FD2',
-            // 'subkey':'V5JBZ-RY5EJ-Z7AFP-FP7OM-YXSFE-P7F4J',
-            'layer-style': '1'
-        }
+        
     }, // 私有数据，可用于模板渲染
     // 数据监听器observers
     observers: {
@@ -72,7 +71,7 @@ Component({
         // 组件所在页面的生命周期函数
         show: function () {
             // startLocationUpdate()
-            this.getRunSetCache()
+            // this.getRunSetCache()
         },
         hide: function () { },
         resize: function () { },
@@ -87,20 +86,7 @@ Component({
             let runMap = wx.createMapContext("run-map", this);
             runMap.moveToLocation();
         },
-        // 读取跑步设置缓存
-        getRunSetCache() {
-            try {
-                let user_id = getStorageSync('user_id')
-                let storageKey = 'run_set_infos_' + user_id
-                let res = getStorageSync(storageKey)
-                if (res) {
-                    this.setData({
-                        mapStyle: res.nowMapStyInfo
-                    })
-                }
-                // console.log(this.data.mapStyle.subkey)
-            } catch (e) { }
-        },
+        
     }
 
 })

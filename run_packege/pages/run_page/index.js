@@ -21,6 +21,20 @@ const innerAudioContext = createInnerAudioContext(true)
 innerAudioContext.autoplay = true
 Page({
     data: {
+        setInfo:{
+            // 是否语音播报
+            openVoice:true,
+            // 播报类型(暂时只有一种)
+            voiceIndex:0,
+            // 语音播报频率
+            freIndex:[0,0],
+            // 地图样式
+            mapStyle: {
+                subkey: 'L4JBZ-YJ56D-GAO47-P6UQY-ODB46-M2FD2',
+                // 'subkey':'V5JBZ-RY5EJ-Z7AFP-FP7OM-YXSFE-P7F4J',
+                'layer-style': '1',
+            }
+        },
         // 引导页显示
         guidePageShow: false,
         // 跑步倒计时
@@ -71,6 +85,89 @@ Page({
         outTime: 0,
         // 当前是第几公里
         kmilesCount: 1,
+        // 播报：
+        reportData:{
+            // 时间频率（秒）
+            audiotime: 600,
+            // 距离频率（米）
+            audioDistance: 500,
+            // 下次播报的时间（秒）
+            nextTime:600,
+            // 下次播报的距离（米）
+            nextDistance: 500,
+        },
+    },
+    // 语音播报
+    runAudioReport(){
+        if(this.data.setInfo.openVoice == true){
+            let auidos = []
+            // 播报频率 ['按距离播报', '按时间播报'] ['10分钟', '20分钟', '30分钟', '40分钟'] ['0.5公里', '1公里', '2公里', '3公里']
+            if(this.data.setInfo.freIndex[0] == 0){
+                // 按距离播报
+                if(this.data.runMiles >= this.data.reportData.nextDistance){
+                    auidos.push('ninyijingpaole')
+                    let kMiles = this.data.reportData.nextDistance/1000
+                    if(kMiles % 1 !== 0){
+                        let karr = String(kMiles).split('.')
+                        auidos = [...auidos,...[karr[0],'点',karr[1]]]
+                    }else {
+                        auidos = [...auidos,...[kMiles]]
+                    }
+                    auidos.push('gongli')
+                    this.setData({
+                        'reportData.nextDistance': this.data.reportData.nextDistance + this.data.reportData.audioDistance
+                    })
+                }
+            }else if(this.data.setInfo.freIndex[0] == 1){
+                // 按时间播报
+                if(this.data.runTime >= this.data.reportData.nextTime ){
+                    auidos.push('ninyijingpaole')
+                    let h = parseInt(this.data.reportData.nextTime/3600)
+                    let m = this.data.reportData.nextTime/60 - h*60
+                    let timeArr = [h,m]
+                    timeArr.forEach((item,index)=>{
+                        if(item % 10 == 0){
+                            if(item == 0){
+                                auidos = [...auidos,...[0]]
+                            }else if(item == 10){
+                                auidos = [...auidos,...[10]]
+                            }else if (item > 10){
+                                let f = item/10
+                                auidos = [...auidos,...[f,10]]
+                            }
+                        }else if(item % 10 != 0){
+                            if(item < 10){
+                                auidos = [...auidos,...[item]]
+                            }else if(item > 10 && item < 20){
+                                let l = item%10
+                                auidos = [...auidos,...[10,l]]
+                            }else if(item > 20){
+                                let f = parseInt(item/10)
+                                let l = item%10
+                                auidos = [...auidos,...[f,10,l]]
+                            }
+                        }
+                        if(index == 0){
+                            auidos.push('xiaoshi')
+                        }else if (index == 1){
+                            auidos.push('fenzhong')
+                        }
+                    })
+                    this.setData({
+                        'reportData.nextTime': this.data.reportData.nextTime + this.data.reportData.audiotime
+                    })
+                    // 播放语音
+                }
+            }
+            const play = createInnerAudioContext(true)
+            let index = 0
+            play.src = `run_packege/assets/voice/hiking/${auidos[index]}.mp3`
+            play.autoplay = true
+            play.onEnded(()=>{
+                index++
+                play.src = `run_packege/assets/voice/hiking/${auidos[index]}.mp3`
+            })
+        }
     },
     // 获取跑步数据可视化信息
     getRunShowData(){
@@ -106,6 +203,8 @@ Page({
             calorie:calorie,
             outMiles:outMiles,
         })
+        // 语音播报
+        this.runAudioReport()
     },
     // 计算总距离（米m）
     _calculateRunMiles(pointArr){
@@ -206,7 +305,7 @@ Page({
         // 清除跑步计时器
         clearInterval(this.data.runTimer)
         clearTimeout(this.data.locaTimer)
-        innerAudioContext.src = "run_packege/assets/voice/zantingpaobu.mp3"
+        innerAudioContext.src = "run_packege/assets/voice/hiking/yundongyizanting.mp3"
         this.setData({
             runStatus:1
         })
@@ -222,7 +321,7 @@ Page({
             runStatus:0
         })
         this.runStart()
-        innerAudioContext.src = "run_packege/assets/voice/jixupaobu.mp3"
+        innerAudioContext.src = "run_packege/assets/voice/hiking/yundongyihuifu.mp3"
     },
     // 结束跑步
     runStop(){
@@ -321,6 +420,75 @@ Page({
             return cacheData
         } catch (e) { }
     },
+    // 读取跑步设置缓存
+    getRunSetCache() {
+        try {
+            let user_id = getStorageSync('user_id')
+            let storageKey = 'run_set_infos_' + user_id
+            let res = getStorageSync(storageKey)
+            if (res) {
+                this.setData({
+                    'setInfo.mapStyle': res.nowMapStyInfo,
+                    'setInfo.openVoice': res.openVoice,
+                    'setInfo.voiceIndex':res.voiceIndex,
+                    'setInfo.freIndex':res.freIndex,
+                })
+                // 根据缓存的播报频率，设置播报频率和下一次播报的时间
+                if(res.freIndex[0] == 0){
+                    let audioDistance = 500
+                    let nextDistance = 500
+                    switch (res.freIndex[1]) {
+                        case 0:
+                            audioDistance = 500
+                            break;
+                        case 1:
+                            audioDistance = 1000
+                            break;
+                        case 2:
+                            audioDistance = 2000
+                            break;
+                        case 3:
+                            audioDistance = 3000
+                            break;
+                        default:
+                            audioDistance = 500
+                            break;
+                    }
+                    nextDistance = (parseInt(this.data.runMiles/audioDistance)+1)*audioDistance
+                    this.setData({
+                        'reportData.audioDistance':audioDistance,
+                        'reportData.nextDistance':nextDistance,
+                    })
+                }else if(res.freIndex[0] == 1){
+                    let audiotime = 600
+                    let nextTime = 600
+                    switch (res.freIndex[1]) {
+                        case 0:
+                            audiotime = 600
+                            break;
+                        case 1:
+                            audiotime = 1200
+                            break;
+                        case 2:
+                            audiotime = 1800
+                            break;
+                        case 3:
+                            audiotime = 2400
+                            break;
+                        default:
+                            audiotime = 600
+                            break;
+                    }
+                    nextTime = (parseInt(this.data.runTime/audiotime)+1)*audiotime
+                    this.setData({
+                        'reportData.audiotime':audiotime,
+                        'reportData.nextTime':nextTime,
+                    })
+                }
+            }
+            // console.log(this.data.mapStyle.subkey)
+        } catch (e) { }
+    },
     /**
      * 生命周期函数--监听页面加载
      */
@@ -406,6 +574,8 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow() {
+        // 读取跑步设置缓存
+        this.getRunSetCache()
     },
 
     /**

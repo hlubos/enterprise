@@ -66,12 +66,12 @@
             <text wx:else>点击检测</text>
         </view>
     </mp-cell>
-    <mp-cell>
+    <!-- <mp-cell>
         <view>权限检测</view>
         <view slot="footer">
             <text>点击检测</text>
         </view>
-    </mp-cell>
+    </mp-cell> -->
 </mp-cells>
 
 <!-- <picker mode="multiSelector"></picker> -->

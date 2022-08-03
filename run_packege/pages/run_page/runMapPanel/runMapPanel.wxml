@@ -42,5 +42,4 @@
             <image bindtap="hideMap" src="https://ssl-pubpic.51yund.com/1221737968.png"></image>
         </view>
     </movable-area>
-    
 </view>

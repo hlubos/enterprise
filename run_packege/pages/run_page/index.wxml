@@ -33,6 +33,7 @@
             bind:hideRunMap="hideMap"
             runShowData="{{runShowData}}"
             locaDotArr="{{locaDotArr}}"
+            mapStyle="{{setInfo.mapStyle}}"
         ></run-map-panel>
     </view>
 </page-container>

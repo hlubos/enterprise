@@ -1,5 +1,5 @@
 <!--run_packege/pages/run_final/index.wxml-->
-<canvas canvas-id="shareCanvas" class="shareCanvas" style="width: 100%; height:{{canvasHeight}}px;">
+<canvas type="2d" canvas-id="shareCanvas" id="shareCanvas" class="shareCanvas" style="width: 100%; height:{{canvasHeight}}px;">
     <view class="share-img-box">
         <view class="fina-map-box" style="height: {{mapHeight}};">
             <map id="run-final-map" 
