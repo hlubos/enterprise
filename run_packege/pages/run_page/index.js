@@ -107,9 +107,9 @@ Page({
                 if(this.data.runMiles >= this.data.reportData.nextDistance){
                     auidos.push('ninyijingpaole')
                     let kMiles = this.data.reportData.nextDistance/1000
-                    if(kMiles % 1 !== 0){
+                    if(kMiles % 1 != 0){
                         let karr = String(kMiles).split('.')
-                        auidos = [...auidos,...[karr[0],'点',karr[1]]]
+                        auidos = [...auidos,...[karr[0],'dian',karr[1]]]
                     }else {
                         auidos = [...auidos,...[kMiles]]
                     }
@@ -337,7 +337,7 @@ Page({
             console.log("停止追踪", res);
         })
         // 缓存最后一公里的配速
-        this.setKmilesCache()
+        this.setKmilesCache(false)
         // 上报跑步数据
         let params = {
             kind_id:0,
@@ -362,7 +362,8 @@ Page({
             console.log(res)
             if(res.code == 0){
                 // 跳转到跑步结算页
-                redirectTo('../run_final/index')
+                let runner_id = res.runner_id
+                redirectTo(`../run_final/index?runner_id=${runner_id}`)
             }
         })
         // redirectTo('../run_final/index')
@@ -388,7 +389,7 @@ Page({
         })
     },
     // 缓存每公里配速
-    setKmilesCache(){
+    setKmilesCache(flag = true){
         let user_id = getStorageSync('user_id')
         let key = 'run_kmiles_pace_arr_'+user_id
         let oldArr = []
@@ -398,12 +399,25 @@ Page({
         }
         let newData = {
             kmiles_cut: this.data.kmilesCount,
-            avg_pace: this.data.outTime/1000,
             usetime: this.data.outTime,
             outMiles: this.data.outMiles,
         }
+        if(flag == true){
+            // 最后结束时的缓存
+            newData.avg_pace = this.data.outTime
+        }else if(flag == false){
+            // 正常每公里缓存
+            newData.avg_pace = this.data.outTime/this.data.outMiles*1000
+        }
         let newArr = [...oldArr,newData]
         setStorage(key,newArr)
+    },
+    // 读取每公里配速缓存
+    getKmilesCache(){
+        let user_id = getStorageSync('user_id')
+        let key = 'run_kmiles_pace_arr_'+user_id
+        let kMilesCacheData = getStorageSync(key)
+        return kMilesCacheData
     },
     // 获取缓存数据
     getRunDataCache(){
@@ -529,6 +543,13 @@ Page({
                 runTime,
                 outTime,
             })
+            // 查看每公里配速缓存
+            let kMilesCache = this.getKmilesCache()
+            if(kMilesCache){
+                this.setData({
+                    kmilesCount: kMilesCache.kmiles_cut
+                })
+            }
             this.runStart()
             innerAudioContext.src = "run_packege/assets/voice/kaishipaobu.mp3"
         }else {

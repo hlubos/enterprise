@@ -26,4 +26,7 @@ export default class LoginMember {
     static getDayPeakRecord(params) {
         return $http.post(url.getDayPeakRecord, params);
     }
+    static AddTrackPic(params) {
+        return $http.post(url.AddTrackPic, params);
+    }
 }

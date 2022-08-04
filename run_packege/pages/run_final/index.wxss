@@ -5,7 +5,9 @@
     display: block;
 }
 
-.shareCanvas {}
+.share-img-box{
+    background-color: #FFFFFF;
+}
 
 .fina-map-box {
     position: relative;
@@ -17,6 +19,10 @@
     /* height: 40vh; */
     height: 100%;
     transition: all ease 0.5s;
+}
+.static-map{
+    width: 100%;
+    height: 100%;
 }
 
 .data-panel-btn {
@@ -39,6 +45,7 @@
 }
 
 .final-chart-box {
+    background-color: #FFFFFF;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
@@ -258,7 +265,8 @@
 
 .share-type-box {
     position: absolute;
-    bottom: 226rpx;
+    /* bottom: 226rpx; */
+    bottom: 0;
     left: 0;
     z-index: 99;
     width: 100%;
@@ -302,10 +310,21 @@
 
 .poster-content {
     position: absolute;
-    top: 15vh;
-    left: 13vw;
-    overflow: hidden;
-    height: 62vh;
-    width: 74vw;
-    background-color: #2E7DE3;
+    /* top: 15vh;
+    left: 13vw; */
+    /* overflow: hidden; */
+    /* height: 62vh; */
+    width: 100%;
+    /* height: 100%; */
+    background-color: #FFFFFF;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.poster-content image{
+    width: 100%;
+    height: 100%;
+}
+.poster-img{
+    width: 100%;
 }

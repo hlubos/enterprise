@@ -9,4 +9,6 @@ export default {
     userSportSummary:'/sport_history/user_sport_summary',
     // 运动轨迹缩略图 
     getDayPeakRecord:'/yd_runner/get_day_peak_record',
+    // 上传运动轨迹
+    AddTrackPic:'/yd_runner/add_track_pic'
 }

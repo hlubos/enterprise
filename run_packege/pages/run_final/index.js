@@ -8,6 +8,7 @@ import {
     navigateBack,
     createInnerAudioContext,
 } from '../../utils/wxApi'
+import Wxml2Canvas from 'wxml2canvas'
 const innerAudioContext = createInnerAudioContext(true)
 innerAudioContext.autoplay = true
 Page({
@@ -17,6 +18,7 @@ Page({
      */
     data: {
         // 
+        runner_id:0,
         showPosterImage: false,
         posterImgUrl: '',
         shareFlag: 0,
@@ -34,6 +36,19 @@ Page({
                 borderWidth: 0//线的边框宽度，还有很多参数，请看文档 
             }
         ],
+        staticMapInfo:{
+            key:'L4JBZ-YJ56D-GAO47-P6UQY-ODB46-M2FD2',
+            width: 500,
+            height: 400,
+            center:{
+                latitude:39.12,
+                longitude:116.54,
+            },
+            zoom:12,
+            scale:2,
+        },
+        // 静态地图
+        staticMapUrl:'https://apis.map.qq.com/ws/staticmap/v2/?key=L4JBZ-YJ56D-GAO47-P6UQY-ODB46-M2FD2&scale=2&size=500x400&center=39.12,116.54&zoom=12',
         // 二维码图片
         qrcodeImg: 'https://ssl-pubpic.51yund.com/1224160409.jpg',
         // 跑步开始时间(时间戳)
@@ -136,7 +151,7 @@ Page({
         // 总里程语音播报数组=======================start============================
         let runKMilesAudioList = []
         runKMilesAudioList.push('zonglicheng')
-        let runKMilesArr = runKMiles.split('.')
+        let runKMilesArr = String(runKMiles).split('.')
         // 小数点前面的
         // 分成0,被10整除,和不被10整除
         if( Number(runKMilesArr[0]) == 0){
@@ -163,9 +178,9 @@ Page({
             }
         }
         // 小数点后面的
-        if(Number(runKMilesArr[1]) > 0){
+        if(Number(runKMilesArr[1]) > 0 && Number(runKMilesArr[1])){
             runKMilesAudioList = [...runKMilesAudioList,'dian']
-            let newArr = Number(runKMilesArr[1]).split('')
+            let newArr = String(runKMilesArr[1]).split('')
             for(let i = 0 ;i<newArr.length; i++){
                 runKMilesAudioList.push(newArr[i])
             }
@@ -243,13 +258,13 @@ Page({
                 }
             }else if(Number(item) % 10 > 0){
                 // 分成大于20、小于20大于10、小于10
-                if(Number(Number(item) < 10)){
-                    avgPaceAudioList = [...avgPaceAudioList,Number(item)]
+                if(Number(item) < 10){
+                    avgPaceAudioList = [...avgPaceAudioList,item]
                 }else if(Number(item) > 10 && Number(item) < 20){
                     let lastNum = Number(item) % 10
                     avgPaceAudioList = [...avgPaceAudioList,...[10,lastNum]]
                 }else if(Number(item) > 20){
-                    let firstNum = Number(item) / 10
+                    let firstNum = parseInt(Number(item) / 10)
                     let lastNum = Number(item) % 10
                     avgPaceAudioList = [...avgPaceAudioList,...[firstNum,10,lastNum]]
                 }
@@ -285,21 +300,15 @@ Page({
         shareBox.select('.share-img-box').boundingClientRect(res => {
             // myCanvasHeight = res.height
             this.setData({
-                canvasHeight: res.height
+                canvasHeight: res.height,
+                canvasWidth:res.width,
             })
         }).exec()
     },
     // 生成海报
     createPoster() {
-        // let context = wx.createCanvasContext('shareCanvas')  //这里的“share”是“canvas-id”
-        // context.setFillStyle('#fff')    //这里是绘制白底，让图片有白色的背景
-        // context.fillRect(0, 0, 0, 0)
-        // context.draw(false, function () {
-
-        // })
-        
         const query = wx.createSelectorQuery()
-        query.select('#shareCanvas')
+        query.select('#share-canvas')
             .fields({
                 node: true,
                 size: true
@@ -307,6 +316,7 @@ Page({
             .exec((res) => {
                 let _this = this
                 console.log("生成海报")
+                console.log(res)
                 const { node } = res[0]
                 if (!node) return
                 /* 获取 canvas 实例 */
@@ -338,26 +348,83 @@ Page({
                         }
                     },_this)
                 },300)
-                
-                // context.draw(false, function() {
-                //     console.log("进入draw")
-                    
-                // })
             })
-        // let _this = this
-        // wx.canvasToTempFilePath({     //将canvas生成图片
-        //     canvasId: 'shareCanvas',
-        //     x: 0,
-        //     y: 0,
-        //     success: function (res) {
-        //         console.log("海报")
-        //         console.log(res)
-        //         _this.setData({
-        //             posterImgUrl: res.tempFilePath
-        //         })
-        //         console.log(_this.data.posterImgUrl)
-        //     },   
-        // })
+    },
+    // =========================================
+    drawCanvas: function () {
+        wx.showLoading({
+           title: '加载中'
+        })
+        const that = this
+        const query = wx.createSelectorQuery().in(this);
+        query.select('#answer-canvas').fields({ //answer-canvas要绘制的canvas的id
+            size: true,
+            scrollOffset: true
+        }, data => {
+            // let width = data.width;
+            // let height = data.height;
+            // let width = 750;
+            // let height = 1500;
+            // console.log(width, height);
+            // that.setData({
+            //     width: width,
+            //     height: height
+            // })
+            setTimeout(() => {
+                that.draw()
+            }, 1500);
+       }).exec()
+    },
+    draw(){
+        let that = this
+        //创建wxml2canvas对象
+        let drawImage = new Wxml2Canvas({
+          element: 'answerCanvas', // canvas节点的id,
+          obj: that, // 在组件中使用时，需要传入当前组件的this
+          width: this.data.canvasWidth, // 宽 自定义
+          height: this.data.canvasHeight, // 高 自定义
+          background: 'white', // 默认背景色 设置背景色
+          zoom:0.8,
+          progress(percent) { // 绘制进度
+            // console.log(percent);
+          },
+          finish(url) {
+            console.log("创建的图片", url);
+            wx.hideLoading()
+            that.setData({
+                // imgUrl: url,
+                posterImgUrl:url,
+            })
+          },
+          error(res) {
+            console.log(res);
+            wx.hideLoading()
+            // 画失败的原因
+          }
+        }, that);
+        let data = {
+          //直接获取wxml数据
+          list: [{
+              type: 'wxml',
+              //class: '.answer_canvas .answer_draw_canvas',  // answer_canvas这边为要绘制的wxml元素跟元素类名， answer_draw_canvas要绘制的元素的类名（所有要绘制的元素都要添加该类名）
+              class: '.answer_canvas .answer_draw_canvas', 
+              limit: '.answer_canvas', // 这边为要绘制的wxml元素跟元素类名,最外面的元素
+              x: 0,
+              y: 0
+            } ]
+        }
+          //传入数据，画制canvas图片
+        this.setData({
+            shareFlag: 1
+        })
+        this.setData({
+            showPosterImage: true
+        })
+        this.setCanvasSize()
+        drawImage.draw(data, that);
+        
+        // this.createPoster()
+        
     },
     // 保存图片
     clickSaveImg() {
@@ -380,12 +447,60 @@ Page({
             showPosterImage: false
         })
     },
+    // 设置静态地图参数
+    setStaticMapInfo(){
+        // staticMapUrl:'https://apis.map.qq.com/ws/staticmap/v2/?key=L4JBZ-YJ56D-GAO47-P6UQY-ODB46-M2FD2&scale=2&size=500x400&center=39.12,116.54&zoom=12',
+        let user_id = getStorageSync('user_id')
+        let storageKey = 'run_data_' + user_id
+        let data = getStorageSync(storageKey)
+        // =================
+        let base = 'https://apis.map.qq.com/ws/staticmap/v2/'
+        let key = 'L4JBZ-YJ56D-GAO47-P6UQY-ODB46-M2FD2'
+        let pathObj = {
+            sty:{
+                color: "0x4CDDB4",//线条的颜色
+                weight: 5,//宽度
+            },
+            locations:data.locaDotArr
+        }
+        let locStr = ''
+        pathObj.locations.forEach((item,index)=>{
+            if(index < pathObj.locations.length - 1 ){
+                locStr = locStr + item.latitude+','+ item.longitude + '|'
+            }else {
+                locStr = locStr + item.latitude+','+ item.longitude
+            }
+        })
+        let path = `color:${pathObj.sty.color}|weight:${pathObj.sty.weight}|${locStr}`
+        let sizeObj = {
+            width: 500,
+            height: 400,
+        }
+        let size = `${sizeObj.width}*${sizeObj.height}`
+        let staticMapUrl = `${base}?size=${size}&scale=2&maptype=roadmap&key=${key}&path=${path}`
+        this.setData({
+            staticMapUrl,
+        })
+        if(this.data.staticMapUrl){
+            // 上传运动缩略图
+            api.AddTrackPic({
+                runner_id:this.data.runner_id,
+                kind_id:0,
+                pic_url:this.data.staticMapUrl,
+            })
+        }
+    },
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad(options) {
         // 
-        this.setCanvasSize()
+        if(options.runner_id){
+            this.setData({
+                runner_id:options.runner_id
+            })
+        }
+        // this.setCanvasSize()
         api.runnerFinishDetail({
             sport_type: 0
         }).then(res => {
@@ -425,6 +540,7 @@ Page({
                 "showRunData.sumTime": myFormats.secTranlateTime(data.runTime),
                 "showRunData.kCalorie": (55 * 1.036 * (data.runMiles / 1000)).toFixed(1),
             })
+            this.setStaticMapInfo()
         } catch (error) { }
         // 
         var mapFinalCtx = wx.createMapContext('run-final-map', this) // mapId对应地图id属性

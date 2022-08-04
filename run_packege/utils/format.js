@@ -55,7 +55,7 @@ function formatShowAvg(avg_pace){
         return "0'00''"
     }
     var total_m = Math.floor(avg_pace / 60) > 59 ? 59 : Math.floor(avg_pace / 60);
-    var lest_sec = avg_pace % 60;
+    var lest_sec = Math.round(avg_pace % 60);
     return total_m+"'"+add0(lest_sec)+"''";
 }
 

@@ -4,6 +4,7 @@ import {
     getStorageSync
 } from '../../../../utils/wxApi'
 import myFormats from '../../../../utils/format'
+let chart
 function getOption(data) {
     var option = {
         title: [
@@ -43,10 +44,18 @@ function getOption(data) {
                 // alignTo: 'edge',
                 normal: {
                     show: true,
-                    formatter: [
-                        '{b}',
-                        '{c}',
-                    ].join('\n'), //图形外文字上下显示
+                    // formatter: [
+                    //     '{b}',
+                    //     '{c}',
+                    // ].join('\n'), //图形外文字上下显示
+                    formatter:function (a) {
+                        console.log('a',a)
+                        let arr = []
+                        arr.push(a.data.name.title)
+                        let formatVal = myFormats.formatShowAvg(a.data.name.cot)
+                        arr.push(formatVal)
+                        return arr.join('\n')
+                    },
                     fontSize: 14
                 },
                 rich: {
@@ -82,58 +91,43 @@ function getCache(){
     for (let i = 0; i < cacheData.length; i++) {
         if (i < cacheData.length - 1) {
             newData.push({
-                name: `第${cacheData[i]['kmiles_cut']}公里`,
-                value: myFormats.formatShowAvg(cacheData[i].avg_pace)
+                name: {
+                    title: `第${cacheData[i]['kmiles_cut']}公里`,
+                    cot:cacheData[i].avg_pace,
+                },
+                // value: myFormats.formatShowAvg(cacheData[i].avg_pace),
+                // value: cacheData[i].avg_pace,
+                value: 1000
             })
         } else {
+            let m = Number(cacheData[i].outMiles).toFixed(2)
             newData.push({
-                name: `最后${cacheData[i].outMiles}米`,
-                value: myFormats.formatShowAvg(cacheData[i].avg_pace)
+                name: {
+                    title:`最后${m}米`,
+                    cot:cacheData[i].avg_pace,
+                },
+                // value: myFormats.formatShowAvg(cacheData[i].avg_pace),
+                // value: cacheData[i].avg_pace,
+                value: m
             })
         }
     }
-    let data = [{
-        value: 55,
-        name: '第1公里'
-      }, {
-        value: 20,
-        name: '第2公里'
-      }, {
-        value: 10,
-        name: '第3公里'
-      }, {
-        value: 20,
-        name: '最后233米'
-      }]
+    // let data = [{
+    //     value: 55,
+    //     name: '第1公里'
+    //   }, {
+    //     value: 20,
+    //     name: '第2公里'
+    //   }, {
+    //     value: 10,
+    //     name: '第3公里'
+    //   }, {
+    //     value: 20,
+    //     name: '最后233米'
+    //   }]
     // let data = newData
     return newData
 }
-// function initChart(canvas, width, height, dpr) {
-//     var chart = echarts.init(canvas, null, {
-//         width: width,
-//         height: height,
-//         devicePixelRatio: dpr // new
-//     });
-//     canvas.setChart(chart);
-//     // let data = [{
-//     //     value: 55,
-//     //     name: '第1公里'
-//     //   }, {
-//     //     value: 20,
-//     //     name: '第2公里'
-//     //   }, {
-//     //     value: 10,
-//     //     name: '第3公里'
-//     //   }, {
-//     //     value: 20,
-//     //     name: '最后233米'
-//     //   }]
-//     // let data = getCache()
-//     let data = []
-//     chart.setOption(option);
-//     return chart;
-// }
-// function 
 Component({
     /**
      * 组件的属性列表
@@ -161,7 +155,9 @@ Component({
             // })
             // getCache()
         },
-        moved: function () { },
+        moved: function () { 
+            // chart.setOption(getOption(getCache()));
+        },
         detached: function () { },
     },
     /**
@@ -170,14 +166,12 @@ Component({
     methods: {
         init_pie(){
             this.pieComponent.init((canvas, width, height, dpr) =>{
-                const chart = echarts.init(canvas, null, {
+                chart = echarts.init(canvas, null, {
                     width: width,
                     height: height,
                     devicePixelRatio: dpr // new
                 });
                 canvas.setChart(chart);
-                // let data = getCache()
-                console.log(getOption(getCache()))
                 chart.setOption(getOption(getCache()));
                 return chart;
             }) 
