@@ -14,6 +14,7 @@
   justify-content: space-between;   /* 定义了项目在主轴上的对齐方式 */
   /* space-between：两端对齐，项目之间的间隔都相等 */
   box-sizing: border-box;
+  background-color: #ffffff;
 }
 ec-canvas {
   width: 100%;

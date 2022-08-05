@@ -6,7 +6,8 @@
 }
 
 .share-img-box{
-    background-color: #FFFFFF;
+    /* background-color: #FFFFFF; */
+    background:#FFFFFF
 }
 
 .fina-map-box {
@@ -109,9 +110,9 @@
 
 .title2-left-kmeter {
     font-weight: Bold;
-    font-size: 84rpx;
+    font-size: 64rpx;
     color: #333333;
-    line-height: 84rpx;
+    line-height: 64rpx;
     margin-right: 24rpx;
 }
 
@@ -210,6 +211,7 @@
     flex-direction: row-reverse;
     align-items: flex-end;
     transition: all ease 0.5s;
+    padding-bottom: 100rpx;
 }
 
 .qrcode-img {
@@ -264,11 +266,11 @@
 }
 
 .share-type-box {
-    position: absolute;
+    /* position: absolute; */
     /* bottom: 226rpx; */
-    bottom: 0;
-    left: 0;
-    z-index: 99;
+    /* bottom: 0; */
+    /* left: 0; */
+    /* z-index: 99; */
     width: 100%;
     height: 226rpx;
     background: #FFFFFF;
@@ -295,36 +297,18 @@
 }
 
 .poster-page {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
-    z-index: 1000;
-}
-
-.poster-page-scroll {
-    width: 100%;
-    height: 100%;
-}
-
-.poster-content {
-    position: absolute;
-    /* top: 15vh;
-    left: 13vw; */
-    /* overflow: hidden; */
-    /* height: 62vh; */
+    /* position: fixed; */
+    /* top: 0; */
     width: 100%;
     /* height: 100%; */
-    background-color: #FFFFFF;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
     display: flex;
     justify-content: center;
-    align-items: center;
+    flex-wrap: wrap;
 }
-.poster-content image{
-    width: 100%;
-    height: 100%;
-}
+
 .poster-img{
     width: 100%;
+    height: 100%;
 }

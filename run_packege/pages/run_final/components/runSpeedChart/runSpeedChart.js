@@ -5,8 +5,22 @@ import {
 } from '../../../../utils/wxApi'
 import myFormats from '../../../../utils/format'
 let chart
+let pace = {
+    nowVal:"0'00''",
+    flag: 1, 
+    value: "0'00''"
+}
 function getOption(data) {
+    let txt = ''
+    if(pace.flag == 1){
+        txt = `比上次 ↓ ${pace.value}`
+    }else{
+        txt = `比上次 ↑ ${pace.value}`
+    }
+    console.log('txt',txt)
+    console.log('pace',pace)
     var option = {
+        backgroundColor: '#ffffff',
         title: [
             {
                 text: '配速',
@@ -23,7 +37,8 @@ function getOption(data) {
             left: "center",
             top: "40%",
             style: {
-                text: `平均配速11'12''`,
+                // text: `平均配速11'12''`,
+                text: pace.nowVal,
                 textAlign: "center",
                 fill: "#333",
                 fontSize: 14,
@@ -33,7 +48,8 @@ function getOption(data) {
             left: "center",
             top: "50%",
             style: {
-                text: `比上次↓7'35''`,
+                // text: `比上次↓7'35''`,
+                text: txt,
                 textAlign: "center",
                 fill: "#333",
                 fontSize: 14,
@@ -49,7 +65,7 @@ function getOption(data) {
                     //     '{c}',
                     // ].join('\n'), //图形外文字上下显示
                     formatter:function (a) {
-                        console.log('a',a)
+                        // console.log('a',a)
                         let arr = []
                         arr.push(a.data.name.title)
                         let formatVal = myFormats.formatShowAvg(a.data.name.cot)
@@ -133,7 +149,10 @@ Component({
      * 组件的属性列表
      */
     properties: {
-
+        paceCompare:{
+            type:Object,
+            value:{}
+        }
     },
 
     /**
@@ -143,17 +162,28 @@ Component({
         ec: {
             // onInit: initChart
             lazyLoad: true // 延迟加载,手动初始化图表
+        },
+        chartImage:'',
+    },
+    observers: {
+        paceCompare: function(paceCompare) {
+            this.pieComponent = this.selectComponent("#mychart-dom-pie");
+            pace = paceCompare
+            console.log(pace)
+            this.init_pie()
         }
     },
     lifetimes: {
         // 生命周期函数，可以为函数，或一个在 methods 段中定义的方法名
-        attached: function () {
+        attached: function (data) {
+            let that = this
             this.pieComponent = this.selectComponent("#mychart-dom-pie");
-            this.init_pie()
+            // this.init_pie()
             // this.setData({
             //     'ec.onInit': this.init_pie
             // })
             // getCache()
+            
         },
         moved: function () { 
             // chart.setOption(getOption(getCache()));
@@ -165,14 +195,38 @@ Component({
      */
     methods: {
         init_pie(){
+            let that = this
             this.pieComponent.init((canvas, width, height, dpr) =>{
                 chart = echarts.init(canvas, null, {
                     width: width,
                     height: height,
                     devicePixelRatio: dpr // new
                 });
+                // canvas.fillStyle = "#fff"
+                // canvas.fillRect(0,0, canvas.width, canvas.width)
                 canvas.setChart(chart);
                 chart.setOption(getOption(getCache()));
+                setTimeout(function () {
+                    that.pieComponent.canvasToTempFilePath({
+                       x: 0,
+                       y: 0,
+                    //    width: 375,
+                    //    height: 375,
+                    //    destWidth: 750,
+                    //    destHeight: 750, //mychart1的option
+                        fileType:'png',
+                       success:res => {
+                         console.log("temp path", res.tempFilePath)
+                         that.setData({
+                          chartImage:res.tempFilePath
+                        })
+                        //next todo
+                        that.triggerEvent('getChartImage', {chartImage: that.data.chartImage})
+                        // 需要等这边图片导出成功后再继续海报生成的方法  
+                        
+                       }
+                    })
+                }, 2000)
                 return chart;
             }) 
         }

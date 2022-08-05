@@ -134,6 +134,12 @@
     height: 92rpx;
 }
 
+.tip{
+    text-align: center;
+    font-size: 28rpx;
+    margin-top: 30rpx;
+}
+
 .set-btn {
     position: absolute;
     top: 48rpx;

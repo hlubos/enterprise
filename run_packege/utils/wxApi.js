@@ -289,6 +289,38 @@ export const showModal = (title,content) => {
     })
 }
 
+/**
+ *  wx.showLoading 显示 loading 提示框。需主动调用 wx.hideLoading 才能关闭提示框
+ */
+export const showLoading = (title,mask) => {
+    return new Promise((resolve, reject) => {
+        wx.showLoading({
+            title,
+            mask,
+            success: (result) => {
+                resolve(result);
+            },
+            fail: (err) => {
+                reject(err);
+            }
+        });
+    })
+}
+/**
+ *  wx.hideLoading 关闭模态对话框
+ */
+export const hideLoading = () => {
+    return new Promise((resolve, reject) => {
+        wx.hideLoading({
+            success: (result) => {
+                resolve(result);
+            },
+            fail: (err) => {
+                reject(err);
+            }
+        });
+    })
+}
 
 /**
  *  wx.createInnerAudioContext 创建内部 audio 上下文 InnerAudioContext 对象。

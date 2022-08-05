@@ -5,6 +5,7 @@ import {
     offLocationChange,
     startLocationUpdate,
     redirectTo,
+    navigateBack,
     stopLocationUpdate,
     startLocationUpdateBackground,
     createInnerAudioContext,
@@ -13,6 +14,7 @@ import {
     getStorageSync,
     removeStorageSync,
     showModal,
+    hideLoading,
 } from '../../utils/wxApi'
 import myFormats from '../../utils/format'
 import api from '../../server/run'
@@ -325,6 +327,37 @@ Page({
     },
     // 结束跑步
     runStop(){
+        // 读取缓存的轨迹数组，没有移动则不允许结算
+        let user_id = getStorageSync('user_id')
+        let key = 'run_data_'+user_id
+        let kMilesCacheData = getStorageSync(key)
+        if(kMilesCacheData.locaDotArr.length < 2){
+            showModal('您的移动距离过短，数据将不会被保存','是否退出跑步？').then(res=>{
+                if(res.confirm){
+                    // 清除运动数据缓存
+                    let user_id = getStorageSync('user_id')
+                    let storageKey = 'run_kmiles_pace_arr_' + user_id
+                    removeStorageSync(storageKey)
+                    removeStorageSync(key)
+                    // 清除定时器
+                    clearInterval(this.data.runTimer)
+                    innerAudioContext.src = "run_packege/assets/voice/paobujieshu.mp3"
+                    this.setData({
+                        runTime:0,
+                        runStatus:1,
+                    })
+                    // 关闭定位追踪
+                    offLocationChange(this._mylocationChangeFn)
+                    stopLocationUpdate().then(res=>{
+                        console.log("停止追踪", res);
+                    })
+                    navigateBack()
+                }else{
+                    return false
+                }
+            })
+            return false
+        }
         clearInterval(this.data.runTimer)
         innerAudioContext.src = "run_packege/assets/voice/paobujieshu.mp3"
         this.setData({
@@ -597,6 +630,7 @@ Page({
     onShow() {
         // 读取跑步设置缓存
         this.getRunSetCache()
+        hideLoading()
     },
 
     /**

@@ -51,6 +51,8 @@ Page({
         staticMapUrl:'https://apis.map.qq.com/ws/staticmap/v2/?key=L4JBZ-YJ56D-GAO47-P6UQY-ODB46-M2FD2&scale=2&size=500x400&center=39.12,116.54&zoom=12',
         // 二维码图片
         qrcodeImg: 'https://ssl-pubpic.51yund.com/1224160409.jpg',
+        // echarts的图片
+        chartImage:'',
         // 跑步开始时间(时间戳)
         runStartTime: 0,
         // 跑步总距离（米）
@@ -79,6 +81,8 @@ Page({
             // 'subkey':'V5JBZ-RY5EJ-Z7AFP-FP7OM-YXSFE-P7F4J',
             'layer-style': '1'
         },
+        // 
+        paceCompare:{},
     },
     handleMap(e) {
         console.log(e.detail)
@@ -104,11 +108,19 @@ Page({
                 isShowPanel: false,
                 mapHeight: '100vh',
             })
+            // let mapBox = wx.createSelectorQuery()
+            // mapBox.select('.fina-map-box').boundingClientRect(res => {
+            //     this.setStaticMapInfo(res.width,res.height)
+            // }).exec()
         } else {
             this.setData({
                 isShowPanel: true,
                 mapHeight: '600rpx',
             })
+            // let mapBox = wx.createSelectorQuery()
+            // mapBox.select('.fina-map-box').boundingClientRect(res => {
+            //     this.setStaticMapInfo(res.width,res.height)
+            // }).exec()
         }
         setTimeout(() => {
             let mapFinalCtx = wx.createMapContext('run-final-map', this) // mapId对应地图id属性
@@ -134,7 +146,7 @@ Page({
     runFinishAudio(){
         // 
         let auidos = this.audioDidy()
-        console.log(auidos)
+        // console.log(auidos)
         let index = 0
         innerAudioContext.src = `run_packege/assets/voice/hiking/${auidos[index]}.mp3`
         // 监听音频自然结束
@@ -293,6 +305,13 @@ Page({
             showPosterImage: true
         })
     },
+    // 获取echart的图片
+    getChartImage(e){ 
+        let chartImage = e.detail.chartImage
+        this.setData({
+            chartImage,
+        })
+    },
     // 调整canvas宽高
     setCanvasSize() {
         let shareBox = wx.createSelectorQuery()
@@ -360,20 +379,12 @@ Page({
         query.select('#answer-canvas').fields({ //answer-canvas要绘制的canvas的id
             size: true,
             scrollOffset: true
-        }, data => {
-            // let width = data.width;
-            // let height = data.height;
-            // let width = 750;
-            // let height = 1500;
-            // console.log(width, height);
-            // that.setData({
-            //     width: width,
-            //     height: height
-            // })
+        }).exec(res=>{
+            // console.log(res)
             setTimeout(() => {
                 that.draw()
             }, 1500);
-       }).exec()
+       })
     },
     draw(){
         let that = this
@@ -383,8 +394,11 @@ Page({
           obj: that, // 在组件中使用时，需要传入当前组件的this
           width: this.data.canvasWidth, // 宽 自定义
           height: this.data.canvasHeight, // 高 自定义
-          background: 'white', // 默认背景色 设置背景色
-          zoom:0.8,
+          background: '#ffffff', // 默认背景色 设置背景色
+          scrolly: 0,
+          scrollx: 0,
+        //   fileType:'jpg',
+        //   zoom:0.8,
           progress(percent) { // 绘制进度
             // console.log(percent);
           },
@@ -440,15 +454,18 @@ Page({
     },
     // 微信分享
     wxShare() {
-        this.setData({
-            shareFlag: 0
-        })
-        this.setData({
-            showPosterImage: false
+        // this.setData({
+        //     shareFlag: 0
+        // })
+        // this.setData({
+        //     showPosterImage: false
+        // })
+        wx.previewImage({
+            urls:[this.data.posterImgUrl]
         })
     },
     // 设置静态地图参数
-    setStaticMapInfo(){
+    setStaticMapInfo(w=500,h=400){
         // staticMapUrl:'https://apis.map.qq.com/ws/staticmap/v2/?key=L4JBZ-YJ56D-GAO47-P6UQY-ODB46-M2FD2&scale=2&size=500x400&center=39.12,116.54&zoom=12',
         let user_id = getStorageSync('user_id')
         let storageKey = 'run_data_' + user_id
@@ -473,22 +490,14 @@ Page({
         })
         let path = `color:${pathObj.sty.color}|weight:${pathObj.sty.weight}|${locStr}`
         let sizeObj = {
-            width: 500,
-            height: 400,
+            width: w,
+            height: h,
         }
         let size = `${sizeObj.width}*${sizeObj.height}`
         let staticMapUrl = `${base}?size=${size}&scale=2&maptype=roadmap&key=${key}&path=${path}`
         this.setData({
             staticMapUrl,
         })
-        if(this.data.staticMapUrl){
-            // 上传运动缩略图
-            api.AddTrackPic({
-                runner_id:this.data.runner_id,
-                kind_id:0,
-                pic_url:this.data.staticMapUrl,
-            })
-        }
     },
     /**
      * 生命周期函数--监听页面加载
@@ -501,24 +510,7 @@ Page({
             })
         }
         // this.setCanvasSize()
-        api.runnerFinishDetail({
-            sport_type: 0
-        }).then(res => {
-            console.log(res)
-            // userInfo:{
-            //     head_url:'',
-            //     run_day_cnt: 0,
-            //     user_id: 0,
-            // }
-            if (res.code == 0) {
-                this.setData({
-                    "userInfo.head_url": res.user_info.head_url,
-                    "userInfo.run_day_cnt": res.user_info.run_day_cnt,
-                    "userInfo.nick": res.user_info.nick,
-                    "userInfo.user_id": getStorageSync('user_id'),
-                })
-            }
-        })
+        
     },
 
     /**
@@ -540,8 +532,52 @@ Page({
                 "showRunData.sumTime": myFormats.secTranlateTime(data.runTime),
                 "showRunData.kCalorie": (55 * 1.036 * (data.runMiles / 1000)).toFixed(1),
             })
+            // 设置静态地图
             this.setStaticMapInfo()
+            if(this.data.staticMapUrl){
+                // 上传运动缩略图
+                api.AddTrackPic({
+                    runner_id:this.data.runner_id,
+                    kind_id:0,
+                    pic_url:this.data.staticMapUrl,
+                })
+            }
+            // 跑步结束页面详情
+            api.runnerFinishDetail({
+                sport_type: 0
+            }).then(res => {
+                console.log(res)
+                if (res.code == 0) {
+                    this.setData({
+                        "userInfo.head_url": res.user_info.head_url,
+                        "userInfo.run_day_cnt": res.user_info.run_day_cnt,
+                        "userInfo.nick": res.user_info.nick,
+                        "userInfo.user_id": getStorageSync('user_id'),
+                    })
+                    let last_sport_record = res.last_sport_record
+                    let last_pace = parseInt(last_sport_record.cost_time/last_sport_record.distance*1000)
+                    let now_pace = parseInt(data.runTime/data.runMiles*1000)
+                    let paceCompare = {}
+                    if(now_pace >= last_pace){
+                        paceCompare = {
+                            nowVal: this.data.showRunData.avgPace,
+                            flag: 1, 
+                            value: myFormats.formatShowAvg(now_pace-last_pace)
+                        }
+                    }else {
+                        paceCompare = {
+                            nowVal: this.data.showRunData.avgPace,
+                            flag: 0, 
+                            value: myFormats.formatShowAvg(last_pace-now_pace)
+                        }
+                    }
+                    this.setData({
+                        paceCompare,
+                    })
+                }
+            })
         } catch (error) { }
+        
         // 
         var mapFinalCtx = wx.createMapContext('run-final-map', this) // mapId对应地图id属性
         mapFinalCtx.includePoints({

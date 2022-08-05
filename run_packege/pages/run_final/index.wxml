@@ -1,11 +1,5 @@
 <!--run_packege/pages/run_final/index.wxml-->
 <!-- <canvas canvas-id="shareCanvas" class="share-Canvas"></canvas> -->
-
-<!-- <view class="canvasImg answer_canvas " id="answer-canvas">
-    <view class="name answer_draw_canvas" data-type="text" data-text="姓名：XXX">姓名：XXX</view>
-    <view class="desc answer_draw_canvas" data-type="text" data-text="这边是要绘制的文字">这边是要绘制的文字</view>
-    <view class="desc answer_draw_canvas" data-type="text" data-text="要绘制的文字描述">要绘制的文字描述</view>
-</view> -->
 <!-- <canvas type="2d" canvas-id="shareCanvas" id="shareCanvas" class="shareCanvas" style="width: 100%; height:{{canvasHeight}}px;"> -->
     <view class="share-img-box answer_canvas" id="answer_canvas">
         <view class="fina-map-box answer_draw_canvas" style="height: {{mapHeight}};">
@@ -27,7 +21,7 @@
         </view>
         <!-- <page-container show="true" overlay="false"> 
         </page-container> -->
-        <view class="final-chart-box answer_draw_canvas" data-type="background-image" hidden="{{!isShowPanel}}">
+        <view class="final-chart-box answer_draw_canvas" data-type="text" data-background = "#ffffff" hidden="{{!isShowPanel}}">
             <view class="title answer_draw_canvas">
                 <view class="title1 answer_draw_canvas">
                     <view class="logo answer_draw_canvas">
@@ -69,11 +63,19 @@
             <view class="visual-chart-box answer_draw_canvas">
                 <!-- <view class="visual-chart-title">配速</view> -->
                 <view class="visual-chart answer_draw_canvas">
-                    <run-speed-chart></run-speed-chart>
+                    <run-speed-chart bind:getChartImage="getChartImage" hidden="{{chartImage}}" paceCompare="{{paceCompare}}"></run-speed-chart>
+                    <image 
+                        class="answer_draw_canvas" 
+                        style="height: 100%; width: 100%;" 
+                        hidden="{{!chartImage}}" 
+                        src="{{chartImage}}"
+                        data-type="image" 
+                        data-url="{{chartImage}}"
+                    ></image>
                 </view>
             </view>
             <!-- 二维码 -->
-            <view class="qrcode-box answer_draw_canvas" hidden="{{shareFlag == 0}}">
+            <view class="qrcode-box answer_draw_canvas">
                 <!-- <canvas type="2d" id='myQrcode' style="width: 160rpx;height: 160rpx;"></canvas> -->
                 <image class="qrcode-img answer_draw_canvas" data-type="image" data-url="{{qrcodeImg}}" src="{{qrcodeImg}}"></image>
                 <view class="qrcode-txt answer_draw_canvas">
@@ -84,7 +86,7 @@
         </view>
     </view>
 <!-- </canvas> -->
-<view class="share-btn-box" hidden="{{shareFlag == 1}}">
+<view class="share-btn-box" hidden="{{!isShowPanel}}">
     <view class="share-btn">
         <view class="btn1" bindtap="runFinish">完成运动</view>
         <!-- <view class="btn2" bindtap="createQrcode">分享</view> -->
@@ -103,22 +105,35 @@
     </view>
 </view> -->
 
-<view class="poster-page" hidden="{{!showPosterImage}}">
-    <!-- <scroll-view scroll-y class="poster-page-scroll" style="height:{{canvasHeight}}px;">
-        <view class="poster-content">
-            
-        </view>
+<page-container show="{{showPosterImage}}">
+    <!-- <scroll-view scroll-y style="height: 2000px;">
+        
     </scroll-view> -->
-    <image class="poster-img" style="height: {{canvasHeight}}px;" src="{{posterImgUrl}}"></image>
-    <canvas canvas-id="answerCanvas" class="answerCanvas" wx:if="{{!posterImgUrl}}" style="width: {{canvasWidth}}px; height:{{canvasHeight}}px;"></canvas>
-    <view class="share-type-box" hidden="{{shareFlag == 0}}">
-        <view class="type-btn" bindtap="wxShare">
-            <image src="https://ssl-pubpic.51yund.com/1225058005.png"></image>
-            <view>微信分享</view>
+    <view class="poster-page" hidden="{{!showPosterImage}}">
+        <view 
+            style="width: 80vw; height: 80vh;"
+            wx:if="{{posterImgUrl}}">
+            <image 
+                class="poster-img" 
+                src="{{posterImgUrl}}"
+                mode="aspectFit"
+            ></image>
         </view>
-        <view class="type-btn" bindtap="clickSaveImg">
-            <image src="https://ssl-pubpic.51yund.com/1225058151.png"></image>
-            <view>保存图片</view>
+        <canvas 
+            canvas-id="answerCanvas" 
+            class="answerCanvas" 
+            wx:if="{{!posterImgUrl}}"
+            style="width: {{canvasWidth}}px; height:{{canvasHeight}}px;background:#fff;"
+        ></canvas>
+        <view class="share-type-box" hidden="{{shareFlag == 0}}">
+            <view class="type-btn" bindtap="wxShare">
+                <image src="https://ssl-pubpic.51yund.com/1225058005.png"></image>
+                <view>微信分享</view>
+            </view>
+            <view class="type-btn" bindtap="clickSaveImg">
+                <image src="https://ssl-pubpic.51yund.com/1225058151.png"></image>
+                <view>保存图片</view>
+            </view>
         </view>
     </view>
-</view>
+</page-container>

@@ -31,7 +31,7 @@
                 <image src="https://ssl-pubpic.51yund.com/1221493943.png"></image>
             </view>
             <!-- 结束 -->
-            <view class="stop-btn" hidden="{{runStatus == 0}}" bindtap="runStop">
+            <view class="stop-btn" hidden="{{runStatus == 0}}" bindlongpress="runStop">
                 <image src="https://ssl-pubpic.51yund.com/1221493926.png"></image>
             </view>
             <!-- 暂停 -->
@@ -45,12 +45,14 @@
         </view>
         <view class="notlock-btns" hidden="{{isLock == false}}">
             <!-- 长按解锁 -->
-            <view class="unlock-btn" bindtap="unlockRunPanel">
+            <view class="unlock-btn" bindlongpress="unlockRunPanel">
                 <view class="unlock-btn-center">解锁</view>
             </view>
             <!-- <circle_bar></circle_bar> -->
         </view>
     </view>
+    <view class="tip" hidden="{{isLock == true || runStatus == 0}}">长按结束按钮，将结束本次跑步</view>
+    <view class="tip" hidden="{{isLock == false}}">长按解锁</view>
     <navigator id="nav" url="../run_set/index">
         <image class="set-btn" src="https://ssl-pubpic.51yund.com/1221761768.png"></image>
     </navigator>

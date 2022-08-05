@@ -9,6 +9,7 @@ import {
     getStorageSync,
     showToast,
     showModal,
+    showLoading,
     removeStorageSync,
 } from '../../utils/wxApi'
 import api from '../../server/run'
@@ -143,6 +144,7 @@ Page({
         this.setData({
             showRunCheckModal: false
         })
+        showLoading('跑步加载中...',true)
         navigateTo("../run_page/index").then((res)=>{
             // console.log(res)
         })
@@ -166,6 +168,7 @@ Page({
     continueRun(){
         // 不清缓存
         console.log("不清缓存")
+        showLoading('跑步加载中...',true)
         this.setData({
             showRunBreakDialog: false
         })
@@ -233,7 +236,7 @@ Page({
         })
         // 
         let params = {
-            user_id:284209535,
+            // user_id:284209535,
         }
         api.getRunnerInfo(params).then(res=>{
             if(res.code == 0){
