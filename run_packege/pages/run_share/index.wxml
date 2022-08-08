@@ -1,0 +1,50 @@
+<!--run_packege/pages/run_share/index.wxml-->
+<!-- 地图静态图 -->
+<canvas
+    class="answerCanvas"
+    canvas-id="answerCanvas"
+    style="position: absolute;top: -{{canvasHeight}}px; width: {{canvasWidth}}px; height:{{canvasHeight}}px;background:#fff;"
+></canvas>
+<view class="img-area .answer_canvas" id="answer-canvas">
+    <image 
+        class="static-map answer_draw_canvas" 
+        data-type="image" 
+        data-url="{{staticMapUrl}}" 
+        src="{{staticMapUrl}}"
+        style="width: 100%; height: 600rpx;"
+    ></image>
+    <!-- 中间数据图 -->
+    <image 
+        class="answer_draw_canvas"
+        data-type="image" 
+        data-url="{{dataImg}}" 
+        src="{{dataImg}}"
+        mode="widthFix"
+        style="width: 100%;"
+    ></image>
+    <view class="line-box" class="answer_draw_canvas">
+        <view class="line" class="answer_draw_canvas"></view>
+    </view>
+    <!-- 二维码 -->
+    <view class="qrcode-box answer_draw_canvas">
+        <image class="qrcode-img answer_draw_canvas" data-delay="1" data-type="image" data-url="{{qrcodeImg}}" src="{{qrcodeImg}}"></image>
+        <view class="qrcode-txt answer_draw_canvas">
+            <view class="answer_draw_canvas" data-delay="1" data-type="text" data-text="全民数字化">全民数字化</view>
+            <view class="answer_draw_canvas" data-delay="1" data-type="text" data-text="运动健康管理平台">运动健康管理平台</view>
+        </view>
+    </view>
+</view>
+
+<!-- 两个按钮 -->
+<view class="share-type-box">
+    <view class="type-btn" bindtap="wxShare">
+        <image src="https://ssl-pubpic.51yund.com/1225058005.png"></image>
+        <view>微信分享</view>
+    </view>
+    <view class="type-btn" bindtap="clickSaveImg">
+        <image src="https://ssl-pubpic.51yund.com/1225058151.png"></image>
+        <view>保存图片</view>
+    </view>
+</view>
+
+

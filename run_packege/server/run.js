@@ -29,4 +29,7 @@ export default class LoginMember {
     static AddTrackPic(params) {
         return $http.post(url.AddTrackPic, params);
     }
+    static reportRunnerPathData(params) {
+        return $http.post(url.reportRunnerPathData, params);
+    }
 }

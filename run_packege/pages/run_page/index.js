@@ -284,10 +284,14 @@ Page({
         })
         console.log(res)
         let locaDotArr = this.data.locaDotArr
-        locaDotArr.push({
-            latitude:res.latitude,
-            longitude:res.longitude
-        })
+        let pointObj = {
+            runner_id: '',
+            point_id: '',
+            longitude: res.longitude,
+            latitude: res.latitude,
+            time: new Date().getTime(),
+        }
+        locaDotArr.push(pointObj)
         this.setData({
             locaDotArr:locaDotArr
         })
@@ -358,17 +362,6 @@ Page({
             })
             return false
         }
-        clearInterval(this.data.runTimer)
-        innerAudioContext.src = "run_packege/assets/voice/paobujieshu.mp3"
-        this.setData({
-            runTime:0,
-            runStatus:1,
-        })
-        // 关闭定位追踪
-        offLocationChange(this._mylocationChangeFn)
-        stopLocationUpdate().then(res=>{
-            console.log("停止追踪", res);
-        })
         // 缓存最后一公里的配速
         this.setKmilesCache(false)
         // 上报跑步数据
@@ -391,9 +384,30 @@ Page({
             // 配速(秒/公里)
             params.avg_speed = ((this.data.runMiles*1000)/(this.data.runTime*3600)).toFixed(2)
         }
+        console.log('avg_pace',params.avg_pace)
+        console.log('avg_speed',params.avg_speed)
         api.reportRunnerInfo(params).then(res=>{
             console.log(res)
+            // 获取runner_id
+            let runId = res.runner_id
+            // 上传轨迹点信息
+            api.reportRunnerPathData({
+                runner_id: runId.toString(),
+                detail: JSON.stringify(this.data.locaDotArr),
+            }).then(res=>{})
             if(res.code == 0){
+                // 清除定位，时间置零
+                clearInterval(this.data.runTimer)
+                innerAudioContext.src = "run_packege/assets/voice/paobujieshu.mp3"
+                this.setData({
+                    runTime:0,
+                    runStatus:1,
+                })
+                // 关闭定位追踪
+                offLocationChange(this._mylocationChangeFn)
+                stopLocationUpdate().then(res=>{
+                    console.log("停止追踪", res);
+                })
                 // 跳转到跑步结算页
                 let runner_id = res.runner_id
                 redirectTo(`../run_final/index?runner_id=${runner_id}`)
@@ -542,7 +556,7 @@ Page({
     onLoad(options) {
         let that = this
         // 获取初始位置信息
-        getLocation().then(res=>{
+        getLocation('gcj02').then(res=>{
             console.log(res)
             const latitude = res.latitude
             const longitude = res.longitude

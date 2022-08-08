@@ -3,7 +3,7 @@
     <view 
         class="nav-item {{selectedNavIndex==index?'active-item':''}}" 
         wx:for="{{navList}}"
-        wx:key="{{index}}"
+        wx:key="index"
         data-index="{{index}}"
         bindtap="selectedNav"
     >{{item.name}}</view>

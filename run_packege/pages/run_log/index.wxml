@@ -21,7 +21,7 @@
     <scroll-view class="runlog-list" scroll-y bindscrolltolower='loadData'>
         <view>
             <mp-cells ext-class="my-cells">
-                <mp-cell wx:for="{{runLogList}}" wx:key="time">
+                <mp-cell wx:for="{{runLogList}}" wx:key="index">
                     <view class="runlog-item-icon">
                         <image src="{{thumbImgList[index].pic_url}}"></image>
                     </view>
@@ -36,7 +36,7 @@
                                 <text class="runlog-item-info-line2-txt1">{{(item.distance)}} 公里</text>
                                 <text class="runlog-item-info-line2-txt2">{{item.kind_id==0?'室外跑':'室内跑'}}</text>
                             </view>
-                            <image class="right-icon" src="https://ssl-pubpic.51yund.com/1221022777.png"></image>
+                            <!-- <image class="right-icon" src="https://ssl-pubpic.51yund.com/1221022777.png"></image> -->
                         </view>
                         <view class="runlog-item-info-line3">
                             <view class="line3-item">

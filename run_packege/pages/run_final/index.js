@@ -7,6 +7,7 @@ import {
     removeStorageSync,
     navigateBack,
     createInnerAudioContext,
+    navigateTo,
 } from '../../utils/wxApi'
 import Wxml2Canvas from 'wxml2canvas'
 const innerAudioContext = createInnerAudioContext(true)
@@ -295,16 +296,16 @@ Page({
         return allAudio
     },
     // 分享按钮,显示海报
-    createQrcode() {
-        this.setData({
-            shareFlag: 1
-        })
-        this.setCanvasSize()
-        this.createPoster()
-        this.setData({
-            showPosterImage: true
-        })
-    },
+    // createQrcode() {
+    //     this.setData({
+    //         shareFlag: 1
+    //     })
+    //     this.setCanvasSize()
+    //     this.createPoster()
+    //     this.setData({
+    //         showPosterImage: true
+    //     })
+    // },
     // 获取echart的图片
     getChartImage(e){ 
         let chartImage = e.detail.chartImage
@@ -323,51 +324,6 @@ Page({
                 canvasWidth:res.width,
             })
         }).exec()
-    },
-    // 生成海报
-    createPoster() {
-        const query = wx.createSelectorQuery()
-        query.select('#share-canvas')
-            .fields({
-                node: true,
-                size: true
-            })
-            .exec((res) => {
-                let _this = this
-                console.log("生成海报")
-                console.log(res)
-                const { node } = res[0]
-                if (!node) return
-                /* 获取 canvas 实例 */
-                const context = node.getContext('2d')
-                context.fillStyle = '#ffffff'
-                // /* 设置字体样式 大小 字体类别 */
-                // context.font = 'normal 400 12px PingFangSC-Regular',
-                // context.fillText('hello,world', 0, 0)
-                console.log(context)
-                setTimeout(()=>{
-                    wx.canvasToTempFilePath({     //将canvas生成图片
-                        // canvasId: 'shareCanvas',
-                        canvas: context,
-                        x: 0,
-                        y: 0,
-                        fileType:'png',
-                        success: function (res) {
-                            console.log("海报")
-                            console.log(res)
-                            _this.setData({
-                                posterImgUrl: res.tempFilePath
-                            })
-                            console.log(_this.data.posterImgUrl)
-                        },
-                        fail(res) {
-                            // wx.hideLoading()
-                            console.log("fail res:")
-                            console.log(res)
-                        }
-                    },_this)
-                },300)
-            })
     },
     // =========================================
     drawCanvas: function () {
@@ -409,6 +365,8 @@ Page({
                 // imgUrl: url,
                 posterImgUrl:url,
             })
+            // 跳转到分享页面
+            navigateTo(`../run_share/index?dataImg=${url}`).then(res=>console.log(res))
           },
           error(res) {
             console.log(res);
@@ -550,7 +508,7 @@ Page({
                 if (res.code == 0) {
                     this.setData({
                         "userInfo.head_url": res.user_info.head_url,
-                        "userInfo.run_day_cnt": res.user_info.run_day_cnt,
+                        "userInfo.this_sport_cnt": res.this_sport_cnt,
                         "userInfo.nick": res.user_info.nick,
                         "userInfo.user_id": getStorageSync('user_id'),
                     })

@@ -1,8 +1,9 @@
 /**
  *  wx.getLocation 获取位置信息
  */
-export const getLocation = () => {
+export const getLocation = (type) => {
     return new Promise((resolve, reject) => {
+        type,
         wx.getLocation({
             success: (result) => {
                 resolve(result);

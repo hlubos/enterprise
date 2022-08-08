@@ -27,19 +27,7 @@
     text-align: center;
     margin-top: 80rpx;
 }
-.giveup-btn{
-    width: 370rpx;
-    height: 80rpx;
-    background: #F86254;
-    border-radius: 8rpx;
-    font-weight: 600;
-    font-size: 34rpx;
-    color: #FFFFFF;
-    margin-bottom: 20rpx;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+
 .continue-btn{
     width: 370rpx;
     height: 80rpx;
@@ -49,6 +37,19 @@
     font-size: 34rpx;
     color: #FFFFFF;
     /* margin-top: 20rpx; */
+    margin-bottom: 20rpx;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.giveup-btn{
+    width: 370rpx;
+    height: 80rpx;
+    background: #F86254;
+    border-radius: 8rpx;
+    font-weight: 600;
+    font-size: 34rpx;
+    color: #FFFFFF;
     margin-bottom: 64rpx;
     display: flex;
     justify-content: center;

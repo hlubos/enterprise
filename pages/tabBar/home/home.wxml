@@ -3,7 +3,6 @@
     <view class="left">
         <view class="title">
             <text>AI动作库</text>
-            <navigator url="/run_packege/pages/index/index">跑步</navigator>
         </view>
         <view class="desc">
             <text>Yodo exercises</text>
@@ -14,6 +13,12 @@
 <login-btn bindsuccess="gotoRecords">
     <view class="records">
         <view class="records-left">历史记录</view>
+        <image class="records-right" src="https://ssl-pubpic.51yund.com/1004075363.jpg" />
+    </view>
+</login-btn>
+<login-btn bindsuccess="gotoRun">
+    <view class="records">
+        <view class="records-left">跑步</view>
         <image class="records-right" src="https://ssl-pubpic.51yund.com/1004075363.jpg" />
     </view>
 </login-btn>

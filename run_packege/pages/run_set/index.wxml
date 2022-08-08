@@ -43,7 +43,7 @@
         <view slot="footer">说明文字</view>
     </mp-cell> -->
     <view class="map-style-list">
-        <view wx:for="{{mapStyleList}}" wx:key="item" class="map-style-item" data-key="{{item}}" bindtap="selectMapSty">
+        <view wx:for="{{mapStyleList}}" wx:key="index" class="map-style-item" data-key="{{item}}" bindtap="selectMapSty">
             <view class="map-icon">
                 <image src="{{item.icon}}"></image>
                 <image 

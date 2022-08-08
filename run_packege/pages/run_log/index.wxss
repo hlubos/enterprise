@@ -66,6 +66,10 @@
     /* background-color: darkgreen; */
     margin-right: 20rpx;
 }
+.runlog-item-icon image{
+    width: 100%;
+    height: 100%;
+}
 
 .runlog-item-info {
     height: 160rpx;
