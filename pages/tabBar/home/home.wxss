@@ -26,6 +26,50 @@
   height: 156rpx;
 }
 
+.nav {
+  padding: 20rpx 38rpx 20rpx 52rpx;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  overflow-x: hidden;
+  font-weight: 500;
+  font-size: 28rpx;
+  color: #666666;
+}
+
+.nav .tle {
+    margin-right: 40rpx;
+    display: flex;
+    flex-direction: column;
+    /* flex-wrap: wrap; */
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.nav .tle .name {
+    height: 60rpx;
+    display: flex;
+    align-items: flex-end;
+}
+
+.nav .tle .tag{
+    width: 36rpx;
+    height: 8rpx;
+    border-radius: 6rpx;
+    margin-top: 8rpx;
+}
+
+.nav .active-tle {
+  font-weight: 600;
+  font-size: 44rpx;
+  line-height: 60rpx;
+  color: #4CDDB4;
+}
+
+.nav .active-tle .tag {
+    background: #4CDDB4;
+}
+
 .kind-list {
   padding: 28rpx;
   display: flex;

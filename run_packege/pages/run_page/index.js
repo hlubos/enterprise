@@ -379,10 +379,10 @@ Page({
             params.avg_pace = 0
             params.avg_speed = 0
         }else {
-            // 均速(公里/小时)
-            params.avg_pace = (this.data.runTime/this.data.runMiles/1000).toFixed(2)
             // 配速(秒/公里)
-            params.avg_speed = ((this.data.runMiles*1000)/(this.data.runTime*3600)).toFixed(2)
+            params.avg_pace = (this.data.runTime/(this.data.runMiles/1000)).toFixed(2)
+            // 均速(公里/小时)
+            params.avg_speed = ((this.data.runMiles/1000)/(this.data.runTime/3600)).toFixed(2)
         }
         console.log('avg_pace',params.avg_pace)
         console.log('avg_speed',params.avg_speed)

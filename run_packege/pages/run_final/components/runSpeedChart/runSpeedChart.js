@@ -39,7 +39,7 @@ function getOption(data) {
             top: "40%",
             style: {
                 // text: `平均配速11'12''`,
-                text: pace.nowVal,
+                text: '平均配速'+pace.nowVal,
                 textAlign: "center",
                 fill: "#333",
                 fontSize: 14,

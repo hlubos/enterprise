@@ -23,7 +23,7 @@ Page({
         offset: 0,
     },
     // 加载数据
-    loadData(){
+    async loadData(){
         if(!this.data.canLoadData || this.data.has_more == 0){
             return false
         }
@@ -32,29 +32,28 @@ Page({
         })
         console.log("加载数据")
         // 获取缩略图接口
-        api.getDayPeakRecord({
+        let peakRecordRes = await api.getDayPeakRecord({
             // user_id:47419973,
             // kind_id: 100,
             kind_id: 0,
             offset:this.data.offset,
-        }).then(res=>{
-            if(res.code == 0){
-                console.log(res)
-                this.setData({
-                    has_more: res.has_more,
-                    offset: this.data.offset + res.runner_extra_infos.length
-                })
-                if(this.data.thumbImgList.length == 0){
-                    this.setData({
-                        thumbImgList:res.runner_extra_infos
-                    })
-                }else if(this.data.thumbImgList.length == 0) {
-                    this.setData({
-                        thumbImgList:[...this.data.thumbImgList,...res.runner_extra_infos]
-                    })
-                }
-            }
         })
+        if(peakRecordRes.code == 0){
+            console.log(peakRecordRes)
+            this.setData({
+                has_more: peakRecordRes.has_more,
+                offset: this.data.offset + peakRecordRes.runner_extra_infos.length
+            })
+            if(this.data.thumbImgList.length == 0){
+                this.setData({
+                    thumbImgList:peakRecordRes.runner_extra_infos
+                })
+            }else if(this.data.thumbImgList.length == 0) {
+                this.setData({
+                    thumbImgList:[...this.data.thumbImgList,...peakRecordRes.runner_extra_infos]
+                })
+            }
+        }
         // 
         let params = {
             // user_id:284209535,
@@ -74,6 +73,9 @@ Page({
                     newInfos[i].cost_time = myFormats.secTranlateTime(newInfos[i].cost_time)
                     // avg_pace formatAvg
                     newInfos[i].avg_pace = myFormats.formatShowAvg(newInfos[i].avg_pace)
+                    if(this.data.thumbImgList.find(item=>item.runner_id == newInfos[i].runner_id)){
+                        newInfos[i].pic_url = this.data.thumbImgList.find(item=>item.runner_id == newInfos[i].runner_id).pic_url 
+                    }
                 }
                 this.setData({
                     total_cnt: res.total_cnt,

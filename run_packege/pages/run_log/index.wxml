@@ -24,6 +24,7 @@
                 <mp-cell wx:for="{{runLogList}}" wx:key="index">
                     <view class="runlog-item-icon">
                         <image src="{{thumbImgList[index].pic_url}}"></image>
+                        <!-- <image src="{{thumbImgList.find(i=>i.runner_id == item.runner_id).pic_url}}"></image> -->
                     </view>
                     <view class="runlog-item-info" slot="footer">
                         <view class="runlog-item-info-line1">

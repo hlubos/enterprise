@@ -1,4 +1,16 @@
 <!-- pages/tabBar/home/home.wxml -->
+<view class="nav">
+    <view class="tle active-tle">
+        <view class="name">AI运动</view>
+        <view class="tag"></view>
+    </view>
+    <login-btn bindsuccess="gotoRun">
+        <view class="tle">
+            <view class="name">跑步</view>
+            <view class="tag"></view>
+        </view>
+    </login-btn>
+</view>
 <view class="header">
     <view class="left">
         <view class="title">
@@ -13,12 +25,6 @@
 <login-btn bindsuccess="gotoRecords">
     <view class="records">
         <view class="records-left">历史记录</view>
-        <image class="records-right" src="https://ssl-pubpic.51yund.com/1004075363.jpg" />
-    </view>
-</login-btn>
-<login-btn bindsuccess="gotoRun">
-    <view class="records">
-        <view class="records-left">跑步</view>
         <image class="records-right" src="https://ssl-pubpic.51yund.com/1004075363.jpg" />
     </view>
 </login-btn>
