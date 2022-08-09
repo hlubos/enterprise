@@ -1,7 +1,8 @@
 // run_packege/pages/run_final/components/runSpeedChart/runSpeedChart.js
 import * as echarts from '../../../../ec-canvas/echarts';
 import {
-    getStorageSync
+    getStorageSync,
+    removeStorageSync,
 } from '../../../../utils/wxApi'
 import myFormats from '../../../../utils/format'
 let chart
@@ -142,6 +143,7 @@ function getCache(){
     //     name: '最后233米'
     //   }]
     // let data = newData
+    
     return newData
 }
 Component({

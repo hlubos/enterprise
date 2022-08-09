@@ -13,12 +13,14 @@ Page({
         total_caloric: '0.0',
         begin_cnt: 0,
         end_cnt: 60,
+        len: 60,
         runLogList:[],
         thumbImgList:[],
         // 节流阀
         canLoadData:true,
         // has_more
         has_more: 1,
+        offset: 0,
     },
     // 加载数据
     loadData(){
@@ -30,26 +32,17 @@ Page({
         })
         console.log("加载数据")
         // 获取缩略图接口
-        // wx.request({
-        //     url:'https://api.51yund.com/yd_runner/get_day_peak_record',
-        //     data:{
-        //         user_id:47419973,
-        //         kind_id:3,
-        //     },
-        //     method:'POST',
-        //     success:(res)=>{
-        //         console.log(res)
-        //     }
-        // })
         api.getDayPeakRecord({
             // user_id:47419973,
             // kind_id: 100,
             kind_id: 0,
+            offset:this.data.offset,
         }).then(res=>{
             if(res.code == 0){
                 console.log(res)
                 this.setData({
-                    has_more: res.has_more
+                    has_more: res.has_more,
+                    offset: this.data.offset + res.runner_extra_infos.length
                 })
                 if(this.data.thumbImgList.length == 0){
                     this.setData({

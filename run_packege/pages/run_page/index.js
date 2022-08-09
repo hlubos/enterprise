@@ -180,9 +180,9 @@ Page({
             runMiles:runMiles,
         })
         // 每公里缓存一次配速(秒/公里)
-        let cut = parseInt(runMiles / 1000)
+        let cut = parseInt(runMiles / 1000) + 1
         let outMiles = runMiles % 1000
-        if( cut+1 > this.data.kmilesCount){
+        if( cut > this.data.kmilesCount){
             this.setKmilesCache()
             this.setData({
                 kmilesCount: this.data.kmilesCount+1,
@@ -594,7 +594,7 @@ Page({
             let kMilesCache = this.getKmilesCache()
             if(kMilesCache){
                 this.setData({
-                    kmilesCount: kMilesCache.kmiles_cut
+                    kmilesCount: kMilesCache[kMilesCache.length-1].kmiles_cut + 1
                 })
             }
             this.runStart()

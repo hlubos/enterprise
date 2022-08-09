@@ -6,6 +6,7 @@ import {
     openSetting,
     startLocationUpdateBackground,
     navigateTo,
+    navigateBack,
     getStorageSync,
     showToast,
     showModal,
@@ -129,6 +130,10 @@ Page({
             }
         })
     },
+    // 返回上一页
+    back(){
+        navigateBack()
+    },
     // 进入跑步页面
     gotoRunPage(){
         // 室内跑暂未开发
@@ -141,14 +146,13 @@ Page({
         }
         let that = this
         // that.selectComponent('#runTypeModal').hideFrame();
-        this.setData({
-            showRunCheckModal: false
-        })
+        // this.setData({
+        //     showRunCheckModal: false
+        // })
         showLoading('跑步加载中...',true)
         navigateTo("../run_page/index").then((res)=>{
             // console.log(res)
         })
-        
     },
     // 放弃跑步
     giveUpRun(){
@@ -234,18 +238,7 @@ Page({
                 })
             }
         })
-        // 
-        let params = {
-            // user_id:284209535,
-        }
-        api.getRunnerInfo(params).then(res=>{
-            if(res.code == 0){
-                console.log(res)
-                this.setData({
-                    totalDistance:(res.total_distance/1000).toFixed(2)
-                })
-            }
-        })
+        
     },
 
     /**
@@ -273,6 +266,21 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow() {
+        this.setData({
+            showRunCheckModal: false
+        })
+        // 获取累计公里数
+        let params = {
+            // user_id:284209535,
+        }
+        api.getRunnerInfo(params).then(res=>{
+            if(res.code == 0){
+                console.log(res)
+                this.setData({
+                    totalDistance:(res.total_distance/1000).toFixed(2)
+                })
+            }
+        })
         let pages = getCurrentPages();
         console.log('------------------- First Page onShow方法中获取栈内页面');
         console.log(pages);

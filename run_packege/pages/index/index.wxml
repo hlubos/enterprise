@@ -21,19 +21,20 @@
             <image class="runlog-btn-img" src="https://ssl-pubpic.51yund.com/1220976698.png"></image>
         </navigator>
     </view>
+    <!-- <view bindtap="back">返回</view> -->
     <view class="auth-hint">
         <view class="auth-hint-box" wx:if="{{!auth.hasAuthUserLocation}}" bindtap="toastAuthUserLocation">
-            <text class="auth-hint-txt">未授权地理位置</text>
+            <text class="auth-hint-txt">当前小程序定位权限未打开，无法开始跑步</text>
         </view>
         <view class="auth-hint-box" wx:if="{{!auth.hasAuthUserLocationBackground}}" bindtap="toastAuthUserLocationBac">
-            <text class="auth-hint-txt">未授权后台定位</text>
+            <text class="auth-hint-txt">当前小程序悬浮后台时无法获取定位，将影响跑步流程</text>
         </view>
     </view>
     <!-- <navigator id="nav" url="../run_page/index">开始</navigator> -->
     <view class="start-run-btn-box">
         <view bindtap="startRun" class="start-run-btn">开始</view>
     </view>
-    <page-container show="{{showRunCheckModal}}" close-on-slideDown round position="bottom">
+    <page-container show="{{showRunCheckModal}}" round position="bottom">
         <view class="run-type-modal-title">请选择你的跑步模式</view>
         <view class="run-type-modal-box">
             <view class='run-type-modal-item {{runType=="0"?"run-type-modal-item-active":""}}' data-runtype="0" bindtap="selectRunType">

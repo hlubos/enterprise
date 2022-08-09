@@ -111,7 +111,7 @@
 
 .title2-left-kmeter {
     font-weight: Bold;
-    font-size: 64rpx;
+    font-size: 60rpx;
     color: #333333;
     line-height: 64rpx;
     margin-right: 24rpx;

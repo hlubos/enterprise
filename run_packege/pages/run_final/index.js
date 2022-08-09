@@ -295,17 +295,6 @@ Page({
         allAudio = [...allAudio,...runKMilesAudioList,...sumTimeAudioList,...avgPaceAudioList]
         return allAudio
     },
-    // 分享按钮,显示海报
-    // createQrcode() {
-    //     this.setData({
-    //         shareFlag: 1
-    //     })
-    //     this.setCanvasSize()
-    //     this.createPoster()
-    //     this.setData({
-    //         showPosterImage: true
-    //     })
-    // },
     // 获取echart的图片
     getChartImage(e){ 
         let chartImage = e.detail.chartImage
@@ -365,8 +354,10 @@ Page({
                 // imgUrl: url,
                 posterImgUrl:url,
             })
+            that.setStaticMapInfo()
             // 跳转到分享页面
-            navigateTo(`../run_share/index?dataImg=${url}`).then(res=>console.log(res))
+            console.log(that.data.staticMapUrl)
+            navigateTo(`../run_share/index?&runner_id=${that.data.runner_id}&dataImg=${encodeURIComponent(url)}&mapImg=${encodeURIComponent(that.data.staticMapUrl)}`).then(res=>console.log(res))
           },
           error(res) {
             console.log(res);
@@ -394,33 +385,6 @@ Page({
         })
         this.setCanvasSize()
         drawImage.draw(data, that);
-        
-        // this.createPoster()
-        
-    },
-    // 保存图片
-    clickSaveImg() {
-        wx.saveImageToPhotosAlbum({  //保存图片到相册
-            filePath: this.data.posterImgUrl, //生成图片临时路径
-            success: function () {
-                wx.showToast({
-                    title: "图片已保存！",
-                    duration: 2000
-                })
-            }
-        })
-    },
-    // 微信分享
-    wxShare() {
-        // this.setData({
-        //     shareFlag: 0
-        // })
-        // this.setData({
-        //     showPosterImage: false
-        // })
-        wx.previewImage({
-            urls:[this.data.posterImgUrl]
-        })
     },
     // 设置静态地图参数
     setStaticMapInfo(w=500,h=400){
@@ -428,12 +392,11 @@ Page({
         let user_id = getStorageSync('user_id')
         let storageKey = 'run_data_' + user_id
         let data = getStorageSync(storageKey)
-        // =================
         let base = 'https://apis.map.qq.com/ws/staticmap/v2/'
         let key = 'L4JBZ-YJ56D-GAO47-P6UQY-ODB46-M2FD2'
         let pathObj = {
             sty:{
-                color: "0x4CDDB4",//线条的颜色
+                color: "0x4CDDB400",//线条的颜色
                 weight: 5,//宽度
             },
             locations:data.locaDotArr
@@ -557,7 +520,14 @@ Page({
      * 生命周期函数--监听页面隐藏
      */
     onHide() {
-
+        // 语音播报停止
+        innerAudioContext.stop()
+        // 清除所有跑步数据缓存
+        let userId = getStorageSync('user_id')
+        let storageKey1 = 'run_data_' + userId
+        let storageKey2 = 'run_kmiles_pace_arr_' + userId
+        removeStorageSync(storageKey1)
+        removeStorageSync(storageKey2)
     },
 
     /**
@@ -568,6 +538,8 @@ Page({
         let user_id = getStorageSync('user_id')
         let storageKey = 'run_data_' + user_id
         removeStorageSync(storageKey)
+        // 销毁音频实例
+        innerAudioContext.destroy()
     },
 
     /**

@@ -32,4 +32,7 @@ export default class LoginMember {
     static reportRunnerPathData(params) {
         return $http.post(url.reportRunnerPathData, params);
     }
+    static getRunnerPathData(params) {
+        return $http.post(url.getRunnerPathData, params);
+    }
 }

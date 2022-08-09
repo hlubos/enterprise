@@ -13,4 +13,6 @@ export default {
     AddTrackPic:'/yd_runner/add_track_pic',
     // 上传运动轨迹点集合
     reportRunnerPathData:'/sport/report_runner_path_data',
+    // 获取轨迹点集合
+    getRunnerPathData:'/sport/get_runner_path_data',
 }

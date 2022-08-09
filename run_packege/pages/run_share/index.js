@@ -3,6 +3,7 @@ import {
     navigateTo,
     getStorageSync,
 } from '../../utils/wxApi'
+import api from '../../server/run'
 import Wxml2Canvas from 'wxml2canvas'
 Page({
 
@@ -104,49 +105,8 @@ Page({
 
     // 微信分享
     wxShare() {
-        // this.setData({
-        //     shareFlag: 0
-        // })
-        // this.setData({
-        //     showPosterImage: false
-        // })
         wx.previewImage({
             urls:[this.data.posterImgUrl]
-        })
-    },
-    // 设置静态地图参数
-    setStaticMapInfo(w=500,h=400){
-        // staticMapUrl:'https://apis.map.qq.com/ws/staticmap/v2/?key=L4JBZ-YJ56D-GAO47-P6UQY-ODB46-M2FD2&scale=2&size=500x400&center=39.12,116.54&zoom=12',
-        let user_id = getStorageSync('user_id')
-        let storageKey = 'run_data_' + user_id
-        let data = getStorageSync(storageKey)
-        // =================
-        let base = 'https://apis.map.qq.com/ws/staticmap/v2/'
-        let key = 'L4JBZ-YJ56D-GAO47-P6UQY-ODB46-M2FD2'
-        let pathObj = {
-            sty:{
-                color: "0x4CDDB4",//线条的颜色
-                weight: 5,//宽度
-            },
-            locations:data.locaDotArr
-        }
-        let locStr = ''
-        pathObj.locations.forEach((item,index)=>{
-            if(index < pathObj.locations.length - 1 ){
-                locStr = locStr + item.latitude+','+ item.longitude + '|'
-            }else {
-                locStr = locStr + item.latitude+','+ item.longitude
-            }
-        })
-        let path = `color:${pathObj.sty.color}|weight:${pathObj.sty.weight}|${locStr}`
-        let sizeObj = {
-            width: w,
-            height: h,
-        }
-        let size = `${sizeObj.width}*${sizeObj.height}`
-        let staticMapUrl = `${base}?size=${size}&scale=2&maptype=roadmap&key=${key}&path=${path}`
-        this.setData({
-            staticMapUrl,
         })
     },
     /**
@@ -155,9 +115,11 @@ Page({
     onLoad(options) {
         console.log(options)
         this.setData({
-            dataImg:options.dataImg
+            runner_id: options.runner_id,
+            dataImg:decodeURIComponent(options.dataImg),
+            staticMapUrl:decodeURIComponent(options.mapImg),
         })
-        this.setStaticMapInfo()
+        // this.setStaticMapInfo()
         this.createImg()
     },
 
@@ -165,7 +127,14 @@ Page({
      * 生命周期函数--监听页面初次渲染完成
      */
     onReady() {
-
+        // 获取轨迹点
+        // api.getRunnerPathData({
+        //     runner_id: this.data.runner_id
+        // }).then(res=>{
+        //     if(res.code == 0){
+        //         console.log(res)
+        //     }
+        // })
     },
 
     /**
