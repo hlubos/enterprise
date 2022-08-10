@@ -1,4 +1,4 @@
 <!--run_packege/pages/run_final/components/runSpeedChart/runSpeedChart.wxml-->
 <view class="chart-container">
-  <ec-canvas type="2d" id="mychart-dom-pie" canvas-id="mychart-pie" ec="{{ ec }}" style="background-color:#fff"></ec-canvas>
+  <ec-canvas force-use-old-canvas="true" type="2d" id="mychart-dom-pie" canvas-id="mychart-pie" ec="{{ ec }}" style="background-color:#fff"></ec-canvas>
 </view>

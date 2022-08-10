@@ -7,6 +7,7 @@ Page({
      * 页面的初始数据
      */
     data: {
+        loading:true,
         total_cnt: 0,
         total_cost_time: '0:00:00',
         total_distance: '0.00',
@@ -89,6 +90,7 @@ Page({
                 if(this.data.runLogList.length == 0){
                     this.setData({
                         runLogList: newInfos,
+                        loading:false,
                     })
                 }else if(this.data.runLogList.length > 0){
                     this.setData({

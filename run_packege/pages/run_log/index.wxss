@@ -1,4 +1,5 @@
 /* plugin/pages/run_log/index.wxss */
+@import "./index.skeleton.wxss";
 .runlog-page {
     width: 100%;
     height: 100vh;

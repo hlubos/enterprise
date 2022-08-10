@@ -19,6 +19,7 @@ Page({
      */
     data: {
         // 
+        loading: true,
         runner_id:0,
         showPosterImage: false,
         posterImgUrl: '',
@@ -159,7 +160,7 @@ Page({
     // 语音播报内容整理
     audioDidy(){
         // 总里程 xx点xx公里 总用时 xx小时xx分xx秒 平均配速 xx分xx秒 每公里
-        let allAudio = []
+        let allAudio = ['paobujieshu']
         let { runKMiles,avgPace,sumTime } = this.data.showRunData
         // 总里程语音播报数组=======================start============================
         let runKMilesAudioList = []
@@ -292,7 +293,8 @@ Page({
         avgPaceAudioList.push('meigongli')
         // 平均配速==============================end=================
         // 合并所有
-        allAudio = [...allAudio,...runKMilesAudioList,...sumTimeAudioList,...avgPaceAudioList]
+        // allAudio = [...allAudio,...runKMilesAudioList,...sumTimeAudioList,...avgPaceAudioList]
+        allAudio = [...allAudio,...runKMilesAudioList]
         return allAudio
     },
     // 获取echart的图片
@@ -505,6 +507,9 @@ Page({
             padding: [70, 70, 70, 70], // padding类似我们css中的padding，可以有四个值
             points: this.data.pointsList
         })
+        this.setData({
+            loading:false
+        })
         // 语音播报
         this.runFinishAudio()
     },
@@ -539,7 +544,7 @@ Page({
         let storageKey = 'run_data_' + user_id
         removeStorageSync(storageKey)
         // 销毁音频实例
-        innerAudioContext.destroy()
+        // innerAudioContext.destroy()
     },
 
     /**

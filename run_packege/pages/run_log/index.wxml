@@ -1,4 +1,6 @@
 <!--plugin/pages/run_log/index.wxml-->
+<import src="index.skeleton.wxml"/>
+<template is="skeleton" wx:if="{{loading}}" />
 <view class="runlog-page">
     <view class="runlog-banner">
         <view class="runlog-banner-num">{{total_distance}}</view>

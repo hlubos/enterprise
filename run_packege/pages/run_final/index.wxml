@@ -1,7 +1,8 @@
 <!--run_packege/pages/run_final/index.wxml-->
 <!-- <canvas canvas-id="shareCanvas" class="share-Canvas"></canvas> -->
 <!-- <canvas type="2d" canvas-id="shareCanvas" id="shareCanvas" class="shareCanvas" style="width: 100%; height:{{canvasHeight}}px;"> -->
-
+<import src="index.skeleton.wxml"/>
+<template is="skeleton" wx:if="{{loading}}" />
 <view class="fina-map-box answer_draw_canvas" style="height: {{mapHeight}};">
     <map id="run-final-map" 
         class="run-final-map answer_draw_canvas" 

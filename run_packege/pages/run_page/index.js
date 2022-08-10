@@ -398,7 +398,7 @@ Page({
             if(res.code == 0){
                 // 清除定位，时间置零
                 clearInterval(this.data.runTimer)
-                innerAudioContext.src = "run_packege/assets/voice/paobujieshu.mp3"
+                // innerAudioContext.src = "run_packege/assets/voice/paobujieshu.mp3"
                 this.setData({
                     runTime:0,
                     runStatus:1,
@@ -546,6 +546,13 @@ Page({
                         'reportData.nextTime':nextTime,
                     })
                 }
+            }else {
+                let audioDistance = 500
+                let nextDistance = (parseInt(this.data.runMiles/audioDistance)+1)*audioDistance
+                this.setData({
+                    'reportData.audioDistance':audioDistance,
+                    'reportData.nextDistance':nextDistance,
+                })
             }
             // console.log(this.data.mapStyle.subkey)
         } catch (e) { }
@@ -597,6 +604,9 @@ Page({
                     kmilesCount: kMilesCache[kMilesCache.length-1].kmiles_cut + 1
                 })
             }
+            // 读取跑步设置缓存
+            this.getRunSetCache()
+            // 
             this.runStart()
             innerAudioContext.src = "run_packege/assets/voice/kaishipaobu.mp3"
         }else {
