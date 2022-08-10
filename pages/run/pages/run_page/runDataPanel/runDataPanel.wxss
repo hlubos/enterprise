@@ -1,0 +1,150 @@
+/* plugin/pages/run_page/components/runDataPanel/runDataPanel.wxss */
+
+.run-miles {
+    text-align: center;
+}
+
+.run-miles-num {
+    font-weight: Bold;
+    font-size: 144rpx;
+    line-height: 144rpx;
+    color: #333333;
+    margin-top: 220rpx;
+}
+
+.run-miles-unit {
+    font-weight: 400;
+    font-size: 32rpx;
+    color: #666666;
+    margin-top: 16rpx;
+}
+
+.run-data-box {
+    display: flex;
+    justify-content: space-evenly;
+    text-align: center;
+    margin-top: 152rpx;
+}
+
+.run-data-item1 {
+    width: 33.3%;
+}
+
+.run-data-item2 {
+    width: 33.3%;
+}
+
+.run-data-item3 {
+    width: 33.3%;
+}
+
+.run-data-num {
+    font-weight: Bold;
+    font-size: 60rpx;
+    color: #333333;
+    line-height: 60rpx;
+    margin-bottom: 12rpx;
+}
+
+.run-data-txt {
+    font-size: 28rpx;
+    color: #666666;
+    text-align: center;
+}
+
+.run-data-btns {
+    margin-top: 222rpx;
+    height: 180rpx;
+}
+
+.run-data-btns image{
+    width: 100%;
+    height: 100%;
+}
+
+.islock-btns {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.notlock-btns {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.lock-btn {
+    width: 92rpx;
+    height: 92rpx;
+}
+
+.continue-btn {
+    width: 160rpx;
+    height: 160rpx;
+    margin-left: 42rpx;
+    margin-right: 24rpx;
+}
+
+.stop-btn {
+    width: 160rpx;
+    height: 160rpx;
+    margin-right: 42rpx;
+}
+
+.pause-btn {
+    width: 160rpx;
+    height: 160rpx;
+    margin-left: 73rpx;
+    margin-right: 73rpx;
+}
+
+.unlock-btn {
+    width: 180rpx;
+    height: 180rpx;
+    background: #4CDDB4;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 500;
+    font-size: 40rpx;
+    color: #FFFFFF;
+}
+
+.unlock-btn-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 156rpx;
+    height: 156rpx;
+    /* transform: scaleX(-1); */
+    border-radius: 50%;
+    border: 4rpx solid #FFFFFF;
+}
+
+.map-btn {
+    width: 92rpx;
+    height: 92rpx;
+}
+
+.tip{
+    text-align: center;
+    font-size: 28rpx;
+    margin-top: 30rpx;
+}
+
+.set-btn {
+    position: absolute;
+    top: 48rpx;
+    right: 24rpx;
+    width: 80rpx;
+    height: 80rpx;
+    z-index: -1;
+}

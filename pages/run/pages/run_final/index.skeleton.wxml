@@ -1,0 +1,86 @@
+<!--
+此文件为开发者工具生成，生成时间: 2022/8/10上午9:40:31
+使用方法：
+在 D:\Desktop\enterprise\run_packege\pages\run_final\index.wxml 引入模板
+
+```
+<import src="index.skeleton.wxml"/>
+<template is="skeleton" wx:if="{{loading}}" />
+```
+
+在 D:\Desktop\enterprise\run_packege\pages\run_final\index.wxss 中引入样式
+```
+@import "./index.skeleton.wxss";
+```
+
+更多详细信息可以参考文档：https://developers.weixin.qq.com/miniprogram/dev/devtools/skeleton.html
+-->
+<template name="skeleton">
+  <view class="sk-container">
+    <view class="fina-map-box answer_draw_canvas" style="height: 300px;">
+      <view class="run-final-map answer_draw_canvas sk-transparent sk-text-18-7500-176 sk-text sk-image" id="run-final-map" latitude="39.92082670727589" layer-style="1" polyline="[{&quot;points&quot;:[{&quot;runner_id&quot;:&quot;&quot;,&quot;point_id&quot;:&quot;&quot;,&quot;longitude&quot;:135.48,&quot;latitude&quot;:62.98,&quot;time&quot;:1660095549832},{&quot;runner_id&quot;:&quot;&quot;,&quot;point_id&quot;:&quot;&quot;,&quot;longitude&quot;:135.49,&quot;latitude&quot;:62.98,&quot;time&quot;:1660095592738}],&quot;color&quot;:&quot;#4CDDB4&quot;,&quot;width&quot;:5,&quot;arrowLine&quot;:true,&quot;borderWidth&quot;:0}]"
+        show-location="true" style="width: 100%; height: 300px;" subkey="L4JBZ-YJ56D-GAO47-P6UQY-ODB46-M2FD2">©2022 Tencent - GS(2022)2224号 - Data© NavInfo地图</view>
+    </view>
+    <view class="share-img-box answer_canvas" id="answer-canvas">
+      <view class="final-chart-box answer_draw_canvas" data-background="#ffffff" data-type="text">
+        <view class="title answer_draw_canvas">
+          <view class="title1 answer_draw_canvas">
+            <view class="logo answer_draw_canvas">
+              <image class="answer_draw_canvas sk-image" data-delay="1" data-type="image" data-url="https://ssl-pubpic.51yund.com/1221778105.png"></image>
+            </view>
+            <view class="finish-time answer_draw_canvas sk-transparent sk-text-18-7500-464 sk-text" data-delay="1" data-text="2022-08-10 09:39:08" data-type="text">2022-08-10 09:39:08</view>
+            <view class="avatar answer_draw_canvas">
+              <image class="answer_draw_canvas sk-image" data-delay="1" data-type="image" data-url="https://head-img.51yund.com/head/573785/head_286892728_80.jpg?imageslim"></image>
+            </view>
+          </view>
+          <view class="title2 answer_draw_canvas">
+            <view class="title2-left answer_draw_canvas">
+              <view class="title2-left-kmeter answer_draw_canvas sk-transparent sk-text-3-1250-510 sk-text" data-delay="1" data-text="0.51" data-type="text">0.51</view>
+              <view class="title2-left-unit answer_draw_canvas sk-transparent sk-text-18-7500-348 sk-text" data-delay="1" data-text="公里" data-type="text">公里</view>
+            </view>
+            <view class="title2-right answer_draw_canvas">
+              <view class="title2-right-name answer_draw_canvas sk-transparent sk-text-18-7500-46 sk-text" data-delay="1" data-text="weial" data-type="text">weial</view>
+              <view class="title2-right-id answer_draw_canvas sk-transparent sk-text-18-7500-702 sk-text" data-delay="1" data-text="用户ID：278334567" data-type="text">用户ID：278334567</view>
+            </view>
+          </view>
+          <view class="title3 answer_draw_canvas">
+            <view class="title3-item1 answer_draw_canvas">
+              <view class="title3-num answer_draw_canvas sk-transparent sk-text-18-7500-470 sk-text" data-delay="1" data-text="1'54''" data-type="text" style="background-position-x: 50%;">1'54''</view>
+              <view class="title3-unit answer_draw_canvas sk-transparent sk-text-18-7500-144 sk-text" data-delay="1" data-text="平均配速" data-type="text" style="background-position-x: 50%;">平均配速</view>
+            </view>
+            <view class="title3-item2 answer_draw_canvas">
+              <view class="title3-num answer_draw_canvas sk-transparent sk-text-18-7500-666 sk-text" data-delay="1" data-text="0:00:58" data-type="text" style="background-position-x: 50%;">0:00:58</view>
+              <view class="title3-unit answer_draw_canvas sk-transparent sk-text-18-7500-559 sk-text" data-delay="1" data-text="总计时间" data-type="text" style="background-position-x: 50%;">总计时间</view>
+            </view>
+            <view class="title3-item3 answer_draw_canvas">
+              <view class="title3-num answer_draw_canvas sk-transparent sk-text-18-7500-726 sk-text" data-delay="1" data-text="28.8" data-type="text" style="background-position-x: 50%;">28.8</view>
+              <view class="title3-unit answer_draw_canvas sk-transparent sk-text-18-7500-694 sk-text" data-delay="1" data-text="消耗千卡" data-type="text" style="background-position-x: 50%;">消耗千卡</view>
+            </view>
+          </view>
+        </view>
+        <view class="count-line answer_draw_canvas">
+          <view class="count-line-txt answer_draw_canvas sk-transparent sk-text-18-7500-747 sk-text" data-delay="1" data-text="第116次跑步" data-type="text">第116次跑步</view>
+        </view>
+        <view class="visual-chart-box answer_draw_canvas">
+          <view class="visual-chart answer_draw_canvas">
+            <view is="run_packege/pages/run_final/components/runSpeedChart/runSpeedChart">
+              <view class="runSpeedChart--chart-container">
+                <view is="run_packege/ec-canvas/ec-canvas" id="c67fe678--mychart-dom-pie" style="background-color:#fff">
+                  <view bindtouchend="touchEnd" bindtouchmove="touchMove" bindtouchstart="touchStart" canvas-id="mychart-pie" class="canvas--ec-canvas sk-transparent sk-text-18-7500-911 sk-text sk-image" type="2d">绘图区域</view>
+                </view>
+              </view>
+            </view>
+            <image class="answer_draw_canvas sk-image" data-delay="1" data-type="image" data-url="http://tmp/GaaMLqRoXQsWb19e1c416949191550b6fcecf35cfc9c.png" style="height: 100%; width: 100%;"></image>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="share-btn-box">
+      <view class="share-btn">
+        <view class="btn1 sk-transparent sk-text-18-7500-417 sk-text">完成运动</view>
+        <view class="btn2 sk-transparent sk-text-18-7500-761 sk-text">分享</view>
+      </view>
+    </view>
+    <view canvas-id="answerCanvas" class="answerCanvas sk-transparent sk-opacity sk-image" style="position: absolute;top: -0px; width: 0px; height:0px;background:#fff;">绘图区域</view>
+  </view>
+</template>

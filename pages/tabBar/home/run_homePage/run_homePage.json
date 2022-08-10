@@ -1,0 +1,7 @@
+{
+    "component": true,
+    "usingComponents": {
+        "runTypeModal":"./components/runTypeModal/runTypeModal",
+        "runCacheDialog":"./components/runCacheDialog/runCacheDialog"
+    }
+}

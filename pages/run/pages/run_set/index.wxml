@@ -1,0 +1,78 @@
+<!--plugin/pages/run_set/index.wxml-->
+<!--语言播报设置-->
+<mp-cells ext-class="my-cells" title="语言播报设置">
+    <mp-cell>
+        <view>语言播报开关</view>
+        <view slot="footer">
+            <switch checked="{{openVoice}}" bindchange="switchVoice"></switch>
+        </view>
+    </mp-cell>
+    <mp-cell value="语音类型">
+        <view slot="footer">
+            <picker mode="selector" value="{{voiceIndex}}" range="{{voiceList}}" bindchange="voiceChange">
+                <view class="right-info">
+                    <text class="right-txt">{{voiceList[voiceIndex]}}</text>
+                    <image class="right-icon" src="https://ssl-pubpic.51yund.com/1223520876.png"></image>
+                </view>
+            </picker>
+        </view>
+    </mp-cell>
+    <mp-cell value="播报频率">
+        <view slot="footer">
+            <picker 
+                mode="multiSelector" 
+                value="{{freIndex}}" 
+                range="{{frequencyArray}}" 
+                bindcolumnchange="freColumnChange" 
+                bindchange="freChange"
+                bindcancel="freCancel"
+            >
+                <view class="right-info">
+                    <text class="right-txt">{{frequencyArray[1][freIndex[1]]}}</text>
+                    <image class="right-icon" src="https://ssl-pubpic.51yund.com/1223520876.png"></image>
+                </view>
+            </picker>
+        </view>
+    </mp-cell>
+</mp-cells>
+<!-- 地图设置 -->
+<mp-cells ext-class="my-cells" title="地图设置">
+    <!-- <mp-cell value="标题文字" footer="说明文字"></mp-cell>
+    <mp-cell>
+        <view>标题文字（使用slot）</view>
+        <view slot="footer">说明文字</view>
+    </mp-cell> -->
+    <view class="map-style-list">
+        <view wx:for="{{mapStyleList}}" wx:key="index" class="map-style-item" data-key="{{item}}" bindtap="selectMapSty">
+            <view class="map-icon">
+                <image src="{{item.icon}}"></image>
+                <image 
+                    src="https://ssl-pubpic.51yund.com/1223539052.png" 
+                    hidden="{{item.mapStyInfo.subkey != nowMapStyInfo.subkey || item.mapStyInfo['layer-style'] != nowMapStyInfo['layer-style']}}"
+                    class="selectedMap"
+                ></image>
+            </view>
+            <view class="map-txt">{{item.title}}</view>
+        </view>
+    </view>
+</mp-cells>
+<!-- 跑步异常检测 -->
+<mp-cells ext-class="my-cells" title="跑步异常检测">
+    <mp-cell>
+        <view>网络检测</view>
+        <!-- <view slot="footer">点击重新检测></view> -->
+        <view slot="footer" bindtap="checkNet">
+            <text wx:if="{{netType}}">当前网络类型：{{netType}}</text>
+            <text wx:else>点击检测</text>
+        </view>
+    </mp-cell>
+    <!-- <mp-cell>
+        <view>权限检测</view>
+        <view slot="footer">
+            <text>点击检测</text>
+        </view>
+    </mp-cell> -->
+</mp-cells>
+
+<!-- <picker mode="multiSelector"></picker> -->
+

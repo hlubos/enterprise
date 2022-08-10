@@ -1,0 +1,6 @@
+{
+    "usingComponents": {
+        "run-map-panel":"./runMapPanel/runMapPanel",
+        "run-data-panel":"./runDataPanel/runDataPanel"
+    }
+}

@@ -14,4 +14,24 @@ export default {
   getUserHistory: '/yd_ai_coach/get_user_history_data', // 获取历史记录
   reportUserAISportData: '/yd_ai_coach/report_user_sport_data',  // 上报AI训练运动数据
   getAISportActionList: '/yd_ai_coach/action_list',  // AI动作数据列表
+
+
+  // 跑步相关接口  
+  // 获取用户跑步详情
+  getRunnerInfo:'https://api20.51yund.com/sport/get_runner_info',
+  // getRunnerInfo:'/sport/get_runner_info',
+  // 上报跑步数据
+  reportRunnerInfo:'/sport/report_runner_info',
+  // 跑步结束页面详情
+  runnerFinishDetail:'/sport_history/runner_finish_detail',
+  // 用户历史数据总结
+  userSportSummary:'/sport_history/user_sport_summary',
+  // 运动轨迹缩略图 
+  getDayPeakRecord:'/yd_runner/get_day_peak_record',
+  // 上传运动轨迹缩略图
+  AddTrackPic:'/yd_runner/add_track_pic',
+  // 上传运动轨迹点集合
+  reportRunnerPathData:'/sport/report_runner_path_data',
+  // 获取轨迹点集合
+  getRunnerPathData:'/sport/get_runner_path_data',
 }

@@ -1,0 +1,59 @@
+<!--plugin/pages/run_page/components/runDataPanel/runDataPanel.wxml-->
+<view class="run-data-page">
+    <view class="run-miles">
+        <!-- <text>7.48</text> -->
+        <view class="run-miles-num">{{runShowData.runKmiles}}</view>
+        <view class="run-miles-unit">公里</view>
+    </view>
+    <view class="run-data-box">
+        <view class="run-data-item1">
+            <view class="run-data-num">{{runShowData.avePace}}</view>
+            <view class="run-data-txt">平均配速</view>
+        </view>
+        <view class="run-data-item2">
+            <view class="run-data-num">{{runShowData.sumTime}}</view>
+            <view class="run-data-txt">总计时间</view>
+        </view>
+        <view class="run-data-item2">
+            <view class="run-data-num">{{runShowData.kiloCalorie}}</view>
+            <view class="run-data-txt">消耗千卡</view>
+        </view>
+    </view>
+
+    <view class="run-data-btns">
+        <view class="islock-btns" hidden="{{isLock == true}}">
+            <!-- 锁定按钮 -->
+            <view class="lock-btn" bindtap="lockRunPanel">
+                <image src="https://ssl-pubpic.51yund.com/1221492970.png"></image>
+            </view>
+            <!-- 开始、继续 -->
+            <view class="continue-btn" hidden="{{runStatus == 0}}" bindtap="runContinue">
+                <image src="https://ssl-pubpic.51yund.com/1221493943.png"></image>
+            </view>
+            <!-- 结束 -->
+            <view class="stop-btn" hidden="{{runStatus == 0}}" bindlongpress="runStop">
+                <image src="https://ssl-pubpic.51yund.com/1221493926.png"></image>
+            </view>
+            <!-- 暂停 -->
+            <view class="pause-btn" hidden="{{runStatus == 1}}" bindtap="runPause">
+                <image src="https://ssl-pubpic.51yund.com/1221493962.png"></image>
+            </view>
+            <!-- 地图按钮 -->
+            <view class="map-btn" bindtap="showMap">
+                <image src="https://ssl-pubpic.51yund.com/1221492958.png"></image>
+            </view>
+        </view>
+        <view class="notlock-btns" hidden="{{isLock == false}}">
+            <!-- 长按解锁 -->
+            <view class="unlock-btn" bindlongpress="unlockRunPanel">
+                <view class="unlock-btn-center">解锁</view>
+            </view>
+            <!-- <circle_bar></circle_bar> -->
+        </view>
+    </view>
+    <view class="tip" hidden="{{isLock == true || runStatus == 0}}">长按结束按钮，将结束本次跑步</view>
+    <view class="tip" hidden="{{isLock == false}}">长按解锁</view>
+    <navigator id="nav" url="../run_set/index">
+        <image class="set-btn" src="https://ssl-pubpic.51yund.com/1221761768.png"></image>
+    </navigator>
+</view>
