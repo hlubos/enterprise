@@ -2,6 +2,12 @@
 import {
     navigateTo,
     getStorageSync,
+    createSelectorQuery,
+    showLoading,
+    hideLoading,
+    previewImage,
+    saveImageToPhotosAlbum,
+    showToast,
 } from '../../utils/wxApi'
 import api from '../../server/run'
 import Wxml2Canvas from 'wxml2canvas'
@@ -20,7 +26,7 @@ Page({
     },
     // 调整canvas宽高
     setCanvasSize() {
-        let shareBox = wx.createSelectorQuery()
+        let shareBox = createSelectorQuery()
         // console.log(shareBox.select('.img-area'))
         shareBox.select('.img-area').boundingClientRect(res => {
             // myCanvasHeight = res.height
@@ -32,11 +38,9 @@ Page({
     },
     // 生成图片
     createImg(){
-        wx.showLoading({
-            title: '加载中'
-         })
+         showLoading('加载中')
          const that = this
-         const query = wx.createSelectorQuery().in(this);
+         const query = createSelectorQuery().in(this);
          query.select('#answer-canvas').fields({ //answer-canvas要绘制的canvas的id
              size: true,
              scrollOffset: true
@@ -65,14 +69,14 @@ Page({
           },
           finish(url) {
             console.log("创建的图片", url);
-            wx.hideLoading()
+            hideLoading()
             that.setData({
                 posterImgUrl:url,
             })
           },
           error(res) {
             console.log(res);
-            wx.hideLoading()
+            hideLoading()
             // 画失败的原因
           }
         }, that);
@@ -92,22 +96,14 @@ Page({
     },
     // 保存图片
     clickSaveImg() {
-        wx.saveImageToPhotosAlbum({  //保存图片到相册
-            filePath: this.data.posterImgUrl, //生成图片临时路径
-            success: function () {
-                wx.showToast({
-                    title: "图片已保存！",
-                    duration: 2000
-                })
-            }
+        saveImageToPhotosAlbum(this.data.posterImgUrl).then(res=>{
+            showToast("图片已保存！","",2000)
         })
     },
 
     // 微信分享
     wxShare() {
-        wx.previewImage({
-            urls:[this.data.posterImgUrl]
-        })
+        previewImage([this.data.posterImgUrl])
     },
     /**
      * 生命周期函数--监听页面加载

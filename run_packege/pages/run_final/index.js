@@ -8,6 +8,10 @@ import {
     navigateBack,
     createInnerAudioContext,
     navigateTo,
+    createMapContext,
+    createSelectorQuery,
+    showLoading,
+    hideLoading,
 } from '../../utils/wxApi'
 import Wxml2Canvas from 'wxml2canvas'
 const innerAudioContext = createInnerAudioContext(true)
@@ -125,7 +129,7 @@ Page({
             // }).exec()
         }
         setTimeout(() => {
-            let mapFinalCtx = wx.createMapContext('run-final-map', this) // mapId对应地图id属性
+            let mapFinalCtx = createMapContext('run-final-map', this) // mapId对应地图id属性
             mapFinalCtx.includePoints({
                 padding: [70, 70, 70, 70], // padding类似我们css中的padding，可以有四个值
                 points: this.data.pointsList
@@ -306,7 +310,7 @@ Page({
     },
     // 调整canvas宽高
     setCanvasSize() {
-        let shareBox = wx.createSelectorQuery()
+        let shareBox = createSelectorQuery()
         console.log(shareBox.select('.share-img-box'))
         shareBox.select('.share-img-box').boundingClientRect(res => {
             // myCanvasHeight = res.height
@@ -318,11 +322,9 @@ Page({
     },
     // =========================================
     drawCanvas: function () {
-        wx.showLoading({
-           title: '加载中'
-        })
+        showLoading('加载中')
         const that = this
-        const query = wx.createSelectorQuery().in(this);
+        const query = createSelectorQuery().in(this);
         query.select('#answer-canvas').fields({ //answer-canvas要绘制的canvas的id
             size: true,
             scrollOffset: true
@@ -351,7 +353,7 @@ Page({
           },
           finish(url) {
             console.log("创建的图片", url);
-            wx.hideLoading()
+            hideLoading()
             that.setData({
                 // imgUrl: url,
                 posterImgUrl:url,
@@ -363,7 +365,7 @@ Page({
           },
           error(res) {
             console.log(res);
-            wx.hideLoading()
+            hideLoading()
             // 画失败的原因
           }
         }, that);
@@ -467,7 +469,8 @@ Page({
             }
             // 跑步结束页面详情
             api.runnerFinishDetail({
-                sport_type: 0
+                sport_type: 0,
+                runner_id:this.data.runner_id,
             }).then(res => {
                 console.log(res)
                 if (res.code == 0) {
@@ -502,7 +505,7 @@ Page({
         } catch (error) { }
         
         // 
-        var mapFinalCtx = wx.createMapContext('run-final-map', this) // mapId对应地图id属性
+        var mapFinalCtx = createMapContext('run-final-map', this) // mapId对应地图id属性
         mapFinalCtx.includePoints({
             padding: [70, 70, 70, 70], // padding类似我们css中的padding，可以有四个值
             points: this.data.pointsList

@@ -11,7 +11,7 @@
     "window": {
         "backgroundTextStyle": "light",
         "navigationBarBackgroundColor": "#fff",
-        "navigationBarTitleText": "悦动圈",
+        "navigationBarTitleText": "企业悦动",
         "navigationBarTextStyle": "black"
     },
     "subPackages": [

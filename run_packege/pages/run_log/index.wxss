@@ -3,6 +3,9 @@
 .runlog-page {
     width: 100%;
     height: 100vh;
+    display: flex;
+    flex-direction:column;
+    overflow:hidden;
 }
 
 .runlog-banner {
@@ -10,7 +13,9 @@
     height: 520rpx;
     background-image: linear-gradient(180deg, #8AE9CE 0%, #4CDDB4 100%);
     color: #ffffff;
-    overflow: hidden;
+    /* overflow: hidden; */
+    box-shadow:0rpx 5rpx 10rpx gray;
+    flex-shrink: 0;
 }
 
 .runlog-banner-num {
@@ -54,7 +59,9 @@
 }
 
 .runlog-list {
-    height: calc( 100vh - 520rpx);
+    /* height: calc( 100vh - 520rpx); */
+    flex: 1;
+    height: 1px;
 }
 
 .runlog-item {

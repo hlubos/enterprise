@@ -11,7 +11,7 @@
         </view>
     </login-btn>
 </view>
-<view class="header">
+<!-- <view class="header">
     <view class="left">
         <view class="title">
             <text>AI动作库</text>
@@ -21,7 +21,7 @@
         </view>
     </view>
     <image class="right" src="https://ssl-pubpic.51yund.com/1040424039.png"></image>
-</view>
+</view> -->
 <login-btn bindsuccess="gotoRecords">
     <view class="records">
         <view class="records-left">历史记录</view>

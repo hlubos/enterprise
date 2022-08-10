@@ -253,15 +253,33 @@ export const navigateBack = (delta = 1) => {
         });
     })
 }
+/**
+ *  wx.saveImageToPhotosAlbum
+ *  保存图片到系统相册
+ */
+export const saveImageToPhotosAlbum = (filePath,) => {//保存图片到相册
+    return new Promise((resolve, reject) => {
+        wx.saveImageToPhotosAlbum({
+            filePath,               //生成图片临时路径
+            success: (result) => {
+                resolve(result);
+            },
+            fail: (err) => {
+                reject(err);
+            }
+        });
+    })
+}
 
 /**
  *  wx.showToast 显示消息提示框
  */
-export const showToast = (title,icon) => {
+export const showToast = (title,icon,duration) => {
     return new Promise((resolve, reject) => {
         wx.showToast({
             title,
             icon,
+            duration,
             success: (result) => {
                 resolve(result);
             },
@@ -324,10 +342,42 @@ export const hideLoading = () => {
 }
 
 /**
+ *  wx.previewImage 在新页面中全屏预览图片。预览的过程中用户可以进行保存图片、发送给朋友等操作。
+ */
+export const previewImage = (urls) => {
+    return new Promise((resolve, reject) => {
+        wx.previewImage({
+            urls,
+            success: (result) => {
+                resolve(result);
+            },
+            fail: (err) => {
+                reject(err);
+            }
+        });
+    })
+}
+
+/**
  *  wx.createInnerAudioContext 创建内部 audio 上下文 InnerAudioContext 对象。
  */
 export const createInnerAudioContext = (useWebAudioImplement) => {
     return wx.createInnerAudioContext({
         useWebAudioImplement,
     })
+}
+
+/**
+ *  返回一个 SelectorQuery 对象实例。在自定义组件或包含自定义组件的页面中，应使用 this.createSelectorQuery() 来代替。
+ */
+export const createSelectorQuery = () => {
+    return wx.createSelectorQuery()
+}
+
+/**
+ * wx.createMapContext
+ *  创建 map 上下文 MapContext 对象。
+ */
+export const createMapContext = (mapId,obj) => {
+    return wx.createMapContext(mapId,obj)
 }

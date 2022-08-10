@@ -1,6 +1,7 @@
 import {
     startLocationUpdate,
-    startLocationUpdateBackground
+    startLocationUpdateBackground,
+    createMapContext,
 } from '../../../utils/wxApi'
 Component({
 
@@ -83,7 +84,7 @@ Component({
         },
         // 内部方法建议以下划线开头
         _toLocation() {
-            let runMap = wx.createMapContext("run-map", this);
+            let runMap = createMapContext("run-map", this);
             runMap.moveToLocation();
         },
         

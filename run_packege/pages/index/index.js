@@ -281,9 +281,6 @@ Page({
                 })
             }
         })
-        let pages = getCurrentPages();
-        console.log('------------------- First Page onShow方法中获取栈内页面');
-        console.log(pages);
         // 读取缓存,应用设置
         this.getRunSetCache()
         // 读取缓存查看是否存在未完成的运动

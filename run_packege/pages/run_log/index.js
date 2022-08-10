@@ -107,16 +107,6 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad(options) {
-        // const baseUrl = 'https://api.51yund.com'
-        // wx.request({
-        //     url: baseUrl+'/sport/get_runner_info', 
-        //     data: {
-        //         user_id: 286796971
-        //     },
-        //     success (res) {
-        //         console.log(res.data)
-        //     },
-        // })
         this.loadData()
         // myFormats.formatDate(1646209697,'yyyy/MM/dd hh:mm:ss')
     },
