@@ -2,7 +2,7 @@
 <view class="run-data-page">
     <view class="run-miles">
         <!-- <text>7.48</text> -->
-        <view class="run-miles-num">{{runShowData.runKmiles}}</view>
+        <view class="run-miles-num">{{runShowData.runKmiles == 0?'0.00': runShowData.runKmiles}}</view>
         <view class="run-miles-unit">公里</view>
     </view>
     <view class="run-data-box">

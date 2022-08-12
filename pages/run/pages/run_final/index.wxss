@@ -1,5 +1,5 @@
 /* run_packege/pages/run_final/index.wxss */
-@import "./index.skeleton.wxss";
+/* @import "./index.skeleton.wxss"; */
 .backImg {
     /* width: 100%;
     height: 100vh; */
@@ -112,7 +112,7 @@
 
 .title2-left-kmeter {
     width: 150rpx;
-    font-weight: Bold;
+    font-weight: bold;
     font-size: 60rpx;
     color: #333333;
     line-height: 64rpx;
@@ -127,22 +127,28 @@
 
 .title2-right {
     display: flex;
-    justify-content: flex-end;
-    align-items: flex-end;
+    justify-content: end;
+    align-items: end;
     flex-wrap: wrap;
+    flex: 1;
+    /* float: right; */
 }
 
 .title2-right-name {
     display: flex;
     justify-content: flex-end;
+    /* flex-direction: row-reverse; */
     width: 100%;
     font-size: 28rpx;
     color: #333333;
+    text-align: right;
 }
 
 .title2-right-id {
     display: flex;
     justify-content: flex-end;
+    /* flex-direction: row-reverse; */
+    text-align: right;
     width: 100%;
     font-size: 24rpx;
     color: #999999;
@@ -175,12 +181,12 @@
 .count-line {
     position: relative;
     width: 100%;
-    height: 30rpx;
+    height: 1rpx;
     border-top: 1px #e8e8e8 solid;
     margin-top: 24rpx;
     display: flex;
     justify-content: center;
-
+    margin-bottom: 30rpx;
 }
 
 .count-line-txt {
@@ -202,6 +208,7 @@
 }
 
 .visual-chart-title {
+    /* font-weight: 600; */
     font-weight: 600;
     font-size: 32rpx;
     color: #333333;

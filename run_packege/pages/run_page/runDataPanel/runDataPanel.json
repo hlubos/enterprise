@@ -1,6 +1,0 @@
-{
-    "usingComponents": {
-        "circle_bar":"../components/circleProgressBar/circleProgressBar"
-    },
-    "component": true
-}

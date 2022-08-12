@@ -138,7 +138,7 @@ Page({
     gotoRunPage(){
         // 室内跑暂未开发
         if(this.data.runType == 1){
-            showToast('敬请期待！','none')
+            showToast('敬请期待！','none',1500)
             this.setData({
                 showRunCheckModal: false
             })

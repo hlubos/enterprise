@@ -12,8 +12,15 @@ import {
     showModal,
     showLoading,
     removeStorageSync,
+    removeStorage,
 } from '../../../../common/wxApi.js'
 import api from '../../../../server/run'
+
+import tool from '../../../../common/tool'
+import loginApi from '../../../../server/login'
+
+const app = getApp()
+
 Component({
     /**
      * 组件的属性列表
@@ -26,6 +33,7 @@ Component({
      * 组件的初始数据
      */
     data: {
+        loading:false,
         totalDistance:'0.00',
         auth:{
             // 地理定位是否授权
@@ -63,12 +71,12 @@ Component({
                     })
                 }else{
                     authorize('scope.userLocation').then(res=>{
-                        console.log('已授权定位')
+                        // console.log('已授权定位')
                         this.setData({
                             "auth.hasAuthUserLocation":true,
                         })
                     }).catch(rej=>{
-                        console.log("定位授权失败")
+                        // console.log("定位授权失败")
                     })
                 }
             })
@@ -80,7 +88,7 @@ Component({
             getSetting().then(res=>{
                 if(res.authSetting.hasOwnProperty('scope.userLocation')){
                     openSetting().then(res=>{
-                        console.log(res)
+                        // console.log(res)
                         this.setData({
                             "auth.hasAuthUserLocation":res.authSetting['scope.userLocation'],
                             "auth.hasAuthUserLocationBackground":res.authSetting['scope.userLocationBackground'],
@@ -93,18 +101,18 @@ Component({
                         this.setData({
                             "auth.hasAuthUserLocation":true
                         })
-                        console.log('已授权定位')
+                        // console.log('已授权定位')
                         // 用户点击允许后调用API查看用户是否勾选后台权限。
                         getSetting().then(res=>{
                             if(res.authSetting["scope.userLocationBackground"] == true){
-                                console.log('已授权后台定位')
+                                // console.log('已授权后台定位')
                                 this.setData({
                                     "auth.hasAuthUserLocationBackground":true
                                 })
                             }
                         })
                     }).catch(rej=>{
-                        console.log("后台定位授权失败")
+                        // console.log("后台定位授权失败")
                     })
                 }
             })
@@ -121,7 +129,7 @@ Component({
             // this.selectComponent('#runTypeModal').showFrame();
             // 运动前首先检查权限是否满足，权限满足则允许跑步，不满足则弹出弹框（去设置）
             getSetting().then(res=>{
-                console.log(res)
+                // console.log(res)
                 if(res.authSetting['scope.userLocation'] != true || res.authSetting['scope.userLocationBackground'] != true){
                     showModal('未授权后台定位','是否前往设置？').then(res=>{
                         if(res.confirm){
@@ -149,7 +157,7 @@ Component({
         gotoRunPage(){
             // 室内跑暂未开发
             if(this.data.runType == 1){
-                showToast('敬请期待！','none')
+                showToast('敬请期待!','none',1500)
                 this.setData({
                     showRunCheckModal: false
                 })
@@ -161,12 +169,12 @@ Component({
             //     showRunCheckModal: false
             // })
             showLoading('跑步加载中...',true)
-            navigateTo("/run_packege/pages/run_page/index").then((res)=>{
+            navigateTo("/pages/run/pages/run_page/index").then((res)=>{
                 // console.log(res)
             })
         },
         // 放弃跑步
-        giveUpRun(){
+        async giveUpRun(){
             // 清缓存
             console.log("清缓存")
             this.setData({
@@ -176,8 +184,10 @@ Component({
             let user_id = getStorageSync('user_id')
             let storageKey = 'run_data_' + user_id
             let key = 'run_kmiles_pace_arr_'+user_id
-            removeStorageSync(storageKey)
-            removeStorageSync(key)
+            await removeStorage(storageKey)
+            await removeStorage(key)
+            // removeStorageSync(storageKey)
+            // removeStorageSync(key)
         },
         // 继续跑步
         continueRun(){
@@ -188,7 +198,7 @@ Component({
                 showRunBreakDialog: false
             })
             // 跳转到跑步页面
-            navigateTo("/run_packege/pages/run_page/index").then((res)=>{
+            navigateTo("/pages/run/pages/run_page/index").then((res)=>{
                 // console.log(res)
             })
         },
@@ -199,13 +209,13 @@ Component({
                 let storageKey = 'run_data_' + user_id
                 let cacheData = getStorageSync(storageKey)
                 if(cacheData){
-                    console.log(cacheData)
-                    console.log("上次运动未完成")
+                    // console.log(cacheData)
+                    // console.log("上次运动未完成")
                     this.setData({
                         showRunBreakDialog: true
                     })
                 }else {
-                    console.log("上次运动已完成")
+                    // console.log("上次运动已完成")
                 }
             } catch (e) { }
         },
@@ -230,11 +240,142 @@ Component({
             let res = getStorageSync(storageKey)
             if(res != 1){
                 // 新用户，跳转到常见问题（引导）页
-                navigateTo("/run_packege/pages/run_FAQ/index").then((res)=>{
+                navigateTo("/pages/run/pages/run_FAQ/index").then((res)=>{
                     // console.log(res)
                 })
             }
         },
+        // 页面初始化
+        initPage(){
+            // 页面数据初始化
+            // 在组件在视图层布局完成后执行
+            getSetting().then(res=>{
+                // console.log(res)
+                if(!res.authSetting["scope.userLocation"]){
+                    // console.log('未授权地理位置')
+                    this.setData({
+                        "auth.hasAuthUserLocation":false
+                    })
+                }
+                if(!res.authSetting["scope.userLocationBackground"]){
+                    // console.log('未授权后台定位')
+                    this.setData({
+                        "auth.hasAuthUserLocationBackground":false
+                    })
+                }
+            })
+            this.setData({
+                showRunCheckModal: false
+            })
+            if(getStorageSync("user_id") && getStorageSync("user_id") !== 0 ){
+                // 获取累计公里数
+                let params = {
+                    // user_id:284209535,
+                }
+                api.getRunnerInfo(params).then(res=>{
+                    if(res.code == 0){
+                        // console.log(res)
+                        this.setData({
+                            totalDistance:(res.total_distance/1000).toFixed(2)
+                        })
+                    }
+                })
+            }
+            // 读取缓存,应用设置
+            this.getRunSetCache()
+            // 读取缓存查看是否存在未完成的运动
+            this.getRunDataCache()
+            // 读缓存判断是否为新用户
+            // this.judgeNewUser()
+        },
+        // ===============================================
+        // 微信授权登录
+        async getUserInfo (obj) {
+            let user_id = wx.getStorageSync('user_id')
+            if (user_id) {
+            return
+            }
+            if(this.loading) return
+            this.loading = true
+            let userInfo = obj.userInfo;
+            if (!obj.iv) {
+                wx.showModal({
+                    title: '提示',
+                    showCancel: false,
+                    content: '授权失败'
+                });
+                delete this.isExecuting;
+                return
+            } 
+            if (userInfo) {
+            app.globalData.userInfo = userInfo
+            }
+            let wxlogin = tool.promisify('login')
+            try {
+            let res = await wxlogin()
+            if (!res.code) {
+                wx.showToast({
+                title: '登录失败',
+                icon: 'none'
+                })
+                return
+            }
+            let params = {
+                "code": res.code,
+                "wxapp_source": "wx_ydenterprise",
+            }
+            this.goWxLogin(params)
+            } catch (err) {
+            } 
+        },
+        // 后台登录
+        goWxLogin (params) {
+            return loginApi.wxLogin(params).then(res => {
+            this.loading = false
+            if (res.code !== 0) return
+            if (res.user_id > 0) { // 老用户
+                this.storageWXlogin(res)
+            } else { // 新用户
+                this.registerNew(res.openid, obj.encryptedData, obj.iv);
+            }
+            })
+        },
+    
+        // 新用户注册
+        registerNew (openid, encrypted, iv) {
+            let globalData = getApp().globalData;
+            let param = {
+                "openid": openid,
+                "encrypted": encrypted,
+                "iv": iv,
+                "sub_channel": globalData.shareFrom,
+                "wx_scene": globalData.wxScene,
+                "share_id": globalData.shareFromId
+            }
+            loginApi.register(param).then(res=>{
+            res.openid = res.open_id;//【特别注意】这里返回的是open_id不是openid
+                this.storageWXlogin(res); 
+            })
+        },
+    
+        storageWXlogin(res){ 
+            let loginObj = {
+            session_key: res.session_key,
+            user_id: res.user_id,
+            xyy: res.xyy,
+            openid: res.openid
+            }
+            wx.setStorageSync('user_id', loginObj.user_id)
+            wx.setStorageSync('session_key', loginObj.session_key)
+            wx.setStorageSync('openid', loginObj.openid)
+            wx.setStorageSync('xyy', loginObj.xyy)
+            this.triggerEvent('success', res)
+
+            // 初始化页面
+            this.initPage()
+            // 读缓存判断是否为新用户
+            this.judgeNewUser()
+        }, 
     },
     lifetimes: {
         created(){
@@ -242,12 +383,48 @@ Component({
         },
         attached: function() {
             // 在组件实例进入页面节点树时执行
+            let that = this
+            // 登录
+            wx.login({
+                success (res) {
+                  if (res.code) {
+                    //获取用户信息
+                    // console.log(res)
+                    wx.getUserInfo({
+                        withCredentials:true,
+                        success:(ress)=>{
+                            that.getUserInfo(ress)
+                        }
+                    })
+                  } else {
+                    console.log('登录失败！' + res.errMsg)
+                  }
+                }
+            })
+            // 
+            startLocationUpdateBackground().then(res=>{
+                // console.log(res)
+                if(res.errMsg == "startLocationUpdateBackground:ok"){
+                    this.setData({
+                        "auth.hasAuthUserLocation":true,
+                        "auth.hasAuthUserLocationBackground":true,
+                    })
+                }
+            })
         },
         ready(){
-            // 在组件在视图层布局完成后执行
+            this.initPage()
         },
         detached: function() {
           // 在组件实例被从页面节点树移除时执行
         },
+    },
+    pageLifetimes: {
+        // 组件所在页面的生命周期函数
+        show: function () {
+            this.initPage()
+        },
+        hide: function () { },
+        resize: function () { },
     },
 })

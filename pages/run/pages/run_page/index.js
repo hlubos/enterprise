@@ -13,8 +13,13 @@ import {
     setStorageSync,
     getStorageSync,
     removeStorageSync,
+    removeStorage,
     showModal,
     hideLoading,
+    startAccelerometer,
+    stopAccelerometer,
+    onAccelerometerChange,
+    offAccelerometerChange,
 } from '../../utils/wxApi'
 import myFormats from '../../utils/format'
 import api from '../../server/run'
@@ -56,6 +61,8 @@ Page({
         kind_id:0,
         // 跑步开始时间(时间戳)
         runStartTime: 0,
+        // 跑步结束时间(时间戳)
+        runEndTime: 0,
         // 跑步持续时间(秒)
         runTime:0,
         // 跑步距离(米m)
@@ -163,18 +170,21 @@ Page({
             }
             const play = createInnerAudioContext(true)
             let index = 0
-            play.src = `run_packege/assets/voice/hiking/${auidos[index]}.mp3`
+            play.src = `pages/run/assets/voice/hiking/${auidos[index]}.mp3`
             play.autoplay = true
             play.onEnded(()=>{
                 index++
-                play.src = `run_packege/assets/voice/hiking/${auidos[index]}.mp3`
+                play.src = `pages/run/assets/voice/hiking/${auidos[index]}.mp3`
             })
         }
     },
     // 获取跑步数据可视化信息
     getRunShowData(){
         // 跑步公里数
-        let runKmiles = (this._calculateRunMiles(this.data.locaDotArr)/1000).toFixed(2)
+        let runKmiles = myFormats.clip(this._calculateRunMiles(this.data.locaDotArr)/1000)
+        if(runKmiles == 0){
+            runKmiles == '0.00'
+        }
         let runMiles = this._calculateRunMiles(this.data.locaDotArr)
         this.setData({
             runMiles:runMiles,
@@ -230,6 +240,11 @@ Page({
     },
     // 开始跑步
     runStart(){
+        startAccelerometer().then(res=>{
+            this.setData({
+                runStatus:0
+            })
+        })
         // 开始计时
         let that = this
         let second = this.data.runTime
@@ -267,43 +282,46 @@ Page({
     },
     // 监听位置变化的操作
     _mylocationChangeFn(res){
-        // 判断离上一次获取位置的时间是否超过5s
-        if(!this.data.canGetLocation){
-            return false
-        }
-        // 判断当前点位与上个点位的距离是否超过10m
-        if(this.data.locaDotArr.length > 0){
-            let finalDoc = this.data.locaDotArr[this.data.locaDotArr.length-1]
-            if(myFormats.calcDistance(res.longitude,res.latitude,finalDoc.longitude,finalDoc.latitude)<10){
+        // 监听加速度数据事件
+        onAccelerometerChange((absObj)=>{
+            // 判断离上一次获取位置的时间是否超过5s    //判断手机是否移动
+            if(!this.data.canGetLocation || !(Math.abs(absObj.x) > 0.07 && Math.abs(absObj.y) > 0.02)){
                 return false
             }
-        }
-        // 时间5s,移动距离超过10m,可以获取点位信息
-        this.setData({
-            canGetLocation: false
-        })
-        console.log(res)
-        let locaDotArr = this.data.locaDotArr
-        let pointObj = {
-            runner_id: '',
-            point_id: '',
-            longitude: res.longitude,
-            latitude: res.latitude,
-            time: new Date().getTime(),
-        }
-        locaDotArr.push(pointObj)
-        this.setData({
-            locaDotArr:locaDotArr
-        })
-        var locaTimer = setTimeout(()=>{
-            // 5秒才能获取一次当前位置
+            // 判断当前点位与上个点位的距离是否超过10m
+            if(this.data.locaDotArr.length > 0){
+                let finalDoc = this.data.locaDotArr[this.data.locaDotArr.length-1]
+                if(myFormats.calcDistance(res.longitude,res.latitude,finalDoc.longitude,finalDoc.latitude)<10 || !(Math.abs(absObj.x) > 0.07 && Math.abs(absObj.y) > 0.02)){
+                    return false
+                }
+            }
+            // 时间5s,移动距离超过10m,可以获取点位信息
             this.setData({
-                canGetLocation: true
+                canGetLocation: false
             })
-            // this.getRunShowData()
-        },5000)
-        this.setData({
-            locaTimer:locaTimer
+            console.log(res)
+            let locaDotArr = this.data.locaDotArr
+            let pointObj = {
+                runner_id: '',
+                point_id: '',
+                longitude: res.longitude,
+                latitude: res.latitude,
+                time: new Date().getTime(),
+            }
+            locaDotArr.push(pointObj)
+            this.setData({
+                locaDotArr:locaDotArr
+            })
+            var locaTimer = setTimeout(()=>{
+                // 5秒才能获取一次当前位置
+                this.setData({
+                    canGetLocation: true
+                })
+                // this.getRunShowData()
+            },5000)
+            this.setData({
+                locaTimer:locaTimer
+            })
         })
     },
     // 跑步暂停
@@ -311,7 +329,7 @@ Page({
         // 清除跑步计时器
         clearInterval(this.data.runTimer)
         clearTimeout(this.data.locaTimer)
-        innerAudioContext.src = "run_packege/assets/voice/hiking/yundongyizanting.mp3"
+        innerAudioContext.src = "pages/run/assets/voice/hiking/yundongyizanting.mp3"
         this.setData({
             runStatus:1
         })
@@ -320,6 +338,8 @@ Page({
         stopLocationUpdate().then(res=>{
             console.log("停止追踪", res);
         })
+        stopAccelerometer()
+        offAccelerometerChange()
     },
     // 继续跑步
     runContinue(){
@@ -327,25 +347,27 @@ Page({
             runStatus:0
         })
         this.runStart()
-        innerAudioContext.src = "run_packege/assets/voice/hiking/yundongyihuifu.mp3"
+        innerAudioContext.src = "pages/run/assets/voice/hiking/yundongyihuifu.mp3"
     },
     // 结束跑步
-    runStop(){
+    async runStop(){
         // 读取缓存的轨迹数组，没有移动则不允许结算
         let user_id = getStorageSync('user_id')
         let key = 'run_data_'+user_id
         let kMilesCacheData = getStorageSync(key)
-        if(kMilesCacheData.locaDotArr.length < 2){
-            showModal('您的移动距离过短，数据将不会被保存','是否退出跑步？').then(res=>{
+        if(kMilesCacheData.locaDotArr.length < 2 || this.data.runMiles <= 10){
+            showModal('您的移动距离过短，数据将不会被保存','是否退出跑步？').then(async res=>{
                 if(res.confirm){
                     // 清除运动数据缓存
                     let user_id = getStorageSync('user_id')
                     let storageKey = 'run_kmiles_pace_arr_' + user_id
-                    removeStorageSync(storageKey)
-                    removeStorageSync(key)
+                    await removeStorage(storageKey)
+                    await removeStorage(key)
+                    // removeStorageSync(storageKey)
+                    // removeStorageSync(key)
                     // 清除定时器
                     clearInterval(this.data.runTimer)
-                    innerAudioContext.src = "run_packege/assets/voice/paobujieshu.mp3"
+                    innerAudioContext.src = "pages/run/assets/voice/paobujieshu.mp3"
                     this.setData({
                         runTime:0,
                         runStatus:1,
@@ -364,12 +386,19 @@ Page({
         }
         // 缓存最后一公里的配速
         this.setKmilesCache(false)
+        // 跑步结束时间
+        let runEndTime = parseInt(new Date().getTime()/1000)
+        this.setData({
+            runEndTime,
+        })
+        this.setRunDataCache()
         // 上报跑步数据
         let params = {
             kind_id:0,
             distance:this.data.runMiles,
             cost_time:this.data.runTime,
-            time:this.data.runStartTime,
+            // time:this.data.runStartTime,
+            time:runEndTime,
             caloric:this.data.calorie,
             run_source:"wx_mini_program",
             // 步数(可不传)
@@ -408,6 +437,8 @@ Page({
                 stopLocationUpdate().then(res=>{
                     console.log("停止追踪", res);
                 })
+                stopAccelerometer()
+                offAccelerometerChange()
                 // 跳转到跑步结算页
                 let runner_id = res.runner_id
                 redirectTo(`../run_final/index?runner_id=${runner_id}`)
@@ -427,6 +458,8 @@ Page({
             locaDotArr:this.data.locaDotArr,
             // 跑步开始时间(时间戳)
             runStartTime: this.data.runStartTime,
+            // 跑步结束时间(时间戳)
+            runEndTime: this.data.runEndTime,
             // 跑步距离(米m)
             runMiles:this.data.runMiles,
             // 消耗卡路里
@@ -608,7 +641,8 @@ Page({
             this.getRunSetCache()
             // 
             this.runStart()
-            innerAudioContext.src = "run_packege/assets/voice/kaishipaobu.mp3"
+            // innerAudioContext.src = "run_packege/assets/voice/kaishipaobu.mp3"
+            innerAudioContext.src = "pages/run/assets/voice/kaishipaobu.mp3"
         }else {
             // 没有残留的运动记录时
             console.log("上次运动已完成")
@@ -620,7 +654,7 @@ Page({
                 guidePageShow:true,
                 runGuideCount: 3,
             })
-            innerAudioContext.src = "run_packege/assets/voice/3.mp3"
+            innerAudioContext.src = "pages/run/assets/voice/3.mp3"
             // 开始倒计时
             var runGuideCountTimer = setInterval(()=>{
                 this.setData({
@@ -630,9 +664,9 @@ Page({
                     runGuideCount: this.data.runGuideCount - 1
                 })
                 if(this.data.runGuideCount == 2){
-                    innerAudioContext.src = "run_packege/assets/voice/2.mp3"
+                    innerAudioContext.src = "pages/run/assets/voice/2.mp3"
                 }else if(this.data.runGuideCount == 1){
-                    innerAudioContext.src = "run_packege/assets/voice/1.mp3"
+                    innerAudioContext.src = "pages/run/assets/voice/1.mp3"
                 }
                 // 倒计时结束后隐藏引导页，设置跑步开始时间,清除定时器，开始跑步计时
                 if(this.data.runGuideCount == 0){
@@ -642,7 +676,7 @@ Page({
                     })
                     clearInterval(this.data.runGuideCountTimer)
                     this.runStart()
-                    innerAudioContext.src = "run_packege/assets/voice/kaishipaobu.mp3"
+                    innerAudioContext.src = "pages/run/assets/voice/kaishipaobu.mp3"
                 }
             },1000)
         }

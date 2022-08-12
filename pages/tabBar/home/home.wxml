@@ -1,15 +1,12 @@
 <!-- pages/tabBar/home/home.wxml -->
-<view class="nav">
-    <view class="tle active-tle">
-        <view class="name">AI运动</view>
-        <view class="tag"></view>
-    </view>
-    <login-btn bindsuccess="gotoRun">
-        <view class="tle">
-            <view class="name">跑步</view>
-            <view class="tag"></view>
-        </view>
-    </login-btn>
+<sport-nav 
+    sportList="{{sportList}}"
+    activeIndex="{{activeIndex}}"
+    bind:checkActiveItem="onCheckActiveItem"
+></sport-nav>
+<view style="height: calc( 100vh - 80rpx ); overflow: hidden;" wx:if="{{activeIndex == 0}}">
+    <run-homepage></run-homepage>
 </view>
-<run-homepage></run-homepage>
-<!-- <AI-page></AI-page> -->
+<view wx:elif="{{activeIndex == 1}}">
+    <AI-page></AI-page>
+</view>

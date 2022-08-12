@@ -49,6 +49,9 @@ function formatAvg(secs,miles){
     return total_m+"'"+add0(lest_sec)+"''";
 }
 
+// 保留两位小数
+var clip = a => Number(parseFloat(a).toFixed(3).slice(0,-1))
+
 // 配速格式化（秒/公里->）
 function formatShowAvg(avg_pace){
     if(avg_pace == 0){
@@ -102,4 +105,5 @@ export default {
     formatAvg,
     formatDate,
     formatShowAvg,
+    clip,
 }

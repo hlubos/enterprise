@@ -274,7 +274,7 @@ export const saveImageToPhotosAlbum = (filePath,) => {//保存图片到相册
 /**
  *  wx.showToast 显示消息提示框
  */
-export const showToast = (title,icon,duration) => {
+export const showToast = (title,icon,duration = 1500) => {
     return new Promise((resolve, reject) => {
         wx.showToast({
             title,
@@ -380,4 +380,54 @@ export const createSelectorQuery = () => {
  */
 export const createMapContext = (mapId,obj) => {
     return wx.createMapContext(mapId,obj)
+}
+
+// 
+/**
+ *  wx.startAccelerometer 开始监听加速度数据。
+ */
+export const startAccelerometer = (interval = 'normal') => {
+    return new Promise((resolve, reject) => {
+        wx.startAccelerometer({
+            interval,
+            success: (result) => {
+                resolve(result);
+            },
+            fail: (err) => {
+                reject(err);
+            }
+        });
+    })
+}
+
+/**
+ *  wx.stopAccelerometer 停止监听加速度数据
+ */
+export const stopAccelerometer = () => {
+    return new Promise((resolve, reject) => {
+        wx.startAccelerometer({
+            success: (result) => {
+                resolve(result);
+            },
+            fail: (err) => {
+                reject(err);
+            }
+        });
+    })
+}
+
+/**
+ * wx.onAccelerometerChange
+ *  监听加速度数据事件。频率根据 wx.startAccelerometer() 的 interval 参数, 接口调用后会自动开始监听。
+ */
+export const onAccelerometerChange = (fn) => {
+    return wx.onAccelerometerChange(fn)
+}
+
+/**
+ * wx.offAccelerometerChange
+ *  取消监听加速度数据事件，参数为空，则取消所有的事件监听。
+ */
+export const offAccelerometerChange = (fn) => {
+    return wx.offAccelerometerChange(fn)
 }

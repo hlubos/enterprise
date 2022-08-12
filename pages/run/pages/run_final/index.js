@@ -4,6 +4,7 @@ import api from '../../server/run'
 import myFormats from '../../utils/format'
 import {
     getStorageSync,
+    removeStorage,
     removeStorageSync,
     navigateBack,
     createInnerAudioContext,
@@ -12,7 +13,9 @@ import {
     createSelectorQuery,
     showLoading,
     hideLoading,
+    showToast,
 } from '../../utils/wxApi'
+// import Wxml2Canvas from '../../wxml2canvas/index'
 import Wxml2Canvas from 'wxml2canvas'
 const innerAudioContext = createInnerAudioContext(true)
 innerAudioContext.autoplay = true
@@ -54,13 +57,15 @@ Page({
             scale:2,
         },
         // 静态地图
-        staticMapUrl:'https://apis.map.qq.com/ws/staticmap/v2/?key=L4JBZ-YJ56D-GAO47-P6UQY-ODB46-M2FD2&scale=2&size=500x400&center=39.12,116.54&zoom=12',
+        staticMapUrl:'',
         // 二维码图片
         qrcodeImg: 'https://ssl-pubpic.51yund.com/1224160409.jpg',
         // echarts的图片
         chartImage:'',
         // 跑步开始时间(时间戳)
         runStartTime: 0,
+        // 跑步结束时间(时间戳)
+        runEndTime: 0,
         // 跑步总距离（米）
         runMiles: 0,
         // 跑步时长（秒）
@@ -70,6 +75,7 @@ Page({
         // 要显示的跑步数据
         showRunData: {
             runStartTime: '',
+            runEndTime: '',
             runKMiles: '0.00',
             avgPace: `00'00''`,
             sumTime: '00:00',
@@ -137,14 +143,16 @@ Page({
         }, 500)
     },
     // 结束跑步
-    runFinish() {
+    async runFinish() {
         try {
             let user_id = getStorageSync('user_id')
             let storageKey = 'run_data_' + user_id
             let key = 'run_kmiles_pace_arr_' + user_id
             // 清除运动数据缓存
-            removeStorageSync(storageKey)
-            removeStorageSync(key)
+            await removeStorage(storageKey)
+            await removeStorage(key)
+            // removeStorageSync(storageKey)
+            // removeStorageSync(key)
         } catch (error) { }
         navigateBack()
     },
@@ -154,11 +162,11 @@ Page({
         let auidos = this.audioDidy()
         // console.log(auidos)
         let index = 0
-        innerAudioContext.src = `run_packege/assets/voice/hiking/${auidos[index]}.mp3`
+        innerAudioContext.src = `pages/run/assets/voice/hiking/${auidos[index]}.mp3`
         // 监听音频自然结束
         innerAudioContext.onEnded(()=>{
             index++
-            innerAudioContext.src = `run_packege/assets/voice/hiking/${auidos[index]}.mp3`
+            innerAudioContext.src = `pages/run/assets/voice/hiking/${auidos[index]}.mp3`
         })
     },
     // 语音播报内容整理
@@ -322,7 +330,8 @@ Page({
     },
     // =========================================
     drawCanvas: function () {
-        showLoading('加载中')
+        // showToast('生成图片中')
+        showLoading('分享图片生成中')
         const that = this
         const query = createSelectorQuery().in(this);
         query.select('#answer-canvas').fields({ //answer-canvas要绘制的canvas的id
@@ -378,7 +387,36 @@ Page({
               limit: '.answer_canvas', // 这边为要绘制的wxml元素跟元素类名,最外面的元素
               x: 0,
               y: 0
-            } ]
+            },
+            // {
+            //     type: 'text',
+            //     text: '文字',
+            //     class: 'txt1',
+            //     x: 0,
+            //     y: 0,
+            //     style: {
+            //         fontSize: 30,
+            //         fontWeight: 'bold',
+            //         lineHeight: 32,
+            //         color: '#333333',
+            //         fontFamily: 'PingFangSC-Regular'
+            //     }
+            // },
+            // {
+            //     type: 'text',
+            //     text: '文字',
+            //     class: 'txt2',
+            //     x: 0,
+            //     y: 0,
+            //     style: {
+            //         fontSize: 24,
+            //         fontWeight: 'bold',
+            //         lineHeight: 24,
+            //         color: '#333333',
+            //         fontFamily: 'PingFangSC-Regular'
+            //     }
+            // }
+          ]
         }
           //传入数据，画制canvas图片
         this.setData({
@@ -392,6 +430,9 @@ Page({
     },
     // 设置静态地图参数
     setStaticMapInfo(w=500,h=400){
+        if(!!this.data.staticMapUrl){
+            return
+        }
         // staticMapUrl:'https://apis.map.qq.com/ws/staticmap/v2/?key=L4JBZ-YJ56D-GAO47-P6UQY-ODB46-M2FD2&scale=2&size=500x400&center=39.12,116.54&zoom=12',
         let user_id = getStorageSync('user_id')
         let storageKey = 'run_data_' + user_id
@@ -452,7 +493,8 @@ Page({
                 pointsList: data.locaDotArr,
                 "polylines[0].points": data.locaDotArr,
                 "showRunData.runStartTime": myFormats.formatDate(data.runStartTime, 'yyyy-MM-dd hh:mm:ss'),
-                "showRunData.runKMiles": (data.runMiles / 1000).toFixed(2),
+                "showRunData.runEndTime": myFormats.formatDate(data.runEndTime, 'yyyy-MM-dd hh:mm:ss'),
+                "showRunData.runKMiles": myFormats.clip(parseInt(data.runMiles) / 1000),
                 "showRunData.avgPace": myFormats.formatAvg(data.runTime, data.runMiles),
                 "showRunData.sumTime": myFormats.secTranlateTime(data.runTime),
                 "showRunData.kCalorie": (55 * 1.036 * (data.runMiles / 1000)).toFixed(1),
@@ -527,25 +569,33 @@ Page({
     /**
      * 生命周期函数--监听页面隐藏
      */
-    onHide() {
+    async onHide() {
         // 语音播报停止
         innerAudioContext.stop()
         // 清除所有跑步数据缓存
         let userId = getStorageSync('user_id')
         let storageKey1 = 'run_data_' + userId
         let storageKey2 = 'run_kmiles_pace_arr_' + userId
-        removeStorageSync(storageKey1)
-        removeStorageSync(storageKey2)
+        await removeStorage(storageKey1)
+        await removeStorage(storageKey2)
+        // removeStorageSync(storageKey1)
+        // removeStorageSync(storageKey2)
     },
 
     /**
      * 生命周期函数--监听页面卸载
      */
-    onUnload() {
-        // 清除运动数据缓存
-        let user_id = getStorageSync('user_id')
-        let storageKey = 'run_data_' + user_id
-        removeStorageSync(storageKey)
+    async onUnload() {
+        // 语音播报停止
+        innerAudioContext.stop()
+        // 清除所有跑步数据缓存
+        let userId = getStorageSync('user_id')
+        let storageKey1 = 'run_data_' + userId
+        let storageKey2 = 'run_kmiles_pace_arr_' + userId
+        await removeStorage(storageKey1)
+        await removeStorage(storageKey2)
+        // removeStorageSync(storageKey1)
+        // removeStorageSync(storageKey2)
         // 销毁音频实例
         // innerAudioContext.destroy()
     },

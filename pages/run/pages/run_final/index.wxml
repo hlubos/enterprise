@@ -1,7 +1,7 @@
 <!--run_packege/pages/run_final/index.wxml-->
 <!-- <canvas canvas-id="shareCanvas" class="share-Canvas"></canvas> -->
 <!-- <canvas type="2d" canvas-id="shareCanvas" id="shareCanvas" class="shareCanvas" style="width: 100%; height:{{canvasHeight}}px;"> -->
-<import src="index.skeleton.wxml"/>
+<!-- <import src="index.skeleton.wxml"/> -->
 <template is="skeleton" wx:if="{{loading}}" />
 <view class="fina-map-box answer_draw_canvas" style="height: {{mapHeight}};">
     <map id="run-final-map" 
@@ -28,37 +28,37 @@
                 <view class="logo answer_draw_canvas">
                     <image class="answer_draw_canvas" data-delay="1" data-type="image" data-url="https://ssl-pubpic.51yund.com/1221778105.png" src="https://ssl-pubpic.51yund.com/1221778105.png"></image>
                 </view>
-                <view class="finish-time answer_draw_canvas" data-delay="1" data-type="text" data-text="{{showRunData.runStartTime}}">{{showRunData.runStartTime}}</view>
+                <view class="finish-time answer_draw_canvas" data-delay="1" data-type="text" data-text="{{showRunData.runEndTime}}">{{showRunData.runEndTime}}</view>
                 <view class="avatar answer_draw_canvas">
                     <image class="answer_draw_canvas" data-delay="1" data-type="image" data-url="{{userInfo.head_url}}" src="{{userInfo.head_url}}"></image>
                 </view>
             </view>
             <view class="title2 answer_draw_canvas">
                 <view class="title2-left answer_draw_canvas">
-                    <view class="title2-left-kmeter answer_draw_canvas" data-delay="1" data-type="text" data-text="{{showRunData.runKMiles}}">{{showRunData.runKMiles}}</view>
+                    <view class="title2-left-kmeter answer_draw_canvas txt1" data-delay="1" data-type="text" data-text="{{showRunData.runKMiles}}">{{showRunData.runKMiles}}</view>
                     <view class="title2-left-unit answer_draw_canvas" data-delay="1" data-type="text" data-text="公里">公里</view>
                 </view>
                 <view class="title2-right answer_draw_canvas">
-                    <view class="title2-right-name answer_draw_canvas" data-delay="1" data-type="text" data-text="{{userInfo.nick}}">{{userInfo.nick}}</view>
-                    <view class="title2-right-id answer_draw_canvas" data-delay="1" data-type="text" data-text="用户ID：278334567">用户ID：278334567</view>
+                    <view class="title2-right-name answer_draw_canvas" data-delay="1" data-left="0" data-type="text" data-text="{{userInfo.nick}}">{{userInfo.nick}}</view>
+                    <view class="title2-right-id answer_draw_canvas" data-delay="1" data-left="0" data-type="text" data-text="用户ID：278334567">用户ID：278334567</view>
                 </view>
             </view>
             <view class="title3 answer_draw_canvas">
                 <view class="title3-item1 answer_draw_canvas">
-                    <view class="title3-num answer_draw_canvas" data-delay="1" data-type="text" data-text="{{showRunData.avgPace}}">{{showRunData.avgPace}}</view>
+                    <view class="title3-num answer_draw_canvas txt2" data-delay="1" data-type="text" data-text="{{showRunData.avgPace}}">{{showRunData.avgPace}}</view>
                     <view class="title3-unit answer_draw_canvas" data-delay="1" data-type="text" data-text="平均配速">平均配速</view>
                 </view>
                 <view class="title3-item2 answer_draw_canvas">
-                    <view class="title3-num answer_draw_canvas" data-delay="1" data-type="text" data-text="{{showRunData.sumTime}}">{{showRunData.sumTime}}</view>
+                    <view class="title3-num answer_draw_canvas txt2" data-delay="1" data-type="text" data-text="{{showRunData.sumTime}}">{{showRunData.sumTime}}</view>
                     <view class="title3-unit answer_draw_canvas" data-delay="1" data-type="text" data-text="总计时间">总计时间</view>
                 </view>
                 <view class="title3-item3 answer_draw_canvas">
-                    <view class="title3-num answer_draw_canvas" data-delay="1" data-type="text" data-text="{{showRunData.kCalorie}}">{{showRunData.kCalorie}}</view>
+                    <view class="title3-num answer_draw_canvas txt2" data-delay="1" data-type="text" data-text="{{showRunData.kCalorie}}">{{showRunData.kCalorie}}</view>
                     <view class="title3-unit answer_draw_canvas" data-delay="1" data-type="text" data-text="消耗千卡">消耗千卡</view>
                 </view>
             </view>
         </view>
-        <view class="count-line answer_draw_canvas">
+        <view class="count-line answer_draw_canvas" data-type="text" data-background="#cccccc">
             <view class="count-line-txt answer_draw_canvas" data-delay="1" data-type="text" data-text="第{{userInfo.this_sport_cnt}}次跑步">第{{userInfo.this_sport_cnt}}次跑步</view>
         </view>
         <view class="visual-chart-box answer_draw_canvas">
@@ -96,8 +96,7 @@
 </view>
 <canvas
     canvas-id="answerCanvas" 
-    class="answerCanvas" 
-    wx:if="{{!posterImgUrl}}"
+    class="answerCanvas"
     style="position: absolute;top: -{{canvasHeight}}px; width: {{canvasWidth}}px; height:{{canvasHeight}}px;background:#fff;"
 ></canvas>
 <!-- <view class="share-type-box" hidden="{{shareFlag == 0}}">

@@ -38,7 +38,7 @@ Page({
     },
     // 生成图片
     createImg(){
-         showLoading('加载中')
+         showLoading('分享图片生成中')
          const that = this
          const query = createSelectorQuery().in(this);
          query.select('#answer-canvas').fields({ //answer-canvas要绘制的canvas的id
@@ -70,6 +70,7 @@ Page({
           finish(url) {
             console.log("创建的图片", url);
             hideLoading()
+            showToast('图片已生成','none',1500)
             that.setData({
                 posterImgUrl:url,
             })
@@ -96,8 +97,15 @@ Page({
     },
     // 保存图片
     clickSaveImg() {
-        saveImageToPhotosAlbum(this.data.posterImgUrl).then(res=>{
+        saveImageToPhotosAlbum(this.data.posterImgUrl)
+        .then(res=>{
             showToast("图片已保存！","",2000)
+        })
+        .catch(rej=>{
+            console.log(rej)
+            if(rej.errno == 103 || rej.errno == 104){
+                console.log("用户取消或拒绝授权")
+            }
         })
     },
 

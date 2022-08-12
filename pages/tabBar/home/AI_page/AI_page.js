@@ -149,11 +149,6 @@ Component({
                 url: '/pages/history/history'
             })
         },
-        gotoRun(){
-            wx.navigateTo({
-                url: '/run_packege/pages/index/index'
-            })
-        },
         updateKindList () {
             api.getAISportActionList().then(res => {
                 let actionInfos = res.data.action_infos

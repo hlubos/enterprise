@@ -62,16 +62,16 @@
         <view>网络检测</view>
         <!-- <view slot="footer">点击重新检测></view> -->
         <view slot="footer" bindtap="checkNet">
-            <text wx:if="{{netType}}">当前网络类型：{{netType}}</text>
-            <text wx:else>点击检测</text>
-        </view>
-    </mp-cell>
-    <!-- <mp-cell>
-        <view>权限检测</view>
-        <view slot="footer">
             <text>点击检测</text>
         </view>
-    </mp-cell> -->
+    </mp-cell>
+    <mp-cell>
+        <view>当前网络</view>
+        <view slot="footer">
+            <!-- <text wx:if="{{networkType}}">当前网络类型：{{networkType}}</text> -->
+            <text>{{netTxt}}</text>
+        </view>
+    </mp-cell>
 </mp-cells>
 
 <!-- <picker mode="multiSelector"></picker> -->

@@ -17,14 +17,6 @@
     ></run-data-panel>
 </view>
 <!-- 地图面板 -->
-<!-- <view hidden="{{!mapPanelShow}}" bind:hideRunMap="hideMap">
-    <run-map-panel
-        newLongitude="{{mapCenterLocation.longitude}}" 
-        newLatitude="{{mapCenterLocation.latitude}}"
-        bind:hideRunMap="hideMap"
-        runShowData="{{runShowData}}"
-    ></run-map-panel>
-</view> -->
 <page-container show="{{mapPanelShow}}">
     <view bind:hideRunMap="hideMap">
         <run-map-panel
