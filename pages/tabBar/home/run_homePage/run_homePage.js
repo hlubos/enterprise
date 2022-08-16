@@ -8,6 +8,7 @@ import {
     navigateTo,
     navigateBack,
     getStorageSync,
+    setStorageSync,
     showToast,
     showModal,
     showLoading,
@@ -184,10 +185,10 @@ Component({
             let user_id = getStorageSync('user_id')
             let storageKey = 'run_data_' + user_id
             let key = 'run_kmiles_pace_arr_'+user_id
-            await removeStorage(storageKey)
-            await removeStorage(key)
-            // removeStorageSync(storageKey)
-            // removeStorageSync(key)
+            // await removeStorage(storageKey)
+            // await removeStorage(key)
+            setStorageSync(storageKey,{})
+            setStorageSync(key,[])
         },
         // 继续跑步
         continueRun(){
@@ -208,14 +209,17 @@ Component({
                 let user_id = getStorageSync('user_id')
                 let storageKey = 'run_data_' + user_id
                 let cacheData = getStorageSync(storageKey)
-                if(cacheData){
-                    // console.log(cacheData)
+                if(!cacheData || JSON.stringify(cacheData) == '{}'){
+                    // console.log("缓存为空")
+                    // console.log("cacheData",cacheData)
+                    return false
+                }else {
+                    // console.log("缓存不为空")
+                    // console.log("cacheData",cacheData)
                     // console.log("上次运动未完成")
                     this.setData({
                         showRunBreakDialog: true
                     })
-                }else {
-                    // console.log("上次运动已完成")
                 }
             } catch (e) { }
         },
@@ -271,12 +275,15 @@ Component({
                 // 获取累计公里数
                 let params = {
                     // user_id:284209535,
+                    sport_type:0,
+                    time_range:'all',
                 }
-                api.getRunnerInfo(params).then(res=>{
+                api.userSportSummary(params).then(res=>{
                     if(res.code == 0){
                         // console.log(res)
                         this.setData({
-                            totalDistance:(res.total_distance/1000).toFixed(2)
+                            // totalDistance:(res.total_distance/1000).toFixed(2)
+                            totalDistance:Number(parseFloat(res.summary_detail.sum_distance/1000).toFixed(3).slice(0,-1))
                         })
                     }
                 })

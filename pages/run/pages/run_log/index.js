@@ -1,4 +1,5 @@
 // plugin/pages/run_log/index.js
+import { all } from '@tensorflow/tfjs-core'
 import api from '../../server/run'
 import myFormats from '../../utils/format'
 Page({
@@ -22,6 +23,27 @@ Page({
         // has_more
         has_more: 1,
         offset: 0,
+    },
+    // 用户历史数据
+    getUserSportSummary(){
+        let params = {
+            sport_type:0,
+            time_range:'all',
+        }
+        api.userSportSummary(params).then(res=>{
+            // console.log("历史数据")
+            // console.log(res)
+            if(res.code == 0){
+                this.setData({
+                    total_cnt: res.summary_detail.sport_cnt,
+                    total_cost_time: myFormats.secTranlateTime(res.summary_detail.sum_cost_time),
+                    // total_cost_time: res.total_cost_time,
+                    total_distance: myFormats.clip(res.summary_detail.sum_distance/1000),
+                    // total_caloric: (55 * 1.036 * (res.total_distance / 1000)).toFixed(1),
+                    total_caloric: res.summary_detail.sum_calories,
+                })
+            }
+        })
     },
     // 加载数据
     async loadData(){
@@ -79,11 +101,11 @@ Page({
                     }
                 }
                 this.setData({
-                    total_cnt: res.total_cnt,
-                    total_cost_time: myFormats.secTranlateTime(res.total_cost_time),
-                    // total_cost_time: res.total_cost_time,
-                    total_distance: myFormats.clip(res.total_distance/1000),
-                    total_caloric: (55 * 1.036 * (res.total_distance / 1000)).toFixed(1),
+                    // total_cnt: res.total_cnt,
+                    // total_cost_time: myFormats.secTranlateTime(res.total_cost_time),
+                    // // total_cost_time: res.total_cost_time,
+                    // total_distance: myFormats.clip(res.total_distance/1000),
+                    // total_caloric: (55 * 1.036 * (res.total_distance / 1000)).toFixed(1),
                     begin_cnt: this.data.begin_cnt + infosLen,
                     end_cnt: this.data.end_cnt + infosLen,
                 })
@@ -107,6 +129,7 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad(options) {
+        this.getUserSportSummary()
         this.loadData()
         // myFormats.formatDate(1646209697,'yyyy/MM/dd hh:mm:ss')
     },

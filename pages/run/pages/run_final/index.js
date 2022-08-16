@@ -7,6 +7,7 @@ import {
     removeStorage,
     removeStorageSync,
     navigateBack,
+    setStorageSync,
     createInnerAudioContext,
     navigateTo,
     createMapContext,
@@ -149,8 +150,10 @@ Page({
             let storageKey = 'run_data_' + user_id
             let key = 'run_kmiles_pace_arr_' + user_id
             // 清除运动数据缓存
-            await removeStorage(storageKey)
-            await removeStorage(key)
+            // await removeStorage(storageKey)
+            // await removeStorage(key)
+            setStorageSync(storageKey,{})
+            setStorageSync(key,[])
             // removeStorageSync(storageKey)
             // removeStorageSync(key)
         } catch (error) { }
@@ -576,8 +579,10 @@ Page({
         let userId = getStorageSync('user_id')
         let storageKey1 = 'run_data_' + userId
         let storageKey2 = 'run_kmiles_pace_arr_' + userId
-        await removeStorage(storageKey1)
-        await removeStorage(storageKey2)
+        // await removeStorage(storageKey1)
+        // await removeStorage(storageKey2)
+        setStorageSync(storageKey1,{})
+        setStorageSync(storageKey2,[])
         // removeStorageSync(storageKey1)
         // removeStorageSync(storageKey2)
     },
@@ -592,8 +597,10 @@ Page({
         let userId = getStorageSync('user_id')
         let storageKey1 = 'run_data_' + userId
         let storageKey2 = 'run_kmiles_pace_arr_' + userId
-        await removeStorage(storageKey1)
-        await removeStorage(storageKey2)
+        // await removeStorage(storageKey1)
+        // await removeStorage(storageKey2)
+        setStorageSync(storageKey1,{})
+        setStorageSync(storageKey2,[])
         // removeStorageSync(storageKey1)
         // removeStorageSync(storageKey2)
         // 销毁音频实例
