@@ -64,7 +64,12 @@
         <view class="visual-chart-box answer_draw_canvas">
             <!-- <view class="visual-chart-title">配速</view> -->
             <view class="visual-chart answer_draw_canvas">
-                <run-speed-chart bind:getChartImage="getChartImage" hidden="{{chartImage}}" paceCompare="{{paceCompare}}"></run-speed-chart>
+                <run-speed-chart 
+                    bind:getChartImage="getChartImage" 
+                    hidden="{{chartImage}}" 
+                    paceCompare="{{paceCompare}}"
+                    kmilesPaceCache="{{kmilesPaceCache}}"
+                ></run-speed-chart>
                 <image 
                     class="answer_draw_canvas" 
                     style="height: 100%; width: 100%;" 

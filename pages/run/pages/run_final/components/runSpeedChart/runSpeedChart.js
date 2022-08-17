@@ -11,8 +11,6 @@ let pace = {
     flag: 1, 
     value: "0'00''"
 }
-// let option
-// let cacheData = getCache()
 function getOption(data) {
     let txt = ''
     if(pace.flag == 1){
@@ -68,7 +66,6 @@ function getOption(data) {
                     //     '{c}',
                     // ].join('\n'), //图形外文字上下显示
                     formatter:function (a) {
-                        // console.log('a',a)
                         let arr = []
                         arr.push(a.data.name.title)
                         let formatVal = myFormats.formatShowAvg(a.data.name.cot)
@@ -101,11 +98,12 @@ function getOption(data) {
     };
     return option
 }
-function getCache(){
+function getCache(kmilesPaceCache){
     // 获取缓存
-    let user_id = getStorageSync('user_id')
-    let key = 'run_kmiles_pace_arr_' + user_id
-    let cacheData = getStorageSync(key)
+    // let user_id = getStorageSync('user_id')
+    // let key = 'run_kmiles_pace_arr_' + user_id
+    // let cacheData = getStorageSync(key)
+    let cacheData = kmilesPaceCache
     let newData = []
     for (let i = 0; i < cacheData.length; i++) {
         if (i < cacheData.length - 1) {
@@ -114,8 +112,6 @@ function getCache(){
                     title: `第${cacheData[i]['kmiles_cut']}公里`,
                     cot:cacheData[i].avg_pace,
                 },
-                // value: myFormats.formatShowAvg(cacheData[i].avg_pace),
-                // value: cacheData[i].avg_pace,
                 value: 1000
             })
         } else {
@@ -125,8 +121,6 @@ function getCache(){
                     title:`最后${m}米`,
                     cot:cacheData[i].avg_pace,
                 },
-                // value: myFormats.formatShowAvg(cacheData[i].avg_pace),
-                // value: cacheData[i].avg_pace,
                 value: m
             })
         }
@@ -156,7 +150,11 @@ Component({
         paceCompare:{
             type:Object,
             value:{}
-        }
+        },
+        kmilesPaceCache:{
+            type:Array,
+            value:[]
+        },
     },
 
     /**
@@ -196,7 +194,6 @@ Component({
     },
     pageLifetimes:{
         show(){
-            // option = 
         }
     },
     /**
@@ -215,7 +212,7 @@ Component({
                 // canvas.fillRect(0,0, canvas.width, canvas.width)
                 canvas.setChart(chart);
                 // chart.setOption(getOption(cacheData));
-                chart.setOption(getOption(getCache()));
+                chart.setOption(getOption(getCache(this.data.kmilesPaceCache)));
                 setTimeout(function () {
                     that.pieComponent.canvasToTempFilePath({
                        x: 0,

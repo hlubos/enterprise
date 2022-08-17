@@ -96,6 +96,7 @@ Page({
         },
         // 
         paceCompare:{},
+        kmilesPaceCache:[],
     },
     handleMap(e) {
         // console.log(e.detail)
@@ -492,6 +493,7 @@ Page({
             let storageKey1 = 'run_data_' + user_id
             let storageKey2 = 'run_kmiles_pace_arr_' + user_id
             let data = getStorageSync(storageKey1)
+            let kmilesPaceCache = getStorageSync(storageKey2)
             // console.log(data)
             this.setData({
                 pointsList: data.locaDotArr,
@@ -544,12 +546,13 @@ Page({
                         }
                     }
                     this.setData({
+                        kmilesPaceCache,
                         paceCompare,
                     })
                 }
                 // 清除缓存
-                // setStorageSync(storageKey1,{})
-                // setStorageSync(storageKey2,[])
+                setStorageSync(storageKey1,{})
+                setStorageSync(storageKey2,[])
             })
         } catch (error) { }
         
