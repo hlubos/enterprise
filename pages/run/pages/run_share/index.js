@@ -68,7 +68,7 @@ Page({
             // console.log(percent);
           },
           finish(url) {
-            console.log("创建的图片", url);
+            // console.log("创建的图片", url);
             hideLoading()
             showToast('图片已生成','none',1500)
             that.setData({
@@ -76,7 +76,7 @@ Page({
             })
           },
           error(res) {
-            console.log(res);
+            // console.log(res);
             hideLoading()
             // 画失败的原因
           }
@@ -102,9 +102,9 @@ Page({
             showToast("图片已保存！","",2000)
         })
         .catch(rej=>{
-            console.log(rej)
+            // console.log(rej)
             if(rej.errno == 103 || rej.errno == 104){
-                console.log("用户取消或拒绝授权")
+                // console.log("用户取消或拒绝授权")
             }
         })
     },
@@ -117,7 +117,7 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad(options) {
-        console.log(options)
+        // console.log(options)
         this.setData({
             runner_id: options.runner_id,
             dataImg:decodeURIComponent(options.dataImg),

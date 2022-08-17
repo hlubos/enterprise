@@ -11,6 +11,8 @@ let pace = {
     flag: 1, 
     value: "0'00''"
 }
+// let option
+// let cacheData = getCache()
 function getOption(data) {
     let txt = ''
     if(pace.flag == 1){
@@ -171,7 +173,7 @@ Component({
         paceCompare: function(paceCompare) {
             this.pieComponent = this.selectComponent("#mychart-dom-pie");
             pace = paceCompare
-            console.log(pace)
+            // console.log(pace)
             this.init_pie()
         }
     },
@@ -192,6 +194,11 @@ Component({
         },
         detached: function () { },
     },
+    pageLifetimes:{
+        show(){
+            // option = 
+        }
+    },
     /**
      * 组件的方法列表
      */
@@ -207,6 +214,7 @@ Component({
                 // canvas.fillStyle = "#fff"
                 // canvas.fillRect(0,0, canvas.width, canvas.width)
                 canvas.setChart(chart);
+                // chart.setOption(getOption(cacheData));
                 chart.setOption(getOption(getCache()));
                 setTimeout(function () {
                     that.pieComponent.canvasToTempFilePath({

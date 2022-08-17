@@ -113,7 +113,7 @@ Page({
     // 检查网络类型
     checkNet(){
         getNetworkType().then(res=>{
-            console.log(res)
+            // console.log(res)
             this.setData({
                 networkType:res.networkType,
                 signalStrength:res.signalStrength,

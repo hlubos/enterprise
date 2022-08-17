@@ -45,9 +45,20 @@
         </view>
         <view class="notlock-btns" hidden="{{isLock == false}}">
             <!-- 长按解锁 -->
-            <view class="unlock-btn" bindlongpress="unlockRunPanel">
+            <!-- <view class="unlock-btn" bindlongpress="unlockRunPanel">
                 <view class="unlock-btn-center">解锁</view>
-            </view>
+            </view> -->
+            <!-- bindtouchstart="unlockStart" bindtouchend="unlockBreak" -->
+            <cover-view style="z-index: 99;" bindtouchstart="unlockStart" bindtouchend="unlockBreak" >
+                <canvas-ring 
+                    canvasWidth="100"
+                    id="canvasRing" 
+                    title="解锁" 
+                    value="{{unlockVal}}"
+                    lineColor="#4CDDB4"
+                    lineWidth="5"
+                ></canvas-ring>
+            </cover-view>
             <!-- <circle_bar></circle_bar> -->
         </view>
     </view>

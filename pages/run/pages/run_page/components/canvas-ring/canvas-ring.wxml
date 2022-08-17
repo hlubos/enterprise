@@ -1,0 +1,11 @@
+<canvas style="width:{{canvasWidth}}px;height:{{canvasWidth}}px;" canvas-id="circleBar">
+  <cover-view class="circle-bar-wrap" style="height:{{canvasWidth}}px;">
+    <cover-view class="font">
+        <cover-view style="width: 100%; text-align: center; margin-top: 40rpx;">{{title}}</cover-view>
+    </cover-view>
+    <!-- <cover-view class="val" style="color: {{valueColor}}; margin-top:{{isMarginTop?'20':'0'}}rpx">
+      {{value}} {{suffix}}
+    </cover-view> -->
+  </cover-view>
+</canvas>
+<slot></slot>

@@ -177,7 +177,7 @@ Component({
         // 放弃跑步
         async giveUpRun(){
             // 清缓存
-            console.log("清缓存")
+            // console.log("清缓存")
             this.setData({
                 showRunBreakDialog: false
             })
@@ -193,7 +193,7 @@ Component({
         // 继续跑步
         continueRun(){
             // 不清缓存
-            console.log("不清缓存")
+            // console.log("不清缓存")
             showLoading('跑步加载中...',true)
             this.setData({
                 showRunBreakDialog: false

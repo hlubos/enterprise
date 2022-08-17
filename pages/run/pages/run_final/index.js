@@ -98,7 +98,7 @@ Page({
         paceCompare:{},
     },
     handleMap(e) {
-        console.log(e.detail)
+        // console.log(e.detail)
     },
     // 读取跑步设置缓存
     getRunSetCache() {
@@ -272,7 +272,7 @@ Page({
         let avgPaceArr = avgPace.split("'").filter(function (s) {
             return s && s.trim(); 
         });
-        console.log('avgPaceArr',avgPaceArr)
+        // console.log('avgPaceArr',avgPaceArr)
         avgPaceArr.forEach((item,index)=>{
             // 数字
             // 分为0,被10整除,和不被10整除
@@ -322,7 +322,7 @@ Page({
     // 调整canvas宽高
     setCanvasSize() {
         let shareBox = createSelectorQuery()
-        console.log(shareBox.select('.share-img-box'))
+        // console.log(shareBox.select('.share-img-box'))
         shareBox.select('.share-img-box').boundingClientRect(res => {
             // myCanvasHeight = res.height
             this.setData({
@@ -364,7 +364,7 @@ Page({
             // console.log(percent);
           },
           finish(url) {
-            console.log("创建的图片", url);
+            // console.log("创建的图片", url);
             hideLoading()
             that.setData({
                 // imgUrl: url,
@@ -372,11 +372,11 @@ Page({
             })
             that.setStaticMapInfo()
             // 跳转到分享页面
-            console.log(that.data.staticMapUrl)
+            // console.log(that.data.staticMapUrl)
             navigateTo(`../run_share/index?&runner_id=${that.data.runner_id}&dataImg=${encodeURIComponent(url)}&mapImg=${encodeURIComponent(that.data.staticMapUrl)}`).then(res=>console.log(res))
           },
           error(res) {
-            console.log(res);
+            // console.log(res);
             hideLoading()
             // 画失败的原因
           }
@@ -489,8 +489,9 @@ Page({
         // 读取缓存
         try {
             let user_id = getStorageSync('user_id')
-            let storageKey = 'run_data_' + user_id
-            let data = getStorageSync(storageKey)
+            let storageKey1 = 'run_data_' + user_id
+            let storageKey2 = 'run_kmiles_pace_arr_' + user_id
+            let data = getStorageSync(storageKey1)
             // console.log(data)
             this.setData({
                 pointsList: data.locaDotArr,
@@ -517,7 +518,7 @@ Page({
                 sport_type: 0,
                 runner_id:this.data.runner_id,
             }).then(res => {
-                console.log(res)
+                // console.log(res)
                 if (res.code == 0) {
                     this.setData({
                         "userInfo.head_url": res.user_info.head_url,
@@ -546,6 +547,9 @@ Page({
                         paceCompare,
                     })
                 }
+                // 清除缓存
+                // setStorageSync(storageKey1,{})
+                // setStorageSync(storageKey2,[])
             })
         } catch (error) { }
         

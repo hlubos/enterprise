@@ -53,7 +53,7 @@ Page({
         this.setData({
             canLoadData: false
         })
-        console.log("加载数据")
+        // console.log("加载数据")
         // 获取缩略图接口
         let peakRecordRes = await api.getDayPeakRecord({
             // user_id:47419973,
@@ -62,7 +62,7 @@ Page({
             offset:this.data.offset,
         })
         if(peakRecordRes.code == 0){
-            console.log(peakRecordRes)
+            // console.log(peakRecordRes)
             this.setData({
                 has_more: peakRecordRes.has_more,
                 offset: this.data.offset + peakRecordRes.runner_extra_infos.length
@@ -86,7 +86,7 @@ Page({
         }
         api.getRunnerInfo(params).then(res=>{
             if(res.code == 0){
-                console.log(res)
+                // console.log(res)
                 let infosLen = res.infos.length
                 let newInfos = res.infos
                 for(let i = 0;i<newInfos.length;i++){

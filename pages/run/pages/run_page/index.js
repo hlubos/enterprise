@@ -301,7 +301,7 @@ Page({
         // 开启监听位置变化，5秒返回一次结果
         // stopLocationUpdate()
         startLocationUpdateBackground().then(res=>{
-            console.log(res)
+            // console.log(res)
             onLocationChange(this._mylocationChangeFn)
         })
     },
@@ -325,15 +325,15 @@ Page({
             if(res.speed == 0){
                 return false
             }
-            console.log('dic',dic)
-            console.log('horizontalAccuracy',res.horizontalAccuracy)
+            // console.log('dic',dic)
+            // console.log('horizontalAccuracy',res.horizontalAccuracy)
         }
-        console.log('speed',res.speed)
+        // console.log('speed',res.speed)
         // 时间5s,移动距离超过10m,可以获取点位信息
         this.setData({
             canGetLocation: false
         })
-        console.log(res)
+        // console.log(res)
         let locaDotArr = this.data.locaDotArr
         let pointObj = {
             runner_id: '',
@@ -369,7 +369,7 @@ Page({
         // 关闭定位追踪
         offLocationChange(this._mylocationChangeFn)
         stopLocationUpdate().then(res=>{
-            console.log("停止追踪", res);
+            // console.log("停止追踪", res);
         })
         stopAccelerometer()
         offAccelerometerChange()
@@ -413,7 +413,7 @@ Page({
                     // 关闭定位追踪
                     offLocationChange(this._mylocationChangeFn)
                     stopLocationUpdate().then(res=>{
-                        console.log("停止追踪", res);
+                        // console.log("停止追踪", res);
                     })
                     stopAccelerometer()
                     offAccelerometerChange()
@@ -456,10 +456,10 @@ Page({
             // 均速(公里/小时)
             params.avg_speed = ((this.data.runMiles/1000)/(this.data.runTime/3600)).toFixed(2)
         }
-        console.log('avg_pace',params.avg_pace)
-        console.log('avg_speed',params.avg_speed)
+        // console.log('avg_pace',params.avg_pace)
+        // console.log('avg_speed',params.avg_speed)
         api.reportRunnerInfo(params).then(res=>{
-            console.log(res)
+            // console.log(res)
             // 获取runner_id
             let runId = res.runner_id
             // 上传轨迹点信息
@@ -478,7 +478,7 @@ Page({
                 // 关闭定位追踪
                 offLocationChange(this._mylocationChangeFn)
                 stopLocationUpdate().then(res=>{
-                    console.log("停止追踪", res);
+                    // console.log("停止追踪", res);
                 })
                 stopAccelerometer()
                 offAccelerometerChange()
@@ -549,10 +549,10 @@ Page({
         try {
             let cacheData = getStorageSync(storageKey)
             if(cacheData){
-                console.log(cacheData)
-                console.log("上次运动未完成")
+                // console.log(cacheData)
+                // console.log("上次运动未完成")
             }else {
-                console.log("上次运动已完成")
+                // console.log("上次运动已完成")
             }
             return cacheData
         } catch (e) { }
@@ -640,10 +640,10 @@ Page({
         let that = this
         // 获取初始位置信息
         getLocation('gcj02').then(res=>{
-            console.log(res)
+            // console.log(res)
             const latitude = res.latitude
             const longitude = res.longitude
-            console.log(latitude,longitude)
+            // console.log(latitude,longitude)
             that.setData({
                 mapCenterLocation:{
                     latitude,
@@ -662,7 +662,7 @@ Page({
         // 有残留的运动记录时
         if(cacheData && JSON.stringify(cacheData)!='{}'){
             // console.log(cacheData)
-            console.log("上次运动未完成")
+            // console.log("上次运动未完成")
             let { calorie,kind_id,locaDotArr,runMiles,runStartTime,runTime,outTime } = cacheData
             this.setData({
                 calorie,
@@ -688,7 +688,7 @@ Page({
             innerAudioContext.src = "pages/run/assets/voice/kaishipaobu.mp3"
         }else {
             // 没有残留的运动记录时
-            console.log("上次运动已完成")
+            // console.log("上次运动已完成")
             this.setData({
                 guidePageShow:false
             })
@@ -761,7 +761,7 @@ Page({
      * 生命周期函数--监听页面隐藏
      */
     onHide() {
-        console.log('跑步页面隐藏')
+        // console.log('跑步页面隐藏')
     },
 
     /**
