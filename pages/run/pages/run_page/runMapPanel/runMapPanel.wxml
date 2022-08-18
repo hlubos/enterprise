@@ -1,5 +1,5 @@
 <!--plugin/pages/run_page/components/runMapPanel/runMapPanel.wxml-->
-<view>
+<view style="z-index: 100;">
     <view class="map-data-box">
         <view class="map-data">
             <view>

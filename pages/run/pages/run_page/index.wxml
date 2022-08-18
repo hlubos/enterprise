@@ -14,10 +14,11 @@
         runStatus="{{runStatus}}"
         runTime="{{runTime}}"
         runMiles="{{runMiles}}"
+        mapPanelShow="{{mapPanelShow}}"
     ></run-data-panel>
 </view>
 <!-- 地图面板 -->
-<page-container show="{{mapPanelShow}}">
+<page-container bind:afterleave="hideMap" show="{{mapPanelShow}}">
     <view bind:hideRunMap="hideMap">
         <run-map-panel
             newLongitude="{{mapCenterLocation.longitude}}"

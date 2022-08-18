@@ -111,11 +111,11 @@
 }
 
 .title2-left-kmeter {
-    width: 150rpx;
+    width: 170rpx;
     font-weight: bold;
-    font-size: 60rpx;
+    font-size: 80rpx;
     color: #333333;
-    line-height: 64rpx;
+    line-height: 80rpx;
     margin-right: 24rpx;
 }
 

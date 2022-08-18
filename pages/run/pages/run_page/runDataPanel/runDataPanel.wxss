@@ -93,6 +93,7 @@
 }
 
 .stop-btn {
+    position: relative;
     width: 160rpx;
     height: 160rpx;
     margin-right: 42rpx;

@@ -7,6 +7,8 @@ import {
 } from '../../../utils/wxApi'
 var breakUnlockTimer
 var startUnlockTimer
+var startStopRunTimer
+var breakStopRunTimer
 Component({
 
     behaviors: [],
@@ -23,7 +25,10 @@ Component({
         },
         runMiles: {
             type: Number
-        }
+        },
+        mapPanelShow: {
+            type: Boolean
+        },
     },
     observers: {
         runTime: function() {
@@ -36,6 +41,8 @@ Component({
         isLock: false,
         // 解锁进度
         unlockVal: 0,
+        // 结束进度
+        stopRunVal: 0,
     }, // 私有数据，可用于模板渲染
 
     lifetimes: {
@@ -53,8 +60,17 @@ Component({
         // 组件所在页面的生命周期函数
         show: function () { 
             // startLocationUpdate()
+            this.setData({
+                stopRunVal:0,
+                unlockVal:0,
+            })
         },
-        hide: function () { },
+        hide: function () {
+            this.setData({
+                stopRunVal:0,
+                unlockVal:0,
+            })
+        },
         resize: function () { },
     },
 
@@ -74,6 +90,40 @@ Component({
         // 跑步结束  
         runStop() {
             this.triggerEvent('runStop')
+        },
+        // 按下结束按钮
+        stopRunStart(){
+            clearInterval(breakStopRunTimer)
+            startStopRunTimer = setInterval(()=>{
+                if(this.data.stopRunVal >= 100){
+                    clearInterval(startStopRunTimer)
+                    this.runStop()
+                }else {
+                    this.setData({
+                        stopRunVal:this.data.stopRunVal + 1
+                    })
+                }
+            },10)
+        },
+        // 中断结束
+        stopRunBreak(){
+            clearInterval(startStopRunTimer)
+            if(this.data.stopRunVal < 100){
+                breakStopRunTimer = setInterval(()=>{
+                    if(this.data.stopRunVal <= 0){
+                        clearInterval(breakStopRunTimer)
+                    }else {
+                        this.setData({
+                            stopRunVal:this.data.stopRunVal - 1
+                        })
+                    }
+                },10)
+            }else {
+                this.setData({
+                    stopRunVal:0
+                })
+            }
+            
         },
         // 锁定跑步面板
         lockRunPanel() {

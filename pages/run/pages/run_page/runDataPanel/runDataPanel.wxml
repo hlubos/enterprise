@@ -31,8 +31,20 @@
                 <image src="https://ssl-pubpic.51yund.com/1221493943.png"></image>
             </view>
             <!-- 结束 -->
-            <view class="stop-btn" hidden="{{runStatus == 0}}" bindlongpress="runStop">
+            <view class="stop-btn" hidden="{{runStatus == 0}}" >
                 <image src="https://ssl-pubpic.51yund.com/1221493926.png"></image>
+                <cover-view hidden="{{mapPanelShow==true}}" style="z-index: 99; position: absolute; top: 0; border-radius: 50%;" bindtouchstart="stopRunStart" bindtouchend="stopRunBreak">
+                    <canvas-ring 
+                        canvasWidth="160"
+                        id="canvasRing" 
+                        title="" 
+                        value="{{stopRunVal}}"
+                        lineColor="#ffffff"
+                        lineWidth="4"
+                        lineInitColor="#f86254"
+                    >
+                    </canvas-ring>
+                </cover-view>
             </view>
             <!-- 暂停 -->
             <view class="pause-btn" hidden="{{runStatus == 1}}" bindtap="runPause">
@@ -48,10 +60,9 @@
             <!-- <view class="unlock-btn" bindlongpress="unlockRunPanel">
                 <view class="unlock-btn-center">解锁</view>
             </view> -->
-            <!-- bindtouchstart="unlockStart" bindtouchend="unlockBreak" -->
             <cover-view style="z-index: 99;" bindtouchstart="unlockStart" bindtouchend="unlockBreak" >
                 <canvas-ring 
-                    canvasWidth="100"
+                    canvasWidth="200"
                     id="canvasRing" 
                     title="解锁" 
                     value="{{unlockVal}}"

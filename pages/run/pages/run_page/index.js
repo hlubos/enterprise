@@ -408,7 +408,7 @@ Page({
                     innerAudioContext.src = "pages/run/assets/voice/paobujieshu.mp3"
                     this.setData({
                         runTime:0,
-                        runStatus:1,
+                        runStatus:2,
                     })
                     // 关闭定位追踪
                     offLocationChange(this._mylocationChangeFn)

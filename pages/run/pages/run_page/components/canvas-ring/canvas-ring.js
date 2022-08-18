@@ -23,6 +23,11 @@ Component({
       type: String,
       value: "#393"
     },
+    // 线条初始颜色
+    lineInitColor: {
+      type: String,
+      value: "#ebebeb"
+    },
     //标题 默认“完成率”
     title: {
       type: String,
@@ -58,7 +63,6 @@ Component({
       type: Number,
       value: 0
     }
-
   },
 
   /**
@@ -87,19 +91,21 @@ Component({
       //作画
 
       var ctx = wx.createCanvasContext("circleBar", this); //canvas组建封装，需要后加个this
-      var circle_r = this.data.canvasWidth / 2; //画布的一半，用来找中心点和半径
+    //   var circle_r = this.data.canvasWidth / 2; //画布的一半，用来找中心点和半径
+      var circle_r = this.data.canvasWidth / 750 * wx.getSystemInfoSync().windowWidth / 2;
       var startDegree = this.data.startDegree; //从什么角度开始
       var maxValue = this.data.maxValue; //最大值
       var minValue = this.data.minValue; //最小值
       var value = this.data.value; //当前的值
       var lineColor = this.data.lineColor; //线条颜色
       var lineWidth = this.data.lineWidth; //线条宽度
+      var lineInitColor = this.data.lineInitColor; //线条初始颜色
       var percent = 360 * ((value - minValue) / (maxValue - minValue)); //计算结果
       //定义起始点
       ctx.translate(circle_r, circle_r);
       //灰色圆弧
       ctx.beginPath();
-      ctx.setStrokeStyle("#ebebeb");
+      ctx.setStrokeStyle(lineInitColor);
       ctx.setLineWidth(lineWidth);
       ctx.arc(0, 0, circle_r - 10, 0, 2 * Math.PI, true);
       ctx.stroke();

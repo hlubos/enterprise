@@ -122,6 +122,7 @@ Page({
                 this.setData({
                     canLoadData: true
                 })
+                // console.log('runLogList',this.data.runLogList)
             }
         })
     },
