@@ -38,7 +38,7 @@
                             <view wx:else class="runlog-item-info-line1-txt1">其他跑步工具</view> -->
                             <view hidden="{{item.run_source != 'wx_mini_program'}}" class="runlog-item-info-line1-txt1">小程序</view>
                             <view hidden="{{item.run_source != 'xiaoyue_bracelet'}}" class="runlog-item-info-line1-txt1">智能穿戴</view>
-                            <view hidden="{{item.run_source == 'wx_mini_program' || item.run_source == 'xiaoyue_bracelet'}}" class="runlog-item-info-line1-txt1">APP</view>
+                            <view hidden="{{item.run_source == 'wx_mini_program' || item.run_source == 'xiaoyue_bracelet'}}" class="runlog-item-info-line1-txt1">悦动圈app</view>
                             <!-- <view class="runlog-item-info-line1-txt2">2022.06.22 19:17</view> -->
                             <view class="runlog-item-info-line1-txt2">{{item.time}}</view>
                         </view>
