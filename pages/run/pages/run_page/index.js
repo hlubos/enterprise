@@ -53,6 +53,8 @@ Page({
         runStatus: 0,
         // 是否显示地图
         mapPanelShow:false,
+        // 是否显示结束按钮
+        stopBtnShow:true,
         // 当前位置
         mapCenterLocation:{
             longitude:0,
@@ -236,11 +238,18 @@ Page({
     showMap(){
         this.setData({
             mapPanelShow:true,
+            stopBtnShow:false,
         })
     },
     // 隐藏地图
     hideMap(){
         this.setData({
+            mapPanelShow:false,
+        })
+    },
+    hideMapA(){
+        this.setData({
+            stopBtnShow:true,
             mapPanelShow:false,
         })
     },

@@ -33,7 +33,7 @@
             <!-- 结束 -->
             <view class="stop-btn" hidden="{{runStatus == 0}}" >
                 <image src="https://ssl-pubpic.51yund.com/1221493926.png"></image>
-                <cover-view hidden="{{mapPanelShow==true}}" style="z-index: 99; position: absolute; top: 0; border-radius: 50%;" bindtouchstart="stopRunStart" bindtouchend="stopRunBreak">
+                <cover-view hidden="{{stopBtnShow==false}}" style="z-index: 99; position: absolute; top: 0; border-radius: 50%;" bindtouchstart="stopRunStart" bindtouchend="stopRunBreak">
                     <canvas-ring 
                         canvasWidth="160"
                         id="canvasRing" 

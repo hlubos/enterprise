@@ -29,6 +29,9 @@ Component({
         mapPanelShow: {
             type: Boolean
         },
+        stopBtnShow: {
+            type: Boolean
+        }
     },
     observers: {
         runTime: function() {

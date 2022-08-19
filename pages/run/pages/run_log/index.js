@@ -98,6 +98,8 @@ Page({
                     newInfos[i].avg_pace = myFormats.formatShowAvg(newInfos[i].avg_pace)
                     if(this.data.thumbImgList.find(item=>item.runner_id == newInfos[i].runner_id)){
                         newInfos[i].pic_url = this.data.thumbImgList.find(item=>item.runner_id == newInfos[i].runner_id).pic_url 
+                    }else{
+                        newInfos[i].pic_url = ''
                     }
                 }
                 this.setData({
@@ -122,7 +124,7 @@ Page({
                 this.setData({
                     canLoadData: true
                 })
-                // console.log('runLogList',this.data.runLogList)
+                console.log('runLogList',this.data.runLogList)
             }
         })
     },
