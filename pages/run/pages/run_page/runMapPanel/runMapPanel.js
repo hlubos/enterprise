@@ -41,13 +41,19 @@ Component({
                 borderWidth: 0//线的边框宽度，还有很多参数，请看文档 
             }
         ],
-        
+        pointArr:[],
     }, // 私有数据，可用于模板渲染
     // 数据监听器observers
     observers: {
         'locaDotArr': function (data) {
+            let pointArr = []
+            data.forEach(item=>{
+                // pointArr.push(item)
+                pointArr = [...pointArr,...item]
+            })
             this.setData({
-                "polylines[0].points": data
+                "polylines[0].points": pointArr,
+                pointArr,
             })
         }
     },

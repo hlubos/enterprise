@@ -34,7 +34,7 @@
             latitude="{{newLatitude}}"
             show-location="true"
             polyline="{{polylines}}"
-            include-points="{{locaDotArrv}}"
+            include-points="{{pointArr}}"
             subkey="{{mapStyle.subkey}}"
             layer-style="{{mapStyle['layer-style']}}"
         ></map>

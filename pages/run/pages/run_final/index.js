@@ -443,12 +443,17 @@ Page({
         let data = getStorageSync(storageKey)
         let base = 'https://apis.map.qq.com/ws/staticmap/v2/'
         let key = 'L4JBZ-YJ56D-GAO47-P6UQY-ODB46-M2FD2'
+
+        let locations = []
+        data.locaDotArr.forEach(item=>{
+            locations = [...locations,...item]
+        })
         let pathObj = {
             sty:{
                 color: "0x4CDDB400",//线条的颜色
                 weight: 5,//宽度
             },
-            locations:data.locaDotArr
+            locations:locations
         }
         let locStr = ''
         pathObj.locations.forEach((item,index)=>{
@@ -494,10 +499,15 @@ Page({
             let storageKey2 = 'run_kmiles_pace_arr_' + user_id
             let data = getStorageSync(storageKey1)
             let kmilesPaceCache = getStorageSync(storageKey2)
+            let points = []
+            data.locaDotArr.forEach(item=>{
+                // points.push(item)
+                points = [...points,...item]
+            })
             // console.log(data)
             this.setData({
-                pointsList: data.locaDotArr,
-                "polylines[0].points": data.locaDotArr,
+                pointsList: points,
+                "polylines[0].points": points,
                 "showRunData.runStartTime": myFormats.formatDate(data.runStartTime, 'yyyy-MM-dd hh:mm:ss'),
                 "showRunData.runEndTime": myFormats.formatDate(data.runEndTime, 'yyyy-MM-dd hh:mm:ss'),
                 "showRunData.runKMiles": myFormats.clip(parseInt(data.runMiles) / 1000),

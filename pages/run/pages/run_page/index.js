@@ -189,11 +189,23 @@ Page({
     // 获取跑步数据可视化信息
     getRunShowData(){
         // 跑步公里数
-        let runKmiles = myFormats.clip(this._calculateRunMiles(this.data.locaDotArr)/1000)
-        if(runKmiles == 0){
+        let points = this.data.locaDotArr
+        // let runKmiles = myFormats.clip(this._calculateRunMiles(points)/1000)
+        let runMiles = 0
+        if(points.length > 0){
+            for(let i = 0;i<points.length;i++){
+                if(points[i].length > 0){
+                    runMiles += this._calculateRunMiles(points[i])
+                }
+            }
+        }else {
+            runMiles = 0
+        }
+        let runKmiles = myFormats.clip(runMiles/1000)
+        if(runMiles == 0){
             runKmiles == '0.00'
         }
-        let runMiles = this._calculateRunMiles(this.data.locaDotArr)
+        // let runMiles = this._calculateRunMiles(this.data.locaDotArr)
         this.setData({
             runMiles:runMiles,
         })
@@ -324,18 +336,17 @@ Page({
             return false
         }
         // 判断当前点位与上个点位的距离是否超过10m 小于75m
-        if(this.data.locaDotArr.length > 0){
-            let finalDoc = this.data.locaDotArr[this.data.locaDotArr.length-1]
-            let dic = myFormats.calcDistance(res.longitude,res.latitude,finalDoc.longitude,finalDoc.latitude)
-            if(dic<=10 || dic>=75){
-                return false
-            }
-            // 判断速度是否异常
-            if(res.speed == 0){
-                return false
-            }
-            // console.log('dic',dic)
-            // console.log('horizontalAccuracy',res.horizontalAccuracy)
+        // if(this.data.locaDotArr.length > 0){
+        //     let finalDoc = this.data.locaDotArr[this.data.locaDotArr.length-1]
+        //     let dic = myFormats.calcDistance(res.longitude,res.latitude,finalDoc.longitude,finalDoc.latitude)
+        //     if(dic<=10 || dic>=75){
+        //         return false
+        //     }
+        //     // console.log('horizontalAccuracy',res.horizontalAccuracy)
+        // }
+        // 判断速度是否异常
+        if(res.speed == 0){
+            return false
         }
         // console.log('speed',res.speed)
         // 时间5s,移动距离超过10m,可以获取点位信息
@@ -343,7 +354,7 @@ Page({
             canGetLocation: false
         })
         // console.log(res)
-        let locaDotArr = this.data.locaDotArr
+        // let locaDotArr = this.data.locaDotArr
         let pointObj = {
             runner_id: '',
             point_id: '',
@@ -351,7 +362,9 @@ Page({
             latitude: res.latitude,
             time: new Date().getTime(),
         }
-        locaDotArr.push(pointObj)
+        // 判断跑步异常点并进行保存
+        let locaDotArr = this.savePoint(pointObj)
+        // locaDotArr.push(pointObj)
         this.setData({
             locaDotArr:locaDotArr
         })
@@ -366,8 +379,45 @@ Page({
             locaTimer:locaTimer
         })
     },
+    // 判断并存点 返回最新的轨迹点数组
+    savePoint(newPoint){
+        let pointArr = this.data.locaDotArr
+        if(pointArr.length == 0){
+            pointArr = [[]]
+        }
+        let finalArr = pointArr[pointArr.length-1]
+        if(finalArr.length > 0){
+            let finalPoint = finalArr[finalArr.length-1]
+            let dic = myFormats.calcDistance(newPoint.longitude,newPoint.latitude,finalPoint.longitude,finalPoint.latitude)
+            if(dic < 10){
+                return pointArr
+            }
+            if(dic>75){
+                if(finalArr.length <= 1){
+                    pointArr.pop()
+                }
+                let newfinalArr = []
+                newfinalArr.push(newPoint)
+                pointArr.push(newfinalArr)
+            }else {
+                pointArr[pointArr.length-1].push(newPoint)
+            }
+        }else {
+            pointArr[pointArr.length-1].push(newPoint)
+        }
+        return pointArr
+    },
     // 跑步暂停
     runPause(){
+        let pointArr = this.data.locaDotArr
+        if(pointArr[pointArr.length-1].length <= 1){
+            pointArr[pointArr.length-1] = []
+        }else{
+            pointArr.push([])
+        }
+        this.setData({
+            locaDotArr: pointArr
+        })
         // 清除跑步计时器
         clearInterval(this.data.runTimer)
         clearTimeout(this.data.locaTimer)
@@ -400,7 +450,7 @@ Page({
         let user_id = getStorageSync('user_id')
         let key = 'run_data_'+user_id
         let kMilesCacheData = getStorageSync(key)
-        if(!kMilesCacheData.locaDotArr || kMilesCacheData.locaDotArr.length < 2 || this.data.runMiles <= 10){
+        if(!kMilesCacheData.locaDotArr[0] || kMilesCacheData.locaDotArr[0].length < 2 || this.data.runMiles <= 10){
             showModal('您的移动距离过短，数据将不会被保存','是否退出跑步？').then(async res=>{
                 if(res.confirm){
                     // 清除运动数据缓存
@@ -472,9 +522,14 @@ Page({
             // 获取runner_id
             let runId = res.runner_id
             // 上传轨迹点信息
+            let points = []
+            this.data.locaDotArr.forEach(item=>{
+                points = [...points,...item]
+                // points.push(item)
+            })
             api.reportRunnerPathData({
                 runner_id: runId.toString(),
-                detail: JSON.stringify(this.data.locaDotArr),
+                detail: JSON.stringify(points),
             }).then(res=>{})
             if(res.code == 0){
                 // 清除定位，时间置零
