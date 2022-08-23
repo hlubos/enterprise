@@ -12,6 +12,7 @@ import {
     showToast,
     showModal,
     showLoading,
+    hideLoading,
     removeStorageSync,
     removeStorage,
 } from '../../../../common/wxApi.js'
@@ -65,19 +66,16 @@ Component({
             getSetting().then(res=>{
                 if(res.authSetting.hasOwnProperty('scope.userLocation')){
                     openSetting().then(res=>{
-                        // console.log(res)
                         this.setData({
                             "auth.hasAuthUserLocation":res.authSetting['scope.userLocation']
                         })
                     })
                 }else{
                     authorize('scope.userLocation').then(res=>{
-                        // console.log('已授权定位')
                         this.setData({
                             "auth.hasAuthUserLocation":true,
                         })
                     }).catch(rej=>{
-                        // console.log("定位授权失败")
                     })
                 }
             })
@@ -102,7 +100,6 @@ Component({
                         this.setData({
                             "auth.hasAuthUserLocation":true
                         })
-                        // console.log('已授权定位')
                         // 用户点击允许后调用API查看用户是否勾选后台权限。
                         getSetting().then(res=>{
                             if(res.authSetting["scope.userLocationBackground"] == true){
@@ -113,7 +110,6 @@ Component({
                             }
                         })
                     }).catch(rej=>{
-                        // console.log("后台定位授权失败")
                     })
                 }
             })
@@ -135,7 +131,6 @@ Component({
                     showModal('未授权后台定位','是否前往设置？').then(res=>{
                         if(res.confirm){
                             openSetting().then(ress=>{
-                                // console.log(ress)
                                 this.setData({
                                     "auth.hasAuthUserLocation":ress.authSetting['scope.userLocation'],
                                     "auth.hasAuthUserLocationBackground":ress.authSetting['scope.userLocationBackground'],
@@ -164,20 +159,18 @@ Component({
                 })
                 return false
             }
-            let that = this
+            // let that = this
             // that.selectComponent('#runTypeModal').hideFrame();
             // this.setData({
             //     showRunCheckModal: false
             // })
-            showLoading('跑步加载中...',true)
-            navigateTo("/pages/run/pages/run_page/index").then((res)=>{
-                // console.log(res)
-            })
+            // showLoading('跑步加载中...',true)
+            navigateTo("/pages/run/pages/run_page/index")
+            // hideLoading()
         },
         // 放弃跑步
         async giveUpRun(){
             // 清缓存
-            // console.log("清缓存")
             this.setData({
                 showRunBreakDialog: false
             })
@@ -185,23 +178,18 @@ Component({
             let user_id = getStorageSync('user_id')
             let storageKey = 'run_data_' + user_id
             let key = 'run_kmiles_pace_arr_'+user_id
-            // await removeStorage(storageKey)
-            // await removeStorage(key)
             setStorageSync(storageKey,{})
             setStorageSync(key,[])
         },
         // 继续跑步
         continueRun(){
             // 不清缓存
-            // console.log("不清缓存")
             showLoading('跑步加载中...',true)
             this.setData({
                 showRunBreakDialog: false
             })
             // 跳转到跑步页面
-            navigateTo("/pages/run/pages/run_page/index").then((res)=>{
-                // console.log(res)
-            })
+            navigateTo("/pages/run/pages/run_page/index")
         },
         // 获取缓存数据,读取缓存查看是否存在未完成的运动
         getRunDataCache(){
@@ -210,13 +198,8 @@ Component({
                 let storageKey = 'run_data_' + user_id
                 let cacheData = getStorageSync(storageKey)
                 if(!cacheData || JSON.stringify(cacheData) == '{}'){
-                    // console.log("缓存为空")
-                    // console.log("cacheData",cacheData)
                     return false
                 }else {
-                    // console.log("缓存不为空")
-                    // console.log("cacheData",cacheData)
-                    // console.log("上次运动未完成")
                     this.setData({
                         showRunBreakDialog: true
                     })
@@ -234,7 +217,6 @@ Component({
                         mapStyle:res.nowMapStyInfo
                     })
                 }
-                // console.log(this.data.mapStyle.subkey)
             } catch (e) { }
         },
         // 读取用户缓存，判断是否为新用户
@@ -244,9 +226,7 @@ Component({
             let res = getStorageSync(storageKey)
             if(res != 1){
                 // 新用户，跳转到常见问题（引导）页
-                navigateTo("/pages/run/pages/run_FAQ/index").then((res)=>{
-                    // console.log(res)
-                })
+                navigateTo("/pages/run/pages/run_FAQ/index")
             }
         },
         // 页面初始化
@@ -280,7 +260,6 @@ Component({
                 }
                 api.userSportSummary(params).then(res=>{
                     if(res.code == 0){
-                        // console.log(res)
                         this.setData({
                             // totalDistance:(res.total_distance/1000).toFixed(2)
                             totalDistance:Number(parseFloat(res.summary_detail.sum_distance/1000).toFixed(3).slice(0,-1))

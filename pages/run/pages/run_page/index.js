@@ -353,8 +353,6 @@ Page({
         this.setData({
             canGetLocation: false
         })
-        // console.log(res)
-        // let locaDotArr = this.data.locaDotArr
         let pointObj = {
             runner_id: '',
             point_id: '',
@@ -410,7 +408,9 @@ Page({
     // 跑步暂停
     runPause(){
         let pointArr = this.data.locaDotArr
-        if(pointArr[pointArr.length-1].length <= 1){
+        if(pointArr.length == 0){
+            pointArr[0] = []
+        }else if(pointArr[pointArr.length-1].length <= 1){
             pointArr[pointArr.length-1] = []
         }else{
             pointArr.push([])
@@ -456,12 +456,8 @@ Page({
                     // 清除运动数据缓存
                     let user_id = getStorageSync('user_id')
                     let storageKey = 'run_kmiles_pace_arr_' + user_id
-                    // await removeStorage(storageKey)
-                    // await removeStorage(key)
                     setStorageSync(storageKey,[])
                     setStorageSync(key,{})
-                    // removeStorageSync(storageKey)
-                    // removeStorageSync(key)
                     // 清除定时器
                     clearInterval(this.data.runTimer)
                     innerAudioContext.src = "pages/run/assets/voice/paobujieshu.mp3"
@@ -518,14 +514,12 @@ Page({
         // console.log('avg_pace',params.avg_pace)
         // console.log('avg_speed',params.avg_speed)
         api.reportRunnerInfo(params).then(res=>{
-            // console.log(res)
             // 获取runner_id
             let runId = res.runner_id
             // 上传轨迹点信息
             let points = []
             this.data.locaDotArr.forEach(item=>{
                 points = [...points,...item]
-                // points.push(item)
             })
             api.reportRunnerPathData({
                 runner_id: runId.toString(),
@@ -612,12 +606,6 @@ Page({
         let storageKey = 'run_data_' + user_id
         try {
             let cacheData = getStorageSync(storageKey)
-            if(cacheData){
-                // console.log(cacheData)
-                // console.log("上次运动未完成")
-            }else {
-                // console.log("上次运动已完成")
-            }
             return cacheData
         } catch (e) { }
     },
@@ -725,7 +713,6 @@ Page({
         let cacheData = this.getRunDataCache()
         // 有残留的运动记录时
         if(cacheData && JSON.stringify(cacheData)!='{}'){
-            // console.log(cacheData)
             // console.log("上次运动未完成")
             let { calorie,kind_id,locaDotArr,runMiles,runStartTime,runTime,outTime } = cacheData
             this.setData({
@@ -818,7 +805,6 @@ Page({
         innerAudioContext.autoplay = true
         // 读取跑步设置缓存
         this.getRunSetCache()
-        hideLoading()
     },
 
     /**
