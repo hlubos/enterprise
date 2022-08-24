@@ -16,6 +16,7 @@ import {
     hideLoading,
     showToast,
 } from '../../utils/wxApi'
+import uploadFile from '../../../../common/uploadFile'
 // import Wxml2Canvas from '../../wxml2canvas/index'
 import Wxml2Canvas from 'wxml2canvas'
 const innerAudioContext = createInnerAudioContext(true)
@@ -97,6 +98,8 @@ Page({
         // 
         paceCompare:{},
         kmilesPaceCache:[],
+        map_orig_url: '',
+        map_thumb_url: '',
     },
     handleMap(e) {
         // console.log(e.detail)
@@ -446,7 +449,9 @@ Page({
 
         let locations = []
         data.locaDotArr.forEach(item=>{
-            locations = [...locations,...item]
+            if(item.length > 0){
+                locations = [...locations,...item]
+            }
         })
         let pathObj = {
             sty:{
@@ -472,6 +477,58 @@ Page({
         let staticMapUrl = `${base}?size=${size}&scale=2&maptype=roadmap&key=${key}&path=${path}`
         this.setData({
             staticMapUrl,
+        })
+        this.upMapImg(staticMapUrl)
+    },
+    // 上传静态地图图片
+    upMapImg(staticMapUrl){
+        // 下载网络图片到本地
+        //文件名设置为时间戳
+        let fileName = new Date().valueOf();
+        let that = this
+        wx.downloadFile({ //下载图片到本地
+            url: staticMapUrl,
+            // filePath: wx.env.USER_DATA_PATH + '/' + fileName + '.png',
+            filePath: wx.env.USER_DATA_PATH + '/' + fileName + '.jpg',
+            success(res) {
+                console.log(res)
+                if (res.statusCode === 200) {
+                    // debugger
+                    let img = res.filePath
+                    console.log('img',img)
+                    // 上传缩略图图片
+                    uploadFile.upload({
+                        source: 'wx_ydenterprise',
+                        file: img,
+                        fail (err) {
+                            console.log(err)
+                          wx.showToast({
+                            title: '使用图片失败，请重试',
+                            icon: 'none'
+                          })
+                        },
+                        success (obj) {
+                          wx.showToast({
+                            title: '上传成功',
+                            icon: 'none'
+                          })
+                          console.log(obj)
+                          that.setData({
+                            map_orig_url: obj.orig_url,
+                            map_thumb_url: obj.thumb_url,
+                          })
+                          if(that.data.thumb_url){
+                            // 上传运动缩略图
+                            api.AddTrackPic({
+                                runner_id:that.data.runner_id,
+                                kind_id:0,
+                                pic_url:that.data.thumb_url,
+                            })
+                          }
+                        },
+                    });
+                }
+            }
         })
     },
     /**
@@ -517,14 +574,7 @@ Page({
             })
             // 设置静态地图
             this.setStaticMapInfo()
-            if(this.data.staticMapUrl){
-                // 上传运动缩略图
-                api.AddTrackPic({
-                    runner_id:this.data.runner_id,
-                    kind_id:0,
-                    pic_url:this.data.staticMapUrl,
-                })
-            }
+            
             // 跑步结束页面详情
             api.runnerFinishDetail({
                 sport_type: 0,

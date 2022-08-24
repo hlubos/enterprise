@@ -1,9 +1,10 @@
 /**
  *  wx.getLocation 获取位置信息
  */
-export const getLocation = (type) => {
+export const getLocation = (type,isHighAccuracy = false) => {
     return new Promise((resolve, reject) => {
         type,
+        isHighAccuracy,
         wx.getLocation({
             success: (result) => {
                 resolve(result);

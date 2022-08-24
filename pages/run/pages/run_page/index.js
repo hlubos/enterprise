@@ -300,20 +300,35 @@ Page({
         that.setData({
             runTimer:runTimer
         })
+        // 获取初始位置
+        // getLocation("gcj02",true).then(res=>{
+        //     console.log(res)
+        //     // let latitude = res.latitude
+        //     // let longitude = res.longitude
+        //     this.setData({
+        //         mapCenterLocation:{
+        //             latitude:res.latitude,
+        //             longitude:res.longitude
+        //         }
+        //     })
+        //     let pointArr = this.data.locaDotArr
+        //     let pointObj = {
+        //         runner_id: '',
+        //         point_id: '',
+        //         longitude: res.longitude,
+        //         latitude: res.latitude,
+        //         time: new Date().getTime(),
+        //     }
+        //     if(pointArr.length == 0){
+        //         pointArr = [[]]
+        //     }
+        //     pointArr[pointArr.length - 1].push(pointObj)
+        //     this.setData({
+        //         locaDotArr:pointArr
+        //     })
+        // })
         // 监听加速度数据事件
         onAccelerometerChange((absObj)=>{
-            // if(this.data.accFlag  == true){
-            //     return false
-            // }
-            // console.log("开始监听加速度")
-            // this.setData({
-            //     accFlag:true
-            // })
-            // 判断离上一次获取位置的时间是否超过5s    //判断手机是否移动
-            // if((Math.abs(absObj.x) > 0.07 && Math.abs(absObj.y) > 0.02)){
-            //     console.log("手机抖动")
-            //     console.log(absObj)
-            // }
             this.setData({
                 x:absObj.x,
                 y:absObj.y,
@@ -328,82 +343,85 @@ Page({
     },
     // 监听位置变化的操作
     _mylocationChangeFn(res){
-        if(!(Math.abs(this.data.x) > 0.07 && Math.abs(this.data.y) > 0.02)){
-            return false
-        }
-        // 判断离上一次获取位置的时间是否超过5s    //判断手机是否移动
+        // 判断离上一次获取位置的时间是否超过5s   
         if(!this.data.canGetLocation){
             return false
         }
-        // 判断当前点位与上个点位的距离是否超过10m 小于75m
-        // if(this.data.locaDotArr.length > 0){
-        //     let finalDoc = this.data.locaDotArr[this.data.locaDotArr.length-1]
-        //     let dic = myFormats.calcDistance(res.longitude,res.latitude,finalDoc.longitude,finalDoc.latitude)
-        //     if(dic<=10 || dic>=75){
-        //         return false
-        //     }
-        //     // console.log('horizontalAccuracy',res.horizontalAccuracy)
-        // }
-        // 判断速度是否异常
-        if(res.speed == 0){
-            return false
-        }
-        // console.log('speed',res.speed)
-        // 时间5s,移动距离超过10m,可以获取点位信息
+        // 时间5s,可以获取点位信息
         this.setData({
             canGetLocation: false
         })
-        let pointObj = {
-            runner_id: '',
-            point_id: '',
-            longitude: res.longitude,
-            latitude: res.latitude,
-            time: new Date().getTime(),
+        // 判断跑步点并进行保存
+        this.savePoint(res)
+    },
+    // 判断并存点 返回最新的轨迹点数组
+    savePoint(res){
+        let correctFlag = 1
+        let pointArr = this.data.locaDotArr
+        console.log("判断")
+        // if(!(Math.abs(this.data.x) > 0.07 && Math.abs(this.data.y) > 0.02)){
+        //     // 判断手机是否在移动？
+        //     correctFlag = 0
+        // }else if(res.speed == 0){
+        //     // 判断速度是否异常
+        //     correctFlag = 0
+        // }else
+        if(1){
+            console.log('正常')
+            let newPoint = {
+                runner_id: '',
+                point_id: '',
+                longitude: res.longitude,
+                latitude: res.latitude,
+                time: new Date().getTime(),
+            }
+            if(pointArr.length == 0){
+                pointArr = [[]]
+            }
+            let finalArr = pointArr[pointArr.length-1]
+            if(finalArr.length > 0){
+                console.log(111)
+                let finalPoint = finalArr[finalArr.length-1]
+                let dic = myFormats.calcDistance(newPoint.longitude,newPoint.latitude,finalPoint.longitude,finalPoint.latitude)
+                if(dic < 10){
+                    correctFlag = 0
+                    // return pointArr
+                }else if(dic > 75){
+                    if(finalArr.length <= 1){
+                        pointArr.pop()
+                    }
+                    let newfinalArr = []
+                    newfinalArr.push(newPoint)
+                    pointArr.push(newfinalArr)
+                    correctFlag = 0
+                }else {
+                    pointArr[pointArr.length-1].push(newPoint)
+                }
+            }else {
+                console.log(222)
+                pointArr[pointArr.length-1].push(newPoint)
+            }
         }
-        // 判断跑步异常点并进行保存
-        let locaDotArr = this.savePoint(pointObj)
-        // locaDotArr.push(pointObj)
-        this.setData({
-            locaDotArr:locaDotArr
-        })
-        var locaTimer = setTimeout(()=>{
-            // 5秒才能获取一次当前位置
+        if(correctFlag == 0){
             this.setData({
                 canGetLocation: true
             })
-            // this.getRunShowData()
-        },5000)
+        }else if(correctFlag == 1){
+            var locaTimer = setTimeout(()=>{
+                // 5秒才能获取一次当前位置
+                this.setData({
+                    canGetLocation: true
+                })
+                // this.getRunShowData()
+            },5000)
+            this.setData({
+                locaTimer:locaTimer
+            })
+        }
         this.setData({
-            locaTimer:locaTimer
+            locaDotArr:pointArr
         })
-    },
-    // 判断并存点 返回最新的轨迹点数组
-    savePoint(newPoint){
-        let pointArr = this.data.locaDotArr
-        if(pointArr.length == 0){
-            pointArr = [[]]
-        }
-        let finalArr = pointArr[pointArr.length-1]
-        if(finalArr.length > 0){
-            let finalPoint = finalArr[finalArr.length-1]
-            let dic = myFormats.calcDistance(newPoint.longitude,newPoint.latitude,finalPoint.longitude,finalPoint.latitude)
-            if(dic < 10){
-                return pointArr
-            }
-            if(dic>75){
-                if(finalArr.length <= 1){
-                    pointArr.pop()
-                }
-                let newfinalArr = []
-                newfinalArr.push(newPoint)
-                pointArr.push(newfinalArr)
-            }else {
-                pointArr[pointArr.length-1].push(newPoint)
-            }
-        }else {
-            pointArr[pointArr.length-1].push(newPoint)
-        }
-        return pointArr
+        // return pointArr
     },
     // 跑步暂停
     runPause(){
@@ -691,18 +709,18 @@ Page({
     onLoad(options) {
         let that = this
         // 获取初始位置信息
-        getLocation('gcj02').then(res=>{
-            // console.log(res)
-            const latitude = res.latitude
-            const longitude = res.longitude
-            // console.log(latitude,longitude)
-            that.setData({
-                mapCenterLocation:{
-                    latitude,
-                    longitude
-                }
-            })
-        })
+        // getLocation('gcj02').then(res=>{
+        //     // console.log(res)
+        //     const latitude = res.latitude
+        //     const longitude = res.longitude
+        //     // console.log(latitude,longitude)
+        //     that.setData({
+        //         mapCenterLocation:{
+        //             latitude,
+        //             longitude
+        //         }
+        //     })
+        // })
     },
 
     /**
