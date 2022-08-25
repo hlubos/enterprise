@@ -337,8 +337,9 @@ Page({
     },
     // =========================================
     drawCanvas: function () {
-        // showToast('生成图片中')
-        showLoading('分享图片生成中')
+        showLoading({
+            title:'分享图片生成中'
+        })
         const that = this
         const query = createSelectorQuery().in(this);
         query.select('#answer-canvas').fields({ //answer-canvas要绘制的canvas的id
@@ -377,7 +378,9 @@ Page({
             that.setStaticMapInfo()
             // 跳转到分享页面
             // console.log(that.data.staticMapUrl)
-            navigateTo(`../run_share/index?&runner_id=${that.data.runner_id}&dataImg=${encodeURIComponent(url)}&mapImg=${encodeURIComponent(that.data.staticMapUrl)}`).then(res=>console.log(res))
+            navigateTo({
+                url:`../run_share/index?&runner_id=${that.data.runner_id}&dataImg=${encodeURIComponent(url)}&mapImg=${encodeURIComponent(that.data.staticMapUrl)}`
+            })
           },
           error(res) {
             // console.log(res);
@@ -395,34 +398,6 @@ Page({
               x: 0,
               y: 0
             },
-            // {
-            //     type: 'text',
-            //     text: '文字',
-            //     class: 'txt1',
-            //     x: 0,
-            //     y: 0,
-            //     style: {
-            //         fontSize: 30,
-            //         fontWeight: 'bold',
-            //         lineHeight: 32,
-            //         color: '#333333',
-            //         fontFamily: 'PingFangSC-Regular'
-            //     }
-            // },
-            // {
-            //     type: 'text',
-            //     text: '文字',
-            //     class: 'txt2',
-            //     x: 0,
-            //     y: 0,
-            //     style: {
-            //         fontSize: 24,
-            //         fontWeight: 'bold',
-            //         lineHeight: 24,
-            //         color: '#333333',
-            //         fontFamily: 'PingFangSC-Regular'
-            //     }
-            // }
           ]
         }
           //传入数据，画制canvas图片
@@ -482,6 +457,9 @@ Page({
     },
     // 上传静态地图图片
     upMapImg(staticMapUrl){
+        if(!!this.data.thumb_url){
+            return
+        }
         // 下载网络图片到本地
         //文件名设置为时间戳
         let fileName = new Date().valueOf();
@@ -491,7 +469,6 @@ Page({
             // filePath: wx.env.USER_DATA_PATH + '/' + fileName + '.png',
             filePath: wx.env.USER_DATA_PATH + '/' + fileName + '.jpg',
             success(res) {
-                console.log(res)
                 if (res.statusCode === 200) {
                     // debugger
                     let img = res.filePath
@@ -501,28 +478,28 @@ Page({
                         source: 'wx_ydenterprise',
                         file: img,
                         fail (err) {
-                            console.log(err)
-                          wx.showToast({
-                            title: '使用图片失败，请重试',
-                            icon: 'none'
-                          })
+                        //     console.log(err)
+                        //   wx.showToast({
+                        //     title: '使用图片失败，请重试',
+                        //     icon: 'none'
+                        //   })
                         },
                         success (obj) {
-                          wx.showToast({
-                            title: '上传成功',
-                            icon: 'none'
-                          })
-                          console.log(obj)
+                        //   wx.showToast({
+                        //     title: '上传成功',
+                        //     icon: 'none'
+                        //   })
                           that.setData({
                             map_orig_url: obj.orig_url,
                             map_thumb_url: obj.thumb_url,
                           })
-                          if(that.data.thumb_url){
+                          if(that.data.map_thumb_url){
+                            //   console.log('map_thumb_url',that.data.map_thumb_url)
                             // 上传运动缩略图
                             api.AddTrackPic({
                                 runner_id:that.data.runner_id,
                                 kind_id:0,
-                                pic_url:that.data.thumb_url,
+                                pic_url:that.data.map_thumb_url,
                             })
                           }
                         },

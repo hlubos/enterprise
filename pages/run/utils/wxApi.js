@@ -1,11 +1,10 @@
 /**
  *  wx.getLocation 获取位置信息
  */
-export const getLocation = (type,isHighAccuracy = false) => {
+export const getLocation = (params) => {
     return new Promise((resolve, reject) => {
-        type,
-        isHighAccuracy,
         wx.getLocation({
+            ...params,
             success: (result) => {
                 resolve(result);
             },
@@ -21,9 +20,10 @@ export const getLocation = (type,isHighAccuracy = false) => {
  *  开启小程序进入前后台时均接收位置消息，
  *  需引导用户开启授权。授权以后，小程序在运行中或进入后台均可接受位置消息变化。
  */
-export const startLocationUpdateBackground = () => {
+export const startLocationUpdateBackground = (params) => {
     return new Promise((resolve, reject) => {
         wx.startLocationUpdateBackground({
+            ...params,
             success: (result) => {
                 resolve(result);
             },
@@ -34,9 +34,10 @@ export const startLocationUpdateBackground = () => {
     })
 }
 
-export const startLocationUpdate= () => {
+export const startLocationUpdate= (params) => {
     return new Promise((resolve, reject) => {
         wx.startLocationUpdate({
+            ...params,
             success: (result) => {
                 resolve(result);
             },
@@ -47,9 +48,10 @@ export const startLocationUpdate= () => {
     })
 }
 
-export const stopLocationUpdate= () => {
+export const stopLocationUpdate= (params) => {
     return new Promise((resolve, reject) => {
         wx.stopLocationUpdate({
+            ...params,
             success: (result) => {
                 resolve(result);
             },
@@ -76,10 +78,10 @@ export const offLocationChange = (fn)=>{
 /**
  *  wx.authorize 用户授权
  */
-export const authorize = (scope) => {
+export const authorize = (params) => {
     return new Promise((resolve, reject) => {
         wx.authorize({
-            scope,
+            ...params,
             success: (result) => {
                 resolve(result);
             },
@@ -94,9 +96,10 @@ export const authorize = (scope) => {
 /**
  *  wx.getSetting 获取用户的当前设置。返回值中只会出现小程序已经向用户请求过的权限。
  */
-export const getSetting = () => {
+export const getSetting = (params) => {
     return new Promise((resolve, reject) => {
         wx.getSetting({
+            ...params,
             success: (result) => {
                 resolve(result);
             },
@@ -111,9 +114,10 @@ export const getSetting = () => {
  /**
  *  wx.openSetting 调起客户端小程序设置界面，返回用户设置的操作结果。设置界面只会出现小程序已经向用户请求过的权限。
  */
-export const openSetting = () => {
+export const openSetting = (params) => {
     return new Promise((resolve, reject) => {
         wx.openSetting({
+            ...params,
             success: (result) => {
                 resolve(result);
             },
@@ -127,9 +131,10 @@ export const openSetting = () => {
  /**
  *  wx.getNetworkType 获取网络类型
  */
-export const getNetworkType = () => {
+export const getNetworkType = (params) => {
     return new Promise((resolve, reject) => {
         wx.getNetworkType({
+            ...params,
             success: (result) => {
                 resolve(result);
             },
@@ -144,10 +149,10 @@ export const getNetworkType = () => {
  *  wx.navigateTo 保留当前页面，跳转到应用内的某个页面。但是不能跳到 tabbar 页面。
  *  使用 wx.navigateBack 可以返回到原页面。小程序中页面栈最多十层。
  */
-export const navigateTo = (url) => {
+export const navigateTo = (params) => {
     return new Promise((resolve, reject) => {
         wx.navigateTo({
-            url,
+            ...params,
             success: (result) => {
                 resolve(result);
             },
@@ -163,11 +168,10 @@ export const navigateTo = (url) => {
  * 除非用户主动删除或因存储空间原因被系统清理，否则数据都一直可用。
  * 单个 key 允许存储的最大数据长度为 1MB，所有数据存储上限为 10MB。
  */
-export const setStorage = (key,data) => {
+export const setStorage = (params) => {
     return new Promise((resolve, reject) => {
         wx.setStorage({
-            key,
-            data,
+            ...params,
             success: (result) => {
                 resolve(result);
             },
@@ -180,10 +184,10 @@ export const setStorage = (key,data) => {
 /**
  *  wx.getStorage 从本地缓存中异步获取指定 key 的内容。
  */
-export const getStorage = (key) => {
+export const getStorage = (params) => {
     return new Promise((resolve, reject) => {
         wx.getStorage({
-            key,
+            ...params,
             success: (result) => {
                 resolve(result);
             },
@@ -204,10 +208,10 @@ export const getStorageSync = (key) =>{
  *  wx.removeStorage 从本地缓存中移除指定 key。
  *  wx.removeStorageSync(string key) wx.removeStorage 的同步版本
  */
-export const removeStorage = (key) => {
+export const removeStorage = (params) => {
     return new Promise((resolve, reject) => {
         wx.removeStorage({
-            key,
+            ...params,
             success: (result) => {
                 resolve(result);
             },
@@ -224,10 +228,10 @@ export const removeStorageSync = (key) =>{
 /**
  *  wx.redirectTo
  */
-export const redirectTo = (url) => {
+export const redirectTo = (params) => {
     return new Promise((resolve, reject) => {
         wx.redirectTo({
-            url,
+            ...params,
             success: (result) => {
                 resolve(result);
             },
@@ -241,10 +245,10 @@ export const redirectTo = (url) => {
  *  wx.navigateBack
  *  关闭当前页面，返回上一页面或多级页面。可通过 getCurrentPages 获取当前的页面栈，决定需要返回几层。
  */
-export const navigateBack = (delta = 1) => {
+export const navigateBack = (parmas = {}) => {
     return new Promise((resolve, reject) => {
         wx.navigateBack({
-            delta,
+            ...parmas,
             success: (result) => {
                 resolve(result);
             },
@@ -258,10 +262,10 @@ export const navigateBack = (delta = 1) => {
  *  wx.saveImageToPhotosAlbum
  *  保存图片到系统相册
  */
-export const saveImageToPhotosAlbum = (filePath,) => {//保存图片到相册
+export const saveImageToPhotosAlbum = (params) => {//保存图片到相册
     return new Promise((resolve, reject) => {
         wx.saveImageToPhotosAlbum({
-            filePath,               //生成图片临时路径
+            ...params,
             success: (result) => {
                 resolve(result);
             },
@@ -275,12 +279,10 @@ export const saveImageToPhotosAlbum = (filePath,) => {//保存图片到相册
 /**
  *  wx.showToast 显示消息提示框
  */
-export const showToast = (title,icon,duration = 1500) => {
+export const showToast = (params) => {
     return new Promise((resolve, reject) => {
         wx.showToast({
-            title,
-            icon,
-            duration,
+            ...params,
             success: (result) => {
                 resolve(result);
             },
@@ -294,11 +296,10 @@ export const showToast = (title,icon,duration = 1500) => {
 /**
  *  wx.showModal 显示模态对话框
  */
-export const showModal = (title,content) => {
+export const showModal = (params) => {
     return new Promise((resolve, reject) => {
         wx.showModal({
-            title,
-            content,
+            ...params,
             success: (result) => {
                 resolve(result);
             },
@@ -312,11 +313,10 @@ export const showModal = (title,content) => {
 /**
  *  wx.showLoading 显示 loading 提示框。需主动调用 wx.hideLoading 才能关闭提示框
  */
-export const showLoading = (title,mask) => {
+export const showLoading = (params) => {
     return new Promise((resolve, reject) => {
         wx.showLoading({
-            title,
-            mask,
+            ...params,
             success: (result) => {
                 resolve(result);
             },
@@ -345,10 +345,10 @@ export const hideLoading = () => {
 /**
  *  wx.previewImage 在新页面中全屏预览图片。预览的过程中用户可以进行保存图片、发送给朋友等操作。
  */
-export const previewImage = (urls) => {
+export const previewImage = (params) => {
     return new Promise((resolve, reject) => {
         wx.previewImage({
-            urls,
+            ...params,
             success: (result) => {
                 resolve(result);
             },
@@ -387,10 +387,10 @@ export const createMapContext = (mapId,obj) => {
 /**
  *  wx.startAccelerometer 开始监听加速度数据。
  */
-export const startAccelerometer = (interval = 'normal') => {
+export const startAccelerometer = (parmas = {}) => {
     return new Promise((resolve, reject) => {
         wx.startAccelerometer({
-            interval,
+            ...parmas,
             success: (result) => {
                 resolve(result);
             },
@@ -406,7 +406,7 @@ export const startAccelerometer = (interval = 'normal') => {
  */
 export const stopAccelerometer = () => {
     return new Promise((resolve, reject) => {
-        wx.startAccelerometer({
+        wx.stopAccelerometer({
             success: (result) => {
                 resolve(result);
             },

@@ -267,17 +267,18 @@ Page({
     },
     // 开始跑步
     runStart(){
-        startAccelerometer().then(res=>{
-            this.setData({
-                runStatus:0
-            })
-        })
+        // startAccelerometer().then(res=>{
+        //     this.setData({
+        //         runStatus:0
+        //     })
+        // })
         // 开始计时
         let that = this
         let second = this.data.runTime
         // let canGetLocation = true
         this.setData({
-            canGetLocation: true
+            runStatus:0,
+            canGetLocation: true,
         })
         // 跑步计时
         var runTimer = setInterval(()=>{
@@ -300,33 +301,6 @@ Page({
         that.setData({
             runTimer:runTimer
         })
-        // 获取初始位置
-        // getLocation("gcj02",true).then(res=>{
-        //     console.log(res)
-        //     // let latitude = res.latitude
-        //     // let longitude = res.longitude
-        //     this.setData({
-        //         mapCenterLocation:{
-        //             latitude:res.latitude,
-        //             longitude:res.longitude
-        //         }
-        //     })
-        //     let pointArr = this.data.locaDotArr
-        //     let pointObj = {
-        //         runner_id: '',
-        //         point_id: '',
-        //         longitude: res.longitude,
-        //         latitude: res.latitude,
-        //         time: new Date().getTime(),
-        //     }
-        //     if(pointArr.length == 0){
-        //         pointArr = [[]]
-        //     }
-        //     pointArr[pointArr.length - 1].push(pointObj)
-        //     this.setData({
-        //         locaDotArr:pointArr
-        //     })
-        // })
         // 监听加速度数据事件
         onAccelerometerChange((absObj)=>{
             this.setData({
@@ -358,16 +332,20 @@ Page({
     savePoint(res){
         let correctFlag = 1
         let pointArr = this.data.locaDotArr
-        console.log("判断")
-        // if(!(Math.abs(this.data.x) > 0.07 && Math.abs(this.data.y) > 0.02)){
-        //     // 判断手机是否在移动？
-        //     correctFlag = 0
-        // }else if(res.speed == 0){
-        //     // 判断速度是否异常
-        //     correctFlag = 0
-        // }else
-        if(1){
-            console.log('正常')
+        let pots = []
+        pointArr.forEach(i=>{
+            pots = [...pots,...i]
+        })
+        if(!(Math.abs(this.data.x) > 0.07 && Math.abs(this.data.y) > 0.02) && pots.length>0){
+            // 判断手机是否在移动？
+            correctFlag = 0
+        }else if(res.speed == 0 && pots.length>0){
+            // 判断速度是否异常
+            correctFlag = 0
+        }else {
+            // console.log('x',Math.abs(this.data.x))
+            // console.log('pots.length',pots.length)
+            // console.log('res.speed',res.speed)
             let newPoint = {
                 runner_id: '',
                 point_id: '',
@@ -380,7 +358,6 @@ Page({
             }
             let finalArr = pointArr[pointArr.length-1]
             if(finalArr.length > 0){
-                console.log(111)
                 let finalPoint = finalArr[finalArr.length-1]
                 let dic = myFormats.calcDistance(newPoint.longitude,newPoint.latitude,finalPoint.longitude,finalPoint.latitude)
                 if(dic < 10){
@@ -398,7 +375,6 @@ Page({
                     pointArr[pointArr.length-1].push(newPoint)
                 }
             }else {
-                console.log(222)
                 pointArr[pointArr.length-1].push(newPoint)
             }
         }
@@ -446,13 +422,9 @@ Page({
         // 关闭定位追踪
         offLocationChange(this._mylocationChangeFn)
         stopLocationUpdate().then(res=>{
-            // console.log("停止追踪", res);
         })
-        stopAccelerometer()
+        // stopAccelerometer()
         offAccelerometerChange()
-        // this.setData({
-        //     accFlag:false
-        // })
     },
     // 继续跑步
     runContinue(){
@@ -469,7 +441,7 @@ Page({
         let key = 'run_data_'+user_id
         let kMilesCacheData = getStorageSync(key)
         if(!kMilesCacheData.locaDotArr[0] || kMilesCacheData.locaDotArr[0].length < 2 || this.data.runMiles <= 10){
-            showModal('您的移动距离过短，数据将不会被保存','是否退出跑步？').then(async res=>{
+            showModal({title:'您的移动距离过短，数据将不会被保存',content:'是否退出跑步？'}).then(async res=>{
                 if(res.confirm){
                     // 清除运动数据缓存
                     let user_id = getStorageSync('user_id')
@@ -486,13 +458,9 @@ Page({
                     // 关闭定位追踪
                     offLocationChange(this._mylocationChangeFn)
                     stopLocationUpdate().then(res=>{
-                        // console.log("停止追踪", res);
                     })
-                    stopAccelerometer()
+                    // stopAccelerometer()
                     offAccelerometerChange()
-                    // this.setData({
-                    //     accFlag:false
-                    // })
                     navigateBack()
                 }else{
                     return false
@@ -560,31 +528,35 @@ Page({
                 offAccelerometerChange()
                 // 跳转到跑步结算页
                 let runner_id = res.runner_id
-                redirectTo(`../run_final/index?runner_id=${runner_id}`)
+                redirectTo({
+                    url:`../run_final/index?runner_id=${runner_id}`
+                })
             }
         })
-        // redirectTo('../run_final/index')
     },
     // 缓存运动数据
     setRunDataCache(){
         let user_id = getStorageSync('user_id')
         let storageKey = 'run_data_' + user_id
-        setStorage(storageKey,{
-            kind_id:this.data.kind_id,
-            // 跑步持续时间(秒)
-            runTime:this.data.runTime,
-            // 跑步轨迹点数组
-            locaDotArr:this.data.locaDotArr,
-            // 跑步开始时间(时间戳)
-            runStartTime: this.data.runStartTime,
-            // 跑步结束时间(时间戳)
-            runEndTime: this.data.runEndTime,
-            // 跑步距离(米m)
-            runMiles:this.data.runMiles,
-            // 消耗卡路里
-            calorie: this.data.calorie,
-            // 最新一公里的跑步时间
-            outTime: this.data.outTime,
+        setStorage({
+            key:storageKey,
+            data:{
+                kind_id:this.data.kind_id,
+                // 跑步持续时间(秒)
+                runTime:this.data.runTime,
+                // 跑步轨迹点数组
+                locaDotArr:this.data.locaDotArr,
+                // 跑步开始时间(时间戳)
+                runStartTime: this.data.runStartTime,
+                // 跑步结束时间(时间戳)
+                runEndTime: this.data.runEndTime,
+                // 跑步距离(米m)
+                runMiles:this.data.runMiles,
+                // 消耗卡路里
+                calorie: this.data.calorie,
+                // 最新一公里的跑步时间
+                outTime: this.data.outTime,
+            }
         })
     },
     // 缓存每公里配速
@@ -609,7 +581,10 @@ Page({
             newData.avg_pace = this.data.outTime/this.data.outMiles*1000
         }
         let newArr = [...oldArr,newData]
-        setStorage(key,newArr)
+        setStorage({
+            key:key,
+            data:newArr
+        })
     },
     // 读取每公里配速缓存
     getKmilesCache(){
@@ -709,7 +684,10 @@ Page({
     onLoad(options) {
         let that = this
         // 获取初始位置信息
-        // getLocation('gcj02').then(res=>{
+        // getLocation({
+        //     type:'gcj02'
+        //     isHighAccuracy:'true'
+        // }).then(res=>{
         //     // console.log(res)
         //     const latitude = res.latitude
         //     const longitude = res.longitude
@@ -836,18 +814,6 @@ Page({
      * 生命周期函数--监听页面卸载
      */
     onUnload() {
-        // showModal('您的运动记录将不会被保存','是否退出跑步？').then(res=>{
-        //     if(res.confirm){
-        //         // 清除运动数据缓存
-        //         let user_id = getStorageSync('user_id')
-        //         let storageKey = 'run_data_' + user_id
-        //         removeStorageSync(storageKey)
-        //         console.log('跑步页面卸载')
-        //         // 清除定时器
-        //     }else{
-        //         return false
-        //     }
-        // })
         innerAudioContext.destroy() 
         clearInterval(runGuideCountTimer)
         clearInterval(this.data.runTimer)

@@ -38,7 +38,9 @@ Page({
     },
     // 生成图片
     createImg(){
-         showLoading('分享图片生成中')
+         showLoading({
+            title:'分享图片生成中'
+         })
          const that = this
          const query = createSelectorQuery().in(this);
          query.select('#answer-canvas').fields({ //answer-canvas要绘制的canvas的id
@@ -70,7 +72,11 @@ Page({
           finish(url) {
             // console.log("创建的图片", url);
             hideLoading()
-            showToast('图片已生成','none',1500)
+            showToast({
+                title:'图片已生成',
+                icon:'none',
+                duration:1500,
+            })
             that.setData({
                 posterImgUrl:url,
             })
@@ -97,9 +103,15 @@ Page({
     },
     // 保存图片
     clickSaveImg() {
-        saveImageToPhotosAlbum(this.data.posterImgUrl)
+        saveImageToPhotosAlbum({
+            filePath:this.data.posterImgUrl
+        })
         .then(res=>{
-            showToast("图片已保存！","",2000)
+            showToast({
+                title:"图片已保存！",
+                icon:'none',
+                duration:2000,
+            })
         })
         .catch(rej=>{
             // console.log(rej)
@@ -111,7 +123,9 @@ Page({
 
     // 微信分享
     wxShare() {
-        previewImage([this.data.posterImgUrl])
+        previewImage({
+            urls:[this.data.posterImgUrl]
+        })
     },
     /**
      * 生命周期函数--监听页面加载

@@ -71,7 +71,9 @@ Component({
                         })
                     })
                 }else{
-                    authorize('scope.userLocation').then(res=>{
+                    authorize({
+                        scope:'scope.userLocation'
+                    }).then(res=>{
                         this.setData({
                             "auth.hasAuthUserLocation":true,
                         })
@@ -95,7 +97,9 @@ Component({
                     })
                 }else{
                     // 调用授权API
-                    authorize('scope.userLocationBackground').then(res=>{
+                    authorize({
+                        scope:'scope.userLocationBackground'
+                    }).then(res=>{
                         // 用户点击允许前台定位权限会被授予，后台定位权限用户不一定会授予
                         this.setData({
                             "auth.hasAuthUserLocation":true
@@ -128,7 +132,7 @@ Component({
             getSetting().then(res=>{
                 // console.log(res)
                 if(res.authSetting['scope.userLocation'] != true || res.authSetting['scope.userLocationBackground'] != true){
-                    showModal('未授权后台定位','是否前往设置？').then(res=>{
+                    showModal({title:'未授权后台定位',content:'是否前往设置？'}).then(res=>{
                         if(res.confirm){
                             openSetting().then(ress=>{
                                 this.setData({
@@ -153,7 +157,11 @@ Component({
         gotoRunPage(){
             // 室内跑暂未开发
             if(this.data.runType == 1){
-                showToast('敬请期待!','none',1500)
+                showToast({
+                    title:'敬请期待!',
+                    icon:'none',
+                    duration:1500,
+                })
                 this.setData({
                     showRunCheckModal: false
                 })
@@ -164,8 +172,9 @@ Component({
             // this.setData({
             //     showRunCheckModal: false
             // })
-            // showLoading('跑步加载中...',true)
-            navigateTo("/pages/run/pages/run_page/index")
+            navigateTo({
+                url:'/pages/run/pages/run_page/index'
+            })
             // hideLoading()
         },
         // 放弃跑步
@@ -184,12 +193,17 @@ Component({
         // 继续跑步
         continueRun(){
             // 不清缓存
-            showLoading('跑步加载中...',true)
+            showLoading({
+                title:'跑步加载中...',
+                mask:true,
+            })
             this.setData({
                 showRunBreakDialog: false
             })
             // 跳转到跑步页面
-            navigateTo("/pages/run/pages/run_page/index")
+            navigateTo({
+                url:'/pages/run/pages/run_page/index'
+            })
         },
         // 获取缓存数据,读取缓存查看是否存在未完成的运动
         getRunDataCache(){
@@ -226,7 +240,9 @@ Component({
             let res = getStorageSync(storageKey)
             if(res != 1){
                 // 新用户，跳转到常见问题（引导）页
-                navigateTo("/pages/run/pages/run_FAQ/index")
+                navigateTo({
+                    url:'/pages/run/pages/run_FAQ/index'
+                })
             }
         },
         // 页面初始化

@@ -33,10 +33,11 @@
             longitude="{{newLongitude}}"
             latitude="{{newLatitude}}"
             show-location="true"
+            show-scale="true"
             polyline="{{polylines}}"
-            include-points="{{pointArr}}"
             subkey="{{mapStyle.subkey}}"
             layer-style="{{mapStyle['layer-style']}}"
+            bindtap="_includePots"
         ></map>
         <view class="back-icon">
             <image bindtap="hideMap" src="https://ssl-pubpic.51yund.com/1221737968.png"></image>

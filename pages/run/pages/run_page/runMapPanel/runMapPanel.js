@@ -48,13 +48,15 @@ Component({
         'locaDotArr': function (data) {
             let pointArr = []
             data.forEach(item=>{
-                // pointArr.push(item)
-                pointArr = [...pointArr,...item]
+                if(item.length > 0){
+                    pointArr = [...pointArr,...item]
+                }
             })
             this.setData({
                 "polylines[0].points": pointArr,
                 pointArr,
             })
+            // this._toLocation()
         }
     },
     lifetimes: {
@@ -66,8 +68,11 @@ Component({
             //         latitude: this.data.newLatitude,
             //     }
             // });
-            this._toLocation()
+            // this._toLocation()
             // startLocationUpdateBackground()
+        },
+        ready(){
+            this._toLocation()
         },
         moved: function () {
         },
@@ -79,9 +84,14 @@ Component({
         show: function () {
             // startLocationUpdate()
             // this.getRunSetCache()
+            setTimeout(()=>{
+                this._toLocation()
+            },1500)
         },
         hide: function () { },
-        resize: function () { },
+        resize: function () {
+            this._toLocation()
+        },
     },
 
     methods: {
@@ -90,10 +100,16 @@ Component({
         },
         // 内部方法建议以下划线开头
         _toLocation() {
-            let runMap = createMapContext("run-map", this);
+            var runMap = createMapContext("run-map", this);
             runMap.moveToLocation();
         },
-        
+        _includePots(){
+            var runMap = createMapContext("run-map", this);
+            runMap.includePoints({
+                padding: [70, 70, 70, 70], // padding类似我们css中的padding，可以有四个值
+                points: this.data.pointArr
+            })
+        }
     }
 
 })

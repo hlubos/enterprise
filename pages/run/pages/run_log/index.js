@@ -1,5 +1,4 @@
 // plugin/pages/run_log/index.js
-import { all } from '@tensorflow/tfjs-core'
 import api from '../../server/run'
 import myFormats from '../../utils/format'
 Page({
