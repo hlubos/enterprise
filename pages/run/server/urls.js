@@ -1,7 +1,6 @@
 export default {
     // 获取用户跑步详情
-    getRunnerInfo:'https://api17.51yund.com/sport/get_runner_info',
-    // getRunnerInfo:'/sport/get_runner_info',
+    getRunnerInfo:'/sport/get_runner_info',
     // 上报跑步数据
     reportRunnerInfo:'/sport/report_runner_info',
     // 跑步结束页面详情

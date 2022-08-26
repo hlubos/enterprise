@@ -1,4 +1,5 @@
 // plugin/pages/run_page/index.js
+import douglasPeuker from '../../utils/Douglas_Peuker'
 import myFormats from '../../utils/format'
 import api from '../../server/run'
 import wxFun from '../../utils/wxFun'
@@ -334,10 +335,12 @@ Page({
         if(!(Math.abs(this.data.x) > 0.07 && Math.abs(this.data.y) > 0.02) && pots.length>0){
             // 判断手机是否在移动？
             correctFlag = 0
-        }else if(res.speed == 0 && pots.length>0){
+        }
+        else if(res.speed == 0 && pots.length>0){
             // 判断速度是否异常
             correctFlag = 0
-        }else {
+        }
+        else {
             // console.log('x',Math.abs(this.data.x))
             // console.log('pots.length',pots.length)
             // console.log('res.speed',res.speed)
@@ -355,10 +358,11 @@ Page({
             if(finalArr.length > 0){
                 let finalPoint = finalArr[finalArr.length-1]
                 let dic = myFormats.calcDistance(newPoint.longitude,newPoint.latitude,finalPoint.longitude,finalPoint.latitude)
-                if(dic < 10){
-                    correctFlag = 0
-                    // return pointArr
-                }else if(dic > 75){
+                // if(dic < 1){
+                //     correctFlag = 0
+                //     // return pointArr
+                // }else 
+                if(dic > 75){
                     if(finalArr.length <= 1){
                         pointArr.pop()
                     }
@@ -379,15 +383,19 @@ Page({
             })
         }else if(correctFlag == 1){
             var locaTimer = setTimeout(()=>{
-                // 5秒才能获取一次当前位置
+                // 1秒才能获取一次当前位置
                 this.setData({
                     canGetLocation: true
                 })
                 // this.getRunShowData()
-            },5000)
+            },1000)
             this.setData({
                 locaTimer:locaTimer
             })
+        }
+        for(let i = 0;i<pointArr.length;i++){
+            // GPS轨迹处理
+            pointArr[i] = douglasPeuker(pointArr[i],0.000005)
         }
         this.setData({
             locaDotArr:pointArr
