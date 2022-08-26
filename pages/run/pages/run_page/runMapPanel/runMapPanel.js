@@ -1,8 +1,5 @@
-import {
-    startLocationUpdate,
-    startLocationUpdateBackground,
-    createMapContext,
-} from '../../../utils/wxApi'
+import wxFun from '../../../utils/wxFun'
+let createMapContext = wxFun.ordinary('createMapContext')
 Component({
 
     behaviors: [],

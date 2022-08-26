@@ -1,16 +1,15 @@
 // run_packege/pages/run_share/index.js
-import {
-    navigateTo,
-    getStorageSync,
-    createSelectorQuery,
-    showLoading,
-    hideLoading,
-    previewImage,
-    saveImageToPhotosAlbum,
-    showToast,
-} from '../../utils/wxApi'
 import api from '../../server/run'
 import Wxml2Canvas from 'wxml2canvas'
+import wxFun from '../../utils/wxFun'
+let navigateTo = wxFun.promisify('navigateTo')
+let showLoading = wxFun.promisify('showLoading')
+let hideLoading = wxFun.promisify('hideLoading')
+let showToast = wxFun.promisify('showToast')
+let previewImage = wxFun.promisify('previewImage')
+let saveImageToPhotosAlbum = wxFun.promisify('saveImageToPhotosAlbum')
+let createSelectorQuery = wxFun.ordinary('createSelectorQuery')
+let getStorageSync = wxFun.ordinary('getStorageSync')
 Page({
 
     /**

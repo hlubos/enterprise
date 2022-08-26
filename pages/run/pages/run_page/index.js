@@ -1,30 +1,30 @@
 // plugin/pages/run_page/index.js
-import { 
-    getLocation , 
-    onLocationChange , 
-    offLocationChange,
-    startLocationUpdate,
-    redirectTo,
-    navigateBack,
-    stopLocationUpdate,
-    startLocationUpdateBackground,
-    createInnerAudioContext,
-    setStorage,
-    setStorageSync,
-    getStorageSync,
-    removeStorageSync,
-    removeStorage,
-    showModal,
-    hideLoading,
-    startAccelerometer,
-    stopAccelerometer,
-    onAccelerometerChange,
-    offAccelerometerChange,
-} from '../../utils/wxApi'
 import myFormats from '../../utils/format'
 import api from '../../server/run'
+import wxFun from '../../utils/wxFun'
+let getLocation = wxFun.promisify('getLocation')
+let redirectTo = wxFun.promisify('redirectTo')
+let navigateBack = wxFun.promisify('navigateBack')
+let stopLocationUpdate = wxFun.promisify('stopLocationUpdate')
+let startLocationUpdateBackground = wxFun.promisify('startLocationUpdateBackground')
+let setStorage = wxFun.promisify('setStorage')
+let removeStorage = wxFun.promisify('removeStorage')
+let showModal = wxFun.promisify('showModal')
+let hideLoading = wxFun.promisify('hideLoading')
+let startAccelerometer = wxFun.promisify('startAccelerometer')
+let stopAccelerometer = wxFun.promisify('stopAccelerometer')
+
+let onLocationChange = wxFun.ordinary('onLocationChange')
+let offLocationChange = wxFun.ordinary('offLocationChange')
+let createInnerAudioContext = wxFun.ordinary('createInnerAudioContext')
+let setStorageSync = wxFun.ordinary('setStorageSync')
+let getStorageSync = wxFun.ordinary('getStorageSync')
+let removeStorageSync = wxFun.ordinary('removeStorageSync')
+let onAccelerometerChange = wxFun.ordinary('onAccelerometerChange')
+let offAccelerometerChange = wxFun.ordinary('offAccelerometerChange')
+
 // const backgroundAudioManager = wx.getBackgroundAudioManager()
-let innerAudioContext = createInnerAudioContext(true)
+let innerAudioContext = createInnerAudioContext({useWebAudioImplement:true})
 innerAudioContext.autoplay = true
 let runGuideCountTimer
 Page({
@@ -176,7 +176,7 @@ Page({
                     // 播放语音
                 }
             }
-            const play = createInnerAudioContext(true)
+            const play = createInnerAudioContext({useWebAudioImplement:true})
             let index = 0
             play.src = `pages/run/assets/voice/hiking/${auidos[index]}.mp3`
             play.autoplay = true
@@ -288,11 +288,6 @@ Page({
                 runTime:second,
                 outTime:this.data.outTime+1,
             })
-            // 跑步时长+1
-            // let sumTime = myFormats.secTranlateTime(this.data.runTime)
-            // this.setData({
-            //     "runShowData.sumTime":sumTime,
-            // })
             // 更新跑步信息
             that.getRunShowData()
             // 缓存跑步数据
@@ -797,7 +792,7 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow() {
-        innerAudioContext = createInnerAudioContext(true)
+        innerAudioContext = createInnerAudioContext({useWebAudioImplement:true})
         innerAudioContext.autoplay = true
         // 读取跑步设置缓存
         this.getRunSetCache()

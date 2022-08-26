@@ -1,5 +1,9 @@
 // plugin/pages/run_set/index.js
-import { getNetworkType,setStorage,getStorage,setStorageSync,getStorageSync } from '../../utils/wxApi'
+import wxFun from '../../utils/wxFun'
+
+let getNetworkType = wxFun.promisify('getNetworkType')
+let setStorageSync = wxFun.ordinary('setStorageSync')
+let getStorageSync = wxFun.ordinary('getStorageSync')
 Page({
     /**
      * 组件的属性列表

@@ -1,27 +1,23 @@
 // pages/tabBar/home/run_homePage/run_homePage.js
-import { 
-    getSetting,
-    getLocation,
-    authorize,
-    openSetting,
-    startLocationUpdateBackground,
-    navigateTo,
-    navigateBack,
-    getStorageSync,
-    setStorageSync,
-    showToast,
-    showModal,
-    showLoading,
-    hideLoading,
-    removeStorageSync,
-    removeStorage,
-} from '../../../../common/wxApi.js'
 import api from '../../../../server/run'
-
 import tool from '../../../../common/tool'
 import loginApi from '../../../../server/login'
 
 const app = getApp()
+let getLocation = tool.promisify('getLocation')
+let getSetting = tool.promisify('getSetting')
+let authorize = tool.promisify('authorize')
+let openSetting = tool.promisify('openSetting')
+let startLocationUpdateBackground = tool.promisify('startLocationUpdateBackground')
+let navigateTo = tool.promisify('navigateTo')
+let navigateBack = tool.promisify('navigateBack')
+let showToast = tool.promisify('showToast')
+let showModal = tool.promisify('showModal')
+let showLoading = tool.promisify('showLoading')
+let hideLoading = tool.promisify('hideLoading')
+let removeStorage = tool.promisify('removeStorage')
+let getStorageSync = tool.getYdStorage
+let setStorageSync = tool.setYdStorage
 
 Component({
     /**
@@ -184,7 +180,7 @@ Component({
                 showRunBreakDialog: false
             })
             // 清除运动数据缓存
-            let user_id = getStorageSync('user_id')
+            let user_id = await getStorageSync('user_id')
             let storageKey = 'run_data_' + user_id
             let key = 'run_kmiles_pace_arr_'+user_id
             setStorageSync(storageKey,{})
@@ -206,11 +202,11 @@ Component({
             })
         },
         // 获取缓存数据,读取缓存查看是否存在未完成的运动
-        getRunDataCache(){
+        async getRunDataCache(){
             try {
-                let user_id = getStorageSync('user_id')
+                let user_id = await getStorageSync('user_id')
                 let storageKey = 'run_data_' + user_id
-                let cacheData = getStorageSync(storageKey)
+                let cacheData = await getStorageSync(storageKey)
                 if(!cacheData || JSON.stringify(cacheData) == '{}'){
                     return false
                 }else {
@@ -221,11 +217,11 @@ Component({
             } catch (e) { }
         },
         // 读取跑步设置缓存
-        getRunSetCache(){
+        async getRunSetCache(){
             try {
-                let user_id = getStorageSync('user_id')
+                let user_id = await getStorageSync('user_id')
                 let storageKey = 'run_set_infos_' + user_id
-                let res = getStorageSync(storageKey)
+                let res = await getStorageSync(storageKey)
                 if(res){
                     this.setData({
                         mapStyle:res.nowMapStyInfo
@@ -234,10 +230,10 @@ Component({
             } catch (e) { }
         },
         // 读取用户缓存，判断是否为新用户
-        judgeNewUser(){
-            let user_id = getStorageSync('user_id')
+        async judgeNewUser(){
+            let user_id = await getStorageSync('user_id')
             let storageKey = 'isNewUser_' + user_id
-            let res = getStorageSync(storageKey)
+            let res = await getStorageSync(storageKey)
             if(res != 1){
                 // 新用户，跳转到常见问题（引导）页
                 navigateTo({
@@ -246,7 +242,7 @@ Component({
             }
         },
         // 页面初始化
-        initPage(){
+        async initPage(){
             // 页面数据初始化
             // 在组件在视图层布局完成后执行
             getSetting().then(res=>{
@@ -267,7 +263,7 @@ Component({
             this.setData({
                 showRunCheckModal: false
             })
-            if(getStorageSync("user_id") && getStorageSync("user_id") !== 0 ){
+            if(await getStorageSync("user_id") && await getStorageSync("user_id") !== 0 ){
                 // 获取累计公里数
                 let params = {
                     // user_id:284209535,

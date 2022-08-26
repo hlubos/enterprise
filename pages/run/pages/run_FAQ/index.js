@@ -1,9 +1,8 @@
 // plugin/pages/FAQ/index.js
-import {
-    navigateBack,
-    setStorageSync,
-    getStorageSync,
-} from '../../utils/wxApi'
+import wxFun from '../../utils/wxFun'
+let navigateBack = wxFun.promisify('navigateBack')
+let setStorageSync = wxFun.ordinary('setStorageSync')
+let getStorageSync = wxFun.ordinary('getStorageSync')
 Page({
 
     /**

@@ -1,5 +1,8 @@
 // components/canvas-ring/canvas-ring.js
-var windWidth = wx.getSystemInfoSync().windowWidth;
+import wxFun from '../../../../utils/wxFun'
+let getSystemInfoSync = wxFun.ordinary('getSystemInfoSync')
+// var windWidth = wx.getSystemInfoSync().windowWidth;
+var windWidth = getSystemInfoSync().windowWidth;
 Component({
   options: {
     multipleSlots: true // 在组件定义时的选项中启用多slot支持
@@ -92,7 +95,7 @@ Component({
 
       var ctx = wx.createCanvasContext("circleBar", this); //canvas组建封装，需要后加个this
     //   var circle_r = this.data.canvasWidth / 2; //画布的一半，用来找中心点和半径
-      var circle_r = this.data.canvasWidth / 750 * wx.getSystemInfoSync().windowWidth / 2;
+      var circle_r = this.data.canvasWidth / 750 * getSystemInfoSync().windowWidth / 2;
       var startDegree = this.data.startDegree; //从什么角度开始
       var maxValue = this.data.maxValue; //最大值
       var minValue = this.data.minValue; //最小值

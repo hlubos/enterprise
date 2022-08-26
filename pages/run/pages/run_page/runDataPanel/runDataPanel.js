@@ -1,10 +1,4 @@
 // plugin/pages/run_page/components/runDataPanel/runDataPanel.js
-import {
-    startLocationUpdate,
-    startLocationUpdateBackground,
-    setStorageSync,
-    getStorageSync,
-} from '../../../utils/wxApi'
 var breakUnlockTimer
 var startUnlockTimer
 var startStopRunTimer

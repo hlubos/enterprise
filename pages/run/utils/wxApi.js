@@ -361,11 +361,15 @@ export const previewImage = (params) => {
 
 /**
  *  wx.createInnerAudioContext 创建内部 audio 上下文 InnerAudioContext 对象。
+ *  parmas:
+ *  属性:useWebAudioImplement 
+ *  类型:boolean
+ *  默认值:false
+ *  必填:否
+ * 是否使用 WebAudio 作为底层音频驱动，默认关闭。对于短音频、播放频繁的音频建议开启此选项
  */
-export const createInnerAudioContext = (useWebAudioImplement) => {
-    return wx.createInnerAudioContext({
-        useWebAudioImplement,
-    })
+export const createInnerAudioContext = (params) => {
+    return wx.createInnerAudioContext(params)
 }
 
 /**

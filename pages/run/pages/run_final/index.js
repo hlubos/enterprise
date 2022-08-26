@@ -2,24 +2,26 @@
 // import QRCode from '../../utils/weapp.qrcode.esm.js'
 import api from '../../server/run'
 import myFormats from '../../utils/format'
-import {
-    getStorageSync,
-    removeStorage,
-    removeStorageSync,
-    navigateBack,
-    setStorageSync,
-    createInnerAudioContext,
-    navigateTo,
-    createMapContext,
-    createSelectorQuery,
-    showLoading,
-    hideLoading,
-    showToast,
-} from '../../utils/wxApi'
 import uploadFile from '../../../../common/uploadFile'
 // import Wxml2Canvas from '../../wxml2canvas/index'
 import Wxml2Canvas from 'wxml2canvas'
-const innerAudioContext = createInnerAudioContext(true)
+import wxFun from '../../utils/wxFun'
+
+let removeStorage = wxFun.promisify('removeStorage')
+let navigateBack = wxFun.promisify('navigateBack')
+let showLoading = wxFun.promisify('showLoading')
+let hideLoading = wxFun.promisify('hideLoading')
+let showToast = wxFun.promisify('showToast')
+let navigateTo = wxFun.promisify('navigateTo')
+
+let getStorageSync = wxFun.ordinary('getStorageSync')
+let removeStorageSync = wxFun.ordinary('removeStorageSync')
+let setStorageSync = wxFun.ordinary('setStorageSync')
+let createInnerAudioContext = wxFun.ordinary('createInnerAudioContext')
+let createMapContext = wxFun.ordinary('createMapContext')
+let createSelectorQuery = wxFun.ordinary('createSelectorQuery')
+
+const innerAudioContext = createInnerAudioContext({useWebAudioImplement:true})
 innerAudioContext.autoplay = true
 Page({
 

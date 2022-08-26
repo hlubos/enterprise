@@ -1,9 +1,5 @@
 // run_packege/pages/run_final/components/runSpeedChart/runSpeedChart.js
 import * as echarts from '../../../../ec-canvas/echarts';
-import {
-    getStorageSync,
-    removeStorageSync,
-} from '../../../../utils/wxApi'
 import myFormats from '../../../../utils/format'
 let chart
 let pace = {
