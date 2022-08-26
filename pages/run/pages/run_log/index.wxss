@@ -1,0 +1,153 @@
+/* plugin/pages/run_log/index.wxss */
+@import "./index.skeleton.wxss";
+.runlog-page {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction:column;
+    overflow:hidden;
+}
+
+.runlog-banner {
+    width: 750rpx;
+    height: 520rpx;
+    background-image: linear-gradient(180deg, #8AE9CE 0%, #4CDDB4 100%);
+    color: #ffffff;
+    /* overflow: hidden; */
+    box-shadow:0rpx 5rpx 10rpx gray;
+    flex-shrink: 0;
+}
+
+.runlog-banner-num {
+    font-weight: Bold;
+    font-size: 136rpx;
+    color: #FFFFFF;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 80rpx;
+    line-height: 136rpx;
+    margin-bottom: 20rpx;
+}
+
+.runlog-banner-txt {
+    font-weight: 400;
+    font-size: 32rpx;
+    color: #FFFFFF;
+    line-height: 32rpx;
+    display: flex;
+    justify-content: center;
+}
+
+.runlog-banner-data {
+    display: flex;
+    /* flex-direction: column; */
+    justify-content: space-evenly;
+    align-items: center;
+    text-align: center;
+    margin-top: 82rpx;
+}
+
+.runlog-banner-data-box {
+    width: 33%;
+}
+
+.runlog-banner-data-num {
+    font-weight: Bold;
+    color: #FFFFFF;
+    text-align: center;
+}
+
+.runlog-list {
+    /* height: calc( 100vh - 520rpx); */
+    flex: 1;
+    height: 1px;
+}
+
+.runlog-item {
+    display: flex;
+}
+
+.runlog-item-icon {
+    width: 160rpx;
+    height: 160rpx;
+    /* background-color: darkgreen; */
+    margin-right: 20rpx;
+}
+.runlog-item-icon image{
+    width: 100%;
+    height: 100%;
+}
+
+.runlog-item-info {
+    height: 160rpx;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: space-between;
+}
+
+.runlog-item-info-line1 {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.runlog-item-info-line1-txt1 {
+    font-weight: 400;
+    font-size: 32rpx;
+    color: #333333;
+}
+
+.runlog-item-info-line1-txt2 {
+    font-weight: 400;
+    font-size: 24rpx;
+    color: #999999;
+}
+
+.runlog-item-info-line2 {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.runlog-item-info-line2-txt1 {
+    font-weight: 400;
+    font-size: 32rpx;
+    color: #333333;
+    margin-right: 22rpx;
+}
+
+.runlog-item-info-line2-txt2 {
+    font-weight: 400;
+    font-size: 24rpx;
+    color: #666666;
+}
+
+.right-icon {
+    width: 24rpx;
+    height: 48rpx;
+}
+
+.runlog-item-info-line3 {
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.line3-item {
+    display: flex;
+    align-items: center;
+    margin-right: 32rpx;
+}
+
+.run-info-icon {
+    width: 32rpx;
+    height: 32rpx;
+}
+
+.run-info-txt {
+    font-weight: 400;
+    font-size: 24rpx;
+    color: #999999;
+}

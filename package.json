@@ -16,6 +16,8 @@
     "@tensorflow/tfjs-core": "2.0.1",
     "crypto-js": "^4.0.0",
     "fetch-wechat": "0.0.3",
-    "qs": "6.9.4"
+    "qs": "6.9.4",
+    "weui-miniprogram": "^1.2.3",
+    "wxml2canvas": "^1.0.1"
   }
 }

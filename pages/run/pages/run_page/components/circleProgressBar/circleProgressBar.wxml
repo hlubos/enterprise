@@ -1,0 +1,8 @@
+<!--run_packege/pages/run_page/components/circle_progress_bar/circle_progress_bar.wxml-->
+<view class="unlock-btn">
+    <view class="unlock-btn-bac">
+        <view class="bac-left"></view>
+        <view class="bac-right"></view>
+    </view>
+    <view class="unlock-btn-center">解锁</view>
+</view>

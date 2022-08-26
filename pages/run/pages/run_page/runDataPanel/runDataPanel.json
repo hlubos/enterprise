@@ -1,0 +1,7 @@
+{
+    "usingComponents": {
+        "circle_bar":"../components/circleProgressBar/circleProgressBar",
+        "canvas-ring":"../components/canvas-ring/canvas-ring"
+    },
+    "component": true
+}

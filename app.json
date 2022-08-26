@@ -1,55 +1,75 @@
 {
-  "pages": [
-    "pages/tabBar/work/work",
-    "pages/tabBar/home/home",
-    "pages/index/index",
-    "pages/login/login",
-    "pages/tabBar/work/second/second",
-    "pages/dialog/dialog",
-    "pages/history/history"
-  ],
-  "window": {
-    "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "悦动圈",
-    "navigationBarTextStyle": "black"
-  },
-  "subPackages": [
-    {
-      "root": "pages/AI/",
-      "pages": [
-        "ShenDun/ShenDun",
-        "TiaoSheng/TiaoSheng",
-        "KaiHeTiao/KaiHeTiao",
-        "FuWoCheng/FuWoCheng",
-        "YangWoQiZuo/YangWoQiZuo"
-      ]
-    }
-  ],
-  "tabBar": {
-    "color": "#BFC2C7",
-    "selectedColor": "#11d59c",
-    "list": [
-      {
-        "pagePath": "pages/tabBar/work/work",
-        "iconPath": "assets/image/work_default.png",
-        "selectedIconPath": "assets/image/work_active.png",
-        "text": "企业"
-      },
-      {
-        "pagePath": "pages/tabBar/home/home",
-        "iconPath": "assets/image/AI_default.png",
-        "selectedIconPath": "assets/image/AI_active.png",
-        "text": "运动"
-      }
-    ]
-  },
-  "plugins": {
-    "tfjsPlugin": {
-      "version": "0.1.0",
-      "provider": "wx6afed118d9e81df9"
-    }
-  },
-  "style": "v2",
-  "sitemapLocation": "sitemap.json"
+    "pages": [
+        "pages/tabBar/work/work",
+        "pages/tabBar/home/home",
+        "pages/index/index",
+        "pages/login/login",
+        "pages/tabBar/work/second/second",
+        "pages/dialog/dialog",
+        "pages/history/history"
+    ],
+    "window": {
+        "backgroundTextStyle": "light",
+        "navigationBarBackgroundColor": "#fff",
+        "navigationBarTitleText": "企业悦动",
+        "navigationBarTextStyle": "black"
+    },
+    "subPackages": [
+        {
+            "root": "pages/AI/",
+            "pages": [
+                "ShenDun/ShenDun",
+                "TiaoSheng/TiaoSheng",
+                "KaiHeTiao/KaiHeTiao",
+                "FuWoCheng/FuWoCheng",
+                "YangWoQiZuo/YangWoQiZuo"
+            ]
+        },
+        {
+            "root": "pages/run",
+            "pages": [
+                "pages/run_FAQ/index",
+                "pages/run_log/index",
+                "pages/run_page/index",
+                "pages/run_set/index",
+                "pages/run_final/index",
+                "pages/run_share/index"
+            ]
+        }
+    ],
+    "tabBar": {
+        "color": "#BFC2C7",
+        "selectedColor": "#11d59c",
+        "list": [
+            {
+                "pagePath": "pages/tabBar/work/work",
+                "iconPath": "assets/image/work_default.png",
+                "selectedIconPath": "assets/image/work_active.png",
+                "text": "企业"
+            },
+            {
+                "pagePath": "pages/tabBar/home/home",
+                "iconPath": "assets/image/AI_default.png",
+                "selectedIconPath": "assets/image/AI_active.png",
+                "text": "运动"
+            }
+        ]
+    },
+    "permission": {
+        "scope.userLocation": {
+            "desc": "你的位置信息将用于小程序位置接口的效果展示"
+        }
+    },
+    "requiredBackgroundModes": [
+        "location",
+        "audio"
+    ],
+    "plugins": {
+        "tfjsPlugin": {
+            "version": "0.1.0",
+            "provider": "wx6afed118d9e81df9"
+        }
+    },
+    "style": "v2",
+    "sitemapLocation": "sitemap.json"
 }

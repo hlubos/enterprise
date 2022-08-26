@@ -1,0 +1,14 @@
+<!--pages/tabBar/home/components/SportNav/SportNav.wxml-->
+<view class="nav">
+    <view 
+        class="tle {{item.index == activeIndex?'active-tle':''}}" 
+        wx:for="{{sportList}}" 
+        wx:key="index"
+        bindtap="changeActive"
+        data-key="{{index}}"
+    >
+        <view class="name">{{item.name}}</view>
+        <view class="tag"></view>
+    </view>
+    <!-- <login-btn bindsuccess="gotoRun"></login-btn> -->
+</view>

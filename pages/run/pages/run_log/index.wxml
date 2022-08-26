@@ -1,0 +1,73 @@
+<!--plugin/pages/run_log/index.wxml-->
+<import src="index.skeleton.wxml"/>
+<template is="skeleton" wx:if="{{loading}}" />
+<view class="runlog-page">
+    <view class="runlog-banner">
+        <view class="runlog-banner-num">{{total_distance}}</view>
+        <view class="runlog-banner-txt">累计公里</view>
+        <view class="runlog-banner-data">
+            <view class="runlog-banner-data-box">
+                <view class="runlog-banner-data-num">{{total_cost_time}}</view>
+                <view class="runlog-banner-data-txt">累计时长</view>
+            </view>
+            <view class="runlog-banner-data-box">
+                <view class="runlog-banner-data-num">{{total_caloric}}</view>
+                <view class="runlog-banner-data-txt">累计消耗千卡</view>
+            </view>
+            <view class="runlog-banner-data-box">
+                <view class="runlog-banner-data-num">{{total_cnt}}</view>
+                <view class="runlog-banner-data-txt">累计次数</view>
+            </view>
+        </view>
+    </view>
+    <scroll-view class="runlog-list" scroll-y bindscrolltolower='loadData'>
+        <view>
+            <mp-cells ext-class="my-cells">
+                <mp-cell wx:for="{{runLogList}}" wx:key="index">
+                    <view class="runlog-item-icon">
+                        <image src="{{item.pic_url}}"></image>
+                        <!-- <image src="{{thumbImgList[index].pic_url}}"></image> -->
+                        <!-- <image src="{{thumbImgList.find(i=>i.runner_id == item.runner_id).pic_url}}"></image> -->
+                    </view>
+                    <view class="runlog-item-info" slot="footer">
+                        <view class="runlog-item-info-line1">
+                            <!-- <view class="runlog-item-info-line1-txt1">悦动圈APP</view> -->
+                            <!-- <view wx:if="{{item.run_source == 'wx_mini_program'}}" class="runlog-item-info-line1-txt1">微信小程序跑步</view>
+                            <view wx:elif="{{item.run_source == 'xiaoyue_bracelet'}}" class="runlog-item-info-line1-txt1">手环跑步</view>
+                            <view wx:elif="{{item.run_source == 'homepage'}}" class="runlog-item-info-line1-txt1">悦动圈APP</view>
+                            <view wx:elif="{{item.run_source == 'normal'}}" class="runlog-item-info-line1-txt1">悦动圈APP</view>
+                            <view wx:else class="runlog-item-info-line1-txt1">其他跑步工具</view> -->
+                            <view hidden="{{item.run_source != 'wx_mini_program'}}" class="runlog-item-info-line1-txt1">小程序</view>
+                            <view hidden="{{item.run_source != 'xiaoyue_bracelet'}}" class="runlog-item-info-line1-txt1">智能穿戴</view>
+                            <view hidden="{{item.run_source == 'wx_mini_program' || item.run_source == 'xiaoyue_bracelet'}}" class="runlog-item-info-line1-txt1">悦动圈APP</view>
+                            <!-- <view class="runlog-item-info-line1-txt2">2022.06.22 19:17</view> -->
+                            <view class="runlog-item-info-line1-txt2">{{item.time}}</view>
+                        </view>
+                        <view class="runlog-item-info-line2">
+                            <view>
+                                <text class="runlog-item-info-line2-txt1">{{(item.distance)}} 公里</text>
+                                <text class="runlog-item-info-line2-txt2">{{item.kind_id==0?'室外跑':'室内跑'}}</text>
+                            </view>
+                            <!-- <image class="right-icon" src="https://ssl-pubpic.51yund.com/1221022777.png"></image> -->
+                        </view>
+                        <view class="runlog-item-info-line3">
+                            <view class="line3-item">
+                                <image class="run-info-icon" src="https://ssl-pubpic.51yund.com/1221022887.png"></image>
+                                <text class="run-info-txt">{{item.caloric}}kcal</text>
+                            </view>
+                            <view class="line3-item">
+                                <image class="run-info-icon" src="https://ssl-pubpic.51yund.com/1221023870.png"></image>
+                                <text class="run-info-txt">{{item.cost_time}}</text>
+                            </view>
+                            <view class="line3-item">
+                                <image class="run-info-icon" src="https://ssl-pubpic.51yund.com/1221024269.png"></image>
+                                <text class="run-info-txt">{{item.avg_pace}}</text>
+                            </view>
+                        </view>
+                    </view>
+                </mp-cell>
+            </mp-cells>
+        </view>
+    </scroll-view>
+    
+</view>

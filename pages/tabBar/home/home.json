@@ -1,7 +1,9 @@
 {
   "usingComponents": {
     "kind-item": "./components/KindItem/KindItem",
-    "login-btn": "../../../components/LoginBtn/LoginBtn"
-
+    "sport-nav": "./components/SportNav/SportNav",
+    "login-btn": "../../../components/LoginBtn/LoginBtn",
+    "AI-page":"./AI_page/AI_page",
+    "run-homepage":"./run_homePage/run_homePage"
   }
 }
