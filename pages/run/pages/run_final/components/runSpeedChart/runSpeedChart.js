@@ -14,8 +14,6 @@ function getOption(data) {
     }else{
         txt = `比上次 ↑ ${pace.value}`
     }
-    console.log('txt',txt)
-    console.log('pace',pace)
     var option = {
         backgroundColor: '#ffffff',
         title: [
@@ -167,7 +165,6 @@ Component({
         paceCompare: function(paceCompare) {
             this.pieComponent = this.selectComponent("#mychart-dom-pie");
             pace = paceCompare
-            // console.log(pace)
             this.init_pie()
         }
     },
@@ -219,7 +216,7 @@ Component({
                     //    destHeight: 750, //mychart1的option
                         fileType:'png',
                        success:res => {
-                         console.log("temp path", res.tempFilePath)
+                        //  console.log("temp path", res.tempFilePath)
                          that.setData({
                           chartImage:res.tempFilePath
                         })

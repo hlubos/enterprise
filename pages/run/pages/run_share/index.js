@@ -81,7 +81,6 @@ Page({
             })
           },
           error(res) {
-            // console.log(res);
             hideLoading()
             // 画失败的原因
           }
@@ -113,7 +112,6 @@ Page({
             })
         })
         .catch(rej=>{
-            // console.log(rej)
             if(rej.errno == 103 || rej.errno == 104){
                 // console.log("用户取消或拒绝授权")
             }

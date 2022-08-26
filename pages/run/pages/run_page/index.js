@@ -341,9 +341,6 @@ Page({
             correctFlag = 0
         }
         else {
-            // console.log('x',Math.abs(this.data.x))
-            // console.log('pots.length',pots.length)
-            // console.log('res.speed',res.speed)
             let newPoint = {
                 runner_id: '',
                 point_id: '',
@@ -500,8 +497,6 @@ Page({
             // 均速(公里/小时)
             params.avg_speed = ((this.data.runMiles/1000)/(this.data.runTime/3600)).toFixed(2)
         }
-        // console.log('avg_pace',params.avg_pace)
-        // console.log('avg_speed',params.avg_speed)
         api.reportRunnerInfo(params).then(res=>{
             // 获取runner_id
             let runId = res.runner_id
@@ -525,7 +520,6 @@ Page({
                 // 关闭定位追踪
                 offLocationChange(this._mylocationChangeFn)
                 stopLocationUpdate().then(res=>{
-                    // console.log("停止追踪", res);
                 })
                 stopAccelerometer()
                 offAccelerometerChange()
@@ -569,7 +563,6 @@ Page({
         let oldArr = []
         if(getStorageSync(key)){
             oldArr = getStorageSync(key)
-            // console.log(oldArr)
         }
         let newData = {
             kmiles_cut: this.data.kmilesCount,
@@ -678,7 +671,6 @@ Page({
                     'reportData.nextDistance':nextDistance,
                 })
             }
-            // console.log(this.data.mapStyle.subkey)
         } catch (e) { }
     },
     /**

@@ -104,7 +104,6 @@ Page({
         map_thumb_url: '',
     },
     handleMap(e) {
-        // console.log(e.detail)
     },
     // 读取跑步设置缓存
     getRunSetCache() {
@@ -117,7 +116,6 @@ Page({
                     mapStyle: res.nowMapStyInfo
                 })
             }
-            // console.log(this.data.mapStyle.subkey)
         } catch (e) { }
     },
     // 打开/关闭面板
@@ -169,7 +167,6 @@ Page({
     runFinishAudio(){
         // 
         let auidos = this.audioDidy()
-        // console.log(auidos)
         let index = 0
         innerAudioContext.src = `pages/run/assets/voice/hiking/${auidos[index]}.mp3`
         // 监听音频自然结束
@@ -278,7 +275,6 @@ Page({
         let avgPaceArr = avgPace.split("'").filter(function (s) {
             return s && s.trim(); 
         });
-        // console.log('avgPaceArr',avgPaceArr)
         avgPaceArr.forEach((item,index)=>{
             // 数字
             // 分为0,被10整除,和不被10整除
@@ -328,7 +324,6 @@ Page({
     // 调整canvas宽高
     setCanvasSize() {
         let shareBox = createSelectorQuery()
-        // console.log(shareBox.select('.share-img-box'))
         shareBox.select('.share-img-box').boundingClientRect(res => {
             // myCanvasHeight = res.height
             this.setData({
@@ -348,7 +343,6 @@ Page({
             size: true,
             scrollOffset: true
         }).exec(res=>{
-            // console.log(res)
             setTimeout(() => {
                 that.draw()
             }, 1500);
@@ -368,10 +362,8 @@ Page({
         //   fileType:'jpg',
         //   zoom:0.8,
           progress(percent) { // 绘制进度
-            // console.log(percent);
           },
           finish(url) {
-            // console.log("创建的图片", url);
             hideLoading()
             that.setData({
                 // imgUrl: url,
@@ -379,7 +371,6 @@ Page({
             })
             that.setStaticMapInfo()
             // 跳转到分享页面
-            // console.log(that.data.staticMapUrl)
             navigateTo({
                 url:`../run_share/index?&runner_id=${that.data.runner_id}&dataImg=${encodeURIComponent(url)}&mapImg=${encodeURIComponent(that.data.staticMapUrl)}`
             })
@@ -474,13 +465,11 @@ Page({
                 if (res.statusCode === 200) {
                     // debugger
                     let img = res.filePath
-                    console.log('img',img)
                     // 上传缩略图图片
                     uploadFile.upload({
                         source: 'wx_ydenterprise',
                         file: img,
                         fail (err) {
-                        //     console.log(err)
                         //   wx.showToast({
                         //     title: '使用图片失败，请重试',
                         //     icon: 'none'
@@ -496,7 +485,6 @@ Page({
                             map_thumb_url: obj.thumb_url,
                           })
                           if(that.data.map_thumb_url){
-                            //   console.log('map_thumb_url',that.data.map_thumb_url)
                             // 上传运动缩略图
                             api.AddTrackPic({
                                 runner_id:that.data.runner_id,
@@ -540,7 +528,6 @@ Page({
                 // points.push(item)
                 points = [...points,...item]
             })
-            // console.log(data)
             this.setData({
                 pointsList: points,
                 "polylines[0].points": points,
@@ -559,7 +546,6 @@ Page({
                 sport_type: 0,
                 runner_id:this.data.runner_id,
             }).then(res => {
-                // console.log(res)
                 if (res.code == 0) {
                     this.setData({
                         "userInfo.head_url": res.user_info.head_url,

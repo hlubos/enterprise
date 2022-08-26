@@ -30,8 +30,6 @@ Page({
             time_range:'all',
         }
         api.userSportSummary(params).then(res=>{
-            // console.log("历史数据")
-            // console.log(res)
             if(res.code == 0){
                 this.setData({
                     total_cnt: res.summary_detail.sport_cnt,
@@ -52,7 +50,6 @@ Page({
         this.setData({
             canLoadData: false
         })
-        // console.log("加载数据")
         // 获取缩略图接口
         let peakRecordRes = await api.getDayPeakRecord({
             // user_id:47419973,
@@ -123,7 +120,7 @@ Page({
                 this.setData({
                     canLoadData: true
                 })
-                console.log('runLogList',this.data.runLogList)
+                // console.log('runLogList',this.data.runLogList)
             }
         })
     },
