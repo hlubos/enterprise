@@ -268,11 +268,6 @@ Page({
     },
     // 开始跑步
     runStart(){
-        // startAccelerometer().then(res=>{
-        //     this.setData({
-        //         runStatus:0
-        //     })
-        // })
         // 开始计时
         let that = this
         let second = this.data.runTime
@@ -677,23 +672,6 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad(options) {
-        let that = this
-        // 获取初始位置信息
-        // getLocation({
-        //     type:'gcj02'
-        //     isHighAccuracy:'true'
-        // }).then(res=>{
-        //     // console.log(res)
-        //     const latitude = res.latitude
-        //     const longitude = res.longitude
-        //     // console.log(latitude,longitude)
-        //     that.setData({
-        //         mapCenterLocation:{
-        //             latitude,
-        //             longitude
-        //         }
-        //     })
-        // })
     },
 
     /**
@@ -739,9 +717,6 @@ Page({
                 guidePageShow:true,
                 runGuideCount: 3,
             })
-            // if(this.data.runGuideCount == 3){
-            //     innerAudioContext.src = "pages/run/assets/voice/3.mp3"
-            // }
             // 开始倒计时
             let c = 0
             runGuideCountTimer = setInterval(()=>{
@@ -769,21 +744,6 @@ Page({
                     innerAudioContext.src = "pages/run/assets/voice/kaishipaobu.mp3"
                 }
                 c += 10
-                // if(this.data.runGuideCount == 2){
-                //     innerAudioContext.src = "pages/run/assets/voice/2.mp3"
-                // }else if(this.data.runGuideCount == 1){
-                //     innerAudioContext.src = "pages/run/assets/voice/1.mp3"
-                // }
-                // 倒计时结束后隐藏引导页，设置跑步开始时间,清除定时器，开始跑步计时
-                // if(this.data.runGuideCount == 0){
-                //     this.setData({
-                //         guidePageShow:false,
-                //         runStartTime: parseInt(new Date().getTime()/1000)
-                //     })
-                //     clearInterval(this.data.runGuideCountTimer)
-                //     this.runStart()
-                //     innerAudioContext.src = "pages/run/assets/voice/kaishipaobu.mp3"
-                // }
             },10)
         }
     },
