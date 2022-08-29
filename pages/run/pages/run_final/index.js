@@ -21,7 +21,7 @@ let createInnerAudioContext = wxFun.ordinary('createInnerAudioContext')
 let createMapContext = wxFun.ordinary('createMapContext')
 let createSelectorQuery = wxFun.ordinary('createSelectorQuery')
 
-const innerAudioContext = createInnerAudioContext({useWebAudioImplement:true})
+let innerAudioContext = createInnerAudioContext({useWebAudioImplement:true})
 innerAudioContext.autoplay = true
 Page({
 
@@ -216,10 +216,8 @@ Page({
             for(let i = 0 ;i<newArr.length; i++){
                 runKMilesAudioList.push(newArr[i])
             }
-            runKMilesAudioList.push('gongli')
-        }else {
-            runKMilesAudioList.push('gongli')
         }
+        runKMilesAudioList.push('gongli')
         // 总里程语音播报数组=====================end==============================
         // 总用时================================start=================================
         let sumTimeAudioList = []
@@ -598,6 +596,8 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow() {
+        innerAudioContext = createInnerAudioContext({useWebAudioImplement:true})
+        innerAudioContext.autoplay = true
         this.getRunSetCache()
     },
 
@@ -607,16 +607,13 @@ Page({
     async onHide() {
         // 语音播报停止
         innerAudioContext.stop()
+        innerAudioContext.destroy()
         // 清除所有跑步数据缓存
         let userId = getStorageSync('user_id')
         let storageKey1 = 'run_data_' + userId
         let storageKey2 = 'run_kmiles_pace_arr_' + userId
-        // await removeStorage(storageKey1)
-        // await removeStorage(storageKey2)
         setStorageSync(storageKey1,{})
         setStorageSync(storageKey2,[])
-        // removeStorageSync(storageKey1)
-        // removeStorageSync(storageKey2)
     },
 
     /**
@@ -625,16 +622,13 @@ Page({
     async onUnload() {
         // 语音播报停止
         innerAudioContext.stop()
+        innerAudioContext.destroy()
         // 清除所有跑步数据缓存
         let userId = getStorageSync('user_id')
         let storageKey1 = 'run_data_' + userId
         let storageKey2 = 'run_kmiles_pace_arr_' + userId
-        // await removeStorage(storageKey1)
-        // await removeStorage(storageKey2)
         setStorageSync(storageKey1,{})
         setStorageSync(storageKey2,[])
-        // removeStorageSync(storageKey1)
-        // removeStorageSync(storageKey2)
         // 销毁音频实例
         // innerAudioContext.destroy()
     },
