@@ -1,5 +1,4 @@
 /* run_packege/pages/run_final/index.wxss */
-/* @import "./index.skeleton.wxss"; */
 .backImg {
     /* width: 100%;
     height: 100vh; */

@@ -179,11 +179,11 @@ Page({
             }
             const play = createInnerAudioContext({useWebAudioImplement:true})
             let index = 0
-            play.src = `pages/run/assets/voice/hiking/${auidos[index]}.mp3`
+            play.src = `https://ydcommon.51yund.com/mini_run_voice/voice_1/${auidos[index]}.mp3`
             play.autoplay = true
             play.onEnded(()=>{
                 index++
-                play.src = `pages/run/assets/voice/hiking/${auidos[index]}.mp3`
+                play.src = `https://ydcommon.51yund.com/mini_run_voice/voice_1/${auidos[index]}.mp3`
             })
         }
     },
@@ -410,7 +410,7 @@ Page({
         // 清除跑步计时器
         clearInterval(this.data.runTimer)
         clearTimeout(this.data.locaTimer)
-        innerAudioContext.src = "pages/run/assets/voice/hiking/yundongyizanting.mp3"
+        innerAudioContext.src = "https://ydcommon.51yund.com/mini_run_voice/voice_1/yundongyizanting.mp3"
         this.setData({
             runStatus:1
         })
@@ -427,7 +427,7 @@ Page({
             runStatus:0
         })
         this.runStart()
-        innerAudioContext.src = "pages/run/assets/voice/hiking/yundongyihuifu.mp3"
+        innerAudioContext.src = "https://ydcommon.51yund.com/mini_run_voice/voice_1/yundongyihuifu.mp3"
     },
     // 结束跑步
     async runStop(){
@@ -445,7 +445,7 @@ Page({
                     setStorageSync(key,{})
                     // 清除定时器
                     clearInterval(this.data.runTimer)
-                    innerAudioContext.src = "pages/run/assets/voice/paobujieshu.mp3"
+                    innerAudioContext.src = "https://ydcommon.51yund.com/mini_run_voice/voice_1/paobujieshu.mp3"
                     this.setData({
                         runTime:0,
                         runStatus:2,
@@ -507,7 +507,6 @@ Page({
             if(res.code == 0){
                 // 清除定位，时间置零
                 clearInterval(this.data.runTimer)
-                // innerAudioContext.src = "run_packege/assets/voice/paobujieshu.mp3"
                 this.setData({
                     runTime:0,
                     runStatus:1,
@@ -704,8 +703,7 @@ Page({
             this.getRunSetCache()
             // 
             this.runStart()
-            // innerAudioContext.src = "run_packege/assets/voice/kaishipaobu.mp3"
-            innerAudioContext.src = "pages/run/assets/voice/kaishipaobu.mp3"
+            innerAudioContext.src = "https://ydcommon.51yund.com/mini_run_voice/voice_1/kaishipaobu.mp3"
         }else {
             // 没有残留的运动记录时
             // console.log("上次运动已完成")
@@ -729,11 +727,11 @@ Page({
                     })
                 }
                 if(c == 0){
-                    innerAudioContext.src = "pages/run/assets/voice/3.mp3"
+                    innerAudioContext.src = "https://ydcommon.51yund.com/mini_run_voice/voice_1/3.mp3"
                 }else if( c == 1000 ){
-                    innerAudioContext.src = "pages/run/assets/voice/2.mp3"
+                    innerAudioContext.src = "https://ydcommon.51yund.com/mini_run_voice/voice_1/2.mp3"
                 }else if(c == 2000){
-                    innerAudioContext.src = "pages/run/assets/voice/1.mp3"
+                    innerAudioContext.src = "https://ydcommon.51yund.com/mini_run_voice/voice_1/1.mp3"
                 }else if(c == 3000){
                     this.setData({
                         guidePageShow:false,
@@ -741,7 +739,7 @@ Page({
                     })
                     clearInterval(this.data.runGuideCountTimer)
                     this.runStart()
-                    innerAudioContext.src = "pages/run/assets/voice/kaishipaobu.mp3"
+                    innerAudioContext.src = "https://ydcommon.51yund.com/mini_run_voice/voice_1/kaishipaobu.mp3"
                 }
                 c += 10
             },10)

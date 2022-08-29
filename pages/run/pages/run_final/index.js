@@ -168,11 +168,11 @@ Page({
         // 
         let auidos = this.audioDidy()
         let index = 0
-        innerAudioContext.src = `pages/run/assets/voice/hiking/${auidos[index]}.mp3`
+        innerAudioContext.src = `https://ydcommon.51yund.com/mini_run_voice/voice_1/${auidos[index]}.mp3`
         // 监听音频自然结束
         innerAudioContext.onEnded(()=>{
             index++
-            innerAudioContext.src = `pages/run/assets/voice/hiking/${auidos[index]}.mp3`
+            innerAudioContext.src = `https://ydcommon.51yund.com/mini_run_voice/voice_1/${auidos[index]}.mp3`
         })
     },
     // 语音播报内容整理
