@@ -163,16 +163,22 @@ Page({
         } catch (error) { }
         navigateBack()
     },
+    playFinalVoice(src){
+      innerAudioContext.src = src
+      innerAudioContext.play()
+    },
     // 跑步结束语音播报
     runFinishAudio(){
         // 
         let auidos = this.audioDidy()
         let index = 0
-        innerAudioContext.src = `https://ydcommon.51yund.com/mini_run_voice/voice_1/${auidos[index]}.mp3`
+        // innerAudioContext.src = `https://ydcommon.51yund.com/mini_run_voice/voice_1/${auidos[index]}.mp3`
+        this.playFinalVoice(`https://ydcommon.51yund.com/mini_run_voice/voice_1/${auidos[index]}.mp3`)
         // 监听音频自然结束
         innerAudioContext.onEnded(()=>{
             index++
-            innerAudioContext.src = `https://ydcommon.51yund.com/mini_run_voice/voice_1/${auidos[index]}.mp3`
+            // innerAudioContext.src = `https://ydcommon.51yund.com/mini_run_voice/voice_1/${auidos[index]}.mp3`
+            this.playFinalVoice(`https://ydcommon.51yund.com/mini_run_voice/voice_1/${auidos[index]}.mp3`)
         })
     },
     // 语音播报内容整理

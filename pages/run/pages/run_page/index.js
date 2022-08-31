@@ -23,10 +23,14 @@ let getStorageSync = wxFun.ordinary('getStorageSync')
 let removeStorageSync = wxFun.ordinary('removeStorageSync')
 let onAccelerometerChange = wxFun.ordinary('onAccelerometerChange')
 let offAccelerometerChange = wxFun.ordinary('offAccelerometerChange')
+let getBackgroundAudioManager = wxFun.ordinary('getBackgroundAudioManager')
 
 // const backgroundAudioManager = wx.getBackgroundAudioManager()
-let innerAudioContext = createInnerAudioContext({useWebAudioImplement:true})
-innerAudioContext.autoplay = true
+// let innerAudioContext = createInnerAudioContext({useWebAudioImplement:true})
+// innerAudioContext.autoplay = true
+let innerAudioContext
+let backgroundAudioManager = getBackgroundAudioManager()
+backgroundAudioManager.title = '跑步'
 let runGuideCountTimer
 Page({
     data: {
@@ -177,12 +181,22 @@ Page({
                     // 播放语音
                 }
             }
-            const play = createInnerAudioContext({useWebAudioImplement:true})
+            let play = createInnerAudioContext({useWebAudioImplement:true})
             let index = 0
             play.src = `https://ydcommon.51yund.com/mini_run_voice/voice_1/${auidos[index]}.mp3`
-            play.autoplay = true
+            // play.play()
+            // play.autoplay = true
+            play.onCanplay(()=>{
+              // console.log("准备就绪")
+              // console.log(play.src)
+              play.play()
+            })
             play.onEnded(()=>{
                 index++
+                if(index == auidos.length){
+                  play.stop()
+                  play.destroy()
+                }
                 play.src = `https://ydcommon.51yund.com/mini_run_voice/voice_1/${auidos[index]}.mp3`
             })
         }
@@ -410,7 +424,9 @@ Page({
         // 清除跑步计时器
         clearInterval(this.data.runTimer)
         clearTimeout(this.data.locaTimer)
-        innerAudioContext.src = "https://ydcommon.51yund.com/mini_run_voice/voice_1/yundongyizanting.mp3"
+        // innerAudioContext.src = "https://ydcommon.51yund.com/mini_run_voice/voice_1/yundongyizanting.mp3"
+        // this.playVoice("https://ydcommon.51yund.com/mini_run_voice/voice_1/yundongyizanting.mp3")
+        backgroundAudioManager.src = "https://ydcommon.51yund.com/mini_run_voice/voice_1/yundongyizanting.mp3"
         this.setData({
             runStatus:1
         })
@@ -427,7 +443,9 @@ Page({
             runStatus:0
         })
         this.runStart()
-        innerAudioContext.src = "https://ydcommon.51yund.com/mini_run_voice/voice_1/yundongyihuifu.mp3"
+        // innerAudioContext.src = "https://ydcommon.51yund.com/mini_run_voice/voice_1/yundongyihuifu.mp3"
+        // this.playVoice("https://ydcommon.51yund.com/mini_run_voice/voice_1/yundongyihuifu.mp3")
+        backgroundAudioManager.src = "https://ydcommon.51yund.com/mini_run_voice/voice_1/yundongyihuifu.mp3"
     },
     // 结束跑步
     async runStop(){
@@ -445,7 +463,9 @@ Page({
                     setStorageSync(key,{})
                     // 清除定时器
                     clearInterval(this.data.runTimer)
-                    innerAudioContext.src = "https://ydcommon.51yund.com/mini_run_voice/voice_1/paobujieshu.mp3"
+                    // innerAudioContext.src = "https://ydcommon.51yund.com/mini_run_voice/voice_1/paobujieshu.mp3"
+                    // this.playVoice("https://ydcommon.51yund.com/mini_run_voice/voice_1/paobujieshu.mp3")
+                    backgroundAudioManager.src = "https://ydcommon.51yund.com/mini_run_voice/voice_1/paobujieshu.mp3"
                     this.setData({
                         runTime:0,
                         runStatus:2,
@@ -667,10 +687,19 @@ Page({
             }
         } catch (e) { }
     },
+    // 音频播放
+    playVoice(src){
+      innerAudioContext.destroy()
+      innerAudioContext = createInnerAudioContext({useWebAudioImplement:true})
+      innerAudioContext.src = src
+      innerAudioContext.play()
+    },
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad(options) {
+      innerAudioContext = createInnerAudioContext({useWebAudioImplement:true})
+      innerAudioContext.autoplay = true
     },
 
     /**
@@ -703,7 +732,9 @@ Page({
             this.getRunSetCache()
             // 
             this.runStart()
-            innerAudioContext.src = "https://ydcommon.51yund.com/mini_run_voice/voice_1/kaishipaobu.mp3"
+            // innerAudioContext.src = "https://ydcommon.51yund.com/mini_run_voice/voice_1/kaishipaobu.mp3"
+            // this.playVoice("https://ydcommon.51yund.com/mini_run_voice/voice_1/kaishipaobu.mp3")
+            backgroundAudioManager.src = "https://ydcommon.51yund.com/mini_run_voice/voice_1/kaishipaobu.mp3"
         }else {
             // 没有残留的运动记录时
             // console.log("上次运动已完成")
@@ -728,10 +759,13 @@ Page({
                 }
                 if(c == 0){
                     innerAudioContext.src = "https://ydcommon.51yund.com/mini_run_voice/voice_1/3.mp3"
+                    // this.playVoice("https://ydcommon.51yund.com/mini_run_voice/voice_1/3.mp3")
                 }else if( c == 1000 ){
                     innerAudioContext.src = "https://ydcommon.51yund.com/mini_run_voice/voice_1/2.mp3"
+                    // this.playVoice("https://ydcommon.51yund.com/mini_run_voice/voice_1/2.mp3")
                 }else if(c == 2000){
                     innerAudioContext.src = "https://ydcommon.51yund.com/mini_run_voice/voice_1/1.mp3"
+                    // this.playVoice("https://ydcommon.51yund.com/mini_run_voice/voice_1/1.mp3")
                 }else if(c == 3000){
                     this.setData({
                         guidePageShow:false,
@@ -739,7 +773,8 @@ Page({
                     })
                     clearInterval(this.data.runGuideCountTimer)
                     this.runStart()
-                    innerAudioContext.src = "https://ydcommon.51yund.com/mini_run_voice/voice_1/kaishipaobu.mp3"
+                    // innerAudioContext.src = "https://ydcommon.51yund.com/mini_run_voice/voice_1/kaishipaobu.mp3"
+                    backgroundAudioManager.src = "https://ydcommon.51yund.com/mini_run_voice/voice_1/kaishipaobu.mp3"
                 }
                 c += 10
             },10)
@@ -750,8 +785,6 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow() {
-        innerAudioContext = createInnerAudioContext({useWebAudioImplement:true})
-        innerAudioContext.autoplay = true
         // 读取跑步设置缓存
         this.getRunSetCache()
     },
@@ -760,13 +793,15 @@ Page({
      * 生命周期函数--监听页面隐藏
      */
     onHide() {
-        // console.log('跑步页面隐藏')
+        // innerAudioContext.stop()
+        // innerAudioContext.destroy() 
     },
 
     /**
      * 生命周期函数--监听页面卸载
      */
     onUnload() {
+        innerAudioContext.stop()
         innerAudioContext.destroy() 
         clearInterval(runGuideCountTimer)
         clearInterval(this.data.runTimer)

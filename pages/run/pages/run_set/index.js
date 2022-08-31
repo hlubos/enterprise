@@ -28,6 +28,10 @@ Page({
         voiceIndex: 0,
         // 当前播报频率索引
         freIndex: [0,0],
+        // 显示语音类型选择器
+        isVoicePickerShow: false,
+        // 显示播报频率选择器
+        isFrePickerShow: false,
         // 语音类型列表
         // voiceList: ['国语女声', '国语男声', '英语女声', '英语男声'],
         voiceList: ['国语女声'],
@@ -241,20 +245,52 @@ Page({
             // console.log(this.data.mapStyle.subkey)
         } catch (e) { }
     },
+    showPicker(){
+      this.setData({
+        isPickerShow: true
+      })
+    },
+    showVoicePicker(){
+      this.setData({
+        isPickerShow: true,
+        isFrePickerShow: false,
+        isVoicePickerShow: true,
+      })
+    },
+    showFrePicker(){
+      this.setData({
+        isPickerShow: true,
+        isVoicePickerShow: false,
+        isFrePickerShow: true,
+      })
+    },
+    changeVoiceIndex(e){
+      console.log(e)
+      this.setData({
+        voiceIndex: e.detail.value
+      })
+      this.cacheSetData()
+    },
+    changeFreIndex(e){
+      // console.log(e)
+      this.setData({
+        freIndex: e.detail.value
+      })
+      this.cacheSetData()
+      if(this.data.freIndex[0] == 0){
+        this.setData({
+            "frequencyArray[1]":['0.5公里', '1公里', '2公里', '3公里']
+        })
+      }else if(this.data.freIndex[0] == 1){
+        this.setData({
+            "frequencyArray[1]":['10分钟', '20分钟', '30分钟', '40分钟']
+        })
+      }
+    },
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad(options) {
-        // try {
-        //     let res = getStorageSync('run_set_infos')
-        //     // console.log(res)
-        //     this.setData({
-        //         freIndex: res.freIndex,
-        //         openVoice:res.openVoice,
-        //         voiceIndex: res.voiceIndex,
-        //         nowMapStyInfo: res.nowMapStyInfo,
-        //     })
-        // } catch (e) { }
     },
 
     /**
@@ -276,14 +312,18 @@ Page({
      * 生命周期函数--监听页面隐藏
      */
     onHide() {
-
+      this.setData({
+        isPickerShow: false
+      })
     },
 
     /**
      * 生命周期函数--监听页面卸载
      */
     onUnload() {
-        
+      this.setData({
+        isPickerShow: false
+      })
     },
 
     /**

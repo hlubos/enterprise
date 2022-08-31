@@ -200,6 +200,7 @@ Component({
             navigateTo({
                 url:'/pages/run/pages/run_page/index'
             })
+            hideLoading()
         },
         // 获取缓存数据,读取缓存查看是否存在未完成的运动
         async getRunDataCache(){
