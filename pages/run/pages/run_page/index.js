@@ -699,6 +699,10 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad(options) {
+      startLocationUpdateBackground().then(res=>{
+        // console.log(res)
+        onLocationChange()
+      })
       innerAudioContext = createInnerAudioContext({useWebAudioImplement:true})
       innerAudioContext.autoplay = true
     },
@@ -759,14 +763,17 @@ Page({
                     })
                 }
                 if(c == 0){
-                    innerAudioContext.src = "https://ydcommon.51yund.com/mini_run_voice/voice_1/3.mp3"
+                    // innerAudioContext.src = "https://ydcommon.51yund.com/mini_run_voice/voice_1/3.mp3"
                     // this.playVoice("https://ydcommon.51yund.com/mini_run_voice/voice_1/3.mp3")
+                    backgroundAudioManager.src = "https://ydcommon.51yund.com/mini_run_voice/voice_1/3.mp3"
                 }else if( c == 1000 ){
-                    innerAudioContext.src = "https://ydcommon.51yund.com/mini_run_voice/voice_1/2.mp3"
+                    // innerAudioContext.src = "https://ydcommon.51yund.com/mini_run_voice/voice_1/2.mp3"
                     // this.playVoice("https://ydcommon.51yund.com/mini_run_voice/voice_1/2.mp3")
+                    backgroundAudioManager.src = "https://ydcommon.51yund.com/mini_run_voice/voice_1/2.mp3"
                 }else if(c == 2000){
-                    innerAudioContext.src = "https://ydcommon.51yund.com/mini_run_voice/voice_1/1.mp3"
+                    // innerAudioContext.src = "https://ydcommon.51yund.com/mini_run_voice/voice_1/1.mp3"
                     // this.playVoice("https://ydcommon.51yund.com/mini_run_voice/voice_1/1.mp3")
+                    backgroundAudioManager.src = "https://ydcommon.51yund.com/mini_run_voice/voice_1/1.mp3"
                 }else if(c == 3000){
                     this.setData({
                         guidePageShow:false,
