@@ -497,7 +497,8 @@ Page({
             distance:this.data.runMiles,
             cost_time:this.data.runTime,
             // time:this.data.runStartTime,
-            time:runEndTime,
+            // time:runEndTime,
+            time: parseInt(new Date().getTime()/1000),
             caloric:this.data.calorie,
             run_source:"wx_mini_program",
             // 步数(可不传)

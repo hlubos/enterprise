@@ -22,7 +22,7 @@ let createMapContext = wxFun.ordinary('createMapContext')
 let createSelectorQuery = wxFun.ordinary('createSelectorQuery')
 
 let innerAudioContext = createInnerAudioContext({useWebAudioImplement:true})
-innerAudioContext.autoplay = true
+// innerAudioContext.autoplay = true
 Page({
 
     /**
@@ -179,6 +179,9 @@ Page({
             index++
             // innerAudioContext.src = `https://ydcommon.51yund.com/mini_run_voice/voice_1/${auidos[index]}.mp3`
             this.playFinalVoice(`https://ydcommon.51yund.com/mini_run_voice/voice_1/${auidos[index]}.mp3`)
+            if(index >= auidos.length - 1){
+              innerAudioContext.offEnded()
+            }
         })
     },
     // 语音播报内容整理
@@ -603,7 +606,7 @@ Page({
      */
     onShow() {
         innerAudioContext = createInnerAudioContext({useWebAudioImplement:true})
-        innerAudioContext.autoplay = true
+        // innerAudioContext.autoplay = true
         this.getRunSetCache()
     },
 

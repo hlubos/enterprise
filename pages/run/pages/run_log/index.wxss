@@ -64,6 +64,10 @@
     height: 1px;
 }
 
+.runlog-list .weui-cells {
+  margin-top: 0;
+}
+
 .runlog-item {
     display: flex;
 }
