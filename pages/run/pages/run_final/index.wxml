@@ -27,7 +27,7 @@
                 <view class="logo answer_draw_canvas">
                     <image class="answer_draw_canvas" data-delay="1" data-type="image" data-url="https://ssl-pubpic.51yund.com/1221778105.png" src="https://ssl-pubpic.51yund.com/1221778105.png"></image>
                 </view>
-                <view class="finish-time answer_draw_canvas" data-delay="1" data-type="text" data-text="{{showRunData.runEndTime}}">{{showRunData.runEndTime}}</view>
+                <view class="finish-time answer_draw_canvas" data-delay="1" data-type="text" data-text="{{showRunData.runStartTime}}">{{showRunData.runStartTime}}</view>
                 <view class="avatar answer_draw_canvas">
                     <image class="answer_draw_canvas" data-delay="1" data-type="image" data-url="{{userInfo.head_url}}" src="{{userInfo.head_url}}"></image>
                 </view>

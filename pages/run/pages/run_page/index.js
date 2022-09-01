@@ -486,7 +486,8 @@ Page({
         // 缓存最后一公里的配速
         this.setKmilesCache(false)
         // 跑步结束时间
-        let runEndTime = parseInt(new Date().getTime()/1000)
+        // let runEndTime = parseInt(new Date().getTime()/1000)
+        let runEndTime = parseInt(Date.now()/1000)
         this.setData({
             runEndTime,
         })
@@ -496,9 +497,8 @@ Page({
             kind_id:0,
             distance:this.data.runMiles,
             cost_time:this.data.runTime,
-            // time:this.data.runStartTime,
+            time:this.data.runStartTime,
             // time:runEndTime,
-            time: parseInt(new Date().getTime()/1000),
             caloric:this.data.calorie,
             run_source:"wx_mini_program",
             // 步数(可不传)
@@ -777,7 +777,8 @@ Page({
                 }else if(c == 3000){
                     this.setData({
                         guidePageShow:false,
-                        runStartTime: parseInt(new Date().getTime()/1000)
+                        // runStartTime: parseInt(new Date().getTime()/1000)
+                        runStartTime: parseInt(Date.now()/1000)
                     })
                     clearInterval(this.data.runGuideCountTimer)
                     this.runStart()
