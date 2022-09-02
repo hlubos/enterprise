@@ -69,3 +69,15 @@
     width: 80rpx;
     height: 80rpx;
 }
+
+.cover-smaller {
+    width: 100rpx;
+    height: 100rpx;
+    position: absolute;
+    z-index: 101;
+    top: 400rpx;
+    right: 10rpx;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

@@ -641,7 +641,14 @@ Page({
         // 销毁音频实例
         // innerAudioContext.destroy()
     },
-
+    // 下拉
+    // onPageScroll: function(e) {
+    //     if (e.scrollTop < 0) {
+    //         wx.pageScrollTo({
+    //             scrollTop: 0
+    //         })
+    //     }
+    // },
     /**
      * 页面相关事件处理函数--监听用户下拉动作
      */

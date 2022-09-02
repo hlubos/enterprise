@@ -2,6 +2,10 @@
 <!-- <canvas canvas-id="shareCanvas" class="share-Canvas"></canvas> -->
 <!-- <canvas type="2d" canvas-id="shareCanvas" id="shareCanvas" class="shareCanvas" style="width: 100%; height:{{canvasHeight}}px;"> -->
 <!-- <import src="index.skeleton.wxml"/> -->
+<scroll-view 
+    scroll-y="true" class="content" :enhanced="true" style="height: 100vh;width: 100vw;"
+    :bounces="false" :show-scrollbar="false">
+<!-- <view style="overflow:scroll; height: 100%;"> -->
 <view class="fina-map-box answer_draw_canvas" style="height: {{mapHeight}};">
     <map id="run-final-map" 
         class="run-final-map answer_draw_canvas" 
@@ -39,7 +43,7 @@
                 </view>
                 <view class="title2-right answer_draw_canvas">
                     <view class="title2-right-name answer_draw_canvas" data-delay="1" data-left="0" data-type="text" data-text="{{userInfo.nick}}">{{userInfo.nick}}</view>
-                    <view class="title2-right-id answer_draw_canvas" data-delay="1" data-left="0" data-type="text" data-text="用户ID：278334567">用户ID：278334567</view>
+                    <view class="title2-right-id answer_draw_canvas" data-delay="1" data-left="0" data-type="text" data-text="用户ID：{{userInfo.user_id}}">用户ID：{{userInfo.user_id}}</view>
                 </view>
             </view>
             <view class="title3 answer_draw_canvas">
@@ -101,7 +105,7 @@
 <canvas
     canvas-id="answerCanvas" 
     class="answerCanvas"
-    style="position: absolute;top: -{{canvasHeight}}px; width: {{canvasWidth}}px; height:{{canvasHeight}}px;background:#fff;"
+    style="position: absolute;top: -{{canvasHeight}}px; left: -{{canvasWidth}}px; width: {{canvasWidth}}px; height:{{canvasHeight}}px;background:#fff;"
 ></canvas>
 <!-- <view class="share-type-box" hidden="{{shareFlag == 0}}">
     <view class="type-btn" bindtap="wxShare">
@@ -143,3 +147,5 @@
         </view>
     </view>
 </page-container> -->
+<!-- </view> -->
+</scroll-view>

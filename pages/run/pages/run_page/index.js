@@ -454,13 +454,15 @@ Page({
         let key = 'run_data_'+user_id
         let kMilesCacheData = getStorageSync(key)
         if(!kMilesCacheData.locaDotArr[0] || kMilesCacheData.locaDotArr[0].length < 2 || this.data.runMiles <= 10){
-            showModal({title:'您的移动距离过短，数据将不会被保存',content:'是否退出跑步？'}).then(async res=>{
+            showModal({title:'您的移动距离过短,数据将不会被保存',content:'是否退出跑步？'}).then(async res=>{
                 if(res.confirm){
                     // 清除运动数据缓存
                     let user_id = getStorageSync('user_id')
                     let storageKey = 'run_kmiles_pace_arr_' + user_id
                     setStorageSync(storageKey,[])
                     setStorageSync(key,{})
+                    console.log('key',getStorageSync('key'))
+                    console.log('storageKey',getStorageSync('storageKey'))
                     // 清除定时器
                     clearInterval(this.data.runTimer)
                     // innerAudioContext.src = "https://ydcommon.51yund.com/mini_run_voice/voice_1/paobujieshu.mp3"
@@ -476,7 +478,7 @@ Page({
                     })
                     // stopAccelerometer()
                     offAccelerometerChange()
-                    navigateBack()
+                    navigateBack({delta:1})
                 }else{
                     return false
                 }
