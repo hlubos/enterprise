@@ -119,16 +119,15 @@
     color: #FFFFFF;
 }
 
-.unlock-btn-center {
+/* .unlock-btn-center {
     display: flex;
     justify-content: center;
     align-items: center;
     width: 156rpx;
     height: 156rpx;
-    /* transform: scaleX(-1); */
     border-radius: 50%;
     border: 4rpx solid #FFFFFF;
-}
+} */
 
 .map-btn {
     width: 92rpx;

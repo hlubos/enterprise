@@ -8,7 +8,7 @@
             layer-style="{{mapStyle['layer-style']}}"
         ></map>
     </view>
-    <view class="run_index">
+    <view class="run_index" catch:touchmove="true">
         <navigator id="nav" url="/pages/run/pages/run_FAQ/index">
             <image class="FAQ-btn" src="https://ssl-pubpic.51yund.com/1220976601.png"></image>
         </navigator>

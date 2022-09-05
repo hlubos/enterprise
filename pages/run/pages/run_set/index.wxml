@@ -46,8 +46,9 @@
 <page-container show="{{isPickerShow}}" round>
   <!-- 声源类型选择 -->
   <picker-view 
-    wx:if="{{isVoicePickerShow}}"
+    hidden="{{!isVoicePickerShow}}"
     class="voice-picker"
+    immediate-change
     indicator-style="height: 50px;"
     style="height: 50vh; width: 100%;"
     value="{{voiceIndex}}"
@@ -59,8 +60,9 @@
   </picker-view>
   <!-- 播报频率选择 -->
   <picker-view 
-    wx:if="{{isFrePickerShow}}"
+    hidden="{{!isFrePickerShow}}"
     class="fre-picker"
+    immediate-change
     indicator-style="height: 50px;"
     style="height: 50vh; width: 100%;"
     value="{{freIndex}}"

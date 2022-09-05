@@ -27,11 +27,11 @@
                 <image src="https://ssl-pubpic.51yund.com/1221492970.png"></image>
             </view>
             <!-- 开始、继续 -->
-            <view class="continue-btn" hidden="{{runStatus == 0}}" bindtap="runContinue">
+            <view class="continue-btn" wx:if="{{runStatus !== 0}}" bindtap="runContinue">
                 <image src="https://ssl-pubpic.51yund.com/1221493943.png"></image>
             </view>
             <!-- 结束 -->
-            <view class="stop-btn" hidden="{{runStatus == 0}}" >
+            <view class="stop-btn" wx:if="{{runStatus !== 0}}" >
                 <image src="https://ssl-pubpic.51yund.com/1221493926.png" bindlongpress="runStop"></image>
                 <!-- <image src="https://ssl-pubpic.51yund.com/1221493926.png"></image> -->
                 <!-- <cover-view hidden="{{stopBtnShow==false}}" style="z-index: 99; position: absolute; top: 0; border-radius: 50%;" bindtouchstart="stopRunStart" bindtouchend="stopRunBreak">
@@ -48,7 +48,7 @@
                 </cover-view> -->
             </view>
             <!-- 暂停 -->
-            <view class="pause-btn" wx:if="{{runStatus !== 1}}" hidden="{{runStatus == 1}}" bindtap="runPause">
+            <view class="pause-btn" wx:if="{{runStatus !== 1}}" bindtap="runPause">
                 <image src="https://ssl-pubpic.51yund.com/1221493962.png"></image>
             </view>
             <!-- 地图按钮 -->

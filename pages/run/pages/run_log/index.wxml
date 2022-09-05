@@ -25,7 +25,9 @@
             <mp-cells ext-class="my-cells">
                 <mp-cell wx:for="{{runLogList}}" wx:key="index">
                     <view class="runlog-item-icon">
-                        <image src="{{item.pic_url}}"></image>
+                        <image lazy-load src="{{item.pic_url == ''?defaultImg:item.pic_url}}" binderror="errorFunction" data-errorimg="{{index}}"></image>
+                        <!-- <image src="{{item.pic_url}}"></image> -->
+                        <!-- <image style="position: absolute; top: 0; left: 0; z-index: -1;" src="https://ssl-pubpic.51yund.com/1301346077.png"></image> -->
                         <!-- <image src="{{thumbImgList[index].pic_url}}"></image> -->
                         <!-- <image src="{{thumbImgList.find(i=>i.runner_id == item.runner_id).pic_url}}"></image> -->
                     </view>

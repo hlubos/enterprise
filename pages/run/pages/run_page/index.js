@@ -6,6 +6,7 @@ import wxFun from '../../utils/wxFun'
 let getLocation = wxFun.promisify('getLocation')
 let redirectTo = wxFun.promisify('redirectTo')
 let navigateBack = wxFun.promisify('navigateBack')
+let switchTab = wxFun.promisify('switchTab')
 let stopLocationUpdate = wxFun.promisify('stopLocationUpdate')
 let startLocationUpdateBackground = wxFun.promisify('startLocationUpdateBackground')
 let setStorage = wxFun.promisify('setStorage')
@@ -24,6 +25,7 @@ let removeStorageSync = wxFun.ordinary('removeStorageSync')
 let onAccelerometerChange = wxFun.ordinary('onAccelerometerChange')
 let offAccelerometerChange = wxFun.ordinary('offAccelerometerChange')
 let getBackgroundAudioManager = wxFun.ordinary('getBackgroundAudioManager')
+let nextTick = wxFun.ordinary('nextTick')
 
 // const backgroundAudioManager = wx.getBackgroundAudioManager()
 // let innerAudioContext = createInnerAudioContext({useWebAudioImplement:true})
@@ -454,7 +456,7 @@ Page({
         let key = 'run_data_'+user_id
         let kMilesCacheData = getStorageSync(key)
         if(!kMilesCacheData.locaDotArr[0] || kMilesCacheData.locaDotArr[0].length < 2 || this.data.runMiles <= 10){
-            showModal({title:'您的移动距离过短,数据将不会被保存',content:'是否退出跑步？'}).then(async res=>{
+            showModal({title:'是否退出跑步？',content:'您的移动距离过短,数据将不会保存'}).then(async res=>{
                 if(res.confirm){
                     // 清除运动数据缓存
                     let user_id = getStorageSync('user_id')
@@ -468,17 +470,22 @@ Page({
                     // innerAudioContext.src = "https://ydcommon.51yund.com/mini_run_voice/voice_1/paobujieshu.mp3"
                     // this.playVoice("https://ydcommon.51yund.com/mini_run_voice/voice_1/paobujieshu.mp3")
                     backgroundAudioManager.src = "https://ydcommon.51yund.com/mini_run_voice/voice_1/paobujieshu.mp3"
-                    this.setData({
-                        runTime:0,
-                        runStatus:2,
-                    })
+                    // this.setData({
+                    //     runTime:0,
+                    //     runStatus:2,
+                    // })
                     // 关闭定位追踪
                     offLocationChange(this._mylocationChangeFn)
                     stopLocationUpdate().then(res=>{
                     })
                     // stopAccelerometer()
                     offAccelerometerChange()
-                    navigateBack({delta:1})
+                    // nextTick(()=>{
+                    //     navigateBack({delta:1}).then(res=>console.log(res)).catch(err=>console.log(err))
+                    // }) 
+                    switchTab({
+                        url:'/pages/tabBar/home/home'
+                    })
                 }else{
                     return false
                 }
