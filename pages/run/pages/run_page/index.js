@@ -285,7 +285,6 @@ Page({
     // 开始跑步
     runStart(){
         // 开始计时
-        let that = this
         let second = this.data.runTime
         // let canGetLocation = true
         this.setData({
@@ -296,16 +295,16 @@ Page({
         var runTimer = setInterval(()=>{
             // 累计跑步时间
             second++
-            that.setData({
+            this.setData({
                 runTime:second,
                 outTime:this.data.outTime+1,
             })
             // 更新跑步信息
-            that.getRunShowData()
+            this.getRunShowData()
             // 缓存跑步数据
-            that.setRunDataCache()
+            this.setRunDataCache()
         },1000)
-        that.setData({
+        this.setData({
             runTimer:runTimer
         })
         // 监听加速度数据事件
@@ -426,8 +425,6 @@ Page({
         // 清除跑步计时器
         clearInterval(this.data.runTimer)
         clearTimeout(this.data.locaTimer)
-        // innerAudioContext.src = "https://ydcommon.51yund.com/mini_run_voice/voice_1/yundongyizanting.mp3"
-        // this.playVoice("https://ydcommon.51yund.com/mini_run_voice/voice_1/yundongyizanting.mp3")
         backgroundAudioManager.src = "https://ydcommon.51yund.com/mini_run_voice/voice_1/yundongyizanting.mp3"
         this.setData({
             runStatus:1
@@ -445,8 +442,6 @@ Page({
             runStatus:0
         })
         this.runStart()
-        // innerAudioContext.src = "https://ydcommon.51yund.com/mini_run_voice/voice_1/yundongyihuifu.mp3"
-        // this.playVoice("https://ydcommon.51yund.com/mini_run_voice/voice_1/yundongyihuifu.mp3")
         backgroundAudioManager.src = "https://ydcommon.51yund.com/mini_run_voice/voice_1/yundongyihuifu.mp3"
     },
     // 结束跑步
@@ -467,13 +462,10 @@ Page({
                     console.log('storageKey',getStorageSync('storageKey'))
                     // 清除定时器
                     clearInterval(this.data.runTimer)
-                    // innerAudioContext.src = "https://ydcommon.51yund.com/mini_run_voice/voice_1/paobujieshu.mp3"
-                    // this.playVoice("https://ydcommon.51yund.com/mini_run_voice/voice_1/paobujieshu.mp3")
                     backgroundAudioManager.src = "https://ydcommon.51yund.com/mini_run_voice/voice_1/paobujieshu.mp3"
-                    // this.setData({
-                    //     runTime:0,
-                    //     runStatus:2,
-                    // })
+                    this.setData({
+                        runTime:0,
+                    })
                     // 关闭定位追踪
                     offLocationChange(this._mylocationChangeFn)
                     stopLocationUpdate().then(res=>{
@@ -710,7 +702,7 @@ Page({
     onLoad(options) {
       startLocationUpdateBackground().then(res=>{
         // console.log(res)
-        onLocationChange()
+        onLocationChange(()=>{})
       })
       innerAudioContext = createInnerAudioContext({useWebAudioImplement:true})
       innerAudioContext.autoplay = true
@@ -746,8 +738,6 @@ Page({
             this.getRunSetCache()
             // 
             this.runStart()
-            // innerAudioContext.src = "https://ydcommon.51yund.com/mini_run_voice/voice_1/kaishipaobu.mp3"
-            // this.playVoice("https://ydcommon.51yund.com/mini_run_voice/voice_1/kaishipaobu.mp3")
             backgroundAudioManager.src = "https://ydcommon.51yund.com/mini_run_voice/voice_1/kaishipaobu.mp3"
         }else {
             // 没有残留的运动记录时
@@ -772,16 +762,10 @@ Page({
                     })
                 }
                 if(c == 0){
-                    // innerAudioContext.src = "https://ydcommon.51yund.com/mini_run_voice/voice_1/3.mp3"
-                    // this.playVoice("https://ydcommon.51yund.com/mini_run_voice/voice_1/3.mp3")
                     backgroundAudioManager.src = "https://ydcommon.51yund.com/mini_run_voice/voice_1/3.mp3"
                 }else if( c == 1000 ){
-                    // innerAudioContext.src = "https://ydcommon.51yund.com/mini_run_voice/voice_1/2.mp3"
-                    // this.playVoice("https://ydcommon.51yund.com/mini_run_voice/voice_1/2.mp3")
                     backgroundAudioManager.src = "https://ydcommon.51yund.com/mini_run_voice/voice_1/2.mp3"
                 }else if(c == 2000){
-                    // innerAudioContext.src = "https://ydcommon.51yund.com/mini_run_voice/voice_1/1.mp3"
-                    // this.playVoice("https://ydcommon.51yund.com/mini_run_voice/voice_1/1.mp3")
                     backgroundAudioManager.src = "https://ydcommon.51yund.com/mini_run_voice/voice_1/1.mp3"
                 }else if(c == 3000){
                     this.setData({
@@ -794,8 +778,8 @@ Page({
                     // innerAudioContext.src = "https://ydcommon.51yund.com/mini_run_voice/voice_1/kaishipaobu.mp3"
                     backgroundAudioManager.src = "https://ydcommon.51yund.com/mini_run_voice/voice_1/kaishipaobu.mp3"
                 }
-                c += 10
-            },10)
+                c += 1000
+            },1000)
         }
     },
 

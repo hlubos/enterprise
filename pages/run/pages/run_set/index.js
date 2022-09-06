@@ -37,6 +37,18 @@ Page({
         voiceList: ['国语女声'],
         // 播报频率 ['10分钟', '20分钟', '30分钟', '40分钟']
         frequencyArray: [['按距离播报', '按时间播报'], ['0.5公里', '1公里', '2公里', '3公里']],
+        freColumns: [
+            {
+              values: ['按距离播报', '按时间播报'],
+              className: 'column1',
+              defaultIndex:'0',
+            },
+            {
+              values: ['0.5公里', '1公里', '2公里', '3公里'],
+              className: 'column2',
+              defaultIndex:'0',
+            },
+          ],
         // 地图样式列表
         mapStyleList:[
             {
@@ -127,51 +139,58 @@ Page({
                 signalStrength:res.signalStrength,
             })
             let netTxt = ''
-            if(!res.signalStrength){
-                if(res.networkType == 'wifi'){
-                    netTxt='当前为WIFI网络'
-                }else if(res.networkType == '4g' || res.networkType == '5g'){
-                    netTxt='当前为4G/5G网络'
-                }else{
-                    netTxt='当前网络信号弱'
-                }
+            if(res.networkType == 'wifi'){
+                netTxt='当前为WIFI网络'
+            }else if(res.networkType == '4g' || res.networkType == '5g'){
+                netTxt='当前为4G/5G网络'
             }else{
-                if(res.networkType == 'wifi'){
-                    // wifi
-                    if(res.signalStrength <= 0 && res.signalStrength > -55){
-                        netTxt = '网络信号强'
-                    }else if(res.signalStrength <= -55 && res.signalStrength >= -100){
-                        netTxt ='网络信号一般'  
-                    }else {
-                        // netTxt = '网络信号差'
-                        netTxt = '您当前网络信号不好，请切换网络'
-                    }
-                }else if(res.networkType == '4g' || res.networkType == '5g'){
-                    // 4g/5g
-                    if(res.signalStrength >= -51 && res.signalStrength < 0){
-                        netTxt = '网络信号强'
-                    }else if(res.signalStrength >= -89 && res.signalStrength < -51){
-                        // （-89）-（-51）满格（Great）
-                        netTxt = '网络信号强'
-                    }else if(res.signalStrength >= -97 && res.signalStrength < -89){
-                        // （-97）-（-89）很好（Good）
-                        netTxt = '网络信号很好'
-                    }else if(res.signalStrength >= -103 && res.signalStrength < -97){
-                        // （-103）-（-97）良好（MODERATE）
-                        netTxt = '网络信号良好'
-                    }else if(res.signalStrength >= -107 && res.signalStrength < -103){
-                        // （-107）-（-103）很差（poor）
-                        netTxt = '您当前网络信号不好，请切换网络'
-                    }else if(res.signalStrength >= -113 && res.signalStrength < -107){
-                        // （-113）-（-107）无信号（min）
-                        netTxt = "您当前网络信号不好，请切换网络"
-                    }else {
-                        netTxt = "您当前网络信号不好，请切换网络"
-                    }
-                }else {
-                    netTxt = "您当前网络信号不好，请切换网络"
-                }
+                netTxt='当前网络信号弱'
             }
+            // if(!res.signalStrength){
+            //     if(res.networkType == 'wifi'){
+            //         netTxt='当前为WIFI网络'
+            //     }else if(res.networkType == '4g' || res.networkType == '5g'){
+            //         netTxt='当前为4G/5G网络'
+            //     }else{
+            //         netTxt='当前网络信号弱'
+            //     }
+            // }else{
+            //     if(res.networkType == 'wifi'){
+            //         // wifi
+            //         if(res.signalStrength <= 0 && res.signalStrength > -55){
+            //             netTxt = '网络信号强'
+            //         }else if(res.signalStrength <= -55 && res.signalStrength >= -100){
+            //             netTxt ='网络信号一般'
+            //         }else {
+            //             // netTxt = '网络信号差'
+            //             netTxt = '您当前网络信号不好，请切换网络'
+            //         }
+            //     }else if(res.networkType == '4g' || res.networkType == '5g'){
+            //         // 4g/5g
+            //         if(res.signalStrength >= -51 && res.signalStrength < 0){
+            //             netTxt = '网络信号强'
+            //         }else if(res.signalStrength >= -89 && res.signalStrength < -51){
+            //             // （-89）-（-51）满格（Great）
+            //             netTxt = '网络信号强'
+            //         }else if(res.signalStrength >= -97 && res.signalStrength < -89){
+            //             // （-97）-（-89）很好（Good）
+            //             netTxt = '网络信号很好'
+            //         }else if(res.signalStrength >= -103 && res.signalStrength < -97){
+            //             // （-103）-（-97）良好（MODERATE）
+            //             netTxt = '网络信号良好'
+            //         }else if(res.signalStrength >= -107 && res.signalStrength < -103){
+            //             // （-107）-（-103）很差（poor）
+            //             netTxt = '您当前网络信号不好，请切换网络'
+            //         }else if(res.signalStrength >= -113 && res.signalStrength < -107){
+            //             // （-113）-（-107）无信号（min）
+            //             netTxt = "您当前网络信号不好，请切换网络"
+            //         }else {
+            //             netTxt = "您当前网络信号不好，请切换网络"
+            //         }
+            //     }else {
+            //         netTxt = "您当前网络信号不好，请切换网络"
+            //     }
+            // }
             this.setData({
                 netTxt,
             })
@@ -187,48 +206,94 @@ Page({
         this.cacheSetData()
     },
     // 播报类型改变
-    voiceChange(e){
+    // voiceChange(e){
+    //     this.setData({
+    //         voiceIndex: e.detail.value
+    //     })
+    //     this.cacheSetData()
+    // },
+    onVoiceColumnChange(e){
+
+    },
+    onVoiceColumnConfirm(e){
         this.setData({
-            voiceIndex: e.detail.value
+            voiceIndex: e.detail.index,
+            isPickerShow:false,
         })
         this.cacheSetData()
+    },
+    onVoiceColumnCancel(e){
+        this.setData({
+            isPickerShow:false,
+        })
     },
     // 播报频率改变
-    freChange(e){
-        this.setData({
-            freIndex: e.detail.value
-        })
-        this.cacheSetData()
-    },
+    // freChange(e){
+    //     this.setData({
+    //         freIndex: e.detail.value
+    //     })
+    //     this.cacheSetData()
+    // },
     // 选择播报频率列改变时触发
-    freColumnChange(e){
-        if(e.detail.column == 0){
-            if(e.detail.value == 0){
+    // freColumnChange(e){
+    //     if(e.detail.column == 0){
+    //         if(e.detail.value == 0){
+    //             this.setData({
+    //                 "frequencyArray[1]":['0.5公里', '1公里', '2公里', '3公里']
+    //             })
+    //         }else if(e.detail.value == 1){
+    //             this.setData({
+    //                 "frequencyArray[1]":['10分钟', '20分钟', '30分钟', '40分钟']
+    //             })
+    //         }
+    //     }
+    // },
+    onFreColumnChange(e){
+        // console.log(e.detail)
+        let { picker, value, index } = e.detail
+        if(index == 0){
+            let valIndex = picker.getColumnIndex(0)
+            // console.log(valIndex)
+            if(valIndex == 0){
                 this.setData({
-                    "frequencyArray[1]":['0.5公里', '1公里', '2公里', '3公里']
+                    "frequencyArray[1]":['0.5公里', '1公里', '2公里', '3公里'],
+                    "freColumns[1].values":['0.5公里', '1公里', '2公里', '3公里'],
                 })
-            }else if(e.detail.value == 1){
+            }else if(valIndex == 1){
                 this.setData({
-                    "frequencyArray[1]":['10分钟', '20分钟', '30分钟', '40分钟']
+                    "frequencyArray[1]":['10分钟', '20分钟', '30分钟', '40分钟'],
+                    "freColumns[1].values":['10分钟', '20分钟', '30分钟', '40分钟'],
                 })
             }
         }
     },
-    // 选择播报频率取消时
-    freCancel(e){
+    onFreColumnConfirm(e){
         this.setData({
-            freIndex:this.data.freIndex
+            freIndex: e.detail.index,
+            isPickerShow:false
         })
-        if(this.data.freIndex[0] == 0){
-            this.setData({
-                "frequencyArray[1]":['0.5公里', '1公里', '2公里', '3公里']
-            })
-        }else if(this.data.freIndex[0] == 1){
-            this.setData({
-                "frequencyArray[1]":['10分钟', '20分钟', '30分钟', '40分钟']
-            })
-        }
+        this.cacheSetData()
     },
+    onFreColumnCancel(e){
+        this.setData({
+            isPickerShow:false
+        })
+    },
+    // 选择播报频率取消时
+    // freCancel(e){
+    //     this.setData({
+    //         freIndex:this.data.freIndex
+    //     })
+    //     if(this.data.freIndex[0] == 0){
+    //         this.setData({
+    //             "frequencyArray[1]":['0.5公里', '1公里', '2公里', '3公里']
+    //         })
+    //     }else if(this.data.freIndex[0] == 1){
+    //         this.setData({
+    //             "frequencyArray[1]":['10分钟', '20分钟', '30分钟', '40分钟']
+    //         })
+    //     }
+    // },
     // 读取跑步设置缓存
     getRunSetCache(){
         try {
@@ -244,13 +309,19 @@ Page({
                 })
                 if(this.data.freIndex[0] == 0){
                     this.setData({
-                        "frequencyArray[1]":['0.5公里', '1公里', '2公里', '3公里']
+                        "frequencyArray[1]":['0.5公里', '1公里', '2公里', '3公里'],
+                        "freColumns[1].values":['0.5公里', '1公里', '2公里', '3公里'],
                     })
                 }else if(this.data.freIndex[0] == 1){
                     this.setData({
-                        "frequencyArray[1]":['10分钟', '20分钟', '30分钟', '40分钟']
+                        "frequencyArray[1]":['10分钟', '20分钟', '30分钟', '40分钟'],
+                        "freColumns[1].values":['10分钟', '20分钟', '30分钟', '40分钟'],
                     })
                 }
+                this.setData({
+                    "freColumns[0].defaultIndex": res.freIndex[0],
+                    "freColumns[1].defaultIndex": res.freIndex[1],
+                })
             }
             // console.log(this.data.mapStyle.subkey)
         } catch (e) { }

@@ -45,7 +45,7 @@
 </mp-cells>
 <page-container show="{{isPickerShow}}" round>
   <!-- 声源类型选择 -->
-  <picker-view 
+  <!-- <picker-view 
     hidden="{{!isVoicePickerShow}}"
     class="voice-picker"
     immediate-change
@@ -57,9 +57,9 @@
     <picker-view-column style="line-height: 50px; text-align: center;">
       <view wx:for="{{voiceList}}" wx:key="index">{{item}}</view>
     </picker-view-column>
-  </picker-view>
+  </picker-view> -->
   <!-- 播报频率选择 -->
-  <picker-view 
+  <!-- <picker-view 
     hidden="{{!isFrePickerShow}}"
     class="fre-picker"
     immediate-change
@@ -74,7 +74,24 @@
     <picker-view-column style="line-height: 50px; text-align: center;">
       <view wx:for="{{frequencyArray[1]}}" wx:key="index">{{item}}</view>
     </picker-view-column>
-  </picker-view>
+  </picker-view> -->
+  <van-picker 
+    wx:if="{{isVoicePickerShow}}"
+    show-toolbar 
+    columns="{{ voiceList }}" 
+    default-index="{{ voiceIndex }}"
+    bind:confirm="onVoiceColumnConfirm" 
+    bind:change="onVoiceColumnChange" 
+    bind:cancel="onVoiceColumnCancel"
+  />
+  <van-picker 
+    wx:if="{{isFrePickerShow}}"
+    show-toolbar 
+    columns="{{ freColumns }}" 
+    bind:confirm="onFreColumnConfirm" 
+    bind:change="onFreColumnChange" 
+    bind:cancel="onFreColumnCancel"
+  />
 </page-container>
 <!-- 地图设置 -->
 <mp-cells ext-class="my-cells" title="地图设置">

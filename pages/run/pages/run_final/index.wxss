@@ -192,11 +192,14 @@
     position: absolute;
     background-color: #FFFFFF;
     padding-top: 5rpx;
-    padding-left: 20rpx;
-    padding-right: 20rpx;
+    /* padding-left: 20rpx; */
+    /* padding-right: 20rpx; */
     top: -24rpx;
     font-size: 24rpx;
+    width: 200rpx;
+    height: 24rpx;
     color: #666666;
+    text-align: center;
 }
 
 .visual-chart {
