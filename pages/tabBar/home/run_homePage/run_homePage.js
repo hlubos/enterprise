@@ -163,11 +163,6 @@ Component({
                 })
                 return false
             }
-            // let that = this
-            // that.selectComponent('#runTypeModal').hideFrame();
-            // this.setData({
-            //     showRunCheckModal: false
-            // })
             navigateTo({
                 url:'/pages/run/pages/run_page/index'
             })

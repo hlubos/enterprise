@@ -212,9 +212,7 @@ Page({
     //     })
     //     this.cacheSetData()
     // },
-    onVoiceColumnChange(e){
-
-    },
+    onVoiceColumnChange(e){},
     onVoiceColumnConfirm(e){
         this.setData({
             voiceIndex: e.detail.index,
@@ -249,11 +247,9 @@ Page({
     //     }
     // },
     onFreColumnChange(e){
-        // console.log(e.detail)
         let { picker, value, index } = e.detail
         if(index == 0){
             let valIndex = picker.getColumnIndex(0)
-            // console.log(valIndex)
             if(valIndex == 0){
                 this.setData({
                     "frequencyArray[1]":['0.5公里', '1公里', '2公里', '3公里'],

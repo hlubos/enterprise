@@ -186,11 +186,7 @@ Page({
             let play = createInnerAudioContext({useWebAudioImplement:true})
             let index = 0
             play.src = `https://ydcommon.51yund.com/mini_run_voice/voice_1/${auidos[index]}.mp3`
-            // play.play()
-            // play.autoplay = true
             play.onCanplay(()=>{
-              // console.log("准备就绪")
-              // console.log(play.src)
               play.play()
             })
             play.onEnded(()=>{
@@ -207,7 +203,6 @@ Page({
     getRunShowData(){
         // 跑步公里数
         let points = this.data.locaDotArr
-        // let runKmiles = myFormats.clip(this._calculateRunMiles(points)/1000)
         let runMiles = 0
         if(points.length > 0){
             for(let i = 0;i<points.length;i++){
@@ -222,7 +217,6 @@ Page({
         if(runMiles == 0){
             runKmiles == '0.00'
         }
-        // let runMiles = this._calculateRunMiles(this.data.locaDotArr)
         this.setData({
             runMiles:runMiles,
         })
@@ -390,11 +384,10 @@ Page({
             })
         }else if(correctFlag == 1){
             var locaTimer = setTimeout(()=>{
-                // 1秒才能获取一次当前位置
+                // 获取一次当前位置
                 this.setData({
                     canGetLocation: true
                 })
-                // this.getRunShowData()
             },1000)
             this.setData({
                 locaTimer:locaTimer
@@ -458,8 +451,6 @@ Page({
                     let storageKey = 'run_kmiles_pace_arr_' + user_id
                     setStorageSync(storageKey,[])
                     setStorageSync(key,{})
-                    console.log('key',getStorageSync('key'))
-                    console.log('storageKey',getStorageSync('storageKey'))
                     // 清除定时器
                     clearInterval(this.data.runTimer)
                     backgroundAudioManager.src = "https://ydcommon.51yund.com/mini_run_voice/voice_1/paobujieshu.mp3"
@@ -470,11 +461,7 @@ Page({
                     offLocationChange(this._mylocationChangeFn)
                     stopLocationUpdate().then(res=>{
                     })
-                    // stopAccelerometer()
                     offAccelerometerChange()
-                    // nextTick(()=>{
-                    //     navigateBack({delta:1}).then(res=>console.log(res)).catch(err=>console.log(err))
-                    // }) 
                     switchTab({
                         url:'/pages/tabBar/home/home'
                     })
@@ -487,7 +474,6 @@ Page({
         // 缓存最后一公里的配速
         this.setKmilesCache(false)
         // 跑步结束时间
-        // let runEndTime = parseInt(new Date().getTime()/1000)
         let runEndTime = parseInt(Date.now()/1000)
         this.setData({
             runEndTime,
@@ -770,7 +756,6 @@ Page({
                 }else if(c == 3000){
                     this.setData({
                         guidePageShow:false,
-                        // runStartTime: parseInt(new Date().getTime()/1000)
                         runStartTime: parseInt(Date.now()/1000)
                     })
                     clearInterval(this.data.runGuideCountTimer)
@@ -795,8 +780,6 @@ Page({
      * 生命周期函数--监听页面隐藏
      */
     onHide() {
-        // innerAudioContext.stop()
-        // innerAudioContext.destroy() 
     },
 
     /**

@@ -59,7 +59,6 @@ Page({
             offset:this.data.offset,
         })
         if(peakRecordRes.code == 0){
-            // console.log(peakRecordRes)
             this.setData({
                 has_more: peakRecordRes.has_more,
                 offset: this.data.offset + peakRecordRes.runner_extra_infos.length
@@ -121,7 +120,7 @@ Page({
                 this.setData({
                     canLoadData: true
                 })
-                console.log('runLogList',this.data.runLogList)
+                // console.log('runLogList',this.data.runLogList)
             }
         })
     },
