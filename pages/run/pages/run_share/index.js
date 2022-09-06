@@ -26,7 +26,6 @@ Page({
     // 调整canvas宽高
     setCanvasSize() {
         let shareBox = createSelectorQuery()
-        // console.log(shareBox.select('.img-area'))
         shareBox.select('.img-area').boundingClientRect(res => {
             // myCanvasHeight = res.height
             this.setData({
@@ -46,7 +45,6 @@ Page({
              size: true,
              scrollOffset: true
          }).exec(res=>{
-             // console.log(res)
              setTimeout(() => {
                  that.draw()
              }, 1500);
@@ -66,10 +64,8 @@ Page({
         //   fileType:'jpg',
         //   zoom:0.8,
           progress(percent) { // 绘制进度
-            // console.log(percent);
           },
           finish(url) {
-            // console.log("创建的图片", url);
             hideLoading()
             showToast({
                 title:'图片已生成',
@@ -142,14 +138,6 @@ Page({
      * 生命周期函数--监听页面初次渲染完成
      */
     onReady() {
-        // 获取轨迹点
-        // api.getRunnerPathData({
-        //     runner_id: this.data.runner_id
-        // }).then(res=>{
-        //     if(res.code == 0){
-        //         console.log(res)
-        //     }
-        // })
     },
 
     /**

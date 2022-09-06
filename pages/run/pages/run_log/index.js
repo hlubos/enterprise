@@ -22,6 +22,7 @@ Page({
         // has_more
         has_more: 1,
         offset: 0,
+        defaultImg:'https://ssl-pubpic.51yund.com/1301346077.png',
     },
     // 用户历史数据
     getUserSportSummary(){
@@ -58,7 +59,6 @@ Page({
             offset:this.data.offset,
         })
         if(peakRecordRes.code == 0){
-            // console.log(peakRecordRes)
             this.setData({
                 has_more: peakRecordRes.has_more,
                 offset: this.data.offset + peakRecordRes.runner_extra_infos.length
@@ -123,6 +123,19 @@ Page({
                 // console.log('runLogList',this.data.runLogList)
             }
         })
+    },
+    /**
+     * 图片加载错误触发的事件
+     */
+    errorFunction(e) {
+        if(e.type=="error"){
+            var errorImgIndex = e.target.dataset.errorimg //获取错误图片循环的下标
+            var runLogList= this.data.runLogList                 //将图片列表数据绑定到变量
+            runLogList[errorImgIndex].pic_url = this.data.defaultImg //错误图片替换为默认图片
+            this.setData({
+                runLogList: runLogList
+            })
+        }
     },
     /**
      * 生命周期函数--监听页面加载

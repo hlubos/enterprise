@@ -27,13 +27,14 @@
                 <image src="https://ssl-pubpic.51yund.com/1221492970.png"></image>
             </view>
             <!-- 开始、继续 -->
-            <view class="continue-btn" hidden="{{runStatus == 0}}" bindtap="runContinue">
+            <view class="continue-btn" wx:if="{{runStatus !== 0}}" bindtap="runContinue">
                 <image src="https://ssl-pubpic.51yund.com/1221493943.png"></image>
             </view>
             <!-- 结束 -->
-            <view class="stop-btn" hidden="{{runStatus == 0}}" >
-                <image src="https://ssl-pubpic.51yund.com/1221493926.png"></image>
-                <cover-view hidden="{{stopBtnShow==false}}" style="z-index: 99; position: absolute; top: 0; border-radius: 50%;" bindtouchstart="stopRunStart" bindtouchend="stopRunBreak">
+            <view class="stop-btn" wx:if="{{runStatus !== 0}}" >
+                <image src="https://ssl-pubpic.51yund.com/1221493926.png" bindlongpress="runStop"></image>
+                <!-- <image src="https://ssl-pubpic.51yund.com/1221493926.png"></image> -->
+                <!-- <cover-view hidden="{{stopBtnShow==false}}" style="z-index: 99; position: absolute; top: 0; border-radius: 50%;" bindtouchstart="stopRunStart" bindtouchend="stopRunBreak">
                     <canvas-ring 
                         canvasWidth="160"
                         id="canvasRing" 
@@ -44,10 +45,10 @@
                         lineInitColor="#f86254"
                     >
                     </canvas-ring>
-                </cover-view>
+                </cover-view> -->
             </view>
             <!-- 暂停 -->
-            <view class="pause-btn" hidden="{{runStatus == 1}}" bindtap="runPause">
+            <view class="pause-btn" wx:if="{{runStatus !== 1}}" bindtap="runPause">
                 <image src="https://ssl-pubpic.51yund.com/1221493962.png"></image>
             </view>
             <!-- 地图按钮 -->
@@ -57,10 +58,10 @@
         </view>
         <view class="notlock-btns" hidden="{{isLock == false}}">
             <!-- 长按解锁 -->
-            <!-- <view class="unlock-btn" bindlongpress="unlockRunPanel">
+            <view class="unlock-btn" bindlongpress="unlockRunPanel">
                 <view class="unlock-btn-center">解锁</view>
-            </view> -->
-            <cover-view style="z-index: 99;" bindtouchstart="unlockStart" bindtouchend="unlockBreak" >
+            </view>
+            <!-- <cover-view style="z-index: 99;" bindtouchstart="unlockStart" bindtouchcancel="unlockBreak" bindtouchend="unlockBreak" >
                 <canvas-ring 
                     canvasWidth="200"
                     id="canvasRing" 
@@ -69,7 +70,7 @@
                     lineColor="#4CDDB4"
                     lineWidth="5"
                 ></canvas-ring>
-            </cover-view>
+            </cover-view> -->
             <!-- <circle_bar></circle_bar> -->
         </view>
     </view>

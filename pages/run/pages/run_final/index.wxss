@@ -1,5 +1,4 @@
 /* run_packege/pages/run_final/index.wxss */
-/* @import "./index.skeleton.wxss"; */
 .backImg {
     /* width: 100%;
     height: 100vh; */
@@ -193,11 +192,14 @@
     position: absolute;
     background-color: #FFFFFF;
     padding-top: 5rpx;
-    padding-left: 20rpx;
-    padding-right: 20rpx;
+    /* padding-left: 20rpx; */
+    /* padding-right: 20rpx; */
     top: -24rpx;
     font-size: 24rpx;
+    width: 200rpx;
+    height: 24rpx;
     color: #666666;
+    text-align: center;
 }
 
 .visual-chart {

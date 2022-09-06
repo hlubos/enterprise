@@ -9,17 +9,21 @@
     </mp-cell>
     <mp-cell value="语音类型">
         <view slot="footer">
-            <picker mode="selector" value="{{voiceIndex}}" range="{{voiceList}}" bindchange="voiceChange">
+            <!-- <picker mode="selector" value="{{voiceIndex}}" range="{{voiceList}}" bindchange="voiceChange">
                 <view class="right-info">
                     <text class="right-txt">{{voiceList[voiceIndex]}}</text>
                     <image class="right-icon" src="https://ssl-pubpic.51yund.com/1223520876.png"></image>
                 </view>
-            </picker>
+            </picker> -->
+            <view class="right-info" bindtap="showVoicePicker">
+              <text class="right-txt">{{voiceList[voiceIndex]}}</text>
+              <image class="right-icon" src="https://ssl-pubpic.51yund.com/1223520876.png"></image>
+            </view>
         </view>
     </mp-cell>
     <mp-cell value="播报频率">
         <view slot="footer">
-            <picker 
+            <!-- <picker 
                 mode="multiSelector" 
                 value="{{freIndex}}" 
                 range="{{frequencyArray}}" 
@@ -31,10 +35,64 @@
                     <text class="right-txt">{{frequencyArray[1][freIndex[1]]}}</text>
                     <image class="right-icon" src="https://ssl-pubpic.51yund.com/1223520876.png"></image>
                 </view>
-            </picker>
+            </picker> -->
+            <view class="right-info" bindtap="showFrePicker">
+              <text class="right-txt">{{frequencyArray[1][freIndex[1]]}}</text>
+              <image class="right-icon" src="https://ssl-pubpic.51yund.com/1223520876.png"></image>
+            </view>
         </view>
     </mp-cell>
 </mp-cells>
+<page-container show="{{isPickerShow}}" round>
+  <!-- 声源类型选择 -->
+  <!-- <picker-view 
+    hidden="{{!isVoicePickerShow}}"
+    class="voice-picker"
+    immediate-change
+    indicator-style="height: 50px;"
+    style="height: 50vh; width: 100%;"
+    value="{{voiceIndex}}"
+    bindchange="changeVoiceIndex"
+  >
+    <picker-view-column style="line-height: 50px; text-align: center;">
+      <view wx:for="{{voiceList}}" wx:key="index">{{item}}</view>
+    </picker-view-column>
+  </picker-view> -->
+  <!-- 播报频率选择 -->
+  <!-- <picker-view 
+    hidden="{{!isFrePickerShow}}"
+    class="fre-picker"
+    immediate-change
+    indicator-style="height: 50px;"
+    style="height: 50vh; width: 100%;"
+    value="{{freIndex}}"
+    bindchange="changeFreIndex"
+  >
+    <picker-view-column style="line-height: 50px; text-align: center;">
+      <view wx:for="{{frequencyArray[0]}}" wx:key="index">{{item}}</view>
+    </picker-view-column>
+    <picker-view-column style="line-height: 50px; text-align: center;">
+      <view wx:for="{{frequencyArray[1]}}" wx:key="index">{{item}}</view>
+    </picker-view-column>
+  </picker-view> -->
+  <van-picker 
+    wx:if="{{isVoicePickerShow}}"
+    show-toolbar 
+    columns="{{ voiceList }}" 
+    default-index="{{ voiceIndex }}"
+    bind:confirm="onVoiceColumnConfirm" 
+    bind:change="onVoiceColumnChange" 
+    bind:cancel="onVoiceColumnCancel"
+  />
+  <van-picker 
+    wx:if="{{isFrePickerShow}}"
+    show-toolbar 
+    columns="{{ freColumns }}" 
+    bind:confirm="onFreColumnConfirm" 
+    bind:change="onFreColumnChange" 
+    bind:cancel="onFreColumnCancel"
+  />
+</page-container>
 <!-- 地图设置 -->
 <mp-cells ext-class="my-cells" title="地图设置">
     <!-- <mp-cell value="标题文字" footer="说明文字"></mp-cell>
@@ -73,6 +131,4 @@
         </view>
     </mp-cell>
 </mp-cells>
-
-<!-- <picker mode="multiSelector"></picker> -->
 

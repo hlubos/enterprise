@@ -6,6 +6,7 @@ import wxFun from '../../utils/wxFun'
 let getLocation = wxFun.promisify('getLocation')
 let redirectTo = wxFun.promisify('redirectTo')
 let navigateBack = wxFun.promisify('navigateBack')
+let switchTab = wxFun.promisify('switchTab')
 let stopLocationUpdate = wxFun.promisify('stopLocationUpdate')
 let startLocationUpdateBackground = wxFun.promisify('startLocationUpdateBackground')
 let setStorage = wxFun.promisify('setStorage')
@@ -23,10 +24,15 @@ let getStorageSync = wxFun.ordinary('getStorageSync')
 let removeStorageSync = wxFun.ordinary('removeStorageSync')
 let onAccelerometerChange = wxFun.ordinary('onAccelerometerChange')
 let offAccelerometerChange = wxFun.ordinary('offAccelerometerChange')
+let getBackgroundAudioManager = wxFun.ordinary('getBackgroundAudioManager')
+let nextTick = wxFun.ordinary('nextTick')
 
 // const backgroundAudioManager = wx.getBackgroundAudioManager()
-let innerAudioContext = createInnerAudioContext({useWebAudioImplement:true})
-innerAudioContext.autoplay = true
+// let innerAudioContext = createInnerAudioContext({useWebAudioImplement:true})
+// innerAudioContext.autoplay = true
+let innerAudioContext
+let backgroundAudioManager = getBackgroundAudioManager()
+backgroundAudioManager.title = '跑步'
 let runGuideCountTimer
 Page({
     data: {
@@ -177,13 +183,19 @@ Page({
                     // 播放语音
                 }
             }
-            const play = createInnerAudioContext({useWebAudioImplement:true})
+            let play = createInnerAudioContext({useWebAudioImplement:true})
             let index = 0
-            play.src = `pages/run/assets/voice/hiking/${auidos[index]}.mp3`
-            play.autoplay = true
+            play.src = `https://ydcommon.51yund.com/mini_run_voice/voice_1/${auidos[index]}.mp3`
+            play.onCanplay(()=>{
+              play.play()
+            })
             play.onEnded(()=>{
                 index++
-                play.src = `pages/run/assets/voice/hiking/${auidos[index]}.mp3`
+                if(index == auidos.length){
+                  play.stop()
+                  play.destroy()
+                }
+                play.src = `https://ydcommon.51yund.com/mini_run_voice/voice_1/${auidos[index]}.mp3`
             })
         }
     },
@@ -191,7 +203,6 @@ Page({
     getRunShowData(){
         // 跑步公里数
         let points = this.data.locaDotArr
-        // let runKmiles = myFormats.clip(this._calculateRunMiles(points)/1000)
         let runMiles = 0
         if(points.length > 0){
             for(let i = 0;i<points.length;i++){
@@ -206,7 +217,6 @@ Page({
         if(runMiles == 0){
             runKmiles == '0.00'
         }
-        // let runMiles = this._calculateRunMiles(this.data.locaDotArr)
         this.setData({
             runMiles:runMiles,
         })
@@ -269,7 +279,6 @@ Page({
     // 开始跑步
     runStart(){
         // 开始计时
-        let that = this
         let second = this.data.runTime
         // let canGetLocation = true
         this.setData({
@@ -280,16 +289,16 @@ Page({
         var runTimer = setInterval(()=>{
             // 累计跑步时间
             second++
-            that.setData({
+            this.setData({
                 runTime:second,
                 outTime:this.data.outTime+1,
             })
             // 更新跑步信息
-            that.getRunShowData()
+            this.getRunShowData()
             // 缓存跑步数据
-            that.setRunDataCache()
+            this.setRunDataCache()
         },1000)
-        that.setData({
+        this.setData({
             runTimer:runTimer
         })
         // 监听加速度数据事件
@@ -375,11 +384,10 @@ Page({
             })
         }else if(correctFlag == 1){
             var locaTimer = setTimeout(()=>{
-                // 1秒才能获取一次当前位置
+                // 获取一次当前位置
                 this.setData({
                     canGetLocation: true
                 })
-                // this.getRunShowData()
             },1000)
             this.setData({
                 locaTimer:locaTimer
@@ -410,7 +418,7 @@ Page({
         // 清除跑步计时器
         clearInterval(this.data.runTimer)
         clearTimeout(this.data.locaTimer)
-        innerAudioContext.src = "pages/run/assets/voice/hiking/yundongyizanting.mp3"
+        backgroundAudioManager.src = "https://ydcommon.51yund.com/mini_run_voice/voice_1/yundongyizanting.mp3"
         this.setData({
             runStatus:1
         })
@@ -427,7 +435,7 @@ Page({
             runStatus:0
         })
         this.runStart()
-        innerAudioContext.src = "pages/run/assets/voice/hiking/yundongyihuifu.mp3"
+        backgroundAudioManager.src = "https://ydcommon.51yund.com/mini_run_voice/voice_1/yundongyihuifu.mp3"
     },
     // 结束跑步
     async runStop(){
@@ -436,7 +444,7 @@ Page({
         let key = 'run_data_'+user_id
         let kMilesCacheData = getStorageSync(key)
         if(!kMilesCacheData.locaDotArr[0] || kMilesCacheData.locaDotArr[0].length < 2 || this.data.runMiles <= 10){
-            showModal({title:'您的移动距离过短，数据将不会被保存',content:'是否退出跑步？'}).then(async res=>{
+            showModal({title:'是否退出跑步？',content:'您的移动距离过短,数据将不会保存'}).then(async res=>{
                 if(res.confirm){
                     // 清除运动数据缓存
                     let user_id = getStorageSync('user_id')
@@ -445,18 +453,18 @@ Page({
                     setStorageSync(key,{})
                     // 清除定时器
                     clearInterval(this.data.runTimer)
-                    innerAudioContext.src = "pages/run/assets/voice/paobujieshu.mp3"
+                    backgroundAudioManager.src = "https://ydcommon.51yund.com/mini_run_voice/voice_1/paobujieshu.mp3"
                     this.setData({
                         runTime:0,
-                        runStatus:2,
                     })
                     // 关闭定位追踪
                     offLocationChange(this._mylocationChangeFn)
                     stopLocationUpdate().then(res=>{
                     })
-                    // stopAccelerometer()
                     offAccelerometerChange()
-                    navigateBack()
+                    switchTab({
+                        url:'/pages/tabBar/home/home'
+                    })
                 }else{
                     return false
                 }
@@ -466,7 +474,7 @@ Page({
         // 缓存最后一公里的配速
         this.setKmilesCache(false)
         // 跑步结束时间
-        let runEndTime = parseInt(new Date().getTime()/1000)
+        let runEndTime = parseInt(Date.now()/1000)
         this.setData({
             runEndTime,
         })
@@ -476,8 +484,8 @@ Page({
             kind_id:0,
             distance:this.data.runMiles,
             cost_time:this.data.runTime,
-            // time:this.data.runStartTime,
-            time:runEndTime,
+            time:this.data.runStartTime,
+            // time:runEndTime,
             caloric:this.data.calorie,
             run_source:"wx_mini_program",
             // 步数(可不传)
@@ -507,7 +515,6 @@ Page({
             if(res.code == 0){
                 // 清除定位，时间置零
                 clearInterval(this.data.runTimer)
-                // innerAudioContext.src = "run_packege/assets/voice/paobujieshu.mp3"
                 this.setData({
                     runTime:0,
                     runStatus:1,
@@ -668,10 +675,23 @@ Page({
             }
         } catch (e) { }
     },
+    // 音频播放
+    playVoice(src){
+      innerAudioContext.destroy()
+      innerAudioContext = createInnerAudioContext({useWebAudioImplement:true})
+      innerAudioContext.src = src
+      innerAudioContext.play()
+    },
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad(options) {
+      startLocationUpdateBackground().then(res=>{
+        // console.log(res)
+        onLocationChange(()=>{})
+      })
+      innerAudioContext = createInnerAudioContext({useWebAudioImplement:true})
+      innerAudioContext.autoplay = true
     },
 
     /**
@@ -704,8 +724,7 @@ Page({
             this.getRunSetCache()
             // 
             this.runStart()
-            // innerAudioContext.src = "run_packege/assets/voice/kaishipaobu.mp3"
-            innerAudioContext.src = "pages/run/assets/voice/kaishipaobu.mp3"
+            backgroundAudioManager.src = "https://ydcommon.51yund.com/mini_run_voice/voice_1/kaishipaobu.mp3"
         }else {
             // 没有残留的运动记录时
             // console.log("上次运动已完成")
@@ -729,22 +748,23 @@ Page({
                     })
                 }
                 if(c == 0){
-                    innerAudioContext.src = "pages/run/assets/voice/3.mp3"
+                    backgroundAudioManager.src = "https://ydcommon.51yund.com/mini_run_voice/voice_1/3.mp3"
                 }else if( c == 1000 ){
-                    innerAudioContext.src = "pages/run/assets/voice/2.mp3"
+                    backgroundAudioManager.src = "https://ydcommon.51yund.com/mini_run_voice/voice_1/2.mp3"
                 }else if(c == 2000){
-                    innerAudioContext.src = "pages/run/assets/voice/1.mp3"
+                    backgroundAudioManager.src = "https://ydcommon.51yund.com/mini_run_voice/voice_1/1.mp3"
                 }else if(c == 3000){
                     this.setData({
                         guidePageShow:false,
-                        runStartTime: parseInt(new Date().getTime()/1000)
+                        runStartTime: parseInt(Date.now()/1000)
                     })
                     clearInterval(this.data.runGuideCountTimer)
                     this.runStart()
-                    innerAudioContext.src = "pages/run/assets/voice/kaishipaobu.mp3"
+                    // innerAudioContext.src = "https://ydcommon.51yund.com/mini_run_voice/voice_1/kaishipaobu.mp3"
+                    backgroundAudioManager.src = "https://ydcommon.51yund.com/mini_run_voice/voice_1/kaishipaobu.mp3"
                 }
-                c += 10
-            },10)
+                c += 1000
+            },1000)
         }
     },
 
@@ -752,8 +772,6 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow() {
-        innerAudioContext = createInnerAudioContext({useWebAudioImplement:true})
-        innerAudioContext.autoplay = true
         // 读取跑步设置缓存
         this.getRunSetCache()
     },
@@ -762,13 +780,13 @@ Page({
      * 生命周期函数--监听页面隐藏
      */
     onHide() {
-        // console.log('跑步页面隐藏')
     },
 
     /**
      * 生命周期函数--监听页面卸载
      */
     onUnload() {
+        innerAudioContext.stop()
         innerAudioContext.destroy() 
         clearInterval(runGuideCountTimer)
         clearInterval(this.data.runTimer)

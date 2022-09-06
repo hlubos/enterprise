@@ -163,11 +163,6 @@ Component({
                 })
                 return false
             }
-            // let that = this
-            // that.selectComponent('#runTypeModal').hideFrame();
-            // this.setData({
-            //     showRunCheckModal: false
-            // })
             navigateTo({
                 url:'/pages/run/pages/run_page/index'
             })
@@ -185,6 +180,8 @@ Component({
             let key = 'run_kmiles_pace_arr_'+user_id
             setStorageSync(storageKey,{})
             setStorageSync(key,[])
+            console.log('key',getStorageSync('key'))
+            console.log('storageKey',getStorageSync('storageKey'))
         },
         // 继续跑步
         continueRun(){
@@ -200,6 +197,7 @@ Component({
             navigateTo({
                 url:'/pages/run/pages/run_page/index'
             })
+            hideLoading()
         },
         // 获取缓存数据,读取缓存查看是否存在未完成的运动
         async getRunDataCache(){

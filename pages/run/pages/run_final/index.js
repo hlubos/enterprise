@@ -21,8 +21,8 @@ let createInnerAudioContext = wxFun.ordinary('createInnerAudioContext')
 let createMapContext = wxFun.ordinary('createMapContext')
 let createSelectorQuery = wxFun.ordinary('createSelectorQuery')
 
-const innerAudioContext = createInnerAudioContext({useWebAudioImplement:true})
-innerAudioContext.autoplay = true
+let innerAudioContext = createInnerAudioContext({useWebAudioImplement:true})
+// innerAudioContext.autoplay = true
 Page({
 
     /**
@@ -163,16 +163,25 @@ Page({
         } catch (error) { }
         navigateBack()
     },
+    playFinalVoice(src){
+      innerAudioContext.src = src
+      innerAudioContext.play()
+    },
     // 跑步结束语音播报
     runFinishAudio(){
         // 
         let auidos = this.audioDidy()
         let index = 0
-        innerAudioContext.src = `pages/run/assets/voice/hiking/${auidos[index]}.mp3`
+        // innerAudioContext.src = `https://ydcommon.51yund.com/mini_run_voice/voice_1/${auidos[index]}.mp3`
+        this.playFinalVoice(`https://ydcommon.51yund.com/mini_run_voice/voice_1/${auidos[index]}.mp3`)
         // 监听音频自然结束
         innerAudioContext.onEnded(()=>{
             index++
-            innerAudioContext.src = `pages/run/assets/voice/hiking/${auidos[index]}.mp3`
+            // innerAudioContext.src = `https://ydcommon.51yund.com/mini_run_voice/voice_1/${auidos[index]}.mp3`
+            this.playFinalVoice(`https://ydcommon.51yund.com/mini_run_voice/voice_1/${auidos[index]}.mp3`)
+            if(index >= auidos.length - 1){
+              innerAudioContext.offEnded()
+            }
         })
     },
     // 语音播报内容整理
@@ -216,10 +225,8 @@ Page({
             for(let i = 0 ;i<newArr.length; i++){
                 runKMilesAudioList.push(newArr[i])
             }
-            runKMilesAudioList.push('gongli')
-        }else {
-            runKMilesAudioList.push('gongli')
         }
+        runKMilesAudioList.push('gongli')
         // 总里程语音播报数组=====================end==============================
         // 总用时================================start=================================
         let sumTimeAudioList = []
@@ -598,6 +605,8 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow() {
+        innerAudioContext = createInnerAudioContext({useWebAudioImplement:true})
+        // innerAudioContext.autoplay = true
         this.getRunSetCache()
     },
 
@@ -607,16 +616,13 @@ Page({
     async onHide() {
         // 语音播报停止
         innerAudioContext.stop()
+        innerAudioContext.destroy()
         // 清除所有跑步数据缓存
         let userId = getStorageSync('user_id')
         let storageKey1 = 'run_data_' + userId
         let storageKey2 = 'run_kmiles_pace_arr_' + userId
-        // await removeStorage(storageKey1)
-        // await removeStorage(storageKey2)
         setStorageSync(storageKey1,{})
         setStorageSync(storageKey2,[])
-        // removeStorageSync(storageKey1)
-        // removeStorageSync(storageKey2)
     },
 
     /**
@@ -625,20 +631,24 @@ Page({
     async onUnload() {
         // 语音播报停止
         innerAudioContext.stop()
+        innerAudioContext.destroy()
         // 清除所有跑步数据缓存
         let userId = getStorageSync('user_id')
         let storageKey1 = 'run_data_' + userId
         let storageKey2 = 'run_kmiles_pace_arr_' + userId
-        // await removeStorage(storageKey1)
-        // await removeStorage(storageKey2)
         setStorageSync(storageKey1,{})
         setStorageSync(storageKey2,[])
-        // removeStorageSync(storageKey1)
-        // removeStorageSync(storageKey2)
         // 销毁音频实例
         // innerAudioContext.destroy()
     },
-
+    // 下拉
+    // onPageScroll: function(e) {
+    //     if (e.scrollTop < 0) {
+    //         wx.pageScrollTo({
+    //             scrollTop: 0
+    //         })
+    //     }
+    // },
     /**
      * 页面相关事件处理函数--监听用户下拉动作
      */

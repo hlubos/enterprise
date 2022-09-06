@@ -45,9 +45,9 @@ Component({
     lifetimes: {
         // 生命周期函数，可以为函数，或一个在 methods 段中定义的方法名
         attached: function () {
-            var that = this;
-            that.canvasRing = that.selectComponent("#canvasRing");
-            that.canvasRing.showCanvasRing();
+            // var that = this;
+            // that.canvasRing = that.selectComponent("#canvasRing");
+            // that.canvasRing.showCanvasRing();
         },
         moved: function () { },
         detached: function () { },
