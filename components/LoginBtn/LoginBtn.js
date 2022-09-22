@@ -91,8 +91,16 @@ Component({
         sub_channel: globalData.shareFrom,
         wx_scene: globalData.wxScene,
         share_id: globalData.shareFromId,
+        wxapp_source: 'wx_ydenterprise',
       }
       api.register(param).then((res) => {
+        if (res.code != 0) {
+          wx.showToast({
+            title: res.msg,
+            icon: 'none',
+          })
+          return
+        }
         res.openid = res.open_id //【特别注意】这里返回的是open_id不是openid
         this.storageWXlogin(res)
       })
