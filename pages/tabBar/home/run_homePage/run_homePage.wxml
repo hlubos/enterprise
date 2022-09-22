@@ -17,10 +17,12 @@
         </navigator>
         <view class="sumkilometre">
             <text class="sumkilometre-txt">{{totalDistance}}</text>
-            <navigator id="nav" url="/pages/run/pages/run_log/index" class="runlog-btn">
+            <login-btn bindsuccess="gotoRunHistory">
+              <view id="nav" class="runlog-btn">
                 <text>累计公里</text>
                 <image class="runlog-btn-img" src="https://ssl-pubpic.51yund.com/1220976698.png"></image>
-            </navigator>
+              </view>
+            </login-btn>
         </view>
         <!-- <view bindtap="back">返回</view> -->
         <!-- <view class="auth-hint">
@@ -41,7 +43,10 @@
                     <text class="auth-hint-txt">当前小程序悬浮后台时无法获取定位，将影响跑步流程</text>
                 </view>
             </view>
-            <view bindtap="startRun" class="start-run-btn">开始</view>
+            <login-btn bindsuccess="startRun">
+              <!-- <view bindtap="startRun" class="start-run-btn">开始</view> -->
+              <view class="start-run-btn">开始</view>
+            </login-btn>
         </view>
         <page-container show="{{showRunCheckModal}}" round position="bottom">
             <view class="run-type-modal-title">请选择你的跑步模式</view>

@@ -65,8 +65,9 @@ Page({
     })
   },
   finishTip() {
-    let user_id = getStorageSync('user_id')
-    let storageKey = 'isNewUser_' + user_id
+    // let user_id = getStorageSync('user_id')
+    // let storageKey = 'isNewUser_' + user_id
+    let storageKey = 'isNewUser'
     setStorageSync(storageKey, 1)
     navigateBack()
   },

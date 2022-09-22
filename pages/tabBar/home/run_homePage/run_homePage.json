@@ -2,6 +2,7 @@
   "component": true,
   "usingComponents": {
     "runTypeModal": "./components/runTypeModal/runTypeModal",
-    "runCacheDialog": "./components/runCacheDialog/runCacheDialog"
+    "runCacheDialog": "./components/runCacheDialog/runCacheDialog",
+    "login-btn": "../../../../components/LoginBtn/LoginBtn"
   }
 }
