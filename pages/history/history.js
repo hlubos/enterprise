@@ -3,18 +3,17 @@ import api from '../../server/history'
 import utils from '../../common/utils'
 
 const imgMap = {
-  '45': 'https://17yd-common.51yund.com/ai_coach/icon_index_tiaoshen%403x.png', // 跳绳
-  '29': 'https://ssl-pubpic.51yund.com/1010293873.jpg', // 平板支撑
-  '33': 'https://ssl-pubpic.51yund.com/1010293806.jpg', // 俯卧撑
-  '1': 'https://ssl-pubpic.51yund.com/1010293895.jpg', // 深蹲
-  '2': 'https://ssl-pubpic.51yund.com/1010293849.jpg', // 开合跳
-  '40': 'https://17yd-common.51yund.com/ai_coach/icon_index_yangwoqizuo%403x.png', // 仰卧起坐
-  '4': 'https://ssl-pubpic.51yund.com/1010294003.jpg', // 左体测
-  '5': 'https://ssl-pubpic.51yund.com/1010294056.jpg', // 右体测
+  45: 'https://17yd-common.51yund.com/ai_coach/icon_index_tiaoshen%403x.png', // 跳绳
+  29: 'https://ssl-pubpic.51yund.com/1010293873.jpg', // 平板支撑
+  33: 'https://ssl-pubpic.51yund.com/1010293806.jpg', // 俯卧撑
+  1: 'https://ssl-pubpic.51yund.com/1010293895.jpg', // 深蹲
+  2: 'https://ssl-pubpic.51yund.com/1010293849.jpg', // 开合跳
+  40: 'https://17yd-common.51yund.com/ai_coach/icon_index_yangwoqizuo%403x.png', // 仰卧起坐
+  4: 'https://ssl-pubpic.51yund.com/1010294003.jpg', // 左体测
+  5: 'https://ssl-pubpic.51yund.com/1010294056.jpg', // 右体测
 }
 
 Page({
-
   data: {
     lastRecordId: 0,
     recordList: [], // 历史列表
@@ -31,29 +30,31 @@ Page({
   },
 
   // 获取历史记录
-  getHistory () {
+  getHistory() {
     if (!this.data.hasMore || this.data.isLoading) {
       return
     }
     this.data.isLoading = true
-    api.getUserHistory({
-      last_record_id: this.data.lastRecordId
-    }).then((res) => {
-      if (res.code === 0) {
-        let list = this.data.recordList.concat(res.infos)
-        let recordList = this.dealList(list)
-        this.data.isLoading = false
-        this.setData({
-          recordList: recordList,
-          hasMore: res.has_more,
-          lastRecordId: res.last_record_id
-        })
-      }
-    })
+    api
+      .getUserHistory({
+        last_record_id: this.data.lastRecordId,
+      })
+      .then((res) => {
+        if (res.code === 0) {
+          let list = this.data.recordList.concat(res.infos)
+          let recordList = this.dealList(list)
+          this.data.isLoading = false
+          this.setData({
+            recordList: recordList,
+            hasMore: res.has_more,
+            lastRecordId: res.last_record_id,
+          })
+        }
+      })
   },
 
   // 处理列表
-  dealList (list) {
+  dealList(list) {
     let map = new Map()
     let res = []
     for (let i = 0; i < list.length; i++) {
@@ -82,30 +83,30 @@ Page({
         date: this.formateDate(item.start_ts),
         calories: item.calories,
         cost_time: item.cost_time,
-        list: [item]
+        list: [item],
       }
-
     }
     return res
   },
 
-  dealTime (ts) {
+  dealTime(ts) {
     let min = Math.floor(ts / 60)
     let sec = ts % 60
     return `${utils.addZero(min)}:${utils.addZero(sec)}`
   },
 
-  dealItem (info) {
+  dealItem(info) {
     let res = JSON.parse(JSON.stringify(info))
     if (res.video_id === 29) {
       res.spend_time = this.dealTime(res.cost_time)
     }
-    res.pic_url = imgMap[info.video_id] || 'https://ssl-pubpic.51yund.com/1040597365.png'
+    res.pic_url =
+      imgMap[info.video_id] || 'https://ssl-pubpic.51yund.com/1040597365.png'
     res.calories = (info.calories / 1000).toFixed(2) - 0
     return res
   },
 
-  formateDate (ts) {
+  formateDate(ts) {
     let date = new Date(ts * 1000)
     let month = date.getMonth() + 1
     let day = date.getDate()
@@ -138,12 +139,11 @@ Page({
   },
 
   // 返回时间20201226
-  getDate (ts) {
+  getDate(ts) {
     let date = new Date(ts * 1000)
     let year = date.getFullYear()
     let month = date.getMonth() + 1
     let day = date.getDate()
     return `${year}${utils.addZero(month)}${utils.addZero(day)}`
-  }
-
+  },
 })

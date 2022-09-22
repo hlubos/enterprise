@@ -1,9 +1,9 @@
 Component({
   properties: {
-      score: Number,
-      gameDuration: Number,
-      type: String
+    score: Number,
+    gameDuration: Number,
+    type: String,
   },
   data: {},
-  methods: {}
-});
+  methods: {},
+})

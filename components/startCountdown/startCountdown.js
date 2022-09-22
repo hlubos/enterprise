@@ -1,8 +1,7 @@
-
 Component({
-    properties: {
-        startCountdown: String
-    },
-    data: {},
-    methods: {}
-});
+  properties: {
+    startCountdown: String,
+  },
+  data: {},
+  methods: {},
+})

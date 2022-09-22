@@ -39,7 +39,8 @@
   left: 0;
 }
 
-.countDownNum,.region {
+.countDownNum,
+.region {
   position: absolute;
   width: 140rpx;
   height: 140rpx;

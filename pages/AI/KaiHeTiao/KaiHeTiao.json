@@ -1,9 +1,9 @@
 {
   "navigationBarTitleText": "开合跳",
   "usingComponents": {
-      "start-countdown": "/components/startCountdown/startCountdown",
-      "background-video": "/components/backgroundVideo/backgroundVideo",
-      "sport-end-score-dailog": "/components/SportEndScoreDailog/SportEndScoreDailog",
-      "sport-score-view": "/components/SportScoreView/SportScoreView"
+    "start-countdown": "/components/startCountdown/startCountdown",
+    "background-video": "/components/backgroundVideo/backgroundVideo",
+    "sport-end-score-dailog": "/components/SportEndScoreDailog/SportEndScoreDailog",
+    "sport-score-view": "/components/SportScoreView/SportScoreView"
   }
 }

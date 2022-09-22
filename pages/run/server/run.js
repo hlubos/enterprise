@@ -11,28 +11,28 @@ import $http from '../../../common/http.js'
 // userSportSummary:'/sport_history/user_sport_summary',
 
 export default class LoginMember {
-    static getRunnerInfo(params) {
-        return $http.post(url.getRunnerInfo, params);
-    }
-    static reportRunnerInfo(params) {
-        return $http.post(url.reportRunnerInfo, params);
-    }
-    static runnerFinishDetail(params) {
-        return $http.post(url.runnerFinishDetail, params);
-    }
-    static userSportSummary(params) {
-        return $http.post(url.userSportSummary, params);
-    }
-    static getDayPeakRecord(params) {
-        return $http.post(url.getDayPeakRecord, params);
-    }
-    static AddTrackPic(params) {
-        return $http.post(url.AddTrackPic, params);
-    }
-    static reportRunnerPathData(params) {
-        return $http.post(url.reportRunnerPathData, params);
-    }
-    static getRunnerPathData(params) {
-        return $http.post(url.getRunnerPathData, params);
-    }
+  static getRunnerInfo(params) {
+    return $http.post(url.getRunnerInfo, params)
+  }
+  static reportRunnerInfo(params) {
+    return $http.post(url.reportRunnerInfo, params)
+  }
+  static runnerFinishDetail(params) {
+    return $http.post(url.runnerFinishDetail, params)
+  }
+  static userSportSummary(params) {
+    return $http.post(url.userSportSummary, params)
+  }
+  static getDayPeakRecord(params) {
+    return $http.post(url.getDayPeakRecord, params)
+  }
+  static AddTrackPic(params) {
+    return $http.post(url.AddTrackPic, params)
+  }
+  static reportRunnerPathData(params) {
+    return $http.post(url.reportRunnerPathData, params)
+  }
+  static getRunnerPathData(params) {
+    return $http.post(url.getRunnerPathData, params)
+  }
 }

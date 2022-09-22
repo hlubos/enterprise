@@ -10,7 +10,7 @@
   height: auto;
   opacity: 1;
   /* 进入 */
-  transition: opacity 100ms ease;    
+  transition: opacity 100ms ease;
 }
 
 .modal-anime-hidden {
@@ -18,7 +18,7 @@
   opacity: 0;
   height: 0;
   /* 退出 */
-  transition: height 0ms ease 100ms, visibility 100ms ease, opacity 100ms ease;    
+  transition: height 0ms ease 100ms, visibility 100ms ease, opacity 100ms ease;
 }
 
 /* 没有动画过渡 */

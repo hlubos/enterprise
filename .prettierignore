@@ -1,0 +1,6 @@
+# Ignore artifacts:
+miniprogram_npm
+
+# Ignore all HTML files:
+*.html
+pages/run/ec-canvas/echarts.js

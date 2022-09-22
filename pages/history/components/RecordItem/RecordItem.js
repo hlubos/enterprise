@@ -6,27 +6,23 @@ Component({
   properties: {
     info: {
       type: Object,
-      value: {}
+      value: {},
     },
 
     // 是否是最后一个
     isLast: {
       type: Boolean,
-      value: false
-    }
+      value: false,
+    },
   },
 
   /**
    * 组件的初始数据
    */
-  data: {
-
-  },
+  data: {},
 
   /**
    * 组件的方法列表
    */
-  methods: {
-
-  }
+  methods: {},
 })
