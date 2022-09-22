@@ -15,7 +15,7 @@ page {
   font-size: 28rpx;
   color: #11d59c;
   box-sizing: border-box;
-  background: url("https://ssl-pubpic.51yund.com/992567646.jpg") center -4em no-repeat;
+  background: url('https://ssl-pubpic.51yund.com/992567646.jpg') center -4em no-repeat;
   background-size: cover;
   overflow: hidden;
 }
@@ -63,10 +63,10 @@ page {
   width: 72%;
   line-height: 46rpx;
   font-size: 36rpx;
-  color: #11D59C;
+  color: #11d59c;
   text-align: center;
   background: #fff;
   border-radius: 46rpx;
   margin: 0 auto 36rpx;
-  border: 1rpx solid #11D59C;
+  border: 1rpx solid #11d59c;
 }

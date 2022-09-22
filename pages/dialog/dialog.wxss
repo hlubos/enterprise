@@ -21,7 +21,7 @@
   border-radius: 4px;
 }
 
-.title{
+.title {
   position: relative;
 }
 .title .title-content {
@@ -33,7 +33,7 @@
   text-align: center;
   margin-bottom: 10px;
 }
-.title .icon{
+.title .icon {
   position: absolute;
   top: 0;
   right: 0;
@@ -65,7 +65,7 @@ view {
   height: 180px;
 }
 
-.long-press-save-pic{
+.long-press-save-pic {
   color: #999;
   font-size: 14px;
   text-align: center;
@@ -73,19 +73,19 @@ view {
   justify-content: center;
   margin-bottom: 10px;
 }
-.vip-text{
+.vip-text {
   margin-bottom: 24px;
 }
 
-.space{
+.space {
   height: 10px;
 }
 
 .btn1 {
-  background: #11D59C;
+  background: #11d59c;
   border-radius: 26px;
   font-size: 18px;
-  color: #FFFFFF;
+  color: #ffffff;
   letter-spacing: 0;
   text-align: center;
 }
@@ -94,9 +94,9 @@ view {
   border-radius: 26px;
   font-size: 18px;
   letter-spacing: 0;
-  color: #11D59C;
+  color: #11d59c;
   text-align: center;
   background-color: FFFFFF;
-  border: 1px solid #11D59C;
+  border: 1px solid #11d59c;
   margin-top: 10px;
 }

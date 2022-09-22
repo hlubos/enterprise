@@ -6,21 +6,17 @@ Component({
   properties: {
     info: {
       type: Object,
-      value: {}
-    }
+      value: {},
+    },
   },
 
   /**
    * 组件的初始数据
    */
-  data: {
-
-  },
+  data: {},
 
   /**
    * 组件的方法列表
    */
-  methods: {
-
-  }
+  methods: {},
 })

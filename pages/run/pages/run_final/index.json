@@ -1,6 +1,6 @@
 {
-    "usingComponents": {
-        "run-speed-chart":"./components/runSpeedChart/runSpeedChart"
-    },
-    "disableScroll": true
+  "usingComponents": {
+    "run-speed-chart": "./components/runSpeedChart/runSpeedChart"
+  },
+  "disableScroll": true
 }

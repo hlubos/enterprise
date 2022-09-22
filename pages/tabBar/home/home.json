@@ -3,7 +3,7 @@
     "kind-item": "./components/KindItem/KindItem",
     "sport-nav": "./components/SportNav/SportNav",
     "login-btn": "../../../components/LoginBtn/LoginBtn",
-    "AI-page":"./AI_page/AI_page",
-    "run-homepage":"./run_homePage/run_homePage"
+    "AI-page": "./AI_page/AI_page",
+    "run-homepage": "./run_homePage/run_homePage"
   }
 }

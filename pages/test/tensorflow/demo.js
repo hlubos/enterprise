@@ -21,25 +21,31 @@ Page({
     listener.start()
   },
   async loadPosenet() {
-
-    const POSENET_URL = 'https://www.gstaticcnapps.cn/tfjs-models/savedmodel/posenet/mobilenet/float/050/model-stride16.json';
+    const POSENET_URL =
+      'https://www.gstaticcnapps.cn/tfjs-models/savedmodel/posenet/mobilenet/float/050/model-stride16.json'
 
     this.net = await posenet.load({
       architecture: 'MobileNetV1',
       outputStride: 16,
       inputResolution: 193,
       multiplier: 0.5,
-      modelUrl: POSENET_URL
+      modelUrl: POSENET_URL,
     })
     // console.log(this.net)
   },
   async detectPose(frame, net) {
-    const imgData = {data: new Uint8Array(frame.data), width: frame.width, height: frame.height}
+    const imgData = {
+      data: new Uint8Array(frame.data),
+      width: frame.width,
+      height: frame.height,
+    }
     const imgSlice = tf.tidy(() => {
       const imgTensor = tf.browser.fromPixels(imgData, 4)
       return imgTensor.slice([0, 0, 0], [-1, -1, 3])
     })
-    const pose = await net.estimateSinglePose(imgSlice, {flipHorizontal: false})
+    const pose = await net.estimateSinglePose(imgSlice, {
+      flipHorizontal: false,
+    })
     imgSlice.dispose()
     return pose
   },
@@ -51,12 +57,15 @@ Page({
       for (let i in pose.keypoints) {
         const point = pose.keypoints[i]
         if (point.score >= 0.5) {
-          const {y, x} = point.position
+          const { y, x } = point.position
           this.drawCircle(this.canvas, x, y)
         }
       }
       // Draw lines
-      const adjacentKeyPoints = posenet.getAdjacentKeyPoints(pose.keypoints, 0.3)
+      const adjacentKeyPoints = posenet.getAdjacentKeyPoints(
+        pose.keypoints,
+        0.3,
+      )
       for (let i in adjacentKeyPoints) {
         const points = adjacentKeyPoints[i]
         this.drawLine(this.canvas, points[0].position, points[1].position)
@@ -77,5 +86,5 @@ Page({
     canvas.lineWidth = 2
     canvas.strokeStyle = `aqua`
     canvas.stroke()
-  }
+  },
 })

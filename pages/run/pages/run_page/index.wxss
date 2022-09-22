@@ -1,18 +1,18 @@
 /* plugin/pages/run_page/index.wxss */
 .run-guide-modal {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: rgba(0, 0, 0, 0.85);
-    font-weight: Bold;
-    font-size: 320rpx;
-    line-height: 320rpx;
-    color: #FFFFFF;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.85);
+  font-weight: Bold;
+  font-size: 320rpx;
+  line-height: 320rpx;
+  color: #ffffff;
 }
