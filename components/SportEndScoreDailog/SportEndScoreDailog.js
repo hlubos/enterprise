@@ -11,19 +11,17 @@ Component({
   /**
    * 组件的初始数据
    */
-  data: {
-
-  },
+  data: {},
 
   /**
    * 组件的方法列表
    */
   methods: {
     goBack: function () {
-      this.triggerEvent("goBack");
+      this.triggerEvent('goBack')
     },
     reStart: function () {
-      this.triggerEvent("reStart");
-    }
-  }
+      this.triggerEvent('reStart')
+    },
+  },
 })

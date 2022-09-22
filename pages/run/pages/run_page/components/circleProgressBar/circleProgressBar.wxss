@@ -1,43 +1,43 @@
 /* run_packege/pages/run_page/components/circle_progress_bar/circle_progress_bar.wxss */
 .unlock-btn {
-    position: relative;
-    width: 180rpx;
-    height: 180rpx;
-    background: #4CDDB4;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: 500;
-    font-size: 40rpx;
-    color: #FFFFFF;
+  position: relative;
+  width: 180rpx;
+  height: 180rpx;
+  background: #4cddb4;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 500;
+  font-size: 40rpx;
+  color: #ffffff;
 }
 
 .unlock-btn-bac {
-    width: 180rpx;
-    height: 180rpx;
-    position: absolute;
+  width: 180rpx;
+  height: 180rpx;
+  position: absolute;
 }
 
 .bac-left {
-    width: 90rpx;
-    height: 180rpx;
-    background-color: #428b77;
+  width: 90rpx;
+  height: 180rpx;
+  background-color: #428b77;
 }
 
 .bac- {
-    width: 90rpx;
-    height: 180rpx;
-    background-color: #428b77;
+  width: 90rpx;
+  height: 180rpx;
+  background-color: #428b77;
 }
 
 .unlock-btn-center {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 156rpx;
-    height: 156rpx;
-    /* transform: scaleX(-1); */
-    border-radius: 50%;
-    border: 4rpx solid #FFFFFF;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 156rpx;
+  height: 156rpx;
+  /* transform: scaleX(-1); */
+  border-radius: 50%;
+  border: 4rpx solid #ffffff;
 }

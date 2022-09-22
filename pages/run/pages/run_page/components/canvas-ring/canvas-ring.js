@@ -2,10 +2,10 @@
 import wxFun from '../../../../utils/wxFun'
 let getSystemInfoSync = wxFun.ordinary('getSystemInfoSync')
 // var windWidth = wx.getSystemInfoSync().windowWidth;
-var windWidth = getSystemInfoSync().windowWidth;
+var windWidth = getSystemInfoSync().windowWidth
 Component({
   options: {
-    multipleSlots: true // 在组件定义时的选项中启用多slot支持
+    multipleSlots: true, // 在组件定义时的选项中启用多slot支持
   },
   /**
    * 组件的属性列表
@@ -14,58 +14,58 @@ Component({
     //画布的宽度 默认占屏幕宽度的0.4倍
     canvasWidth: {
       type: Number,
-      value: windWidth * 0.4
+      value: windWidth * 0.4,
     },
     //线条宽度 默认10
     lineWidth: {
       type: Number,
-      value: 10
+      value: 10,
     },
     //线条颜色 默认"#393"
     lineColor: {
       type: String,
-      value: "#393"
+      value: '#393',
     },
     // 线条初始颜色
     lineInitColor: {
       type: String,
-      value: "#ebebeb"
+      value: '#ebebeb',
     },
     //标题 默认“完成率”
     title: {
       type: String,
-      value: "完成率"
+      value: '完成率',
     },
     //当前的值 默认45
     value: {
       type: Number,
-      value: 45
+      value: 45,
     },
     //值的颜色 默认"#ff9c07"
-    valueColor:{
+    valueColor: {
       type: String,
-      value: "#ff9c07"
+      value: '#ff9c07',
     },
     //最大值 默认100
     maxValue: {
       type: Number,
-      value: 100
+      value: 100,
     },
     //最小值 默认0
     minValue: {
       type: Number,
-      value: 0
+      value: 0,
     },
     //当前值的后缀名
     suffix: {
       type: null,
-      value: "%"
+      value: '%',
     },
     //从什么角度开始 0~360之间 （12点方向为0,18点方向为180,0点方向为360）
     startDegree: {
       type: Number,
-      value: 0
-    }
+      value: 0,
+    },
   },
 
   /**
@@ -73,11 +73,11 @@ Component({
    */
   data: {
     canvasWidth: windWidth * 0.4,
-    isMarginTop: true
+    isMarginTop: true,
   },
   observers: {
-    value: function(value) {
-        this.showCanvasRing()
+    value: function (value) {
+      this.showCanvasRing()
     },
   },
   /**
@@ -86,46 +86,52 @@ Component({
   methods: {
     showCanvasRing() {
       //去掉首位空格后如果标题为空，那么当前值的区域就没有margin-top值
-      if (this.data.title.replace(/(^\s*)|(\s*$)/g, "").length == 0) {
+      if (this.data.title.replace(/(^\s*)|(\s*$)/g, '').length == 0) {
         this.setData({
-          isMarginTop: false
+          isMarginTop: false,
         })
       }
       //作画
 
-      var ctx = wx.createCanvasContext("circleBar", this); //canvas组建封装，需要后加个this
-    //   var circle_r = this.data.canvasWidth / 2; //画布的一半，用来找中心点和半径
-      var circle_r = this.data.canvasWidth / 750 * getSystemInfoSync().windowWidth / 2;
-      var startDegree = this.data.startDegree; //从什么角度开始
-      var maxValue = this.data.maxValue; //最大值
-      var minValue = this.data.minValue; //最小值
-      var value = this.data.value; //当前的值
-      var lineColor = this.data.lineColor; //线条颜色
-      var lineWidth = this.data.lineWidth; //线条宽度
-      var lineInitColor = this.data.lineInitColor; //线条初始颜色
-      var percent = 360 * ((value - minValue) / (maxValue - minValue)); //计算结果
+      var ctx = wx.createCanvasContext('circleBar', this) //canvas组建封装，需要后加个this
+      //   var circle_r = this.data.canvasWidth / 2; //画布的一半，用来找中心点和半径
+      var circle_r =
+        ((this.data.canvasWidth / 750) * getSystemInfoSync().windowWidth) / 2
+      var startDegree = this.data.startDegree //从什么角度开始
+      var maxValue = this.data.maxValue //最大值
+      var minValue = this.data.minValue //最小值
+      var value = this.data.value //当前的值
+      var lineColor = this.data.lineColor //线条颜色
+      var lineWidth = this.data.lineWidth //线条宽度
+      var lineInitColor = this.data.lineInitColor //线条初始颜色
+      var percent = 360 * ((value - minValue) / (maxValue - minValue)) //计算结果
       //定义起始点
-      ctx.translate(circle_r, circle_r);
+      ctx.translate(circle_r, circle_r)
       //灰色圆弧
-      ctx.beginPath();
-      ctx.setStrokeStyle(lineInitColor);
-      ctx.setLineWidth(lineWidth);
-      ctx.arc(0, 0, circle_r - 10, 0, 2 * Math.PI, true);
-      ctx.stroke();
-      ctx.closePath();
+      ctx.beginPath()
+      ctx.setStrokeStyle(lineInitColor)
+      ctx.setLineWidth(lineWidth)
+      ctx.arc(0, 0, circle_r - 10, 0, 2 * Math.PI, true)
+      ctx.stroke()
+      ctx.closePath()
       //有色彩的圆弧
-      ctx.beginPath();
-      ctx.setStrokeStyle(lineColor);
-      ctx.setLineWidth(lineWidth);
-      ctx.arc(0, 0, circle_r - 10, startDegree * Math.PI / 180 - 0.5 * Math.PI, percent * Math.PI / 180 + startDegree * Math.PI / 180 - 0.5 * Math.PI, false);
-      ctx.stroke();
-      ctx.closePath();
+      ctx.beginPath()
+      ctx.setStrokeStyle(lineColor)
+      ctx.setLineWidth(lineWidth)
+      ctx.arc(
+        0,
+        0,
+        circle_r - 10,
+        (startDegree * Math.PI) / 180 - 0.5 * Math.PI,
+        (percent * Math.PI) / 180 +
+          (startDegree * Math.PI) / 180 -
+          0.5 * Math.PI,
+        false,
+      )
+      ctx.stroke()
+      ctx.closePath()
 
-      ctx.draw();
-
-
-
-
-    }
-  }
+      ctx.draw()
+    },
+  },
 })

@@ -1,6 +1,5 @@
 // pages/tabBar/work/second/second.js
 Page({
-
   data: {
     webUrl: '', // webview地址
   },
@@ -9,7 +8,7 @@ Page({
     this.initWebview(options)
   },
 
-  initWebview (options) {
+  initWebview(options) {
     let user_id = wx.getStorageSync('user_id')
     let xyy = wx.getStorageSync('xyy')
     let query = []
@@ -19,10 +18,11 @@ Page({
         query.push(str)
       }
     }
-    let url = `https://work.51yund.com/vapps/new_work/${options.path}?user_id=${user_id}&xyy=${xyy}&is_login=true&${query.join('&')}`
+    let url = `https://work.51yund.com/vapps/new_work/${
+      options.path
+    }?user_id=${user_id}&xyy=${xyy}&is_login=true&${query.join('&')}`
     this.setData({
-      webUrl: url
+      webUrl: url,
     })
-  }
-
+  },
 })

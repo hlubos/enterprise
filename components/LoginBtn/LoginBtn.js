@@ -8,15 +8,13 @@ Component({
   /**
    * 组件的属性列表
    */
-  properties: {
-
-  },
+  properties: {},
 
   /**
    * 组件的初始数据
    */
   data: {
-    loading: false
+    loading: false,
   },
 
   /**
@@ -24,24 +22,24 @@ Component({
    */
   methods: {
     // 微信授权登录
-    async getUserInfo (e) {
+    async getUserInfo(e) {
       let user_id = wx.getStorageSync('user_id')
       if (user_id) {
         this.triggerEvent('success')
         return
       }
-      if(this.loading) return
+      if (this.loading) return
       this.loading = true
-      let userInfo = e.detail.userInfo;
+      let userInfo = e.detail.userInfo
       if (!e.detail.iv) {
-          wx.showModal({
-              title: '提示',
-              showCancel: false,
-              content: '授权失败'
-          });
-          delete this.isExecuting;
-          return
-      } 
+        wx.showModal({
+          title: '提示',
+          showCancel: false,
+          content: '授权失败',
+        })
+        delete this.isExecuting
+        return
+      }
       if (userInfo) {
         app.globalData.userInfo = userInfo
       }
@@ -51,55 +49,56 @@ Component({
         if (!res.code) {
           wx.showToast({
             title: '登录失败',
-            icon: 'none'
+            icon: 'none',
           })
           return
         }
         let params = {
-          "code": res.code,
-          "wxapp_source": "wx_ydenterprise",
+          code: res.code,
+          wxapp_source: 'wx_ydenterprise',
         }
         this.goWxLogin(params)
-      } catch (err) {
-      } 
+      } catch (err) {}
     },
 
     // 后台登录
-    goWxLogin (params) {
-      return api.wxLogin(params).then(res => {
+    goWxLogin(params) {
+      return api.wxLogin(params).then((res) => {
         this.loading = false
         if (res.code !== 0) return
-        if (res.user_id > 0) { // 老用户
+        if (res.user_id > 0) {
+          // 老用户
           this.storageWXlogin(res)
-        } else { // 新用户
-          this.registerNew(res.openid, e.detail.encryptedData, e.detail.iv);
+        } else {
+          // 新用户
+          this.registerNew(res.openid, e.detail.encryptedData, e.detail.iv)
         }
       })
     },
 
     // 新用户注册
-			registerNew (openid, encrypted, iv) {
-				let globalData = getApp().globalData;
-				let param = {
-					"openid": openid,
-					"encrypted": encrypted,
-					"iv": iv,
-					"sub_channel": globalData.shareFrom,
-					"wx_scene": globalData.wxScene,
-					"share_id": globalData.shareFromId
-				}
-				api.register(param).then(res=>{
-          res.openid = res.open_id;//【特别注意】这里返回的是open_id不是openid
-					this.storageWXlogin(res); 
-				})
-			},
+    registerNew(openid, encrypted, iv) {
+      let globalData = getApp().globalData
+      let param = {
+        openid: openid,
+        encrypted: encrypted,
+        iv: iv,
+        sub_channel: globalData.shareFrom,
+        wx_scene: globalData.wxScene,
+        share_id: globalData.shareFromId,
+      }
+      api.register(param).then((res) => {
+        res.openid = res.open_id //【特别注意】这里返回的是open_id不是openid
+        this.storageWXlogin(res)
+      })
+    },
 
-    storageWXlogin(res){ 
+    storageWXlogin(res) {
       let loginObj = {
         session_key: res.session_key,
         user_id: res.user_id,
         xyy: res.xyy,
-        openid: res.openid
+        openid: res.openid,
       }
       wx.setStorageSync('user_id', loginObj.user_id)
       wx.setStorageSync('session_key', loginObj.session_key)
@@ -107,5 +106,5 @@ Component({
       wx.setStorageSync('xyy', loginObj.xyy)
       this.triggerEvent('success', res)
     },
-  }
+  },
 })
