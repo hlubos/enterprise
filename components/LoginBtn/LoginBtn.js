@@ -37,7 +37,6 @@ Component({
           showCancel: false,
           content: '授权失败',
         })
-        delete this.isExecuting
         return
       }
       if (userInfo) {
@@ -57,12 +56,12 @@ Component({
           code: res.code,
           wxapp_source: 'wx_ydenterprise',
         }
-        this.goWxLogin(params)
+        this.goWxLogin(params, e)
       } catch (err) {}
     },
 
     // 后台登录
-    goWxLogin(params) {
+    goWxLogin(params, e) {
       return api.wxLogin(params).then((res) => {
         this.loading = false
         if (res.code !== 0) return
@@ -71,16 +70,22 @@ Component({
           this.storageWXlogin(res)
         } else {
           // 新用户
-          this.registerNew(res.openid, e.detail.encryptedData, e.detail.iv)
+          this.registerNew(
+            res.openid,
+            res.unionid,
+            e.detail.encryptedData,
+            e.detail.iv,
+          )
         }
       })
     },
 
     // 新用户注册
-    registerNew(openid, encrypted, iv) {
+    registerNew(openid, unionid, encrypted, iv) {
       let globalData = getApp().globalData
       let param = {
         openid: openid,
+        unionid: unionid,
         encrypted: encrypted,
         iv: iv,
         sub_channel: globalData.shareFrom,
