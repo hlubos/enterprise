@@ -11,6 +11,9 @@ let openSetting = tool.promisify('openSetting')
 let startLocationUpdateBackground = tool.promisify(
   'startLocationUpdateBackground',
 )
+let stopLocationUpdate = tool.promisify(
+  'stopLocationUpdate',
+)
 let navigateTo = tool.promisify('navigateTo')
 let navigateBack = tool.promisify('navigateBack')
 let showToast = tool.promisify('showToast')
@@ -75,7 +78,7 @@ Component({
                 'auth.hasAuthUserLocation': true,
               })
             })
-            .catch((rej) => {})
+            .catch((rej) => { })
         }
       })
     },
@@ -112,7 +115,7 @@ Component({
                 }
               })
             })
-            .catch((rej) => {})
+            .catch((rej) => { })
         }
       })
     },
@@ -153,6 +156,12 @@ Component({
             showRunCheckModal: true,
           })
         }
+      })
+    },
+    // 进入跑步记录页
+    gotoRunHistory() {
+      navigateTo({
+        url: '/pages/run/pages/run_log/index',
       })
     },
     // 返回上一页
@@ -222,7 +231,7 @@ Component({
             showRunBreakDialog: true,
           })
         }
-      } catch (e) {}
+      } catch (e) { }
     },
     // 读取跑步设置缓存
     async getRunSetCache() {
@@ -235,12 +244,13 @@ Component({
             mapStyle: res.nowMapStyInfo,
           })
         }
-      } catch (e) {}
+      } catch (e) { }
     },
     // 读取用户缓存，判断是否为新用户
     async judgeNewUser() {
-      let user_id = await getStorageSync('user_id')
-      let storageKey = 'isNewUser_' + user_id
+      // let user_id = await getStorageSync('user_id')
+      // let storageKey = 'isNewUser_' + user_id
+      let storageKey = 'isNewUser'
       let res = await getStorageSync(storageKey)
       if (res != 1) {
         // 新用户，跳转到常见问题（引导）页
@@ -299,95 +309,6 @@ Component({
       // 读取缓存查看是否存在未完成的运动
       this.getRunDataCache()
       // 读缓存判断是否为新用户
-      // this.judgeNewUser()
-    },
-    // ===============================================
-    // 微信授权登录
-    async getUserInfo(obj) {
-      let user_id = wx.getStorageSync('user_id')
-      if (user_id) {
-        return
-      }
-      if (this.loading) return
-      this.loading = true
-      let userInfo = obj.userInfo
-      if (!obj.iv) {
-        wx.showModal({
-          title: '提示',
-          showCancel: false,
-          content: '授权失败',
-        })
-        delete this.isExecuting
-        return
-      }
-      if (userInfo) {
-        app.globalData.userInfo = userInfo
-      }
-      let wxlogin = tool.promisify('login')
-      try {
-        let res = await wxlogin()
-        if (!res.code) {
-          wx.showToast({
-            title: '登录失败',
-            icon: 'none',
-          })
-          return
-        }
-        let params = {
-          code: res.code,
-          wxapp_source: 'wx_ydenterprise',
-        }
-        this.goWxLogin(params)
-      } catch (err) {}
-    },
-    // 后台登录
-    goWxLogin(params) {
-      return loginApi.wxLogin(params).then((res) => {
-        this.loading = false
-        if (res.code !== 0) return
-        if (res.user_id > 0) {
-          // 老用户
-          this.storageWXlogin(res)
-        } else {
-          // 新用户
-          this.registerNew(res.openid, obj.encryptedData, obj.iv)
-        }
-      })
-    },
-
-    // 新用户注册
-    registerNew(openid, encrypted, iv) {
-      let globalData = getApp().globalData
-      let param = {
-        openid: openid,
-        encrypted: encrypted,
-        iv: iv,
-        sub_channel: globalData.shareFrom,
-        wx_scene: globalData.wxScene,
-        share_id: globalData.shareFromId,
-      }
-      loginApi.register(param).then((res) => {
-        res.openid = res.open_id //【特别注意】这里返回的是open_id不是openid
-        this.storageWXlogin(res)
-      })
-    },
-
-    storageWXlogin(res) {
-      let loginObj = {
-        session_key: res.session_key,
-        user_id: res.user_id,
-        xyy: res.xyy,
-        openid: res.openid,
-      }
-      wx.setStorageSync('user_id', loginObj.user_id)
-      wx.setStorageSync('session_key', loginObj.session_key)
-      wx.setStorageSync('openid', loginObj.openid)
-      wx.setStorageSync('xyy', loginObj.xyy)
-      this.triggerEvent('success', res)
-
-      // 初始化页面
-      this.initPage()
-      // 读缓存判断是否为新用户
       this.judgeNewUser()
     },
   },
@@ -397,25 +318,7 @@ Component({
     },
     attached: function () {
       // 在组件实例进入页面节点树时执行
-      let that = this
-      // 登录
-      wx.login({
-        success(res) {
-          if (res.code) {
-            //获取用户信息
-            // console.log(res)
-            wx.getUserInfo({
-              withCredentials: true,
-              success: (ress) => {
-                that.getUserInfo(ress)
-              },
-            })
-          } else {
-            console.log('登录失败！' + res.errMsg)
-          }
-        },
-      })
-      //
+      // 获取后台定位的权限
       startLocationUpdateBackground().then((res) => {
         // console.log(res)
         if (res.errMsg == 'startLocationUpdateBackground:ok') {
@@ -423,11 +326,14 @@ Component({
             'auth.hasAuthUserLocation': true,
             'auth.hasAuthUserLocationBackground': true,
           })
+          stopLocationUpdate().then(ress=>{
+            console.log('关闭定位')
+          })
         }
       })
     },
     ready() {
-      this.initPage()
+      // this.initPage()
     },
     detached: function () {
       // 在组件实例被从页面节点树移除时执行
@@ -438,7 +344,7 @@ Component({
     show: function () {
       this.initPage()
     },
-    hide: function () {},
-    resize: function () {},
+    hide: function () { },
+    resize: function () { },
   },
 })
