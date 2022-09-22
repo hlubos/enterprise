@@ -397,6 +397,16 @@ Component({
                   }
                 }
             })
+            // 
+            startLocationUpdateBackground().then(res=>{
+                // console.log(res)
+                if(res.errMsg == "startLocationUpdateBackground:ok"){
+                    this.setData({
+                        "auth.hasAuthUserLocation":true,
+                        "auth.hasAuthUserLocationBackground":true,
+                    })
+                }
+            })
         },
         ready(){
             this.initPage()
