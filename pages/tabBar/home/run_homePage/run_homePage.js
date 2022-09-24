@@ -60,28 +60,6 @@ Component({
    * 组件的方法列表
    */
   methods: {
-    // 授权地理定位
-    toastAuthUserLocation() {
-      getSetting().then((res) => {
-        if (res.authSetting.hasOwnProperty('scope.userLocation')) {
-          openSetting().then((res) => {
-            this.setData({
-              'auth.hasAuthUserLocation': res.authSetting['scope.userLocation'],
-            })
-          })
-        } else {
-          authorize({
-            scope: 'scope.userLocation',
-          })
-            .then((res) => {
-              this.setData({
-                'auth.hasAuthUserLocation': true,
-              })
-            })
-            .catch((rej) => { })
-        }
-      })
-    },
     // 授权后台地理定位（此时后台定位权限未被授予，但是前台定位权限有可能已被授予）
     toastAuthUserLocationBac() {
       // 判断前台定位权限，如已授权则打开设置，让用户勾选后台权限。未授权则弹出授权窗口。
@@ -319,15 +297,18 @@ Component({
     attached: function () {
       // 在组件实例进入页面节点树时执行
       // 获取后台定位的权限
-      startLocationUpdateBackground().then((res) => {
-        // console.log(res)
-        if (res.errMsg == 'startLocationUpdateBackground:ok') {
-          this.setData({
-            'auth.hasAuthUserLocation': true,
-            'auth.hasAuthUserLocationBackground': true,
-          })
-          stopLocationUpdate().then(ress=>{
-            console.log('关闭定位')
+      getSetting().then(res => {
+        if (!res.authSetting['scope.userLocationBackground']) {
+          authorize({
+            scope: 'scope.userLocationBackground',
+          }).then(ress => {
+            console.log(ress)
+            this.setData({
+              'auth.hasAuthUserLocation': true,
+              'auth.hasAuthUserLocationBackground': true,
+            })
+          }).catch(err => {
+            console.log(err)
           })
         }
       })
