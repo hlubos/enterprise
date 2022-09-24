@@ -61,6 +61,12 @@
     }
   },
   "requiredBackgroundModes": ["location", "audio"],
+  "requiredPrivateInfos": [
+    "startLocationUpdateBackground",
+    "onLocationChange",
+    "getLocation",
+    "startLocationUpdate"
+  ],
   "plugins": {
     "tfjsPlugin": {
       "version": "0.1.0",

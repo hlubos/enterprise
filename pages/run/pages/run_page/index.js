@@ -720,10 +720,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    startLocationUpdateBackground().then((res) => {
-      // console.log(res)
-      onLocationChange(() => {})
-    })
     innerAudioContext = createInnerAudioContext({ useWebAudioImplement: true })
     innerAudioContext.autoplay = true
   },

@@ -36,7 +36,7 @@
         <!-- <navigator id="nav" url="../run_page/index">开始</navigator> -->
         <view class="start-run-btn-box">
             <view class="auth-hint">
-                <view class="auth-hint-box" wx:if="{{!auth.hasAuthUserLocation}}" bindtap="toastAuthUserLocation">
+                <view class="auth-hint-box" wx:if="{{!auth.hasAuthUserLocation}}" bindtap="toastAuthUserLocationBac">
                     <text class="auth-hint-txt">当前小程序定位权限未打开，无法开始跑步</text>
                 </view>
                 <view class="auth-hint-box" wx:if="{{!auth.hasAuthUserLocationBackground}}" bindtap="toastAuthUserLocationBac">
