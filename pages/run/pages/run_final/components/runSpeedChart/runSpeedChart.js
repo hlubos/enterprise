@@ -10,9 +10,9 @@ let pace = {
 function getOption(data) {
   let txt = ''
   if (pace.flag == 1) {
-    txt = `比上次 ↓ ${pace.value}`
-  } else {
     txt = `比上次 ↑ ${pace.value}`
+  } else {
+    txt = `比上次 ↓ ${pace.value}`
   }
   var option = {
     backgroundColor: '#ffffff',
