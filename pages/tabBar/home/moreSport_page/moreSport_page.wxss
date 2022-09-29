@@ -1,0 +1,43 @@
+/* pages/tabBar/home/moreSport_page/moreSport_page.wxss */
+.more-sport-page{
+  height: 100%;
+  width: 100vw;
+}
+
+.more-sport-page view{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.sport-img-box{
+  width: 100%;
+}
+
+.sport-img{
+  width: 534rpx;
+  height: 530rpx;
+  margin-top: 180rpx;
+}
+
+.tip-txt{
+  color: #999999;
+  font-weight: 400;
+  text-align: center;
+  font-size: 24rpx;
+  margin-top: 28rpx;
+}
+
+.btn{
+  color: #FFFFFF;
+  font-size: 34rpx;
+  margin-top: 80rpx;
+  margin-bottom: 120rpx;
+  width: 552rpx;
+  height: 104rpx;
+  background: #4CDDB4;
+  border-radius: 52rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

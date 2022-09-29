@@ -1,0 +1,12 @@
+<!--pages/tabBar/home/moreSport_page/moreSport_page.wxml-->
+<view class="more-sport-page">
+  <view class="sport-img-box">
+    <image class="sport-img" src="https://ssl-pubpic.51yund.com/1306533712.png"></image>
+  </view>
+  <view class="tip-txt">骑行、徒步、更多AI运动，请前往app体验</view>
+  <view class="btn-box">
+    <view class="btn">
+      前往体验
+    </view>
+  </view>
+</view>

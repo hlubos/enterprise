@@ -16,6 +16,10 @@ Page({
         name: 'AI运动',
         index: 1,
       },
+      {
+        name: '更多运动',
+        index: 2,
+      },
     ],
   },
   onCheckActiveItem: function (e) {

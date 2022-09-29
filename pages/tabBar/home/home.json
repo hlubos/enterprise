@@ -4,6 +4,7 @@
     "sport-nav": "./components/SportNav/SportNav",
     "login-btn": "../../../components/LoginBtn/LoginBtn",
     "AI-page": "./AI_page/AI_page",
-    "run-homepage": "./run_homePage/run_homePage"
+    "run-homepage": "./run_homePage/run_homePage",
+    "moresport-page": "./moreSport_page/moreSport_page"
   }
 }
