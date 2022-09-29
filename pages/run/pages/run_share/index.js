@@ -1,6 +1,6 @@
 // run_packege/pages/run_share/index.js
 import api from '../../server/run'
-import Wxml2Canvas from 'wxml2canvas'
+import Wxml2Canvas from '../../wxml2canvas/index'
 import wxFun from '../../utils/wxFun'
 let navigateTo = wxFun.promisify('navigateTo')
 let showLoading = wxFun.promisify('showLoading')
@@ -131,6 +131,12 @@ Page({
   wxShare() {
     previewImage({
       urls: [this.data.posterImgUrl],
+    }).then(res=>{
+      showToast({
+        title: '长按图片分享',
+        icon: 'none',
+        duration: 1500,
+      })
     })
   },
   /**

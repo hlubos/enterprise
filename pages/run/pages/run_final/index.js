@@ -4,7 +4,7 @@ import api from '../../server/run'
 import myFormats from '../../utils/format'
 import uploadFile from '../../../../common/uploadFile'
 // import Wxml2Canvas from '../../wxml2canvas/index'
-import Wxml2Canvas from 'wxml2canvas'
+import Wxml2Canvas from '../../wxml2canvas/index'
 import wxFun from '../../utils/wxFun'
 
 let removeStorage = wxFun.promisify('removeStorage')
@@ -401,9 +401,13 @@ Page({
           })
         },
         error(res) {
-          // console.log(res);
+          console.log(res);
           hideLoading()
           // 画失败的原因
+          showToast({
+            title:'分享图片失败',
+            icon:'error'
+          })
         },
       },
       that,

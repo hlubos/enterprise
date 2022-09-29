@@ -6,9 +6,9 @@
     scroll-y="true" class="content" :enhanced="true" style="height: 100vh;width: 100vw;"
     :bounces="false" :show-scrollbar="false">
 <!-- <view style="overflow:scroll; height: 100%;"> -->
-<view class="fina-map-box answer_draw_canvas" style="height: {{mapHeight}};">
+<view class="fina-map-box" style="height: {{mapHeight}};">
     <map id="run-final-map" 
-        class="run-final-map answer_draw_canvas" 
+        class="run-final-map" 
         name="run_final_map" 
         latitude="39.92082670727589" 
         longitude:="116.45972113140078" 
