@@ -17,7 +17,7 @@
 }
 .nav-item {
   display: inline-block;
-  padding: 0 .6rem;
+  padding: 0 0.6rem;
 }
 .active-item {
   font-weight: 500;

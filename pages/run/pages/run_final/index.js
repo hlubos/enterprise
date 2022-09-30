@@ -592,13 +592,15 @@ Page({
               'userInfo.user_id': getStorageSync('user_id'),
             })
             let last_sport_record = res.last_sport_record
-            let last_cost_time = last_sport_record.cost_time ? last_sport_record.cost_time : 0
-            let last_distance = last_sport_record.distance ? last_sport_record.distance : 0
-            let last_pace = parseInt(
-              (last_cost_time / last_distance) * 1000
-            ) ? parseInt(
-              (last_cost_time / last_distance) * 1000
-            ) : 0
+            let last_cost_time = last_sport_record.cost_time
+              ? last_sport_record.cost_time
+              : 0
+            let last_distance = last_sport_record.distance
+              ? last_sport_record.distance
+              : 0
+            let last_pace = parseInt((last_cost_time / last_distance) * 1000)
+              ? parseInt((last_cost_time / last_distance) * 1000)
+              : 0
             let now_pace = parseInt((data.runTime / data.runMiles) * 1000)
             let paceCompare = {}
             if (now_pace >= last_pace) {
