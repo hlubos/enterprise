@@ -19,7 +19,7 @@
             <text class="sumkilometre-txt">{{totalDistance}}</text>
             <login-btn bindsuccess="gotoRunHistory">
               <view id="nav" class="runlog-btn">
-                <text>累计公里</text>
+                <text>{{ $language['累计公里'] }}</text>
                 <image class="runlog-btn-img" src="https://ssl-pubpic.51yund.com/1220976698.png"></image>
               </view>
             </login-btn>
@@ -45,24 +45,24 @@
             </view>
             <login-btn bindsuccess="startRun">
               <!-- <view bindtap="startRun" class="start-run-btn">开始</view> -->
-              <view class="start-run-btn">开始</view>
+              <view class="start-run-btn">{{ $language['开始'] }}</view>
             </login-btn>
         </view>
         <page-container show="{{showRunCheckModal}}" round position="bottom">
-            <view class="run-type-modal-title">请选择你的跑步模式</view>
+            <view class="run-type-modal-title">{{ $language['请选择你的跑步模式'] }}</view>
             <view class="run-type-modal-box">
                 <view class='run-type-modal-item {{runType=="0"?"run-type-modal-item-active":""}}' data-runtype="0" bindtap="selectRunType">
-                    室外跑
+                    {{ $language['室外跑'] }}
                     <image hidden="{{runType=='1'}}" class="active-icon" src="https://ssl-pubpic.51yund.com/1221474398.png"></image>
                 </view>
                 <view class='run-type-modal-item {{runType=="1"?"run-type-modal-item-active":""}}' data-runtype="1" bindtap="selectRunType">
-                    室内跑
+                    {{ $language['室内跑'] }}
                     <image hidden="{{runType=='0'}}" class="active-icon" src="https://ssl-pubpic.51yund.com/1221474398.png"></image>
                 </view>
             </view>
             <view class="run-open-btn-box">
                 <view class="run-open-btn" bindtap="gotoRunPage">
-                    开始跑步
+                    {{ $language['开始跑步'] }}
                 </view>
             </view>
         </page-container>

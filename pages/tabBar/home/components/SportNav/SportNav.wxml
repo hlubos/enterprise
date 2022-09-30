@@ -7,7 +7,7 @@
         bindtap="changeActive"
         data-key="{{index}}"
     >
-        <view class="name">{{item.name}}</view>
+        <view class="name">{{ $language[item.name] }}</view>
         <view class="tag"></view>
     </view>
     <!-- <login-btn bindsuccess="gotoRun"></login-btn> -->
