@@ -2,7 +2,7 @@
 <view class="record-item {{isLast ? '' : 'border'}}">
   <image class="left" src="{{info.pic_url}}"></image>
   <view class="center">
-    <view class="title">{{info.video_name}}</view>
+    <view class="title">{{$language[info.video_name]}}</view>
     <view class="calories">{{info.calories}} Kcal</view>
   </view>
   <view class="right">
