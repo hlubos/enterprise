@@ -30,7 +30,16 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {},
+  onLoad: function (options) {
+    console.log(options)
+    if (options.kindId == '0') {
+      this.setData({
+        activeIndex: 0,
+      })
+      let runPage = this.selectComponent('#run-homepage')
+      runPage.startRun()
+    }
+  },
 
   //   gotoRun(){
   //     wx.navigateTo({

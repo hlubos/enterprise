@@ -1,0 +1,40 @@
+<!--pages/inviteQRcodePage/inviteQRcodePage.wxml-->
+<view class="invite-join">
+  <view
+    class="qr-body"
+    style="background-image: url({{joinBackgroundImg}});height: {{both?'1312rpx' : '668rpx'}};"
+  >
+    <view class="qr-external">
+      <view class="qr-e-title">邀请加入非员工赛区</view>
+      <view class="qr-all-body">
+        <view class="qr-body-title">吉时出发，为爱奔跑</view>
+        <view class="qr-body-c">
+          <image src="{{qrImgUrl1}}" class="qr-img"></image>
+        </view>
+        <view class="qr-body-text">
+          扫码进入吉利创业36周年快乐亚运公益接力跑
+        </view>
+        <view class="qr-body-btn" bindtap="saveImg">
+          保存图片到相册
+        </view>
+      </view>
+    </view>
+    <view wx:if="{{both}}" class="qr-inside">
+      <view class="qr-i-title">邀请加入员工赛区</view>
+      <view class="qr-all-body">
+        <view class="qr-body-title">吉时出发，为爱奔跑</view>
+        <view class="qr-body-c">
+          <image src="{{qrImgUrl2}}" class="qr-img"></image>
+        </view>
+        <view class="qr-body-text">
+          扫码进入吉利创业36周年快乐亚运公益接力跑
+        </view>
+        <view class="qr-body-btn" bindtap="saveImg1">
+          保存图片到相册
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="bottom"></view>
+</view>
+

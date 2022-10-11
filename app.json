@@ -6,7 +6,8 @@
     "pages/login/login",
     "pages/tabBar/work/second/second",
     "pages/dialog/dialog",
-    "pages/history/history"
+    "pages/history/history",
+    "pages/inviteQRcodePage/inviteQRcodePage"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -60,7 +61,10 @@
       "desc": "你的位置信息将用于小程序位置接口的效果展示"
     }
   },
-  "requiredBackgroundModes": ["location", "audio"],
+  "requiredBackgroundModes": [
+    "location",
+    "audio"
+  ],
   "requiredPrivateInfos": [
     "startLocationUpdateBackground",
     "onLocationChange",

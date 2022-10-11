@@ -10,6 +10,6 @@
   </view>
 </view>
 <view class="container" wx:elif="{{isComplete}}">
-  <web-view src="{{webUrl}}">
+  <web-view src="{{webUrl}}" bindmessage = "saveQRcodeImg">
   </web-view>
 </view>
