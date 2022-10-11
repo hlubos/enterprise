@@ -1,5 +1,5 @@
 /* pages/tabBar/home/moreSport_page/moreSport_page.wxss */
-.more-sport-page{
+.more-sport-page {
   /* height: 100%; */
   width: 100vw;
   display: flex;
@@ -7,23 +7,23 @@
   justify-content: center;
 }
 
-.more-sport-page view{
+.more-sport-page view {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
 }
 
-.sport-img-box{
+.sport-img-box {
   width: 100%;
 }
 
-.sport-img{
+.sport-img {
   width: 534rpx;
   height: 530rpx;
   margin-top: 100rpx;
 }
 
-.tip-txt{
+.tip-txt {
   color: #333333;
   font-weight: 400;
   text-align: center;
@@ -31,7 +31,7 @@
   margin-top: 28rpx;
 }
 
-.tip-txt-1{
+.tip-txt-1 {
   width: 60%;
   color: #999999;
   font-weight: 400;
@@ -40,7 +40,7 @@
   margin-top: 36rpx;
 }
 
-.tip-txt-2{
+.tip-txt-2 {
   width: 60%;
   color: #999999;
   font-weight: 400;
@@ -49,7 +49,7 @@
   margin-top: 28rpx;
 }
 
-.btn-box{
+.btn-box {
   position: fixed;
   bottom: 0;
   left: 0;
@@ -58,14 +58,14 @@
   /* background-color: #FFFFFF; */
 }
 
-.btn{
-  color: #FFFFFF;
+.btn {
+  color: #ffffff;
   font-size: 34rpx;
   margin-top: 80rpx;
   margin-bottom: 120rpx;
   width: 552rpx;
   height: 104rpx;
-  background: #4CDDB4;
+  background: #4cddb4;
   border-radius: 52rpx;
   display: flex;
   justify-content: center;

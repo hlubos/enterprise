@@ -1,3 +1,3 @@
-import Wxml2Canvas from './src/index';
+import Wxml2Canvas from './src/index'
 
-export default Wxml2Canvas;
+export default Wxml2Canvas

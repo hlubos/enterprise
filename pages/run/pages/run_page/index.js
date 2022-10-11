@@ -835,7 +835,7 @@ Page({
     clearInterval(this.data.runGuideCountTimer)
     // 关闭定位追踪
     offLocationChange()
-    stopLocationUpdate().then(res=>{})
+    stopLocationUpdate().then((res) => {})
   },
 
   /**

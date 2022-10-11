@@ -131,7 +131,7 @@ Page({
   wxShare() {
     previewImage({
       urls: [this.data.posterImgUrl],
-    }).then(res=>{
+    }).then((res) => {
       showToast({
         title: '长按图片分享',
         icon: 'none',
