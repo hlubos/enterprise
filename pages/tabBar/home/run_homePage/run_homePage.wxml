@@ -37,10 +37,10 @@
         <view class="start-run-btn-box">
             <view class="auth-hint">
                 <view class="auth-hint-box" wx:if="{{!auth.hasAuthUserLocation}}" bindtap="toastAuthUserLocationBac">
-                    <text class="auth-hint-txt">当前小程序定位权限未打开，无法开始跑步</text>
+                    <text class="auth-hint-txt">{{ $language['当前小程序定位权限未打开，无法开始跑步'] }}</text>
                 </view>
                 <view class="auth-hint-box" wx:if="{{!auth.hasAuthUserLocationBackground}}" bindtap="toastAuthUserLocationBac">
-                    <text class="auth-hint-txt">当前小程序悬浮后台时无法获取定位，将影响跑步流程</text>
+                    <text class="auth-hint-txt">{{ $language['当前小程序悬浮后台时无法获取定位，将影响跑步流程'] }}</text>
                 </view>
             </view>
             <login-btn bindsuccess="startRun">

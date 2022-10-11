@@ -60,7 +60,8 @@ Page({
     // Todo
     this.setData({
       noLogin: false,
-      webUrl: `https://work.51yund.com/vapps/new_work/index?user_id=${user_id}&xyy=${xyy}&is_login=true&from_tab=true`,
+      // webUrl: `https://work.51yund.com/vapps/new_work/index?user_id=${user_id}&xyy=${xyy}&is_login=true&from_tab=true`,
+      webUrl: `https://test-hd.51yund.com/vapps/new_work/index?user_id=${user_id}&xyy=${xyy}&is_login=true&from_tab=true`,
     })
   },
 

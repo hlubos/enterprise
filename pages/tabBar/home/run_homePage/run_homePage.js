@@ -114,8 +114,10 @@ Component({
           res.authSetting['scope.userLocationBackground'] != true
         ) {
           showModal({
-            title: '未授权后台定位',
-            content: '是否前往设置？',
+            title: this.data.$language['未授权后台定位'],
+            content: this.data.$language['是否前往设置'] + ' ？',
+            cancelText: this.data.$language['取消'],
+            confirmText: this.data.$language['确定'],
           }).then((res) => {
             if (res.confirm) {
               openSetting().then((ress) => {

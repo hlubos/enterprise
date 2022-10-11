@@ -12,11 +12,6 @@ const en = {
   开始跑步: 'Start running',
   历史记录: 'History',
   人参与: 'participants',
-  跳绳: 'Skipping-rope',
-  俯卧撑: 'Push-up',
-  深蹲: 'Squat',
-  仰卧起坐: 'Sit-up',
-  开合跳: 'Jumping jack',
   敬请期待: 'Coming soon',
   暂无记录: 'No record',
   周一: 'Mon',
@@ -83,6 +78,36 @@ const en = {
   下一步: 'next',
   完成: 'complete',
   企业悦动: 'Enterprise Yodo',
+  '当前小程序定位权限未打开，无法开始跑步':
+    'The current mini program location permission is not open, unable to start running',
+  '当前小程序悬浮后台时无法获取定位，将影响跑步流程':
+    'When the current mini program is suspended in the background, it cannot obtain the location, which will affect the running process',
+  '上次跑步进程被异常中断，跑步记录未上传。是否重新进入跑步进程':
+    'The last run was interrupted abnormally, and the run record was not uploaded. Whether to re-enter the running process',
+  '是,回到上次进程': 'Yes, go back to the last process',
+  '否,上次记录将丢失': 'No, the last record will be lost',
+  公里: 'km',
+  平均配速: 'Average speed',
+  总计时间: 'Total time',
+  消耗千卡: 'Kilocalori consumed',
+  解锁: 'Unlock',
+  '长按结束按钮，将结束本次跑步': 'Long press the end button to end the run',
+  长按解锁: 'Press and hold to unlock',
+  是否退出跑步: 'Whether to quit running',
+  '您的移动距离过短,数据将不会保存':
+    'Your moving distance is too short, the data will not be saved',
+  取消: 'Cancel',
+  确定: 'Confirm',
+  未授权后台定位: 'Unauthorized background positioning',
+  是否前往设置: 'Whether to go to set',
+  请站在识别框内: 'Please stand in the identification box',
+  俯卧撑: 'Push-up',
+  开合跳: 'Jumping Jack',
+  深蹲: 'Squat',
+  跳绳: 'Rope skipping',
+  仰卧起坐: 'Sit-up',
+  'https://ssl-pubpic.51yund.com/1221493962.png':
+    'https://ssl-pubpic.51yund.com/1309230214.png',
 }
 
 export default en
