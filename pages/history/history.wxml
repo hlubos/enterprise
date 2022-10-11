@@ -8,4 +8,4 @@
     info="{{element}}"></record-box>
 </view>
 
-<view class="tip" wx:else> - 暂无记录 - </view>
+<view class="tip" wx:else> - {{ $language['暂无记录'] }} - </view>

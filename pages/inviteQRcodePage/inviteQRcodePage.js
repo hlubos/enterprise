@@ -1,4 +1,5 @@
 // pages/inviteQRcodePage/inviteQRcodePage.js
+import i18nInstance from 'miniprogram-i18n-plus'
 Page({
   /**
    * 页面的初始数据
@@ -71,6 +72,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
+    i18nInstance.effect(this)
     console.log('options', options)
     if (options.isBoth == 'true') {
       this.setData({

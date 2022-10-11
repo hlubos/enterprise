@@ -14,6 +14,7 @@ Page({
     // let baseUrl = 'https://work.51yund.com/vapps/new_work/'
     let baseUrl = 'https://test-web7.51yund.com/vapps/new_work/'
     // let baseUrl = "https://test-lip.51yund.com/vapps/new_work/"
+    // let baseUrl = 'https://test-hd.51yund.com/vapps/new_work/'
 
     let url = ''
     //接收从其他小程序页面传过来的参数，判断后跳转到webview的具体页面

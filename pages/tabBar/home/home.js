@@ -1,6 +1,6 @@
 // pages/tabBar/home/home.js
 import api from '../../../server/home'
-
+import i18nInstance from 'miniprogram-i18n-plus'
 Page({
   /**
    * 页面的初始数据
@@ -31,6 +31,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    i18nInstance.effect(this)
+    wx.setNavigationBarTitle({
+      title: this.data.$language['企业悦动'],
+    })
     console.log(options)
     if (options.kindId == '0') {
       this.setData({

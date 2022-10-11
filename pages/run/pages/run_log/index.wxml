@@ -4,19 +4,19 @@
 <view class="runlog-page">
     <view class="runlog-banner">
         <view class="runlog-banner-num">{{total_distance}}</view>
-        <view class="runlog-banner-txt">累计公里</view>
+        <view class="runlog-banner-txt">{{ $language['累计公里'] }}</view>
         <view class="runlog-banner-data">
             <view class="runlog-banner-data-box">
                 <view class="runlog-banner-data-num">{{total_cost_time}}</view>
-                <view class="runlog-banner-data-txt">累计时长</view>
+                <view class="runlog-banner-data-txt">{{ $language['累计时长'] }}</view>
             </view>
             <view class="runlog-banner-data-box">
                 <view class="runlog-banner-data-num">{{total_caloric}}</view>
-                <view class="runlog-banner-data-txt">累计消耗千卡</view>
+                <view class="runlog-banner-data-txt">{{ $language['累计消耗千卡'] }}</view>
             </view>
             <view class="runlog-banner-data-box">
                 <view class="runlog-banner-data-num">{{total_cnt}}</view>
-                <view class="runlog-banner-data-txt">累计次数</view>
+                <view class="runlog-banner-data-txt">{{ $language['累计次数'] }}</view>
             </view>
         </view>
     </view>
@@ -38,7 +38,7 @@
                         <view class="runlog-item-info-line2">
                             <view>
                                 <text class="runlog-item-info-line2-txt1">{{(item.distance)}} 公里</text>
-                                <text class="runlog-item-info-line2-txt2">{{item.kind_id==0?'室外跑':'室内跑'}}</text>
+                                <text class="runlog-item-info-line2-txt2">{{item.kind_id==0?$language['室外跑']:$language['室内跑']}}</text>
                             </view>
                             <!-- <image class="right-icon" src="https://ssl-pubpic.51yund.com/1221022777.png"></image> -->
                         </view>

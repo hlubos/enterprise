@@ -1,5 +1,6 @@
 import errStorage from './common/errStorage'
 import tool from './common/tool'
+import i18n from './i18n/index'
 
 import * as fetchWechat from 'fetch-wechat'
 import * as tf from '@tensorflow/tfjs-core'
@@ -37,10 +38,26 @@ App({
         this.globalData.CustomBar =
           custom.bottom + custom.top - e.statusBarHeight
         this.globalData.systemInfo = systemInfo
+        this.initTabBar(e.language)
+        i18n(e.language)
       },
     })
 
     this.globalData.bgMusic = !1 !== wx.getStorageSync('bgMusic')
+  },
+
+  initTabBar(language) {
+    const lang = language == 'zh_CN' ? language : 'en_US'
+    if (lang !== 'zh_CN') {
+      wx.setTabBarItem({
+        index: 0,
+        text: 'enterprise',
+      })
+      wx.setTabBarItem({
+        index: 1,
+        text: 'movement',
+      })
+    }
   },
 
   // 初始化插件

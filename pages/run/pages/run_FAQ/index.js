@@ -3,6 +3,7 @@ import wxFun from '../../utils/wxFun'
 let navigateBack = wxFun.promisify('navigateBack')
 let setStorageSync = wxFun.ordinary('setStorageSync')
 let getStorageSync = wxFun.ordinary('getStorageSync')
+import i18nInstance from 'miniprogram-i18n-plus'
 Page({
   /**
    * 页面的初始数据
@@ -74,7 +75,12 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad(options) {},
+  onLoad(options) {
+    i18nInstance.effect(this)
+    wx.setNavigationBarTitle({
+      title: this.data.$language['企业悦动'],
+    })
+  },
 
   /**
    * 生命周期函数--监听页面初次渲染完成

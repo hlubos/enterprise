@@ -1,5 +1,6 @@
 // plugin/pages/run_set/index.js
 import wxFun from '../../utils/wxFun'
+import i18nInstance from 'miniprogram-i18n-plus'
 
 let getNetworkType = wxFun.promisify('getNetworkType')
 let setStorageSync = wxFun.ordinary('setStorageSync')
@@ -34,6 +35,8 @@ Page({
     // voiceList: ['国语女声', '国语男声', '英语女声', '英语男声'],
     voiceList: ['国语女声'],
     // 播报频率 ['10分钟', '20分钟', '30分钟', '40分钟']
+    defaultDistanceArr: ['0.5公里', '1公里', '2公里', '3公里'],
+    defaultTimeArr: ['10分钟', '20分钟', '30分钟', '40分钟'],
     frequencyArray: [
       ['按距离播报', '按时间播报'],
       ['0.5公里', '1公里', '2公里', '3公里'],
@@ -238,11 +241,11 @@ Page({
   //     if(e.detail.column == 0){
   //         if(e.detail.value == 0){
   //             this.setData({
-  //                 "frequencyArray[1]":['0.5公里', '1公里', '2公里', '3公里']
+  //                 "frequencyArray[1]": this.data.defaultDistanceArr
   //             })
   //         }else if(e.detail.value == 1){
   //             this.setData({
-  //                 "frequencyArray[1]":['10分钟', '20分钟', '30分钟', '40分钟']
+  //                 "frequencyArray[1]": this.data.defaultTimeArr
   //             })
   //         }
   //     }
@@ -253,13 +256,13 @@ Page({
       let valIndex = picker.getColumnIndex(0)
       if (valIndex == 0) {
         this.setData({
-          'frequencyArray[1]': ['0.5公里', '1公里', '2公里', '3公里'],
-          'freColumns[1].values': ['0.5公里', '1公里', '2公里', '3公里'],
+          'frequencyArray[1]': this.data.defaultDistanceArr,
+          'freColumns[1].values': this.data.defaultDistanceArr,
         })
       } else if (valIndex == 1) {
         this.setData({
-          'frequencyArray[1]': ['10分钟', '20分钟', '30分钟', '40分钟'],
-          'freColumns[1].values': ['10分钟', '20分钟', '30分钟', '40分钟'],
+          'frequencyArray[1]': this.data.defaultTimeArr,
+          'freColumns[1].values': this.data.defaultTimeArr,
         })
       }
     }
@@ -283,11 +286,11 @@ Page({
   //     })
   //     if(this.data.freIndex[0] == 0){
   //         this.setData({
-  //             "frequencyArray[1]":['0.5公里', '1公里', '2公里', '3公里']
+  //             "frequencyArray[1]": this.data.defaultDistanceArr
   //         })
   //     }else if(this.data.freIndex[0] == 1){
   //         this.setData({
-  //             "frequencyArray[1]":['10分钟', '20分钟', '30分钟', '40分钟']
+  //             "frequencyArray[1]": this.data.defaultTimeArr
   //         })
   //     }
   // },
@@ -306,13 +309,13 @@ Page({
         })
         if (this.data.freIndex[0] == 0) {
           this.setData({
-            'frequencyArray[1]': ['0.5公里', '1公里', '2公里', '3公里'],
-            'freColumns[1].values': ['0.5公里', '1公里', '2公里', '3公里'],
+            'frequencyArray[1]': this.data.defaultDistanceArr,
+            'freColumns[1].values': this.data.defaultDistanceArr,
           })
         } else if (this.data.freIndex[0] == 1) {
           this.setData({
-            'frequencyArray[1]': ['10分钟', '20分钟', '30分钟', '40分钟'],
-            'freColumns[1].values': ['10分钟', '20分钟', '30分钟', '40分钟'],
+            'frequencyArray[1]': this.data.defaultTimeArr,
+            'freColumns[1].values': this.data.defaultTimeArr,
           })
         }
         this.setData({
@@ -357,18 +360,54 @@ Page({
     this.cacheSetData()
     if (this.data.freIndex[0] == 0) {
       this.setData({
-        'frequencyArray[1]': ['0.5公里', '1公里', '2公里', '3公里'],
+        'frequencyArray[1]': this.data.defaultDistanceArr,
       })
     } else if (this.data.freIndex[0] == 1) {
       this.setData({
-        'frequencyArray[1]': ['10分钟', '20分钟', '30分钟', '40分钟'],
+        'frequencyArray[1]': this.data.defaultTimeArr,
       })
     }
+  },
+
+  initI18nData() {
+    const voiceList = this.data.voiceList
+    this.formatI18nArr(voiceList)
+    const frequencyArray = this.data.frequencyArray
+    frequencyArray.forEach((item) => {
+      this.formatI18nArr(item)
+    })
+    const freColumns = this.data.freColumns
+    freColumns.forEach((item) => {
+      this.formatI18nArr(item.values)
+    })
+    const defaultDistanceArr = this.data.defaultDistanceArr
+    const defaultTimeArr = this.data.defaultTimeArr
+    this.formatI18nArr(defaultDistanceArr)
+    this.formatI18nArr(defaultTimeArr)
+    this.setData({
+      voiceList,
+      frequencyArray,
+      freColumns,
+      defaultDistanceArr,
+      defaultTimeArr,
+    })
+  },
+
+  formatI18nArr(data) {
+    data.forEach((item, index, arr) => {
+      arr[index] = this.data.$language[item]
+    })
   },
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad(options) {},
+  onLoad(options) {
+    i18nInstance.effect(this)
+    this.initI18nData()
+    wx.setNavigationBarTitle({
+      title: this.data.$language['企业悦动'],
+    })
+  },
 
   /**
    * 生命周期函数--监听页面初次渲染完成

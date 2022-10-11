@@ -2,15 +2,15 @@
 <view class="record-item {{isLast ? '' : 'border'}}">
   <image class="left" src="{{info.pic_url}}"></image>
   <view class="center">
-    <view class="title">{{info.video_name}}</view>
+    <view class="title">{{$language[info.video_name]}}</view>
     <view class="calories">{{info.calories}} Kcal</view>
   </view>
   <view class="right">
     <!-- 平板支撑 -->
     <view class="content" wx:if="{{info.video_id == 29}}">{{info.spend_time}}</view>
     <!-- 体测运动 -->
-    <view class="content" wx:elif="{{info.video_id == 21}}">{{info.score}}<text class="unit">分</text></view>
+    <view class="content" wx:elif="{{info.video_id == 21}}">{{info.score}}<text class="unit">{{ $language['分'] }}</text></view>
     <!-- 其他 -->
-    <view class="content" wx:else>{{info.action_times}}<text class="unit">个</text></view>
+    <view class="content" wx:else>{{info.action_times}}<text class="unit">{{ $language['个'] }}</text></view>
   </view>
 </view>

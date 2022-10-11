@@ -1,4 +1,6 @@
 // pages/history/components/RecordItem/RecordItem.js
+import i18nInstance from 'miniprogram-i18n-plus'
+
 Component({
   /**
    * 组件的属性列表
@@ -14,6 +16,10 @@ Component({
       type: Boolean,
       value: false,
     },
+  },
+
+  attached: function () {
+    i18nInstance.effect(this)
   },
 
   /**

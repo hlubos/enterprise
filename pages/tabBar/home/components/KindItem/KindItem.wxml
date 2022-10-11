@@ -2,10 +2,10 @@
 <login-btn bindsuccess="goSport">
   <view class="kind-item" bindtap="goSport">
     <view class="title">
-      <text>{{info.name}}</text>
+      <text>{{$language[info.name]}}</text>
     </view>
     <view class="cnt">
-      <text wx:if="{{info.cnt>0}}">{{info.cnt}}人参与</text>
+      <text wx:if="{{info.cnt>0}}">{{info.cnt}} {{ $language['人参与'] }}</text>
     </view>
     <image class="kind-img" src="{{info.pic_url}}"></image>
   </view>

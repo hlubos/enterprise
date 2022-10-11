@@ -6,20 +6,20 @@
         wx:key="index"
         data-index="{{index}}"
         bindtap="selectedNav"
-    >{{item.name}}</view>
+    >{{ $language[item.name] }}</view>
 </view>
 <view style="width: 100vw; height: 88rpx;"></view>
 <view class="faq-box">
     <view class="faq-content">
-        <view class="faq-title">{{faqList[selectedNavIndex].title}}</view>
-        <view class="faq-text">{{faqList[selectedNavIndex].text}}</view>
-        <view class="faq-solve-tle">{{faqList[selectedNavIndex].solveTle}}</view>
-        <view class="faq-solve-con">{{faqList[selectedNavIndex].solveCon}}</view>
+        <view class="faq-title">{{ $language[faqList[selectedNavIndex].title] }}</view>
+        <view class="faq-text">{{ $language[faqList[selectedNavIndex].text] }}</view>
+        <view class="faq-solve-tle">{{ $language[faqList[selectedNavIndex].solveTle] }}</view>
+        <view class="faq-solve-con">{{ $language[faqList[selectedNavIndex].solveCon] }}</view>
         <image class="faq-img" src="{{faqList[selectedNavIndex].img}}"></image>
     </view>
 </view>
 <view class="filler-box"></view>
 <view class="next-btn-box">
-    <view class="next-btn" bindtap="nextTip" hidden="{{selectedNavIndex >= 3}}">下一步</view>
-    <view class="next-btn" bindtap="finishTip" hidden="{{selectedNavIndex < 3}}">完成</view>
+    <view class="next-btn" bindtap="nextTip" hidden="{{selectedNavIndex >= 3}}">{{ $language['下一步'] }}</view>
+    <view class="next-btn" bindtap="finishTip" hidden="{{selectedNavIndex < 3}}">{{ $language['完成'] }}</view>
 </view>

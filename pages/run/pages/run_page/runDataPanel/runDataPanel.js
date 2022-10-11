@@ -1,4 +1,5 @@
 // plugin/pages/run_page/components/runDataPanel/runDataPanel.js
+import i18nInstance from 'miniprogram-i18n-plus'
 var breakUnlockTimer
 var startUnlockTimer
 var startStopRunTimer
@@ -42,6 +43,7 @@ Component({
   lifetimes: {
     // 生命周期函数，可以为函数，或一个在 methods 段中定义的方法名
     attached: function () {
+      i18nInstance.effect(this)
       // var that = this;
       // that.canvasRing = that.selectComponent("#canvasRing");
       // that.canvasRing.showCanvasRing();

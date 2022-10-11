@@ -3,6 +3,7 @@ import douglasPeuker from '../../utils/Douglas_Peuker'
 import myFormats from '../../utils/format'
 import api from '../../server/run'
 import wxFun from '../../utils/wxFun'
+import i18nInstance from 'miniprogram-i18n-plus'
 let getLocation = wxFun.promisify('getLocation')
 let redirectTo = wxFun.promisify('redirectTo')
 let navigateBack = wxFun.promisify('navigateBack')
@@ -466,8 +467,10 @@ Page({
       this.data.runMiles <= 10
     ) {
       showModal({
-        title: '是否退出跑步？',
-        content: '您的移动距离过短,数据将不会保存',
+        title: this.data.$language['是否退出跑步'] + ' ？',
+        content: this.data.$language['您的移动距离过短,数据将不会保存'],
+        cancelText: this.data.$language['取消'],
+        confirmText: this.data.$language['确定'],
       }).then(async (res) => {
         if (res.confirm) {
           // 清除运动数据缓存
@@ -720,6 +723,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
+    i18nInstance.effect(this)
+    wx.setNavigationBarTitle({
+      title: this.data.$language['企业悦动'],
+    })
     innerAudioContext = createInnerAudioContext({ useWebAudioImplement: true })
     innerAudioContext.autoplay = true
   },

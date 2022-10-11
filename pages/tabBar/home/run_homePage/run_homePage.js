@@ -2,6 +2,7 @@
 import api from '../../../../server/run'
 import tool from '../../../../common/tool'
 import loginApi from '../../../../server/login'
+import i18nInstance from 'miniprogram-i18n-plus'
 
 const app = getApp()
 let getLocation = tool.promisify('getLocation')
@@ -113,8 +114,10 @@ Component({
           res.authSetting['scope.userLocationBackground'] != true
         ) {
           showModal({
-            title: '未授权后台定位',
-            content: '是否前往设置？',
+            title: this.data.$language['未授权后台定位'],
+            content: this.data.$language['是否前往设置'] + ' ？',
+            cancelText: this.data.$language['取消'],
+            confirmText: this.data.$language['确定'],
           }).then((res) => {
             if (res.confirm) {
               openSetting().then((ress) => {
@@ -293,6 +296,7 @@ Component({
       // 在组件实例刚刚被创建时执行
     },
     attached: function () {
+      i18nInstance.effect(this)
       // 在组件实例进入页面节点树时执行
       // 获取后台定位的权限
       getSetting().then((res) => {
