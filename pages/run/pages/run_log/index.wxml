@@ -24,10 +24,11 @@
         <view>
             <mp-cells ext-class="my-cells">
                 <mp-cell wx:for="{{runLogList}}" wx:key="index">
+                  <view style="display: flex;">
                     <view class="runlog-item-icon">
                         <image lazy-load src="{{item.pic_url == ''?defaultImg:item.pic_url}}" binderror="errorFunction" data-errorimg="{{index}}"></image>
                     </view>
-                    <view class="runlog-item-info" slot="footer">
+                    <view style="flex: 1;" class="runlog-item-info" slot="footer">
                         <view class="runlog-item-info-line1">
                             <view hidden="{{item.run_source != 'wx_mini_program'}}" class="runlog-item-info-line1-txt1">小程序</view>
                             <view hidden="{{item.run_source != 'xiaoyue_bracelet'}}" class="runlog-item-info-line1-txt1">智能穿戴</view>
@@ -57,6 +58,7 @@
                             </view>
                         </view>
                     </view>
+                  </view>
                 </mp-cell>
             </mp-cells>
         </view>
