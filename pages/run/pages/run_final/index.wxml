@@ -29,7 +29,7 @@
         <view class="title answer_draw_canvas">
             <view class="title1 answer_draw_canvas">
                 <view class="logo answer_draw_canvas">
-                    <image class="answer_draw_canvas" data-delay="1" data-type="image" data-url="https://ssl-pubpic.51yund.com/1221778105.png" src="https://ssl-pubpic.51yund.com/1221778105.png"></image>
+                    <image class="answer_draw_canvas" data-delay="1" data-type="image" data-url="{{$language['https://ssl-pubpic.51yund.com/1221778105.png']}}" src="{{$language['https://ssl-pubpic.51yund.com/1221778105.png']}}"></image>
                 </view>
                 <view class="finish-time answer_draw_canvas" data-delay="1" data-type="text" data-text="{{showRunData.runStartTime}}">{{showRunData.runStartTime}}</view>
                 <view class="avatar answer_draw_canvas">
@@ -39,30 +39,30 @@
             <view class="title2 answer_draw_canvas">
                 <view class="title2-left answer_draw_canvas">
                     <view class="title2-left-kmeter answer_draw_canvas txt1" data-delay="1" data-type="text" data-text="{{showRunData.runKMiles}}">{{showRunData.runKMiles}}</view>
-                    <view class="title2-left-unit answer_draw_canvas" data-delay="1" data-type="text" data-text="公里">公里</view>
+                    <view class="title2-left-unit answer_draw_canvas" data-delay="1" data-type="text" data-text="{{ $language['公里'] }}">{{ $language['公里'] }}</view>
                 </view>
                 <view class="title2-right answer_draw_canvas">
                     <view class="title2-right-name answer_draw_canvas" data-delay="1" data-left="0" data-type="text" data-text="{{userInfo.nick}}">{{userInfo.nick}}</view>
-                    <view class="title2-right-id answer_draw_canvas" data-delay="1" data-left="0" data-type="text" data-text="用户ID：{{userInfo.user_id}}">用户ID：{{userInfo.user_id}}</view>
+                    <view class="title2-right-id answer_draw_canvas" data-delay="1" data-left="0" data-type="text" data-text="{{ $language['用户ID'] }}：{{userInfo.user_id}}">{{ $language['用户ID'] }}：{{userInfo.user_id}}</view>
                 </view>
             </view>
             <view class="title3 answer_draw_canvas">
                 <view class="title3-item1 answer_draw_canvas">
                     <view class="title3-num answer_draw_canvas txt2" data-delay="1" data-type="text" data-text="{{showRunData.avgPace}}">{{showRunData.avgPace}}</view>
-                    <view class="title3-unit answer_draw_canvas" data-delay="1" data-type="text" data-text="平均配速">平均配速</view>
+                    <view class="title3-unit answer_draw_canvas" data-delay="1" data-type="text" data-text="{{ $language['平均配速'] }}">{{ $language['平均配速'] }}</view>
                 </view>
                 <view class="title3-item2 answer_draw_canvas">
                     <view class="title3-num answer_draw_canvas txt2" data-delay="1" data-type="text" data-text="{{showRunData.sumTime}}">{{showRunData.sumTime}}</view>
-                    <view class="title3-unit answer_draw_canvas" data-delay="1" data-type="text" data-text="总计时间">总计时间</view>
+                    <view class="title3-unit answer_draw_canvas" data-delay="1" data-type="text" data-text="{{ $language['总计时间'] }}">{{ $language['总计时间'] }}</view>
                 </view>
                 <view class="title3-item3 answer_draw_canvas">
                     <view class="title3-num answer_draw_canvas txt2" data-delay="1" data-type="text" data-text="{{showRunData.kCalorie}}">{{showRunData.kCalorie}}</view>
-                    <view class="title3-unit answer_draw_canvas" data-delay="1" data-type="text" data-text="消耗千卡">消耗千卡</view>
+                    <view class="title3-unit answer_draw_canvas" data-delay="1" data-type="text" data-text="{{ $language['消耗千卡'] }}">{{ $language['消耗千卡'] }}</view>
                 </view>
             </view>
         </view>
         <view class="count-line answer_draw_canvas" data-type="text" data-background="#cccccc">
-            <view class="count-line-txt answer_draw_canvas" data-delay="1" data-type="text" data-text="第{{userInfo.this_sport_cnt}}次跑步">第{{userInfo.this_sport_cnt}}次跑步</view>
+            <view class="count-line-txt answer_draw_canvas" data-delay="1" data-type="text" data-text="{{ isZh ? '第' : 'You have run ' }}{{userInfo.this_sport_cnt}}{{ isZh ? '次跑步' : ' times' }}">{{ isZh ? '第' : "You've run " }}{{userInfo.this_sport_cnt}}{{ isZh ? '次跑步' : ' times' }}</view>
         </view>
         <view class="visual-chart-box answer_draw_canvas">
             <!-- <view class="visual-chart-title">配速</view> -->
@@ -97,9 +97,9 @@
 <!-- </canvas> -->
 <view class="share-btn-box" hidden="{{!isShowPanel}}">
     <view class="share-btn">
-        <view class="btn1" bindtap="runFinish">完成运动</view>
+        <view class="btn1" bindtap="runFinish">{{ $language['完成运动'] }}</view>
         <!-- <view class="btn2" bindtap="createQrcode">分享</view> -->
-        <view class="btn2" bindtap="drawCanvas">分享</view>
+        <view class="btn2" bindtap="drawCanvas">{{ $language['分享'] }}</view>
     </view>
 </view>
 <canvas

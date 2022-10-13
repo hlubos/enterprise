@@ -196,7 +196,7 @@
   /* padding-right: 20rpx; */
   top: -24rpx;
   font-size: 24rpx;
-  width: 200rpx;
+  width: 300rpx;
   height: 24rpx;
   color: #666666;
   text-align: center;

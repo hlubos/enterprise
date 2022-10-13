@@ -1,4 +1,5 @@
 import wxFun from '../../../utils/wxFun'
+import i18nInstance from 'miniprogram-i18n-plus'
 let createMapContext = wxFun.ordinary('createMapContext')
 Component({
   behaviors: [],
@@ -58,6 +59,7 @@ Component({
   lifetimes: {
     // 生命周期函数，可以为函数，或一个在 methods 段中定义的方法名
     attached: function () {
+      i18nInstance.effect(this)
       // this.setData({
       //     mapCenterLocation:{
       //         longitude: this.data.newLongitude,

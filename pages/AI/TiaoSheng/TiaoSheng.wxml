@@ -8,7 +8,7 @@
         <cover-view class="score-bg"></cover-view>
         <cover-view wx:if="{{limitTime>0}}" class="time-progress" style="width: {{timeProgress}}%"></cover-view>
         <cover-view wx:if="{{!sportEnd&&!sportStart}}" class="tips-text-center">
-            {{$language[tipsText]}}
+            {{tipsText}}
         </cover-view>
         <cover-view wx:if="{{sportStart}}">
             <cover-view class="score-detail">

@@ -4,19 +4,19 @@
         <view class="map-data">
             <view>
                 <view class="map-data-num">{{runShowData.runKmiles == 0?'0.00': runShowData.runKmiles}}</view>
-                <view class="map-data-unit">公里</view>
+                <view class="map-data-unit">{{ $language['公里'] }}</view>
             </view>
             <view>
                 <view class="map-data-num">{{runShowData.avePace}}</view>
-                <view class="map-data-unit">平均配速</view>
+                <view class="map-data-unit">{{ $language['平均配速'] }}</view>
             </view>
             <view>
                 <view class="map-data-num">{{runShowData.sumTime}}</view>
-                <view class="map-data-unit">总用时</view>
+                <view class="map-data-unit">{{ $language['总用时'] }}</view>
             </view>
             <view>
                 <view class="map-data-num">{{runShowData.kiloCalorie}}</view>
-                <view class="map-data-unit">消耗千卡</view>
+                <view class="map-data-unit">{{ $language['消耗千卡'] }}</view>
             </view>
         </view>
         <view class="map-data map-data-unit">

@@ -30,15 +30,15 @@
                     </view>
                     <view style="flex: 1;" class="runlog-item-info" slot="footer">
                         <view class="runlog-item-info-line1">
-                            <view hidden="{{item.run_source != 'wx_mini_program'}}" class="runlog-item-info-line1-txt1">小程序</view>
-                            <view hidden="{{item.run_source != 'xiaoyue_bracelet'}}" class="runlog-item-info-line1-txt1">智能穿戴</view>
-                            <view hidden="{{item.run_source == 'wx_mini_program' || item.run_source == 'xiaoyue_bracelet'}}" class="runlog-item-info-line1-txt1">悦动圈APP</view>
+                            <view hidden="{{item.run_source != 'wx_mini_program'}}" class="runlog-item-info-line1-txt1">{{ $language['小程序'] }}</view>
+                            <view hidden="{{item.run_source != 'xiaoyue_bracelet'}}" class="runlog-item-info-line1-txt1">{{ $language['智能穿戴'] }}</view>
+                            <view hidden="{{item.run_source == 'wx_mini_program' || item.run_source == 'xiaoyue_bracelet'}}" class="runlog-item-info-line1-txt1">{{ $language['悦动圈APP'] }}</view>
                             <!-- <view class="runlog-item-info-line1-txt2">2022.06.22 19:17</view> -->
                             <view class="runlog-item-info-line1-txt2">{{item.time}}</view>
                         </view>
                         <view class="runlog-item-info-line2">
                             <view>
-                                <text class="runlog-item-info-line2-txt1">{{(item.distance)}} 公里</text>
+                                <text class="runlog-item-info-line2-txt1">{{(item.distance)}} {{ $language['公里'] }}</text>
                                 <text class="runlog-item-info-line2-txt2">{{item.kind_id==0?$language['室外跑']:$language['室内跑']}}</text>
                             </view>
                             <!-- <image class="right-icon" src="https://ssl-pubpic.51yund.com/1221022777.png"></image> -->

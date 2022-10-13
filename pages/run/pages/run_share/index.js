@@ -2,6 +2,7 @@
 import api from '../../server/run'
 import Wxml2Canvas from '../../wxml2canvas/index'
 import wxFun from '../../utils/wxFun'
+import i18nInstance from 'miniprogram-i18n-plus'
 let navigateTo = wxFun.promisify('navigateTo')
 let showLoading = wxFun.promisify('showLoading')
 let hideLoading = wxFun.promisify('hideLoading')
@@ -40,7 +41,7 @@ Page({
   // 生成图片
   createImg() {
     showLoading({
-      title: '分享图片生成中',
+      title: this.data.$language['分享图片生成中'],
     })
     const that = this
     const query = createSelectorQuery().in(this)
@@ -77,7 +78,7 @@ Page({
         finish(url) {
           hideLoading()
           showToast({
-            title: '图片已生成',
+            title: this.data.$language['图片已生成'],
             icon: 'none',
             duration: 1500,
           })
@@ -115,7 +116,7 @@ Page({
     })
       .then((res) => {
         showToast({
-          title: '图片已保存！',
+          title: this.data.$language['图片已保存'] + '！',
           icon: 'none',
           duration: 2000,
         })
@@ -144,6 +145,10 @@ Page({
    */
   onLoad(options) {
     // console.log(options)
+    i18nInstance.effect(this)
+    wx.setNavigationBarTitle({
+      title: this.data.$language['企业悦动'],
+    })
     this.setData({
       runner_id: options.runner_id,
       dataImg: decodeURIComponent(options.dataImg),
