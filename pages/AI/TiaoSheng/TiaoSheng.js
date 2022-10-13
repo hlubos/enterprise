@@ -3,7 +3,6 @@ const app = getApp()
 import { Classifier } from '../../../models/posenet/classifier.js'
 import utils from '../../../common/utils'
 import api from '../../../server/home'
-import i18nInstance from 'miniprogram-i18n-plus'
 const CANVAS_ID = 'canvas'
 var o = 0,
   r = -1,
@@ -75,10 +74,6 @@ Page({
    */
   onLoad: function (options) {
     console.log(`options==`, options)
-    i18nInstance.effect(this)
-    wx.setNavigationBarTitle({
-      title: this.data.$language['跳绳'],
-    })
     if (options.limit_time > 0) {
       let limitTime = parseInt(options.limit_time)
       this.setData({

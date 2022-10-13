@@ -1,6 +1,8 @@
 // run_packege/pages/run_final/components/runSpeedChart/runSpeedChart.js
 import * as echarts from '../../../../ec-canvas/echarts'
 import myFormats from '../../../../utils/format'
+import i18nInstance from 'miniprogram-i18n-plus'
+
 let chart
 let pace = {
   nowVal: "0'00''",
@@ -8,17 +10,18 @@ let pace = {
   value: "0'00''",
 }
 function getOption(data) {
+  const isZh = wx.getStorageSync('language') == 'zh'
   let txt = ''
   if (pace.flag == 1) {
-    txt = `比上次 ↑ ${pace.value}`
+    txt = isZh ? `比上次 ↑ ${pace.value}` : `↑ ${pace.value} than last`
   } else {
-    txt = `比上次 ↓ ${pace.value}`
+    txt = isZh ? `比上次 ↓ ${pace.value}` : `↓ ${pace.value} than last`
   }
   var option = {
     backgroundColor: '#ffffff',
     title: [
       {
-        text: '配速',
+        text: isZh ? '配速' : 'Speed',
         // left: 'center',
         textStyle: {
           fontWeight: '600',
@@ -34,7 +37,7 @@ function getOption(data) {
         top: '40%',
         style: {
           // text: `平均配速11'12''`,
-          text: '平均配速' + pace.nowVal,
+          text: isZh ? '平均配速' : 'Avg speed: ' + pace.nowVal,
           textAlign: 'center',
           fill: '#333',
           fontSize: 14,
@@ -101,6 +104,7 @@ function getCache(kmilesPaceCache) {
   // let user_id = getStorageSync('user_id')
   // let key = 'run_kmiles_pace_arr_' + user_id
   // let cacheData = getStorageSync(key)
+  const isZh = wx.getStorageSync('language') == 'zh'
   let cacheData = kmilesPaceCache
   let newData = []
   for (let i = 0; i < cacheData.length; i++) {
@@ -116,7 +120,7 @@ function getCache(kmilesPaceCache) {
       let m = Number(cacheData[i].outMiles).toFixed(2)
       newData.push({
         name: {
-          title: `最后${m}米`,
+          title: isZh ? `最后${m}米` : `Result: ${m} meters`,
           cot: cacheData[i].avg_pace,
         },
         value: m,
@@ -175,6 +179,7 @@ Component({
   lifetimes: {
     // 生命周期函数，可以为函数，或一个在 methods 段中定义的方法名
     attached: function (data) {
+      i18nInstance.effect(this)
       let that = this
       this.pieComponent = this.selectComponent('#mychart-dom-pie')
       // this.init_pie()

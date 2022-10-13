@@ -33,8 +33,8 @@
     <view class="qrcode-box answer_draw_canvas">
         <image class="qrcode-img answer_draw_canvas" data-delay="1" data-type="image" data-url="{{qrcodeImg}}" src="{{qrcodeImg}}"></image>
         <view class="qrcode-txt answer_draw_canvas">
-            <view class="answer_draw_canvas" data-delay="1" data-type="text" data-text="全民数字化">全民数字化</view>
-            <view class="answer_draw_canvas" data-delay="1" data-type="text" data-text="运动健康管理平台">运动健康管理平台</view>
+            <view class="answer_draw_canvas" data-delay="1" data-type="text" data-text="全民数字化">{{ $language['全民数字化'] }}</view>
+            <view class="answer_draw_canvas" data-delay="1" data-type="text" data-text="运动健康管理平台">{{ $language['运动健康管理平台'] }}</view>
         </view>
     </view>
 </view>
@@ -43,11 +43,11 @@
 <view class="share-type-box">
     <view class="type-btn" bindtap="wxShare">
         <image src="https://ssl-pubpic.51yund.com/1225058005.png"></image>
-        <view>微信分享</view>
+        <view>{{ $language['微信分享'] }}</view>
     </view>
     <view class="type-btn" bindtap="clickSaveImg">
         <image src="https://ssl-pubpic.51yund.com/1225058151.png"></image>
-        <view>保存图片</view>
+        <view>{{ $language['保存图片'] }}</view>
     </view>
 </view>
 <!-- </view> -->

@@ -3,7 +3,6 @@ var t = require('../../../models/posenet/classifier.js'),
 
 import utils from '../../../common/utils'
 import api from '../../../server/home'
-import i18nInstance from 'miniprogram-i18n-plus'
 
 Page({
   classifier: null,
@@ -59,10 +58,6 @@ Page({
     costTimeStr: '00:00',
   },
   onLoad: function (t) {
-    i18nInstance.effect(this)
-    wx.setNavigationBarTitle({
-      title: this.data.$language['俯卧撑'],
-    })
     var i = this
     t.angleRange = '70-85'
     this.setData({

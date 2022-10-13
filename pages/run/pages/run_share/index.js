@@ -2,6 +2,7 @@
 import api from '../../server/run'
 import Wxml2Canvas from 'wxml2canvas'
 import wxFun from '../../utils/wxFun'
+import i18nInstance from 'miniprogram-i18n-plus'
 let navigateTo = wxFun.promisify('navigateTo')
 let showLoading = wxFun.promisify('showLoading')
 let hideLoading = wxFun.promisify('hideLoading')
@@ -138,6 +139,10 @@ Page({
    */
   onLoad(options) {
     // console.log(options)
+    i18nInstance.effect(this)
+    wx.setNavigationBarTitle({
+      title: this.data.$language['企业悦动'],
+    })
     this.setData({
       runner_id: options.runner_id,
       dataImg: decodeURIComponent(options.dataImg),

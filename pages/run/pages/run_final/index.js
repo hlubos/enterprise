@@ -6,6 +6,7 @@ import uploadFile from '../../../../common/uploadFile'
 // import Wxml2Canvas from '../../wxml2canvas/index'
 import Wxml2Canvas from 'wxml2canvas'
 import wxFun from '../../utils/wxFun'
+import i18nInstance from 'miniprogram-i18n-plus'
 
 let removeStorage = wxFun.promisify('removeStorage')
 let navigateBack = wxFun.promisify('navigateBack')
@@ -101,6 +102,7 @@ Page({
     kmilesPaceCache: [],
     map_orig_url: '',
     map_thumb_url: '',
+    isZh: wx.getStorageSync('language') == 'zh',
   },
   handleMap(e) {},
   // 读取跑步设置缓存
@@ -531,6 +533,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
+    i18nInstance.effect(this)
+    wx.setNavigationBarTitle({
+      title: this.data.$language['企业悦动'],
+    })
     //
     if (options.runner_id) {
       this.setData({

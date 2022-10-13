@@ -3,7 +3,6 @@ var t = require('../../../models/posenet/classifier.js'),
 
 import utils from '../../../common/utils'
 import api from '../../../server/home'
-import i18nInstance from 'miniprogram-i18n-plus'
 
 Page({
   classifier: null,
@@ -57,10 +56,6 @@ Page({
     timeProgress: 0,
   },
   onLoad: function (t) {
-    i18nInstance.effect(this)
-    wx.setNavigationBarTitle({
-      title: this.data.$language['开合跳'],
-    })
     var i = this
     const n = wx.getSystemInfoSync().windowWidth >= 768
     t.angleRange = n ? '70-80' : '65-75'
