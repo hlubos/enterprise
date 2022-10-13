@@ -16,6 +16,10 @@ Page({
   saveImg(e) {
     let imgSrc = e.currentTarget.dataset.qrurl
     let number = new Date().valueOf()
+    wx.showLoading({
+      title: '图片下载中',
+      mask: true,
+    })
     // 保存网络图片
     wx.downloadFile({
       filePath: wx.env.USER_DATA_PATH + '/pic' + number + '.png',
@@ -26,18 +30,29 @@ Page({
           wx.saveImageToPhotosAlbum({
             filePath: wx.env.USER_DATA_PATH + '/pic' + number + '.png',
             success: function (res) {
+              wx.hideLoading()
               wx.showToast({
                 title: '保存成功',
               })
             },
             fail: function (err) {
               console.log(err)
+              wx.hideLoading()
+              wx.showToast({
+                title: '保存失败',
+                icon: 'error',
+              })
             },
           })
         }
       },
       fail: (err) => {
         console.log(err)
+        wx.hideLoading()
+        wx.showToast({
+          title: '下载失败',
+          icon: 'error',
+        })
       },
     })
   },
