@@ -41,7 +41,7 @@ Page({
   // 生成图片
   createImg() {
     showLoading({
-      title: '分享图片生成中',
+      title: this.data.$language['分享图片生成中'],
     })
     const that = this
     const query = createSelectorQuery().in(this)
@@ -78,7 +78,7 @@ Page({
         finish(url) {
           hideLoading()
           showToast({
-            title: '图片已生成',
+            title: this.data.$language['图片已生成'],
             icon: 'none',
             duration: 1500,
           })
@@ -116,7 +116,7 @@ Page({
     })
       .then((res) => {
         showToast({
-          title: '图片已保存！',
+          title: this.data.$language['图片已保存'] + '！',
           icon: 'none',
           duration: 2000,
         })

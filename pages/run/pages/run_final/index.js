@@ -352,7 +352,7 @@ Page({
   // =========================================
   drawCanvas: function () {
     showLoading({
-      title: '分享图片生成中',
+      title: this.data.$language['分享图片生成中'],
     })
     const that = this
     const query = createSelectorQuery().in(this)

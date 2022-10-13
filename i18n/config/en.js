@@ -125,6 +125,9 @@ const en = {
   运动健康管理平台: 'Sports health management platform',
   微信分享: 'WeChat sharing',
   保存图片: 'Save Picture',
+  分享图片生成中: 'Sharing picture is being generated',
+  图片已生成: 'Picture generated',
+  图片已保存: 'Picture saved',
 }
 
 export default en
