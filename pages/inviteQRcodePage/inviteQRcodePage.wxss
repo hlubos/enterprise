@@ -92,7 +92,12 @@
   color: #5b0b8c;
 }
 .qr-body-text {
-  margin: 32rpx 0 18rpx;
+  /* margin: 32rpx 0 18rpx; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 0 18rpx;
+  height: 70rpx;
   font-family: PingFang-SC-Regular;
   font-weight: 400;
   font-size: 24rpx;
