@@ -1,6 +1,7 @@
 // plugin/pages/run_log/index.js
 import api from '../../server/run'
 import myFormats from '../../utils/format'
+import i18nInstance from 'miniprogram-i18n-plus'
 Page({
   /**
    * 页面的初始数据
@@ -158,6 +159,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
+    i18nInstance.effect(this)
     this.getUserSportSummary()
     this.loadData()
     // myFormats.formatDate(1646209697,'yyyy/MM/dd hh:mm:ss')

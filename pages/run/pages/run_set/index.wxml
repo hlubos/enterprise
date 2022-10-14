@@ -1,13 +1,13 @@
 <!--plugin/pages/run_set/index.wxml-->
 <!--语言播报设置-->
-<mp-cells ext-class="my-cells" title="语言播报设置">
+<mp-cells ext-class="my-cells" title="{{$language['语言播报设置']}}">
     <mp-cell>
-        <view>语言播报开关</view>
+        <view>{{ $language['语言播报开关'] }}</view>
         <view slot="footer">
             <switch checked="{{openVoice}}" bindchange="switchVoice"></switch>
         </view>
     </mp-cell>
-    <mp-cell value="语音类型">
+    <mp-cell value="{{$language['语音类型']}}">
         <view slot="footer">
             <!-- <picker mode="selector" value="{{voiceIndex}}" range="{{voiceList}}" bindchange="voiceChange">
                 <view class="right-info">
@@ -21,7 +21,7 @@
             </view>
         </view>
     </mp-cell>
-    <mp-cell value="播报频率">
+    <mp-cell value="{{$language['播报频率']}}">
         <view slot="footer">
             <!-- <picker 
                 mode="multiSelector" 
@@ -94,7 +94,7 @@
   />
 </page-container>
 <!-- 地图设置 -->
-<mp-cells ext-class="my-cells" title="地图设置">
+<mp-cells ext-class="my-cells" title="{{$language['地图设置']}}">
     <!-- <mp-cell value="标题文字" footer="说明文字"></mp-cell>
     <mp-cell>
         <view>标题文字（使用slot）</view>
@@ -110,24 +110,24 @@
                     class="selectedMap"
                 ></image>
             </view>
-            <view class="map-txt">{{item.title}}</view>
+            <view class="map-txt">{{$language[item.title]}}</view>
         </view>
     </view>
 </mp-cells>
 <!-- 跑步异常检测 -->
-<mp-cells ext-class="my-cells" title="跑步异常检测">
+<mp-cells ext-class="my-cells" title="{{$language['跑步异常检测']}}">
     <mp-cell>
-        <view>网络检测</view>
+        <view>{{$language['网络检测']}}</view>
         <!-- <view slot="footer">点击重新检测></view> -->
         <view slot="footer" bindtap="checkNet">
-            <text>点击检测</text>
+            <text>{{$language['点击检测']}}</text>
         </view>
     </mp-cell>
     <mp-cell>
-        <view>当前网络</view>
+        <view>{{$language['当前网络']}}</view>
         <view slot="footer">
             <!-- <text wx:if="{{networkType}}">当前网络类型：{{networkType}}</text> -->
-            <text>{{netTxt}}</text>
+            <text>{{$language[netTxt]}}</text>
         </view>
     </mp-cell>
 </mp-cells>

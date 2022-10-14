@@ -2,6 +2,7 @@
 import api from '../../../../server/run'
 import tool from '../../../../common/tool'
 import loginApi from '../../../../server/login'
+import i18nInstance from 'miniprogram-i18n-plus'
 
 const app = getApp()
 let getLocation = tool.promisify('getLocation')
@@ -11,9 +12,7 @@ let openSetting = tool.promisify('openSetting')
 let startLocationUpdateBackground = tool.promisify(
   'startLocationUpdateBackground',
 )
-let stopLocationUpdate = tool.promisify(
-  'stopLocationUpdate',
-)
+let stopLocationUpdate = tool.promisify('stopLocationUpdate')
 let navigateTo = tool.promisify('navigateTo')
 let navigateBack = tool.promisify('navigateBack')
 let showToast = tool.promisify('showToast')
@@ -93,7 +92,7 @@ Component({
                 }
               })
             })
-            .catch((rej) => { })
+            .catch((rej) => {})
         }
       })
     },
@@ -115,8 +114,10 @@ Component({
           res.authSetting['scope.userLocationBackground'] != true
         ) {
           showModal({
-            title: '未授权后台定位',
-            content: '是否前往设置？',
+            title: this.data.$language['未授权后台定位'],
+            content: this.data.$language['是否前往设置'] + ' ？',
+            cancelText: this.data.$language['取消'],
+            confirmText: this.data.$language['确定'],
           }).then((res) => {
             if (res.confirm) {
               openSetting().then((ress) => {
@@ -209,7 +210,7 @@ Component({
             showRunBreakDialog: true,
           })
         }
-      } catch (e) { }
+      } catch (e) {}
     },
     // 读取跑步设置缓存
     async getRunSetCache() {
@@ -222,7 +223,7 @@ Component({
             mapStyle: res.nowMapStyInfo,
           })
         }
-      } catch (e) { }
+      } catch (e) {}
     },
     // 读取用户缓存，判断是否为新用户
     async judgeNewUser() {
@@ -295,21 +296,24 @@ Component({
       // 在组件实例刚刚被创建时执行
     },
     attached: function () {
+      i18nInstance.effect(this)
       // 在组件实例进入页面节点树时执行
       // 获取后台定位的权限
-      getSetting().then(res => {
+      getSetting().then((res) => {
         if (!res.authSetting['scope.userLocationBackground']) {
           authorize({
             scope: 'scope.userLocationBackground',
-          }).then(ress => {
-            console.log(ress)
-            this.setData({
-              'auth.hasAuthUserLocation': true,
-              'auth.hasAuthUserLocationBackground': true,
-            })
-          }).catch(err => {
-            console.log(err)
           })
+            .then((ress) => {
+              console.log(ress)
+              this.setData({
+                'auth.hasAuthUserLocation': true,
+                'auth.hasAuthUserLocationBackground': true,
+              })
+            })
+            .catch((err) => {
+              console.log(err)
+            })
         }
       })
     },
@@ -325,7 +329,7 @@ Component({
     show: function () {
       this.initPage()
     },
-    hide: function () { },
-    resize: function () { },
+    hide: function () {},
+    resize: function () {},
   },
 })

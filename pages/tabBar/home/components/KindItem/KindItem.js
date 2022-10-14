@@ -1,4 +1,5 @@
 // pages/tabBar/home/components/KindItem/KindItem.js
+import i18nInstance from 'miniprogram-i18n-plus'
 Component({
   /**
    * 组件的属性列表
@@ -8,6 +9,10 @@ Component({
       type: Object,
       value: {},
     },
+  },
+
+  attached: function (options) {
+    i18nInstance.effect(this)
   },
 
   /**

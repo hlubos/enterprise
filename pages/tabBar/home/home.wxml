@@ -1,12 +1,15 @@
 <!-- pages/tabBar/home/home.wxml -->
 <sport-nav 
-    sportList="{{sportList}}"
-    activeIndex="{{activeIndex}}"
-    bind:checkActiveItem="onCheckActiveItem"
+  sportList="{{sportList}}"
+  activeIndex="{{activeIndex}}"
+  bind:checkActiveItem="onCheckActiveItem"
 ></sport-nav>
 <view style="height: calc( 100vh - 80rpx ); overflow: hidden;" wx:if="{{activeIndex == 0}}">
-    <run-homepage></run-homepage>
+  <run-homepage id="run-homepage"></run-homepage>
 </view>
 <view wx:elif="{{activeIndex == 1}}">
-    <AI-page></AI-page>
+  <AI-page id="AI_page"></AI-page>
+</view>
+<view style="min-height: calc( 100vh - 80rpx ); " wx:elif="{{activeIndex == 2}}">
+  <moresport-page></moresport-page>
 </view>

@@ -4,8 +4,9 @@ import api from '../../server/run'
 import myFormats from '../../utils/format'
 import uploadFile from '../../../../common/uploadFile'
 // import Wxml2Canvas from '../../wxml2canvas/index'
-import Wxml2Canvas from 'wxml2canvas'
+import Wxml2Canvas from '../../wxml2canvas/index'
 import wxFun from '../../utils/wxFun'
+import i18nInstance from 'miniprogram-i18n-plus'
 
 let removeStorage = wxFun.promisify('removeStorage')
 let navigateBack = wxFun.promisify('navigateBack')
@@ -62,7 +63,7 @@ Page({
     // 静态地图
     staticMapUrl: '',
     // 二维码图片
-    qrcodeImg: 'https://ssl-pubpic.51yund.com/1224160409.jpg',
+    qrcodeImg: 'https://ydcommon.51yund.com/wxapp/upimg/mini-qrcode.png',
     // echarts的图片
     chartImage: '',
     // 跑步开始时间(时间戳)
@@ -101,6 +102,7 @@ Page({
     kmilesPaceCache: [],
     map_orig_url: '',
     map_thumb_url: '',
+    isZh: wx.getStorageSync('language') == 'zh',
   },
   handleMap(e) {},
   // 读取跑步设置缓存
@@ -350,7 +352,7 @@ Page({
   // =========================================
   drawCanvas: function () {
     showLoading({
-      title: '分享图片生成中',
+      title: this.data.$language['分享图片生成中'],
     })
     const that = this
     const query = createSelectorQuery().in(this)
@@ -401,9 +403,13 @@ Page({
           })
         },
         error(res) {
-          // console.log(res);
+          console.log(res)
           hideLoading()
           // 画失败的原因
+          showToast({
+            title: '分享图片失败',
+            icon: 'error',
+          })
         },
       },
       that,
@@ -531,6 +537,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
+    i18nInstance.effect(this)
+    wx.setNavigationBarTitle({
+      title: this.data.$language['企业悦动'],
+    })
     //
     if (options.runner_id) {
       this.setData({
@@ -592,13 +602,15 @@ Page({
               'userInfo.user_id': getStorageSync('user_id'),
             })
             let last_sport_record = res.last_sport_record
-            let last_cost_time = last_sport_record.cost_time ? last_sport_record.cost_time : 0
-            let last_distance = last_sport_record.distance ? last_sport_record.distance : 0
-            let last_pace = parseInt(
-              (last_cost_time / last_distance) * 1000
-            ) ? parseInt(
-              (last_cost_time / last_distance) * 1000
-            ) : 0
+            let last_cost_time = last_sport_record.cost_time
+              ? last_sport_record.cost_time
+              : 0
+            let last_distance = last_sport_record.distance
+              ? last_sport_record.distance
+              : 0
+            let last_pace = parseInt((last_cost_time / last_distance) * 1000)
+              ? parseInt((last_cost_time / last_distance) * 1000)
+              : 0
             let now_pace = parseInt((data.runTime / data.runMiles) * 1000)
             let paceCompare = {}
             if (now_pace >= last_pace) {

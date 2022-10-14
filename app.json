@@ -6,7 +6,8 @@
     "pages/login/login",
     "pages/tabBar/work/second/second",
     "pages/dialog/dialog",
-    "pages/history/history"
+    "pages/history/history",
+    "pages/inviteQRcodePage/inviteQRcodePage"
   ],
   "window": {
     "backgroundTextStyle": "light",

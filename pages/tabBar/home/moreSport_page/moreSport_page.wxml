@@ -1,0 +1,28 @@
+<!--pages/tabBar/home/moreSport_page/moreSport_page.wxml-->
+<view class="more-sport-page">
+  <view class="sport-img-box">
+    <image class="sport-img" src="https://ssl-pubpic.51yund.com/1306533712.png"></image>
+  </view>
+  <view class="tip-txt">{{ $language['骑行、徒步、更多AI运动，请前往app体验'] }}</view>
+  <view class="tip-txt-1">
+    <view>{{ $language['第一步：下载app'] }}</view>
+    <view>{{ $language['1、点击以下按钮获取下载方式'] }}</view>
+    <view>{{ $language['2、在手机应用市场搜索“悦动圈”即可下载'] }}</view>
+  </view>
+  <view class="tip-txt-2">
+    <view>{{ $language['第二步：登录app'] }}</view>
+    <view>{{ $language['使用微信登陆app，在【运动-我的企业】或【运动账户-吉利36周年】中均可看到企业和赛事'] }}</view>
+  </view>
+  <view class="padd" style="width: 100%;height: 304rpx;"></view>
+  <view class="btn-box">
+    <button class="btn" 
+      open-type="contact" 
+      show-message-card="true"
+      send-message-title="下载悦动圈App体验更多AI运动！" 
+      send-message-path="/pages/tabBar/home/moreSport_page/moreSport_page"
+      send-message-img="https://ssl-pubpic.51yund.com/1306533712.png"
+    >
+      {{ $language['前往体验'] }}
+    </button>
+  </view>
+</view>

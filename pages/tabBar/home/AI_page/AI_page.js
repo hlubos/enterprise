@@ -1,5 +1,6 @@
 // pages/tabBar/home/AI_page/AI_page.js
 import api from '../../../../server/home'
+import i18nInstance from 'miniprogram-i18n-plus'
 Component({
   /**
    * 组件的属性列表
@@ -182,6 +183,7 @@ Component({
   // 组件生命周期
   lifetimes: {
     attached: function () {
+      i18nInstance.effect(this)
       // 在组件实例进入页面节点树时执行
       this.initData()
     },

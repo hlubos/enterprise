@@ -1,6 +1,7 @@
 // pages/history/history.js
 import api from '../../server/history'
 import utils from '../../common/utils'
+import i18nInstance from 'miniprogram-i18n-plus'
 
 const imgMap = {
   45: 'https://17yd-common.51yund.com/ai_coach/icon_index_tiaoshen%403x.png', // 跳绳
@@ -22,6 +23,10 @@ Page({
   },
 
   onLoad: function (options) {
+    i18nInstance.effect(this)
+    wx.setNavigationBarTitle({
+      title: this.data.$language['企业悦动'],
+    })
     this.getHistory()
   },
 
@@ -135,7 +140,7 @@ Page({
         weekChinese = '周六'
         break
     }
-    return `${month}/${day} ${weekChinese}`
+    return `${month}/${day} ${this.data.$language[weekChinese]}`
   },
 
   // 返回时间20201226
