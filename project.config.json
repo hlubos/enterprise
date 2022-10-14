@@ -24,6 +24,7 @@
     "compileHotReLoad": false,
     "useMultiFrameRuntime": true,
     "useApiHook": true,
+    "useApiHostProcess": true,
     "babelSetting": {
       "ignore": [],
       "disablePlugins": [],
@@ -42,14 +43,7 @@
         "miniprogramNpmDistDir": "./"
       }
     ],
-    "minifyWXSS": true,
-    "useApiHostProcess": true,
-    "lazyloadPlaceholderEnable": false,
-    "useStaticServer": true,
-    "showES6CompileOption": false,
-    "disableUseStrict": false,
-    "useCompilerPlugins": false,
-    "minifyWXML": true
+    "minifyWXSS": true
   },
   "compileType": "miniprogram",
   "libVersion": "2.14.1",
@@ -57,6 +51,10 @@
   "projectname": "企业悦动",
   "simulatorType": "wechat",
   "simulatorPluginLibVersion": {},
+  "editorSetting": {
+    "tabIndent": "insertSpaces",
+    "tabSize": 2
+  },
   "condition": {
     "miniprogram": {
       "list": [
@@ -98,9 +96,5 @@
         }
       ]
     }
-  },
-  "editorSetting": {
-    "tabIndent": "insertSpaces",
-    "tabSize": 2
   }
 }
