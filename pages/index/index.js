@@ -11,8 +11,8 @@ Page({
   },
 
   async initWebview(option) {
-    // let baseUrl = 'https://work.51yund.com/vapps/new_work/'
-    let baseUrl = 'https://test-web7.51yund.com/vapps/new_work/'
+    let baseUrl = 'https://work.51yund.com/vapps/new_work/'
+    // let baseUrl = 'https://test-web7.51yund.com/vapps/new_work/'
     // let baseUrl = "https://test-lip.51yund.com/vapps/new_work/"
     // let baseUrl = 'https://test-hd.51yund.com/vapps/new_work/'
 
