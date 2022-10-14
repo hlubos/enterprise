@@ -35,18 +35,53 @@ Page({
     wx.setNavigationBarTitle({
       title: this.data.$language['企业悦动'],
     })
-    if (options.kindId == '0') {
-      this.setData({
-        activeIndex: 0,
-      })
-      let runPage = this.selectComponent('#run-homepage')
-      runPage.startRun()
+    if (options.kindId) {
+      let kindId = options.kindId ? JSON.parse(options.kindId) : ''
+      switch (kindId) {
+        case 0:
+          this.gotoRun()
+          break
+        default:
+          this.gotoAIsport(kindId)
+          break
+      }
     }
   },
 
-  //   gotoRun(){
-  //     wx.navigateTo({
-  //         url: '/run_packege/pages/index/index'
-  //       })
-  //   },
+  gotoRun() {
+    this.setData({
+      activeIndex: 0,
+    })
+    let runPage = this.selectComponent('#run-homepage')
+    runPage.startRun()
+  },
+
+  gotoAIsport(kindId) {
+    this.setData({
+      activeIndex: 1,
+    })
+    // console.log('#AI_page',this.selectComponent('#AI_page').data.kindList)
+    let infoList = this.selectComponent('#AI_page').data.kindList
+    let info = infoList.find((item) => {
+      return item.kind_id === 19
+    })
+    let user_id = wx.getStorageSync('user_id')
+    if (info.video_id <= 0) {
+      return wx.showToast({
+        title: '敬请期待',
+        icon: 'none',
+      })
+    }
+    if (user_id) {
+      wx.navigateTo({
+        url: `${info.path}?video_id=${info.video_id}&video_name=${info.name}`,
+        success: (res) => {
+          console.log(res)
+        },
+        fail: (res) => {
+          console.log(res)
+        },
+      })
+    }
+  },
 })

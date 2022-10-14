@@ -139,14 +139,14 @@ const en = {
     '2. Search "Yodo" in the mobile app market to download',
   '第二步：登录app': 'Step 2: Log in to the app',
   '使用微信登陆app，在【运动-我的企业】或【运动账户-吉利36周年】中均可看到企业和赛事':
-    'Use wechat to log in the app, and you can see enterprises and events in "Sports - My Enterprise" or "Sports Account - 36th Anniversary of Geely" ',
+    'Log in to the app with your WeChat account. Find the enterprise information and sport events in Sports-My enterprise or Sport Account - Geely 36th anniversary',
   '下载悦动圈App体验更多AI运动！':
     'Download the Yodo App to experience more AI sports!',
   前往体验: 'To experience',
   邀请加入非员工赛区: 'Invite to join the non-employee division',
-  '吉时出发，为爱奔跑': "start off in the Geely's time , Run for love",
+  '吉时出发，为爱奔跑': 'Start your Geely, Sprint for love',
   扫码进入吉利创业36周年快乐亚运公益接力跑:
-    "Scan the code to enter the 36th anniversary of Geely's entrepreneurship Happy Asian Games public welfare relay",
+    'Scan the QR code to enter the Geely 36th anniversary-Asian Games Charity Relay Race',
   保存图片到相册: 'Save the picture to the album',
   邀请加入员工赛区: 'Invite to join the staff competition area',
   图片下载中: 'Image in download',
