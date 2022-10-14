@@ -19,7 +19,7 @@ Page({
     dataImg: '',
     staticMapUrl:
       'https://apis.map.qq.com/ws/staticmap/v2/?key=L4JBZ-YJ56D-GAO47-P6UQY-ODB46-M2FD2&scale=2&size=500x400&center=39.12,116.54&zoom=12',
-    qrcodeImg: 'https://ssl-pubpic.51yund.com/1224160409.jpg',
+    qrcodeImg: 'https://ydcommon.51yund.com/wxapp/upimg/mini-qrcode.jpg',
     posterImgUrl: '',
     canvasWidth: 750,
     canvasHeight: 1000,
@@ -78,7 +78,7 @@ Page({
         finish(url) {
           hideLoading()
           showToast({
-            title: this.data.$language['图片已生成'],
+            title: that.data.$language['图片已生成'],
             icon: 'none',
             duration: 1500,
           })
@@ -111,6 +111,15 @@ Page({
   },
   // 保存图片
   clickSaveImg() {
+    console.log('filePath', this.data.posterImgUrl)
+    if (!this.data.posterImgUrl) {
+      showToast({
+        title: this.data.$language['保存失败'],
+        icon: 'none',
+        duration: 1500,
+      })
+      return
+    }
     saveImageToPhotosAlbum({
       filePath: this.data.posterImgUrl,
     })
@@ -130,11 +139,19 @@ Page({
 
   // 微信分享
   wxShare() {
+    if (!this.data.posterImgUrl) {
+      showToast({
+        title: this.data.$language['保存失败'],
+        icon: 'none',
+        duration: 1500,
+      })
+      return
+    }
     previewImage({
       urls: [this.data.posterImgUrl],
     }).then((res) => {
       showToast({
-        title: '长按图片分享',
+        title: this.data.$language['长按图片分享'],
         icon: 'none',
         duration: 1500,
       })

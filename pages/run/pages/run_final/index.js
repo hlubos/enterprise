@@ -63,7 +63,7 @@ Page({
     // 静态地图
     staticMapUrl: '',
     // 二维码图片
-    qrcodeImg: 'https://ssl-pubpic.51yund.com/1224160409.jpg',
+    qrcodeImg: 'https://ydcommon.51yund.com/wxapp/upimg/mini-qrcode.png',
     // echarts的图片
     chartImage: '',
     // 跑步开始时间(时间戳)

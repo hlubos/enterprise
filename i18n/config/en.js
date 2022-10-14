@@ -116,8 +116,8 @@ const en = {
   比上次: 'Compared with last time',
   最后: 'Result:',
   米: 'meters',
-  'https://ssl-pubpic.51yund.com/1221778105.png':
-    'https://ssl-pubpic.51yund.com/1309492255.png',
+  'https://ydcommon.51yund.com/wxapp/upimg/ydlogo-zh.png':
+    'https://ydcommon.51yund.com/wxapp/upimg/ydlogo-en.png',
   小程序: 'Mini program',
   智能穿戴: 'Intelligent wear',
   悦动圈APP: 'Yodo APP',
@@ -128,6 +128,7 @@ const en = {
   分享图片生成中: 'Sharing picture is being generated',
   图片已生成: 'Picture generated',
   图片已保存: 'Picture saved',
+  长按图片分享: 'Long press to share',
   更多运动: 'More sports',
   '骑行、徒步、更多AI运动，请前往app体验':
     'For more sports cycling, hiking and AI sports, please visit the app',

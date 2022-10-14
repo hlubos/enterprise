@@ -29,7 +29,7 @@
         <view class="title answer_draw_canvas">
             <view class="title1 answer_draw_canvas">
                 <view class="logo answer_draw_canvas">
-                    <image class="answer_draw_canvas" data-delay="1" data-type="image" data-url="{{$language['https://ssl-pubpic.51yund.com/1221778105.png']}}" src="{{$language['https://ssl-pubpic.51yund.com/1221778105.png']}}"></image>
+                    <image class="answer_draw_canvas" data-delay="1" data-type="image" data-url="{{$language['https://ydcommon.51yund.com/wxapp/upimg/ydlogo-zh.png']}}" src="{{$language['https://ydcommon.51yund.com/wxapp/upimg/ydlogo-zh.png']}}"></image>
                 </view>
                 <view class="finish-time answer_draw_canvas" data-delay="1" data-type="text" data-text="{{showRunData.runStartTime}}">{{showRunData.runStartTime}}</view>
                 <view class="avatar answer_draw_canvas">

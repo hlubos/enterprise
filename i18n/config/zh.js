@@ -114,8 +114,8 @@ const zh = {
   比上次: '比上次',
   最后: '最后',
   米: '米',
-  'https://ssl-pubpic.51yund.com/1221778105.png':
-    'https://ssl-pubpic.51yund.com/1221778105.png',
+  'https://ydcommon.51yund.com/wxapp/upimg/ydlogo-zh.png':
+    'https://ydcommon.51yund.com/wxapp/upimg/ydlogo-zh.png',
   小程序: '小程序',
   智能穿戴: '智能穿戴',
   悦动圈APP: '悦动圈APP',
@@ -126,6 +126,7 @@ const zh = {
   分享图片生成中: '分享图片生成中',
   图片已生成: '图片已生成',
   图片已保存: '图片已保存',
+  长按图片分享: '长按图片分享',
   更多运动: '更多运动',
   '骑行、徒步、更多AI运动，请前往app体验':
     '骑行、徒步、更多AI运动，请前往app体验',

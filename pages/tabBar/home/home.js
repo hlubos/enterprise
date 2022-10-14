@@ -35,7 +35,6 @@ Page({
     wx.setNavigationBarTitle({
       title: this.data.$language['企业悦动'],
     })
-    console.log(options)
     if (options.kindId == '0') {
       this.setData({
         activeIndex: 0,

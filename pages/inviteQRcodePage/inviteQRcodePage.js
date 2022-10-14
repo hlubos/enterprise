@@ -8,10 +8,12 @@ Page({
     both: false,
     // https://sport-album.51yund.com/1308787625.png
     joinBackgroundImg: 'https://sport-album.51yund.com/1308787626.png',
-    qrImgUrl1: 'https://sport-album.51yund.com/1309264111.png',
-    qrImgUrl2: 'https://sport-album.51yund.com/1309264348.png',
-    downloadUrl1: 'https://sport-album.51yund.com/1309264110.png',
-    downloadUrl2: 'https://sport-album.51yund.com/1309264347.png',
+    qrImgUrl1: 'https://ydcommon.51yund.com/wxapp/upimg/geely-e-show.png',
+    qrImgUrl2: 'https://ydcommon.51yund.com/wxapp/upimg/geely-i-show.png',
+    downloadUrl1:
+      'https://ydcommon.51yund.com/wxapp/upimg/geely-e-download.png',
+    downloadUrl2:
+      'https://ydcommon.51yund.com/wxapp/upimg/geely-i-download.png',
   },
   saveImg(e) {
     let imgSrc = e.currentTarget.dataset.qrurl
@@ -61,7 +63,10 @@ Page({
    */
   onLoad(options) {
     i18nInstance.effect(this)
-    console.log('options', options)
+    wx.setNavigationBarTitle({
+      title: this.data.$language['企业悦动'],
+    })
+    // console.log('options', options)
     if (options.isBoth == 'true') {
       this.setData({
         both: true,
