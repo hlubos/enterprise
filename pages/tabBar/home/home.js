@@ -63,7 +63,7 @@ Page({
     // console.log('#AI_page',this.selectComponent('#AI_page').data.kindList)
     let infoList = this.selectComponent('#AI_page').data.kindList
     let info = infoList.find((item) => {
-      return item.kind_id === 19
+      return item.kind_id === kindId
     })
     let user_id = wx.getStorageSync('user_id')
     if (info.video_id <= 0) {

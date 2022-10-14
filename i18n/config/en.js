@@ -129,26 +129,26 @@ const en = {
   图片已生成: 'Picture generated',
   图片已保存: 'Picture saved',
   长按图片分享: 'Long press to share',
-  更多运动: 'More sports',
+  更多运动: 'Other sports',
   '骑行、徒步、更多AI运动，请前往app体验':
-    'For more sports cycling, hiking and AI sports, please visit the app',
+    'To join in cycling, walking, and other AI sports, please download the app',
   '第一步：下载app': 'Step 1: Download the app',
   '1、点击以下按钮获取下载方式':
-    '1. Click the following button to obtain the download method',
+    '1. Click to button to access the downloading page',
   '2、在手机应用市场搜索“悦动圈”即可下载':
-    '2. Search "Yodo" in the mobile app market to download',
+    '2. Search YODO in App Store to download',
   '第二步：登录app': 'Step 2: Log in to the app',
   '使用微信登陆app，在【运动-我的企业】或【运动账户-吉利36周年】中均可看到企业和赛事':
     'Log in to the app with your WeChat account. Find the enterprise information and sport events in Sports-My enterprise or Sport Account - Geely 36th anniversary',
   '下载悦动圈App体验更多AI运动！':
-    'Download the Yodo App to experience more AI sports!',
-  前往体验: 'To experience',
-  邀请加入非员工赛区: 'Invite to join the non-employee division',
+    'Download YODO for more AI sports experience!',
+  前往体验: 'experience more',
+  邀请加入非员工赛区: 'invite to the non-employee’s division',
   '吉时出发，为爱奔跑': 'Start your Geely, Sprint for love',
   扫码进入吉利创业36周年快乐亚运公益接力跑:
     'Scan the QR code to enter the Geely 36th anniversary-Asian Games Charity Relay Race',
-  保存图片到相册: 'Save the picture to the album',
-  邀请加入员工赛区: 'Invite to join the staff competition area',
+  保存图片到相册: 'Save to album',
+  邀请加入员工赛区: 'invite to the employee’s division',
   图片下载中: 'Image in download',
   保存成功: 'Save successfully',
   保存失败: 'Fail to save',

@@ -97,6 +97,8 @@
   font-weight: 400;
   font-size: 24rpx;
   color: #222222;
+  width: 564rpx;
+  text-align: center;
 }
 .qr-body-btn {
   width: 464rpx;
