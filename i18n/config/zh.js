@@ -149,6 +149,10 @@ const zh = {
   保存成功: '保存成功',
   保存失败: '保存失败',
   下载失败: '下载失败',
+  'https://ydcommon.51yund.com/wxapp/upimg/geely-i-download.png':
+    'https://ydcommon.51yund.com/wxapp/upimg/geely-i-download.png',
+  'https://ydcommon.51yund.com/wxapp/upimg/geely-e-download.png':
+    'https://ydcommon.51yund.com/wxapp/upimg/geely-e-download.png',
 }
 
 export default zh
