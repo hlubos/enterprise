@@ -143,14 +143,12 @@ const en = {
   '下载悦动圈App体验更多AI运动！':
     'Download YODO for more AI sports experience!',
   前往体验: 'experience more',
-  //   邀请加入非员工赛区: 'invite to the non-employee’s division',
-  邀请加入非员工赛区: 'non-employee’s',
+  邀请加入非员工赛区: 'Non-employee Entry',
   '吉时出发，为爱奔跑': 'Start your Geely, Sprint for love',
   扫码进入吉利创业36周年快乐亚运公益接力跑:
     'Scan the QR code to enter the Geely 36th anniversary-Asian Games Charity Relay Race',
   保存图片到相册: 'Save to album',
-  //   邀请加入员工赛区: 'invite to the employee’s division',
-  邀请加入员工赛区: 'employee’s',
+  邀请加入员工赛区: 'Employee Entry',
   图片下载中: 'Image in download',
   保存成功: 'Save successfully',
   保存失败: 'Fail to save',

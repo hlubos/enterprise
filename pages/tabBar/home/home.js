@@ -36,7 +36,7 @@ Page({
       title: this.data.$language['企业悦动'],
     })
     if (options.kindId) {
-      let kindId = options.kindId ? JSON.parse(options.kindId) : ''
+      let kindId = JSON.parse(options.kindId)
       switch (kindId) {
         case 0:
           this.gotoRun()
@@ -45,6 +45,12 @@ Page({
           this.gotoAIsport(kindId)
           break
       }
+    } else if (options.tabIndex) {
+      // tabIndex  0 跑步  1 AI运动  2 更多运动
+      let tabIndex = JSON.parse(options.tabIndex)
+      this.onCheckActiveItem({
+        detail: tabIndex,
+      })
     }
   },
 
