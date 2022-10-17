@@ -45,6 +45,13 @@ Page({
           this.gotoAIsport(kindId)
           break
       }
+    } else if (options.tabIndex) {
+      // tabIndex  1 跑步 2 AI运动 3 更多运动
+      let tabIndex = options.tabIndex ? JSON.parse(options.tabIndex) : ''
+      let tabActive = tabIndex - 1
+      this.onCheckActiveItem({
+        detail: tabActive,
+      })
     }
   },
 
