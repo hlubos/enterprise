@@ -46,11 +46,10 @@ Page({
           break
       }
     } else if (options.tabIndex) {
-      // tabIndex  1 跑步 2 AI运动 3 更多运动
+      // tabIndex  0 跑步  1 AI运动  2 更多运动
       let tabIndex = JSON.parse(options.tabIndex)
-      let tabActive = tabIndex
       this.onCheckActiveItem({
-        detail: tabActive,
+        detail: tabIndex,
       })
     }
   },
