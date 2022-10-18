@@ -1,4 +1,5 @@
 const en = {
+  lang: 'en',
   跑步: 'Run',
   AI运动: 'AI Sport',
   累计公里: 'Cumulative kilometers',
@@ -153,10 +154,6 @@ const en = {
   保存成功: 'Save successfully',
   保存失败: 'Fail to save',
   下载失败: 'Download failed',
-  'https://ydcommon.51yund.com/wxapp/upimg/geely-i-download.png':
-    'https://ydcommon.51yund.com/wxapp/upimg/geely-i-download-en.png',
-  'https://ydcommon.51yund.com/wxapp/upimg/geely-e-download.png':
-    'https://ydcommon.51yund.com/wxapp/upimg/geely-e-download-en.png',
 }
 
 export default en

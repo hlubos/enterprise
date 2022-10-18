@@ -14,7 +14,7 @@
         <view class="qr-body-text">
           {{ $language['扫码进入吉利创业36周年快乐亚运公益接力跑'] }}
         </view>
-        <view class="qr-body-btn" bindtap="saveImg" data-qrurl="{{ $language[downloadUrl1] }}">
+        <view class="qr-body-btn" bindtap="saveImg" data-qrurl="{{ downloadUrl1 }}">
           {{ $language['保存图片到相册'] }}
         </view>
       </view>
@@ -29,7 +29,7 @@
         <view class="qr-body-text">
           {{ $language['扫码进入吉利创业36周年快乐亚运公益接力跑'] }}
         </view>
-        <view class="qr-body-btn" bindtap="saveImg" data-qrurl="{{ $language[downloadUrl2] }}">
+        <view class="qr-body-btn" bindtap="saveImg" data-qrurl="{{ downloadUrl2 }}">
           {{ $language['保存图片到相册'] }}
         </view>
       </view>
