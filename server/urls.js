@@ -32,4 +32,7 @@ export default {
   reportRunnerPathData: '/sport/report_runner_path_data',
   // 获取轨迹点集合
   getRunnerPathData: '/sport/get_runner_path_data',
+
+  // 吉利邀请二维码页面接口
+  getShareInfos: '/matchs/get_share_infos',
 }
