@@ -131,9 +131,24 @@ Component({
             }
           })
         } else {
-          this.setData({
-            showRunCheckModal: true,
-          })
+          // 这里先暂时改为不弹出室内室外选择弹框，直接跳进室外跑，等室内跑开发完成再开放弹框
+          if (this.data.showRunBreakDialog) {
+            // 当存在跑步缓存时不能进入跑步
+            return false
+          }
+          // 显示选择弹框
+          // this.setData({
+          //   showRunCheckModal: true,
+          // })
+          // 直接进入室外跑
+          this.setData(
+            {
+              runType: '0',
+            },
+            () => {
+              this.gotoRunPage()
+            },
+          )
         }
       })
     },
