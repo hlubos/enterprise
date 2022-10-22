@@ -145,7 +145,9 @@ const en = {
     'Download YODO for more AI sports experience!',
   前往体验: 'experience more',
   邀请加入非员工赛区: 'Non-employee Entry',
-  '吉时出发，为爱奔跑': 'Start your Geely, Sprint for love',
+  吉利创业36周年接力跑邀您参赛:
+    'the Geely 36th anniversary-Asian Games Charity Relay Race sent you an invitation',
+  '吉时出发，为爱奔跑': 'On your mark, ready steady Geely!',
   扫码进入吉利创业36周年快乐亚运公益接力跑:
     'Scan the QR code to enter the Geely 36th anniversary-Asian Games Charity Relay Race',
   保存图片到相册: 'Save to album',
