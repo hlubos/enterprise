@@ -20,7 +20,7 @@ Page({
     staticMapUrl:
       'https://apis.map.qq.com/ws/staticmap/v2/?key=L4JBZ-YJ56D-GAO47-P6UQY-ODB46-M2FD2&scale=2&size=500x400&center=39.12,116.54&zoom=12',
     // qrcodeImg: 'https://ydcommon.51yund.com/wxapp/upimg/mini-qrcode.jpg',
-    qrcodeImg: 'https://ydcommon.51yund.com/wxapp/upimg/geely-e-show.png',
+    qrcodeImg: 'https://ydcommon.51yund.com/wxapp/upimg/geely-in-show.png',
     posterImgUrl: '',
     canvasWidth: 750,
     canvasHeight: 1000,
