@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "toast": "../../components/Toast/Toast",
+    "login-btn": "../../components/LoginBtn/LoginBtn"
+  }
+}

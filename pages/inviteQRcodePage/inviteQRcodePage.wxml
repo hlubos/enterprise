@@ -1,0 +1,40 @@
+<!--pages/inviteQRcodePage/inviteQRcodePage.wxml-->
+<view class="invite-join">
+  <view
+    class="qr-body"
+    style="background-image: url({{joinBackgroundImg}});height: {{both?'1312rpx' : '668rpx'}};"
+  >
+    <view class="qr-external">
+      <view class="qr-e-title">{{ $language['邀请加入非员工赛区'] }}</view>
+      <view class="qr-all-body">
+        <view class="qr-body-title">{{ $language['吉时出发，为爱奔跑'] }}</view>
+        <view class="qr-body-c">
+          <image src="{{qrImgUrl1}}" class="qr-img"></image>
+        </view>
+        <view class="qr-body-text">
+          {{ $language['扫码进入吉利创业36周年快乐亚运公益接力跑'] }}
+        </view>
+        <view class="qr-body-btn" bindtap="saveImg" data-qrurl="{{ downloadUrl1 }}">
+          {{ $language['保存图片到相册'] }}
+        </view>
+      </view>
+    </view>
+    <view wx:if="{{both}}" class="qr-inside">
+      <view class="qr-i-title">{{ $language['邀请加入员工赛区'] }}</view>
+      <view class="qr-all-body">
+        <view class="qr-body-title">{{ $language['吉时出发，为爱奔跑'] }}</view>
+        <view class="qr-body-c">
+          <image src="{{qrImgUrl2}}" class="qr-img"></image>
+        </view>
+        <view class="qr-body-text">
+          {{ $language['扫码进入吉利创业36周年快乐亚运公益接力跑'] }}
+        </view>
+        <view class="qr-body-btn" bindtap="saveImg" data-qrurl="{{ downloadUrl2 }}">
+          {{ $language['保存图片到相册'] }}
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="bottom"></view>
+</view>
+

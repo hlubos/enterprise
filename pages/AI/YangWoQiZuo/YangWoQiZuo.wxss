@@ -1,0 +1,312 @@
+.camera {
+  width: 100vw;
+  height: 100vh;
+  z-index: 5;
+  position: relative;
+}
+
+.page__bd {
+  position: relative;
+}
+
+.canvas,
+.page__bd {
+  width: 100%;
+  height: 100%;
+}
+
+.canvas {
+  z-index: 100;
+}
+
+.result {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+
+.prediction-result {
+  height: calc(100vh - 100vw);
+}
+
+.stage {
+  top: 0;
+  height: 100%;
+  z-index: 10000;
+}
+
+.stage,
+.stage_hd {
+  position: absolute;
+  left: 0;
+  width: 100%;
+}
+
+.stage_hd {
+  top: 60rpx;
+  justify-content: space-between;
+  z-index: 5;
+}
+
+.stage_hd,
+.stage_hd_left {
+  display: flex;
+}
+
+.stage_hd_left {
+  align-items: center;
+}
+
+.stage_info {
+  color: #00f;
+  font-size: 16px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.stage_tip_blue {
+  color: #00f;
+  font-size: 32px;
+}
+
+.stage_tip_red {
+  color: red;
+  font-size: 32px;
+}
+
+.point {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  background: red;
+}
+
+.point.jh {
+  background: orange;
+}
+
+.bot_mid {
+  left: 50%;
+}
+
+.bot_mid,
+.left_mid,
+.right_mid {
+  position: absolute;
+  bottom: 10%;
+  transform: translateX(-50%) translateY(50%);
+}
+
+.top_mid {
+  position: absolute;
+  top: 12.5%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+}
+
+.green {
+  background: #3cf42f !important;
+}
+
+.red {
+  background: #fb0d1e;
+}
+
+.blue {
+  background: #00f;
+}
+
+.point {
+  display: block;
+  opacity: 0;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+}
+
+.countdown {
+  top: 20%;
+  color: #87ceeb;
+  font-size: 108px;
+  font-weight: 700;
+}
+
+.countdown,
+.fetch-box {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.fetch-box {
+  width: 85%;
+  height: 85%;
+  border: 3px solid #fff;
+  top: 10%;
+}
+
+.restart_countdown {
+  color: red;
+  font-size: 26px;
+}
+
+.img_back {
+  width: 50%;
+  height: 15%;
+}
+
+.img_back,
+.img_countdown {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.img_countdown {
+  width: 30%;
+  height: 30%;
+}
+
+.img_start {
+  width: 40%;
+  height: 60%;
+  top: 50%;
+}
+
+.img_in_box,
+.img_start {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.img_in_box {
+  width: 30%;
+  height: 80%;
+  top: 55%;
+}
+
+.result_bg {
+  position: absolute;
+  z-index: 10;
+  left: 50%;
+  top: 0;
+  height: 260rpx;
+  width: 408rpx;
+  transform: translateX(-50%);
+}
+
+.gameEnd_box_container {
+  text-align: center;
+  margin-top: 15rpx;
+  z-index: 6;
+  position: relative;
+  background: #fff;
+  padding-top: 100rpx;
+  border-radius: 20rpx;
+  overflow: hidden !important;
+}
+
+.gameEnd_box-bd {
+  margin: 30rpx auto;
+  background: #fdd429;
+  width: 70%;
+  border-radius: 10px;
+  padding: 30rpx 60rpx;
+}
+
+.gameEnd_box-bd-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15rpx 0;
+}
+
+.gameEnd_box {
+  border-radius: 20rpx;
+  z-index: 1000;
+  width: 650rpx;
+  color: #000;
+  position: absolute;
+  left: 50%;
+  font-weight: 700;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  padding: 5%;
+}
+
+.gameEnd_box-hd {
+  border-radius: 8rpx;
+  width: 100%;
+  justify-content: center;
+  flex-direction: column;
+  margin-top: 0rpx;
+  margin-bottom: 30rpx;
+}
+
+.gameEnd_box-ft,
+.gameEnd_box-hd {
+  display: flex;
+  align-items: center;
+}
+
+.gameEnd_box-ft {
+  justify-content: space-between;
+  font-size: 32rpx;
+  font-weight: 400;
+  padding: 30rpx;
+  border-radius: 20rpx;
+}
+
+.gameEnd_box-hd_img {
+  height: 30%;
+}
+
+.gameEnd_box-ft-button {
+  padding: 16rpx 36rpx;
+  margin-top: 8rpx;
+  color: #0074e8;
+  height: 40rpx;
+  line-height: 48rpx;
+  text-align: center;
+  border: 6rpx solid #0074e8;
+  border-radius: 40rpx;
+}
+
+.gameEnd_box-ft-button.active {
+  color: #fff;
+  background-color: #0074e8;
+}
+
+.img_tips {
+  width: 50%;
+  height: 80%;
+  position: absolute;
+  left: 50%;
+  top: 55%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 10%;
+  padding-top: 10%;
+  overflow: visible;
+}
+
+.img_tips_img {
+  height: 360rpx;
+}
+
+.img_tips_img_pose {
+  height: 630rpx;
+  position: absolute;
+  left: 44%;
+  top: 74%;
+  transform: translate(-50%, -50%);
+  width: 86%;
+}

@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "run-speed-chart": "./components/runSpeedChart/runSpeedChart"
+  },
+  "disableScroll": true
+}

@@ -1,0 +1,49 @@
+{
+  "setting": {
+    "urlCheck": false
+  },
+  "description": "项目私有配置文件。此文件中的内容将覆盖 project.config.json 中的相同字段。项目的改动优先同步到此文件中。详见文档：https://developers.weixin.qq.com/miniprogram/dev/devtools/projectconfig.html",
+  "libVersion": "2.26.0",
+  "condition": {
+    "miniprogram": {
+      "list": [
+        {
+          "name": "登陆页面",
+          "pathName": "pages/login/login",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "姿态识别demo页面",
+          "pathName": "pages/test/tensorflow/demo",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "跳绳",
+          "pathName": "pages/AI/TiaoSheng/TiaoSheng",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "企业tab",
+          "pathName": "pages/tabBar/work/work",
+          "query": "a=1",
+          "scene": null
+        },
+        {
+          "name": "dialog页面",
+          "pathName": "pages/dialog/dialog",
+          "query": "dialogType=isStep&level=3",
+          "scene": null
+        },
+        {
+          "name": "历史记录页面",
+          "pathName": "pages/history/history",
+          "query": "",
+          "scene": null
+        }
+      ]
+    }
+  }
+}

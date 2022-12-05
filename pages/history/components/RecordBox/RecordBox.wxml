@@ -1,0 +1,13 @@
+<!--pages/history/components/RecordBox/RecordBox.wxml-->
+<view class="record-box">
+  <view class="header">
+    <view class="left">{{info.date}}</view>
+  </view>
+  <view class="list">
+    <record-item 
+      wx:for="{{info.list}}" 
+      wx:key="index"
+      info="{{item}}"
+      isLast="{{index == info.list.length - 1}}"></record-item>
+  </view>
+</view>

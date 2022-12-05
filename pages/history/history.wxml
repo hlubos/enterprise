@@ -1,0 +1,11 @@
+<!--pages/history/history.wxml-->
+<view class="history-container" wx:if="{{recordList.length}}">
+  <record-box 
+    class="day-list"
+    wx:for="{{recordList}}" 
+    wx:key="index" 
+    wx:for-item="element"
+    info="{{element}}"></record-box>
+</view>
+
+<view class="tip" wx:else> - {{ $language['暂无记录'] }} - </view>

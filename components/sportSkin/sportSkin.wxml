@@ -1,0 +1,7 @@
+<cover-view class="skinBg">
+    <cover-image class="top" src="{{skin.backgroundTop}}" wx:if="{{skin.backgroundTop}}"></cover-image>
+    <cover-image class="bottom" src="{{skin.backgroundBottom}}" wx:if="{{skin.backgroundBottom}}"></cover-image>
+    <cover-image class="touchPoint normal" src="{{skinCode=='he31a5958p'?skin.ballNormalUrl:skin.ballNormalUrl[normalTouchPoint.type]}}" style="width:{{normalTouchPoint.w+'px'}};height:{{normalTouchPoint.w+'px'}};left:{{normalTouchPoint.x+'px'}};top:{{normalTouchPoint.y+'px'}};" wx:if="{{normalBallShow}}"></cover-image>
+    <cover-image class="touchPoint" src="{{skin[utils.ballType(specialTouchPoint.type).type]}}" style="width:{{specialTouchPoint.w+'px'}};height:{{specialTouchPoint.w+'px'}};left:{{specialTouchPoint.x+'px'}};top:{{specialTouchPoint.y+'px'}};line-height:{{specialTouchPoint.w+'px'}}" wx:if="{{specialBallShow}}"></cover-image>
+</cover-view>
+<wxs module="utils" src="sportSkin.wxs" />

@@ -1,0 +1,21 @@
+<!--pages/tabBar/home/AI_page/AI_page.wxml-->
+<!-- <view class="header">
+    <view class="left">
+        <view class="title">
+            <text>AI动作库</text>
+        </view>
+        <view class="desc">
+            <text>Yodo exercises</text>
+        </view>
+    </view>
+    <image class="right" src="https://ssl-pubpic.51yund.com/1040424039.png"></image>
+</view> -->
+<login-btn bindsuccess="gotoRecords">
+    <view class="records">
+        <view class="records-left">{{ $language['历史记录'] }}</view>
+        <image class="records-right" src="https://ssl-pubpic.51yund.com/1004075363.jpg" />
+    </view>
+</login-btn>
+<view class="kind-list">
+    <kind-item class="item" wx:for="{{kindList}}" wx:key="video_id" info="{{item}}"></kind-item>
+</view>

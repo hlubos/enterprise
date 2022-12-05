@@ -1,0 +1,6 @@
+{
+  "component": true,
+  "usingComponents": {
+    "login-btn": "../../../../../components/LoginBtn/LoginBtn"
+  }
+}

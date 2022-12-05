@@ -1,0 +1,168 @@
+<!--
+此文件为开发者工具生成，生成时间: 2022/10/12下午7:27:09
+使用方法：
+在 D:\web\enterprise\pages\run\pages\run_log\index.wxml 引入模板
+
+```
+<import src="index.skeleton.wxml"/>
+<template is="skeleton" wx:if="{{loading}}" />
+```
+
+在 D:\web\enterprise\pages\run\pages\run_log\index.wxss 中引入样式
+```
+@import "./index.skeleton.wxss";
+```
+
+更多详细信息可以参考文档：https://developers.weixin.qq.com/miniprogram/dev/devtools/skeleton.html
+-->
+<template name="skeleton">
+  <view class="sk-container">
+    <view class="runlog-page">
+      <view class="runlog-banner sk-image">
+        <view class="runlog-banner-num sk-transparent sk-text-0-0000-717 sk-text">64.63</view>
+        <view class="runlog-banner-txt sk-transparent sk-text-0-0000-702 sk-text">累计公里</view>
+        <view class="runlog-banner-data">
+          <view class="runlog-banner-data-box">
+            <view class="runlog-banner-data-num sk-transparent sk-text-18-7500-234 sk-text" style="background-position-x: 50%;">47:40:25</view>
+            <view class="runlog-banner-data-txt sk-transparent sk-text-18-7500-925 sk-text" style="background-position-x: 50%;">累计时长</view>
+          </view>
+          <view class="runlog-banner-data-box">
+            <view class="runlog-banner-data-num sk-transparent sk-text-18-7500-626 sk-text" style="background-position-x: 50%;">4352</view>
+            <view class="runlog-banner-data-txt sk-transparent sk-text-18-7500-239 sk-text" style="background-position-x: 50%;">累计消耗千卡</view>
+          </view>
+          <view class="runlog-banner-data-box">
+            <view class="runlog-banner-data-num sk-transparent sk-text-18-7500-348 sk-text" style="background-position-x: 50%;">263</view>
+            <view class="runlog-banner-data-txt sk-transparent sk-text-18-7500-57 sk-text" style="background-position-x: 50%;">累计次数</view>
+          </view>
+        </view>
+      </view>
+      <scroll-view scroll-y="true" class="runlog-list">
+        <view>
+          <view is="miniprogram_npm/weui-miniprogram/cells/cells">
+            <view class="my-cells cells--my-cells weui-cells__group cells--weui-cells__group">
+              <view class="weui-cells cells--weui-cells weui-cells_after-title cells--weui-cells_after-title sk-pseudo sk-pseudo-circle">
+                <view is="miniprogram_npm/weui-miniprogram/cell/cell">
+                  <view class="weui-cell cell--weui-cell sk-pseudo sk-pseudo-circle" hover-class="true">
+                    <view class="weui-cell__hd cell--weui-cell__hd"></view>
+                    <view class="weui-cell__bd cell--weui-cell__bd">
+                      <view style="display: flex;">
+                        <view class="runlog-item-icon">
+                          <image lazy-load="true" data-errorimg="0" class="sk-image"></image>
+                        </view>
+                        <view class="runlog-item-info" style="flex: 1;">
+                          <view class="runlog-item-info-line1">
+                            <view class="runlog-item-info-line1-txt1 sk-transparent sk-text-14-5833-146 sk-text">小程序</view>
+                            <view class="runlog-item-info-line1-txt2 sk-transparent sk-text-14-5832-359 sk-text">2022/09/29 15:45:58</view>
+                          </view>
+                          <view class="runlog-item-info-line2">
+                            <view>
+                              <text class="runlog-item-info-line2-txt1 sk-transparent sk-text-14-5833-765 sk-text">0.06 公里</text>
+                              <text class="runlog-item-info-line2-txt2 sk-transparent sk-text-14-5832-542 sk-text">室外跑</text>
+                            </view>
+                          </view>
+                          <view class="runlog-item-info-line3">
+                            <view class="line3-item">
+                              <image class="run-info-icon sk-image"></image>
+                              <text class="run-info-txt sk-transparent sk-text-14-5832-780 sk-text">3.54kcal</text>
+                            </view>
+                            <view class="line3-item">
+                              <image class="run-info-icon sk-image"></image>
+                              <text class="run-info-txt sk-transparent sk-text-14-5832-333 sk-text">0:00:17</text>
+                            </view>
+                            <view class="line3-item">
+                              <image class="run-info-icon sk-image"></image>
+                              <text class="run-info-txt sk-transparent sk-text-14-5832-667 sk-text">4'33''</text>
+                            </view>
+                          </view>
+                        </view>
+                      </view>
+                    </view>
+                    <view class="weui-cell__ft cell--weui-cell__ft weui-cell__ft_in-access cell--weui-cell__ft_in-access"></view>
+                  </view>
+                </view>
+                <view is="miniprogram_npm/weui-miniprogram/cell/cell">
+                  <view class="weui-cell cell--weui-cell weui-cell_wxss cell--weui-cell_wxss sk-pseudo sk-pseudo-circle" hover-class="true">
+                    <view class="weui-cell__hd cell--weui-cell__hd"></view>
+                    <view class="weui-cell__bd cell--weui-cell__bd">
+                      <view style="display: flex;">
+                        <view class="runlog-item-icon">
+                          <image lazy-load="true" data-errorimg="1" class="sk-image"></image>
+                        </view>
+                        <view class="runlog-item-info" style="flex: 1;">
+                          <view class="runlog-item-info-line1">
+                            <view class="runlog-item-info-line1-txt1 sk-transparent sk-text-14-5833-167 sk-text">小程序</view>
+                            <view class="runlog-item-info-line1-txt2 sk-transparent sk-text-14-5832-988 sk-text">2022/09/29 15:40:56</view>
+                          </view>
+                          <view class="runlog-item-info-line2">
+                            <view>
+                              <text class="runlog-item-info-line2-txt1 sk-transparent sk-text-14-5833-718 sk-text">0.05 公里</text>
+                              <text class="runlog-item-info-line2-txt2 sk-transparent sk-text-14-5832-23 sk-text">室外跑</text>
+                            </view>
+                          </view>
+                          <view class="runlog-item-info-line3">
+                            <view class="line3-item">
+                              <image class="run-info-icon sk-image"></image>
+                              <text class="run-info-txt sk-transparent sk-text-14-5832-310 sk-text">3.38kcal</text>
+                            </view>
+                            <view class="line3-item">
+                              <image class="run-info-icon sk-image"></image>
+                              <text class="run-info-txt sk-transparent sk-text-14-5832-706 sk-text">0:00:21</text>
+                            </view>
+                            <view class="line3-item">
+                              <image class="run-info-icon sk-image"></image>
+                              <text class="run-info-txt sk-transparent sk-text-14-5832-809 sk-text">5'53''</text>
+                            </view>
+                          </view>
+                        </view>
+                      </view>
+                    </view>
+                    <view class="weui-cell__ft cell--weui-cell__ft weui-cell__ft_in-access cell--weui-cell__ft_in-access"></view>
+                  </view>
+                </view>
+                <view is="miniprogram_npm/weui-miniprogram/cell/cell">
+                  <view class="weui-cell cell--weui-cell weui-cell_wxss cell--weui-cell_wxss sk-pseudo sk-pseudo-circle" hover-class="true">
+                    <view class="weui-cell__hd cell--weui-cell__hd"></view>
+                    <view class="weui-cell__bd cell--weui-cell__bd">
+                      <view style="display: flex;">
+                        <view class="runlog-item-icon">
+                          <image lazy-load="true" data-errorimg="2" class="sk-image"></image>
+                        </view>
+                        <view class="runlog-item-info" style="flex: 1;">
+                          <view class="runlog-item-info-line1">
+                            <view class="runlog-item-info-line1-txt1 sk-transparent sk-text-14-5833-126 sk-text">小程序</view>
+                            <view class="runlog-item-info-line1-txt2 sk-transparent sk-text-14-5832-776 sk-text">2022/09/29 15:34:00</view>
+                          </view>
+                          <view class="runlog-item-info-line2">
+                            <view>
+                              <text class="runlog-item-info-line2-txt1 sk-transparent sk-text-14-5833-937 sk-text">0.11 公里</text>
+                              <text class="runlog-item-info-line2-txt2 sk-transparent sk-text-14-5832-836 sk-text">室外跑</text>
+                            </view>
+                          </view>
+                          <view class="runlog-item-info-line3">
+                            <view class="line3-item">
+                              <image class="run-info-icon sk-image"></image>
+                              <text class="run-info-txt sk-transparent sk-text-14-5832-89 sk-text">6.33kcal</text>
+                            </view>
+                            <view class="line3-item">
+                              <image class="run-info-icon sk-image"></image>
+                              <text class="run-info-txt sk-transparent sk-text-14-5832-661 sk-text">0:00:13</text>
+                            </view>
+                            <view class="line3-item">
+                              <image class="run-info-icon sk-image"></image>
+                              <text class="run-info-txt sk-transparent sk-text-14-5832-94 sk-text">1'56''</text>
+                            </view>
+                          </view>
+                        </view>
+                      </view>
+                    </view>
+                    <view class="weui-cell__ft cell--weui-cell__ft weui-cell__ft_in-access cell--weui-cell__ft_in-access"></view>
+                  </view>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+  </view>
+</template>

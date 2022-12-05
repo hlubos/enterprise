@@ -1,0 +1,66 @@
+/* pages/tabBar/home/AI_page/AI_page.wxss */
+.header {
+  padding: 20rpx 38rpx 20rpx 52rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  overflow-x: hidden;
+}
+
+.header .left .title {
+  margin-bottom: 6rpx;
+  font-family: PingFangSC-Medium;
+  font-size: 48rpx;
+  color: #333333;
+  letter-spacing: 4rpx;
+}
+
+.header .left .desc {
+  font-family: PingFangSC-Medium;
+  font-size: 28rpx;
+  color: #e0e0e0;
+}
+
+.header .right {
+  width: 282rpx;
+  height: 156rpx;
+}
+
+.kind-list {
+  padding: 28rpx;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.kind-list .item {
+  margin-bottom: 14rpx;
+}
+
+.kind-list .item:nth-child(2n) {
+  margin-left: 14rpx;
+}
+
+.records {
+  position: relative;
+  font-size: 36rpx;
+  height: 100rpx;
+  line-height: 100rpx;
+  color: #999999;
+  padding: 8rpx 0;
+  margin: 24rpx;
+  background-color: #ffffff;
+  border-radius: 12rpx;
+  box-shadow: 0 0 10rpx 0 rgba(0, 0, 0, 0.09);
+}
+
+.records-left {
+  margin-left: 24rpx;
+  display: inline-block;
+}
+
+.records-right {
+  float: right;
+  margin: 36rpx 24rpx;
+  width: 28rpx;
+  height: 28rpx;
+}

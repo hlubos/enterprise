@@ -1,0 +1,11 @@
+<!--run_packege/pages/index/components/runCacheDialog/runCacheDialog.wxml-->
+<view class="mask">
+    <view class="dialog-box">
+        <view class="dialog-title">
+            <view>{{$language['上次跑步进程被异常中断，跑步记录未上传。是否重新进入跑步进程']+'？'}}</view>
+            <!-- <view></view> -->
+        </view>
+        <view class="continue-btn" bindtap="continueRun">{{$language['是,回到上次进程']}}</view>
+        <view class="giveup-btn" bindtap="giveUpRun">{{$language['否,上次记录将丢失']}}</view>
+    </view>
+</view>

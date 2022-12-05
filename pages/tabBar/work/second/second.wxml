@@ -1,0 +1,4 @@
+<!--pages/tabBar/work/second/second.wxml-->
+<view class="sec-container">
+  <web-view src="{{webUrl}}"></web-view>
+</view>

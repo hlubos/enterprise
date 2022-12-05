@@ -1,0 +1,1 @@
+<video class="backgroundVideo" id="myVideo" loop="{{true}}" src="https://17yd-common.51yund.com/ai_coach_bg_01.aac" wx:if="{{bgMusic}}"></video>

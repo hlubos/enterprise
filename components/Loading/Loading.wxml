@@ -1,0 +1,13 @@
+<!--pages/loading/loading.wxml-->
+<view class="loading-box">
+    <view class="loadEffect">
+        <text></text>
+        <text></text>
+        <text></text>
+        <text></text>
+        <text></text>
+        <text></text>
+        <text></text>
+        <text></text>
+    </view>
+</view>

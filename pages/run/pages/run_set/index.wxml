@@ -1,0 +1,134 @@
+<!--plugin/pages/run_set/index.wxml-->
+<!--语言播报设置-->
+<mp-cells ext-class="my-cells" title="{{$language['语言播报设置']}}">
+    <mp-cell>
+        <view>{{ $language['语言播报开关'] }}</view>
+        <view slot="footer">
+            <switch checked="{{openVoice}}" bindchange="switchVoice"></switch>
+        </view>
+    </mp-cell>
+    <mp-cell value="{{$language['语音类型']}}">
+        <view slot="footer">
+            <!-- <picker mode="selector" value="{{voiceIndex}}" range="{{voiceList}}" bindchange="voiceChange">
+                <view class="right-info">
+                    <text class="right-txt">{{voiceList[voiceIndex]}}</text>
+                    <image class="right-icon" src="https://ssl-pubpic.51yund.com/1223520876.png"></image>
+                </view>
+            </picker> -->
+            <view class="right-info" bindtap="showVoicePicker">
+              <text class="right-txt">{{voiceList[voiceIndex]}}</text>
+              <image class="right-icon" src="https://ssl-pubpic.51yund.com/1223520876.png"></image>
+            </view>
+        </view>
+    </mp-cell>
+    <mp-cell value="{{$language['播报频率']}}">
+        <view slot="footer">
+            <!-- <picker 
+                mode="multiSelector" 
+                value="{{freIndex}}" 
+                range="{{frequencyArray}}" 
+                bindcolumnchange="freColumnChange" 
+                bindchange="freChange"
+                bindcancel="freCancel"
+            >
+                <view class="right-info">
+                    <text class="right-txt">{{frequencyArray[1][freIndex[1]]}}</text>
+                    <image class="right-icon" src="https://ssl-pubpic.51yund.com/1223520876.png"></image>
+                </view>
+            </picker> -->
+            <view class="right-info" bindtap="showFrePicker">
+              <text class="right-txt">{{frequencyArray[1][freIndex[1]]}}</text>
+              <image class="right-icon" src="https://ssl-pubpic.51yund.com/1223520876.png"></image>
+            </view>
+        </view>
+    </mp-cell>
+</mp-cells>
+<page-container show="{{isPickerShow}}" round>
+  <!-- 声源类型选择 -->
+  <!-- <picker-view 
+    hidden="{{!isVoicePickerShow}}"
+    class="voice-picker"
+    immediate-change
+    indicator-style="height: 50px;"
+    style="height: 50vh; width: 100%;"
+    value="{{voiceIndex}}"
+    bindchange="changeVoiceIndex"
+  >
+    <picker-view-column style="line-height: 50px; text-align: center;">
+      <view wx:for="{{voiceList}}" wx:key="index">{{item}}</view>
+    </picker-view-column>
+  </picker-view> -->
+  <!-- 播报频率选择 -->
+  <!-- <picker-view 
+    hidden="{{!isFrePickerShow}}"
+    class="fre-picker"
+    immediate-change
+    indicator-style="height: 50px;"
+    style="height: 50vh; width: 100%;"
+    value="{{freIndex}}"
+    bindchange="changeFreIndex"
+  >
+    <picker-view-column style="line-height: 50px; text-align: center;">
+      <view wx:for="{{frequencyArray[0]}}" wx:key="index">{{item}}</view>
+    </picker-view-column>
+    <picker-view-column style="line-height: 50px; text-align: center;">
+      <view wx:for="{{frequencyArray[1]}}" wx:key="index">{{item}}</view>
+    </picker-view-column>
+  </picker-view> -->
+  <van-picker 
+    wx:if="{{isVoicePickerShow}}"
+    show-toolbar 
+    columns="{{ voiceList }}" 
+    default-index="{{ voiceIndex }}"
+    bind:confirm="onVoiceColumnConfirm" 
+    bind:change="onVoiceColumnChange" 
+    bind:cancel="onVoiceColumnCancel"
+  />
+  <van-picker 
+    wx:if="{{isFrePickerShow}}"
+    show-toolbar 
+    columns="{{ freColumns }}" 
+    bind:confirm="onFreColumnConfirm" 
+    bind:change="onFreColumnChange" 
+    bind:cancel="onFreColumnCancel"
+  />
+</page-container>
+<!-- 地图设置 -->
+<mp-cells ext-class="my-cells" title="{{$language['地图设置']}}">
+    <!-- <mp-cell value="标题文字" footer="说明文字"></mp-cell>
+    <mp-cell>
+        <view>标题文字（使用slot）</view>
+        <view slot="footer">说明文字</view>
+    </mp-cell> -->
+    <view class="map-style-list">
+        <view wx:for="{{mapStyleList}}" wx:key="index" class="map-style-item" data-key="{{item}}" bindtap="selectMapSty">
+            <view class="map-icon">
+                <image src="{{item.icon}}"></image>
+                <image 
+                    src="https://ssl-pubpic.51yund.com/1223539052.png" 
+                    hidden="{{item.mapStyInfo.subkey != nowMapStyInfo.subkey || item.mapStyInfo['layer-style'] != nowMapStyInfo['layer-style']}}"
+                    class="selectedMap"
+                ></image>
+            </view>
+            <view class="map-txt">{{$language[item.title]}}</view>
+        </view>
+    </view>
+</mp-cells>
+<!-- 跑步异常检测 -->
+<mp-cells ext-class="my-cells" title="{{$language['跑步异常检测']}}">
+    <mp-cell>
+        <view>{{$language['网络检测']}}</view>
+        <!-- <view slot="footer">点击重新检测></view> -->
+        <view slot="footer" bindtap="checkNet">
+            <text>{{$language['点击检测']}}</text>
+        </view>
+    </mp-cell>
+    <mp-cell>
+        <view>{{$language['当前网络']}}</view>
+        <view slot="footer">
+            <!-- <text wx:if="{{networkType}}">当前网络类型：{{networkType}}</text> -->
+            <text>{{$language[netTxt]}}</text>
+        </view>
+    </mp-cell>
+</mp-cells>
+

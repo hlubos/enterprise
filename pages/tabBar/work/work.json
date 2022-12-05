@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "dialog": "../../../components/Dialog/Dialog",
+    "loading": "../../../components/Loading/Loading",
+    "toast": "../../../components/Toast/Toast"
+  }
+}
