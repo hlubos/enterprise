@@ -42,6 +42,17 @@
           "pathName": "pages/history/history",
           "query": "",
           "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "pages/jumpIsuxPage/jumpIsuxPage",
+          "query": "",
+          "launchMode": "default",
+          "scene": 1011,
+          "partialCompile": {
+            "enabled": true,
+            "pages": []
+          }
         }
       ]
     }

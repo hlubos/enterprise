@@ -1,6 +1,6 @@
 <!--pages/tabBar/home/moreSport_page/moreSport_page.wxml-->
 <view class="more-sport-page">
-<navigator url="/pages/jumpIsuxPage/jumpIsuxPage">跳转公众号的中转页面</navigator>
+<!-- <navigator url="/pages/jumpIsuxPage/jumpIsuxPage">跳转公众号的中转页面</navigator> -->
   <view class="sport-img-box">
     <image class="sport-img" src="https://ssl-pubpic.51yund.com/1306533712.png"></image>
   </view>
