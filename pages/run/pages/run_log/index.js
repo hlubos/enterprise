@@ -16,6 +16,7 @@ Page({
     end_cnt: 60,
     len: 60,
     runLogList: [],
+    rawRunLog:[],
     thumbImgList: [],
     // 节流阀
     canLoadData: true,
@@ -89,9 +90,11 @@ Page({
     }
     api.getRunnerInfo(params).then((res) => {
       if (res.code == 0) {
-        // console.log(res)
         let infosLen = res.infos.length
         let newInfos = res.infos
+        this.setData({
+          rawRunLog:JSON.parse(JSON.stringify(newInfos))
+        })
         for (let i = 0; i < newInfos.length; i++) {
           newInfos[i].time = myFormats.formatDate(
             newInfos[i].time,
@@ -154,6 +157,16 @@ Page({
         runLogList: runLogList,
       })
     }
+  },
+  // 跳转详情页
+  gotoDetail(e){
+    console.log(e);
+    console.log(this.data.rawRunLog)
+   wx.navigateTo({
+     url: `../run_detail/index?runner_id=${
+      e.currentTarget.dataset.runnerid
+    }&runLog=${encodeURIComponent(JSON.stringify(this.data.rawRunLog[e.currentTarget.dataset.idx]))}`,
+   })
   },
   /**
    * 生命周期函数--监听页面加载

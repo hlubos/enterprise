@@ -35,7 +35,8 @@
                 "pages/run_set/index",
                 "pages/run_final/index",
                 "pages/run_share/index",
-                "pages/run_detail/run"
+                "pages/run_detail/run",
+                "pages/run_detail/index"
             ]
         }
     ],

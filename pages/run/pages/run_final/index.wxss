@@ -156,14 +156,17 @@
 .title3 {
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
   margin-bottom: 48rpx;
-}
+}  
 
 .title3-item1,
 .title3-item2,
-.title3-item3 {
-  width: 33.3%;
+.title3-item3,
+.title3-item4 {
+  width: 50%;
   text-align: center;
+  padding-bottom: 50rpx;
 }
 
 .title3-num {
@@ -181,7 +184,7 @@
   position: relative;
   width: 100%;
   height: 1rpx;
-  border-top: 1px #e8e8e8 solid;
+  border-top: 1px rgb(49, 218, 175) solid;
   margin-top: 24rpx;
   display: flex;
   justify-content: center;
@@ -198,10 +201,30 @@
   font-size: 24rpx;
   width: 300rpx;
   height: 24rpx;
-  color: #666666;
+  color: rgb(49, 218, 175);
   text-align: center;
 }
+.speed-table{
+  position: relative;
+  width: 654rpx;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+.speed-table::after{
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 30%;
+  transform: translateX(-50%);
+  display: block;
+  height: 60%;
+  border:solid 1rpx rgb(222, 222, 222);
 
+}
+.table-title{
+  width: 100%;
+}
 .visual-chart {
   position: relative;
   width: 654rpx;
@@ -220,7 +243,6 @@
   /* width: 100%; */
   width: 654rpx;
   display: flex;
-  flex-direction: row-reverse;
   align-items: flex-end;
   transition: all ease 0.5s;
   padding-bottom: 100rpx;
@@ -233,11 +255,14 @@
 }
 
 .qrcode-txt {
+  margin-left: 30rpx;
   font-size: 32rpx;
   color: #333333;
-  text-align: right;
+  font-weight: 900;
 }
-
+.qrcode-txt view:nth-child(2){
+  margin-left: 100rpx;
+}
 .share-btn-box {
   width: 100%;
   display: flex;
@@ -249,33 +274,25 @@
 .share-btn {
   display: flex;
   justify-content: center;
-  width: 552rpx;
+  width: 615rpx;
   height: 104rpx;
   margin-top: 60rpx;
   margin-bottom: 80rpx;
 }
 
-.btn1,
-.btn2 {
-  width: 50%;
+.btn {
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 34rpx;
   color: #ffffff;
   font-weight: 600;
+  background: #4cddb4;
+  border-radius: 52rpx;
 }
 
-.btn1 {
-  background: #4cddb4;
-  border-radius: 52rpx 0 0 52rpx;
-}
 
-.btn2 {
-  background: #4cddb4;
-  opacity: 0.6;
-  border-radius: 0 52rpx 52rpx 0;
-}
 
 .share-type-box {
   /* position: absolute; */

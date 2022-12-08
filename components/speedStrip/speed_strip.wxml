@@ -1,0 +1,19 @@
+<view class="line answer_draw_canvas">
+{{speedDetail.avg_time}}
+  <view class="line-kilometer answer_draw_canvas" data-type="text" data-text="1">{{speedDetail.index}} </view>
+  <view class="line-triangle answer_draw_canvas" wx:if="{{ speedDetail.avg_time == min}}"></view>
+  <view class="line-wai answer_draw_canvas">
+    <block wx:if="{{speedDetail.avg_time != min&&speedDetail.avg_time!=max}}" class="answer_draw_canvas">
+      <view class="line-nei answer_draw_canvas" style="width: {{speedDetail.avg_time/max*100}}\%; "> </view>
+    </block>
+    <block wx:if="{{speedDetail.avg_time == min}}" class="answer_draw_canvas">
+      <view class="line-nei answer_draw_canvas" style="width: {{speedDetail.avg_time/max*100}}\%; background-color: rgb(14, 189, 72); "> </view>
+    </block>
+    <block wx:if="{{speedDetail.avg_time == max}}" class="answer_draw_canvas">
+      <view class="line-nei answer_draw_canvas" style="width: 100%; "> </view>
+    </block>
+  </view>
+  <view class="line-minkm answer_draw_canvas">{{avg_speed}}</view>
+</view>
+
+

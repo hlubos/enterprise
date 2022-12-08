@@ -2,6 +2,7 @@
 import api from '../../../../server/run'
 import tool from '../../../../common/tool'
 import loginApi from '../../../../server/login'
+import utils from "../../../../common/utils"
 import i18nInstance from 'miniprogram-i18n-plus'
 
 const app = getApp()
@@ -52,7 +53,7 @@ Component({
       subkey: 'L4JBZ-YJ56D-GAO47-P6UQY-ODB46-M2FD2',
       // 'subkey':'V5JBZ-RY5EJ-Z7AFP-FP7OM-YXSFE-P7F4J',
       'layer-style': '1',
-    },
+    }
   },
 
   /**
@@ -104,7 +105,7 @@ Component({
       })
     },
     // 开始运动
-    startRun() {
+    startRun:utils.throttle(function() {
       // this.selectComponent('#runTypeModal').showFrame();
       // 运动前首先检查权限是否满足，权限满足则允许跑步，不满足则弹出弹框（去设置）
       getSetting().then((res) => {
@@ -151,7 +152,7 @@ Component({
           )
         }
       })
-    },
+    },2000),
     // 进入跑步记录页
     gotoRunHistory() {
       navigateTo({
@@ -164,6 +165,7 @@ Component({
     },
     // 进入跑步页面
     gotoRunPage() {
+      this.setData({isStar : true})
       // 室内跑暂未开发
       if (this.data.runType == 1) {
         showToast({
@@ -309,6 +311,7 @@ Component({
   lifetimes: {
     created() {
       // 在组件实例刚刚被创建时执行
+      this.initPage()
     },
     attached: function () {
       i18nInstance.effect(this)

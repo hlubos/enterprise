@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "speedStrip":"../../../../components/speedStrip/speed_strip"
+  }
+}

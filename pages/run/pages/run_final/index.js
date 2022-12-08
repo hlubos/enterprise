@@ -84,6 +84,8 @@ Page({
       avgPace: `00'00''`,
       sumTime: '00:00',
       kCalorie: 0,
+      stride:0, // 步幅
+      optimalPace:`00'00''`, //最佳配速
     },
     // 用户信息
     userInfo: {
@@ -580,9 +582,9 @@ Page({
         'showRunData.runKMiles': myFormats.clip(parseInt(data.runMiles) / 1000),
         'showRunData.avgPace': myFormats.formatAvg(data.runTime, data.runMiles),
         'showRunData.sumTime': myFormats.secTranlateTime(data.runTime),
-        'showRunData.kCalorie': (55 * 1.036 * (data.runMiles / 1000)).toFixed(
-          1,
-        ),
+        'showRunData.kCalorie': (55 * 1.036 * (data.runMiles / 1000)).toFixed(1),
+        'showRunData.stride':((data.distance*100)/data.steps).toFixed(0),
+        'showRunData.avgSpeed':(((this.data.distance/1000)/(this.data.runTime/360))*10).toFixed(1)
       })
       // 设置静态地图
       this.setStaticMapInfo()

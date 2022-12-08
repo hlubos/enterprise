@@ -86,6 +86,10 @@ Page({
     runTimer: null,
     // 位置获取计时器
     locaTimer: null,
+    // 跑步时的初始步数
+    initialStep:0,
+    // 总步数
+    steps:1,
     // 跑步显示的数据
     runShowData: {
       // 公里数
@@ -96,6 +100,8 @@ Page({
       avePace: `0'00''`,
       // 消耗千卡
       kiloCalorie: '0.0',
+      // 步幅
+      stride:0
     },
     // 位置点保存数组
     locaDotArr: [],
@@ -238,6 +244,8 @@ Page({
     }
     // 跑步时长
     let sumTime = myFormats.secTranlateTime(this.data.runTime)
+    // 步幅
+    let stride =((this.data.runMiles*100)/this.data.steps).toFixed(0)
     // 平均配速
     let avePace = myFormats.formatAvg(this.data.runTime, runMiles)
     // 消耗千卡
@@ -251,6 +259,7 @@ Page({
       'runShowData.kiloCalorie': kiloCalorie,
       calorie: calorie,
       outMiles: outMiles,
+      stride:stride,
     })
     // 语音播报
     this.runAudioReport()
@@ -287,8 +296,40 @@ Page({
       mapPanelShow: false,
     })
   },
+  // 设置当前步数
+  setNowStep(flag=true){
+    return new Promise((resolve)=>{
+      wx.getWeRunData({
+        success:async (res)=>{
+          // 拿 encryptedData 到开发者后台解密开放数据
+          let parms = {
+            open_id: wx.getStorageSync('openid'),
+            wxapp_source: 'wx_ydenterprise',
+            encryptedData: res.encryptedData,
+            iv: res.iv,
+          }
+          let data = await api.getUserDayStep(parms)
+          if (data.code == 0) {
+            if(flag){//如果为初始化步数
+              this.setData({
+                steps:0,
+                initialStep:data.steps
+              })
+              resolve()
+            }else{//如果为结束 或 暂停
+              this.setData({
+                steps:data.steps-this.data.initialStep+this.data.steps,
+                initialStep:data.steps
+              })
+              resolve()
+            }
+          }
+        }
+      })
+  })
+  },
   // 开始跑步
-  runStart() {
+  async runStart() {
     // 开始计时
     let second = this.data.runTime
     // let canGetLocation = true
@@ -296,6 +337,12 @@ Page({
       runStatus: 0,
       canGetLocation: true,
     })
+    // 初始化当前步数
+    console.log("555");
+    await this.setNowStep()
+    console.log("开始");
+    console.log(this.data.steps);
+    console.log(this.data.initialStep)
     // 跑步计时
     var runTimer = setInterval(() => {
       // 累计跑步时间
@@ -420,7 +467,7 @@ Page({
     // return pointArr
   },
   // 跑步暂停
-  runPause() {
+  async runPause() {
     let pointArr = this.data.locaDotArr
     if (pointArr.length == 0) {
       pointArr[0] = []
@@ -432,6 +479,11 @@ Page({
     this.setData({
       locaDotArr: pointArr,
     })
+    // 重新获取当前步数
+    await this.setNowStep(false)
+    console.log("暂停");
+    console.log(this.data.steps);
+    console.log(this.data.initialStep);
     // 清除跑步计时器
     clearInterval(this.data.runTimer)
     clearTimeout(this.data.locaTimer)
@@ -505,7 +557,21 @@ Page({
     this.setData({
       runEndTime,
     })
+    // 重新获取当前步数
+    await this.setNowStep(false)
+    console.log("暂停");
+    console.log(this.data.steps);
+    console.log(this.data.initialStep);
     this.setRunDataCache()
+    // 处理缓存数据
+    let speed_infos=this.getKmilesCache()
+    for(const index in speed_infos){
+      speed_infos[index]={
+        index:speed_infos[index]['kmiles_cut'],
+        distance:speed_infos[index]['outMiles'],
+        avg_time:speed_infos[index]['usetime']
+      }
+    }
     // 上报跑步数据
     let params = {
       kind_id: 0,
@@ -515,8 +581,10 @@ Page({
       // time:runEndTime,
       caloric: this.data.calorie,
       run_source: 'wx_mini_program',
-      // 步数(可不传)
-      // u_steps:100,
+      // 每公里配速缓存上报
+      speed_infos:JSON.stringify(speed_infos),
+      // 步数
+      u_steps:this.data.steps,
     }
     if (this.data.runTime == 0 || this.data.runMiles == 0) {
       params.avg_pace = 0
@@ -590,6 +658,8 @@ Page({
         calorie: this.data.calorie,
         // 最新一公里的跑步时间
         outTime: this.data.outTime,
+        // 步数
+        steps: this.data.steps
       },
     })
   },
@@ -614,10 +684,7 @@ Page({
       newData.avg_pace = (this.data.outTime / this.data.outMiles) * 1000
     }
     let newArr = [...oldArr, newData]
-    setStorage({
-      key: key,
-      data: newArr,
-    })
+    setStorageSync(key, newArr)
   },
   // 读取每公里配速缓存
   getKmilesCache() {
@@ -748,6 +815,7 @@ Page({
         runStartTime,
         runTime,
         outTime,
+        steps,
       } = cacheData
       this.setData({
         calorie,
@@ -757,6 +825,7 @@ Page({
         runStartTime,
         runTime,
         outTime,
+        steps,
       })
       // 查看每公里配速缓存
       let kMilesCache = this.getKmilesCache()

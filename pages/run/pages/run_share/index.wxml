@@ -30,7 +30,7 @@
         <view class="line" class="answer_draw_canvas"></view>
     </view>
     <!-- 二维码 -->
-    <view class="qrcode-box answer_draw_canvas">
+    <view hidden="true" class="qrcode-box answer_draw_canvas">
         <image class="qrcode-img answer_draw_canvas" data-delay="1" data-type="image" data-url="{{qrcodeImg}}" src="{{qrcodeImg}}"></image>
         <view class="qrcode-txt answer_draw_canvas">
             <!-- <view class="answer_draw_canvas" data-delay="1" data-type="text" data-text="{{ $language['全民数字化'] }}">{{ $language['全民数字化'] }}</view> -->
