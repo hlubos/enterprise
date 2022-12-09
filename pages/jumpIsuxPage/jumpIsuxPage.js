@@ -5,15 +5,23 @@ Page({
    * 页面的初始数据
    */
   data: {
-    // 悦动圈跑步：MzA5NDIwMDM3Nw
-    // 悦动圈公众号：MzA5NjU1NTAzNw
-    biz: 'MzA5NjU1NTAzNw',
+    // 跳转的文章的url
+    textUrl: '',
   },
-
+  scc(e) {
+    console.log('跳转成功', e)
+  },
+  err(e) {
+    console.log('跳转失败', e)
+  },
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad(options) {},
+  onLoad(options) {
+    this.setData({
+      textUrl: decodeURIComponent(options.textUrl),
+    })
+  },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
