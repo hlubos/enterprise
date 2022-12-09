@@ -1,101 +1,97 @@
 <!--pages/run/pages/run_detail/index.wxml-->
-<scroll-view 
-    scroll-y="true" class="content" :enhanced="true" style="height: 100vh;width: 100vw;"
-    :bounces="false" :show-scrollbar="false">
+<scroll-view scroll-y="true" class="content" :enhanced="true" style="height: 100vh;width: 100vw;" :bounces="false" :show-scrollbar="false">
     <view class="fina-map-box" style="height: {{mapHeight}};">
-    <map id="run-final-map" 
-        class="run-final-map" 
-        name="run_final_map" 
-        latitude="39.92082670727589" 
-        longitude:="116.45972113140078" 
-        show-location="true" 
-        bindtap="handleMap" 
-        polyline="{{polylines}}"
-        subkey="{{mapStyle.subkey}}"
-        layer-style="{{mapStyle['layer-style']}}"
-        style="width: 100%; height: {{mapHeight}};"
-    ></map>
-</view>
-<view class="share-img-box answer_canvas" id="answer-canvas">
-    <view class="final-chart-box answer_draw_canvas" data-type="text" data-background="#ffffff">
-        <view class="title answer_draw_canvas">
-            <view class="title1 answer_draw_canvas">
-                <view class="logo answer_draw_canvas">
-                    <image class="answer_draw_canvas" data-delay="1" data-type="image" data-url="{{$language['https://ydcommon.51yund.com/wxapp/upimg/ydlogo-zh.png']}}" src="{{$language['https://ydcommon.51yund.com/wxapp/upimg/ydlogo-zh.png']}}"></image>
+        <map id="run-final-map" class="run-final-map" name="run_final_map" latitude="39.92082670727589" longitude:="116.45972113140078" show-location="true" bindtap="handleMap" polyline="{{polylines}}" subkey="{{mapStyle.subkey}}" layer-style="{{mapStyle['layer-style']}}" style="width: 100%; height: {{mapHeight}};"></map>
+    </view>
+    <view class="share-img-box answer_canvas" id="answer-canvas">
+        <view class="final-chart-box answer_draw_canvas" data-type="text" data-background="#ffffff">
+            <view class="title answer_draw_canvas">
+                <view class="title1 answer_draw_canvas">
+                    <view class="logo answer_draw_canvas">
+                        <image class="answer_draw_canvas" data-delay="1" data-type="image" data-url="{{$language['https://ydcommon.51yund.com/wxapp/upimg/ydlogo-zh.png']}}" src="{{$language['https://ydcommon.51yund.com/wxapp/upimg/ydlogo-zh.png']}}"></image>
+                    </view>
+                    <view class="finish-time answer_draw_canvas" data-delay="1" data-type="text" data-text="{{showRunData.runStartTime}}">{{showRunData.runStartTime}}</view>
+                    <view class="avatar answer_draw_canvas">
+                        <image class="answer_draw_canvas" data-delay="1" data-type="image" data-url="{{userInfo.head_url}}" src="{{userInfo.head_url}}"></image>
+                    </view>
                 </view>
-                <view class="finish-time answer_draw_canvas" data-delay="1" data-type="text" data-text="{{showRunData.runStartTime}}">{{showRunData.runStartTime}}</view>
-                <view class="avatar answer_draw_canvas">
-                    <image class="answer_draw_canvas" data-delay="1" data-type="image" data-url="{{userInfo.head_url}}" src="{{userInfo.head_url}}"></image>
+                <view class="title2 answer_draw_canvas">
+                    <view class="title2-left answer_draw_canvas">
+                        <view class="title2-left-kmeter answer_draw_canvas txt1" data-delay="1" data-type="text" data-text="{{showRunData.runKMiles}}">{{showRunData.runKMiles}}</view>
+                        <view class="title2-left-unit answer_draw_canvas" data-delay="1" data-type="text" data-text="{{ $language['公里'] }}">{{ $language['公里'] }}</view>
+                    </view>
+                    <view class="title2-right answer_draw_canvas">
+                        <view class="title2-right-name answer_draw_canvas" data-delay="1" data-left="0" data-type="text" data-text="{{userInfo.nick}}">{{userInfo.nick}}</view>
+                        <view class="title2-right-id answer_draw_canvas" data-delay="1" data-left="0" data-type="text" data-text="{{ $language['用户ID'] }}：{{userInfo.user_id}}">{{ $language['用户ID'] }}：{{userInfo.user_id}}</view>
+                    </view>
                 </view>
-            </view>
-            <view class="title2 answer_draw_canvas">
-                <view class="title2-left answer_draw_canvas">
-                    <view class="title2-left-kmeter answer_draw_canvas txt1" data-delay="1" data-type="text" data-text="{{showRunData.runKMiles}}">{{showRunData.runKMiles}}</view>
-                    <view class="title2-left-unit answer_draw_canvas" data-delay="1" data-type="text" data-text="{{ $language['公里'] }}">{{ $language['公里'] }}</view>
-                </view>
-                <view class="title2-right answer_draw_canvas">
-                    <view class="title2-right-name answer_draw_canvas" data-delay="1" data-left="0" data-type="text" data-text="{{userInfo.nick}}">{{userInfo.nick}}</view>
-                    <view class="title2-right-id answer_draw_canvas" data-delay="1" data-left="0" data-type="text" data-text="{{ $language['用户ID'] }}：{{userInfo.user_id}}">{{ $language['用户ID'] }}：{{userInfo.user_id}}</view>
-                </view>
-            </view>
-            <view class="title3 answer_draw_canvas">
-                <view class="title3-item1 answer_draw_canvas">
-                    <view class="title3-num answer_draw_canvas txt2" data-delay="1" data-type="text" data-text="{{showRunData.sumTime}}">{{showRunData.sumTime}}</view>
-                    <view class="title3-unit answer_draw_canvas" data-delay="1" data-type="text" data-text="{{ $language['总计时间'] }}">{{ $language['总计时间'] }}</view>
-                </view>
-                <view class="title3-item2 answer_draw_canvas">
-                    <view class="title3-num answer_draw_canvas txt2" data-delay="1" data-type="text" data-text="{{showRunData.sumTime}}">{{showRunData.kCalorie}}</view>
-                    <view class="title3-unit answer_draw_canvas" data-delay="1" data-type="text" data-text="{{ $language['消耗千卡'] }}">{{ $language['消耗千卡'] }}</view>
-                </view>
-                <view class="title3-item3 answer_draw_canvas">
-                    <view class="title3-num answer_draw_canvas txt2" data-delay="1" data-type="text" data-text="{{showRunData.stride}}">{{showRunData.stride}}</view>
-                    <view class="title3-unit answer_draw_canvas" data-delay="1" data-type="text" data-text="{{ $language['步幅'] }}（cm）">{{ $language['步幅'] }}（cm）</view>
-                </view>
-                <view class="title3-item4 answer_draw_canvas">
-                    <view class="title3-num answer_draw_canvas txt2" data-delay="1" data-type="text" data-text="{{showRunData.avgSpeed}}">{{showRunData.avgSpeed}}</view>
-                    <view class="title3-unit answer_draw_canvas" data-delay="1" data-type="text" data-text="{{ $language['速度'] }}(km/h)">{{ $language['速度'] }}(km/h)</view>
+                <view class="title3 answer_draw_canvas">
+                    <view class="title3-item1 answer_draw_canvas">
+                        <view class="title3-num answer_draw_canvas txt2" data-delay="1" data-type="text" data-text="{{showRunData.sumTime}}">{{showRunData.sumTime}}</view>
+                        <view class="title3-unit answer_draw_canvas" data-delay="1" data-type="text" data-text="{{ $language['总计时间'] }}">{{ $language['总计时间'] }}</view>
+                    </view>
+                    <view class="title3-item2 answer_draw_canvas">
+                        <view class="title3-num answer_draw_canvas txt2" data-delay="1" data-type="text" data-text="{{showRunData.sumTime}}">{{showRunData.kCalorie}}</view>
+                        <view class="title3-unit answer_draw_canvas" data-delay="1" data-type="text" data-text="{{ $language['消耗千卡'] }}">{{ $language['消耗千卡'] }}</view>
+                    </view>
+                    <view class="title3-item3 answer_draw_canvas">
+                        <view class="title3-num answer_draw_canvas txt2" data-delay="1" data-type="text" data-text="{{showRunData.stride}}">{{showRunData.stride}}</view>
+                        <view class="title3-unit answer_draw_canvas" data-delay="1" data-type="text" data-text="{{ $language['步幅'] }}（cm）">{{ $language['步幅'] }}（cm）</view>
+                    </view>
+                    <view class="title3-item4 answer_draw_canvas">
+                        <view class="title3-num answer_draw_canvas txt2" data-delay="1" data-type="text" data-text="{{showRunData.avgSpeed}}">{{showRunData.avgSpeed}}</view>
+                        <view class="title3-unit answer_draw_canvas" data-delay="1" data-type="text" data-text="{{ $language['速度'] }}(km/h)">{{ $language['速度'] }}(km/h)</view>
+                    </view>
                 </view>
             </view>
-        </view>
-        <view class="count-line answer_draw_canvas" data-type="text" data-background="rgb(49, 218, 175)">
-            <view class="count-line-txt answer_draw_canvas" data-delay="1" data-type="text" data-text="{{ isZh ? '第' : 'You have run ' }}{{userInfo.this_sport_cnt}}{{ isZh ? '次跑步' : ' times' }}">{{ isZh ? '第' : "You've run " }}{{userInfo.this_sport_cnt}}{{ isZh ? '次跑步' : ' times' }}</view>
-        </view>
-        <view class="speed-table answer_draw_canvas">
-            <view class="table-title answer_draw_canvas" data-delay="1" data-type="text" data-text="{{$language['配速']}}">配速</view>
-            <view class="table-item4  answer_draw_canvas">
+            <view class="count-line answer_draw_canvas" data-type="text" data-background="rgb(49, 218, 175)">
+                <view class="count-line-txt answer_draw_canvas" data-delay="1" data-type="text" data-text="{{ isZh ? '第' : 'You have run ' }}{{userInfo.this_sport_cnt}}{{ isZh ? '次跑步' : ' times' }}">{{ isZh ? '第' : "You've run " }}{{userInfo.this_sport_cnt}}{{ isZh ? '次跑步' : ' times' }}</view>
+            </view>
+            <view class="speed-table answer_draw_canvas">
+                <view class="table-title answer_draw_canvas" data-delay="1" data-type="text" data-text="{{$language['配速']}}">配速</view>
+                <view class="table-item4  answer_draw_canvas">
                     <view class="title3-num answer_draw_canvas txt2" data-delay="1" data-type="text" data-text="{{showRunData.avgPace}}">{{showRunData.avgPace}}</view>
                     <view class="title3-unit answer_draw_canvas" data-delay="1" data-type="text" data-text="{{ $language['平均配速'] }}">{{ $language['平均配速'] }}</view>
-            </view>  
-            <view class="table-item4 answer_draw_canvas">
-                    <view class="title3-num answer_draw_canvas txt2" data-delay="1" data-type="text" data-text="{{showRunData.kCalorie}}">{{showRunData.kCalorie}}</view>
+                </view>
+                <view class="table-item4 answer_draw_canvas">
+                    <view class="title3-num answer_draw_canvas txt2" data-delay="1" data-type="text" data-text="{{showRunData.bestSpeed}}">{{showRunData.bestSpeed}}</view>
                     <view class="title3-unit answer_draw_canvas" data-delay="1" data-type="text" data-text="{{ $language['最佳配速'] }}">{{ $language['最佳配速'] }}</view>
+                </view>
             </view>
-        </view>
-        <view class="record answer_draw_canvas ">{{runkilometer.length}}段记录</view>
-        <view class="Kilometer answer_draw_canvas">
-            <view class="kilometre_num answer_draw_canvas " data-delay="1" data-type="text" data-text="{{ $language['公里'] }}">公里</view>
-            <view class="speed_allocation answer_draw_canvas"> 配速（公里）</view>
-        </view>
-        <speedStrip wx:for="{{speedDetails}}" speedDetail="{{item}}" min="{{min}}" max="{{max}}" class="answer_draw_canvas"></speedStrip>
-        <view class="share-btn-box" hidden="{{!isShowPanel}}">
-            <view class="share-btn">
-                <view class="btn" bindtap="drawCanvas">{{ $language['分享'] }}</view>
+            <view class="Kilometer answer_draw_canvas">
+                <view class="record answer_draw_canvas" data-delay="1" data-type="text" data-text="{{speedDetails.length}}段记录">{{speedDetails.length}}段记录</view>
+                <view class="Kilometer_title">
+                    <view class="kilometre_num answer_draw_canvas " data-delay="1" data-type="text" data-text="{{ $language['公里'] }}">公里</view>
+                    <view class="speed_allocation answer_draw_canvas" data-delay="1" data-type="text" data-text="配速（公里)"> 配速（公里）</view>
+                </view>
+                <view class="line answer_draw_canvas" wx:for="{{speedDetails}}" wx:for-item="speedDetail">
+                    <view class="line-kilometer answer_draw_canvas" data-type="text" data-text="1">{{speedDetail.index}} </view>
+                    <view class="line-triangle answer_draw_canvas" >
+                        <view class="line_sign answer_draw_canvas" wx:if="{{ speedDetail.avg_time == min.avg_time && speedDetail.index==1}}"></view>
+                    </view>
+                    <view class="line-wai answer_draw_canvas">
+                        <view class="line-nei answer_draw_canvas" 
+                            style="width: {{speedDetail.avg_time == max?'100%':(speedDetail.avg_time/max.avg_time*100+'%')}};background-color:{{speedDetail.avg_time == min.avg_time?'rgb(14, 189, 72)':'rgb(2, 148, 245)'}};"
+                        > </view>
+                    </view>
+                    <view class="line-minkm answer_draw_canvas" data-delay="1" data-type="text" data-text="{{speedDetail.speedTime}}">{{speedDetail.speedTime}}</view>
+                </view>
             </view>
-        </view>
-        <!-- 二维码 -->
-        <view hidden="{{!shareFlag}}" class="qrcode-box answer_draw_canvas">
-            <image class="qrcode-img answer_draw_canvas" data-delay="1" data-type="image" data-url="{{qrcodeImg}}" src="{{qrcodeImg}}"></image>
-            <view class="qrcode-txt answer_draw_canvas">
-                <view class="answer_draw_canvas" data-delay="1" data-type="text" data-text="全民数字化">全民数字化</view>
-                <view class="answer_draw_canvas" data-delay="1" data-type="text" data-text="运动健康管理平台">运动健康管理平台</view>
+            <view class="share-btn-box" hidden="{{!isShowPanel}}">
+                <view class="share-btn">
+                    <view class="btn" bindtap="drawCanvas">{{ $language['分享'] }}</view>
+                </view>
+            </view>
+            <!-- 二维码 -->
+            <view hidden="{{!shareFlag}}" class="qrcode-box answer_draw_canvas">
+                <image class="qrcode-img answer_draw_canvas" data-delay="1" data-type="image" data-url="{{qrcodeImg}}" src="{{qrcodeImg}}"></image>
+                <view class="qrcode-txt answer_draw_canvas">
+                    <view class="answer_draw_canvas" data-delay="1" data-type="text" data-text="全民数字化">全民数字化</view>
+                    <view class="answer_draw_canvas" data-delay="1" data-type="text" data-text="运动健康管理平台">运动健康管理平台</view>
+                </view>
             </view>
         </view>
     </view>
-</view>
-<!-- canvas -->
-<canvas
-    canvas-id="answerCanvas" 
-    class="answerCanvas"
-    style="position: absolute;top: -{{canvasHeight}}px; left: -{{canvasWidth}}px; width: {{canvasWidth}}px; height:{{canvasHeight}}px;background:#fff;"
-></canvas>
+    <!-- canvas -->
+    <canvas canvas-id="answerCanvas" class="answerCanvas" style="position: absolute;top: -{{canvasHeight}}px; left: -{{canvasWidth}}px; width: {{canvasWidth}}px; height:{{canvasHeight}}px;background:#fff;"></canvas>
 </scroll-view>

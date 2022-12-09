@@ -11,14 +11,14 @@
  flex:1;
  height: 18rpx;
  border: 0.1rpx black solid;
- border-radius: 40rpx;
+ /* border-radius: 40rpx; */
  margin: 0 20rpx;
  order: 4;
 }
 .line-nei{
  width: 50%;
  height: 18rpx;
- border-radius: 40rpx;
+ /* border-radius: 40rpx; */
  background-color: rgb(2, 148, 245);
 }
 .line-kilometer{

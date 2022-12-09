@@ -129,6 +129,8 @@ Page({
     //
     x: 0,
     y: 0,
+    // 判断是否正常结束跑步
+    isNormal: false,
   },
   // 语音播报
   runAudioReport() {
@@ -515,10 +517,9 @@ Page({
     let key = 'run_data_' + user_id
     let kMilesCacheData = getStorageSync(key)
     if (
-      // !kMilesCacheData.locaDotArr[0] ||
-      // kMilesCacheData.locaDotArr[0].length < 2 ||
-      // this.data.runMiles <= 10
-      false
+      !kMilesCacheData.locaDotArr[0] ||
+      kMilesCacheData.locaDotArr[0].length < 2 ||
+      this.data.runMiles <= 10
     ) {
       showModal({
         title: this.data.$language['是否退出跑步'] + ' ？',
@@ -543,6 +544,10 @@ Page({
           offLocationChange(this._mylocationChangeFn)
           stopLocationUpdate().then((res) => {})
           offAccelerometerChange()
+          // 正常退出
+          this.setData({
+            isNormal:true
+          })
           switchTab({
             url: '/pages/tabBar/home/home',
           })
@@ -633,6 +638,12 @@ Page({
         stopLocationUpdate().then((res) => {})
         stopAccelerometer()
         offAccelerometerChange()
+        // 跑步正常结束
+        this.setData({
+          isNormal:true
+        })
+        console.log("jies");
+        console.log(this.data.isNormal);
         // 跳转到跑步结算页
         let runner_id = res.runner_id
         redirectTo({
@@ -916,16 +927,21 @@ Page({
 
     innerAudioContext.stop()
     innerAudioContext.destroy()
+    console.log(this.data.runTimer);
     clearInterval(runGuideCountTimer)
     clearInterval(this.data.runTimer)
     clearInterval(this.data.runGuideCountTimer)
+    console.log("请玩啦");
+    console.log(this.data.runTimer);
     // 关闭定位追踪
     offLocationChange()
     stopLocationUpdate().then((res) => {})
     // 存储步数
     console.log("页面卸载");
-
-    if (cacheData && JSON.stringify(cacheData) != '{}') {
+    console.log(this.data.isNormal);
+    console.log(JSON.stringify(cacheData));
+    if (cacheData && JSON.stringify(cacheData) != '{}' && !this.data.isNormal) { //如果为异常退出 
+      console.log("异常退出");
       await this.setNowStep(false)
       this.setRunDataCache()
       wx.setStorageSync('initialStep', this.data.initialStep)

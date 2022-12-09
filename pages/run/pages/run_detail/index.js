@@ -79,6 +79,7 @@ Page({
       kCalorie: 0,
       avgSpeed: '0.00',
       stride: 0,
+      bestSpeed:`00'00''`,
     },
     // 用户信息
     userInfo: {
@@ -378,26 +379,36 @@ Page({
           this.setData({
             speedDetails: JSON.parse( res.speed_detail)
           })
-      //判断数据
-      this.setData({
-        min:this.data.speedDetails[0].avg_time,
-        max:this.data.speedDetails[0].avg_time
-      })
-      this.data.speedDetails.forEach((item,index)=>{
-        // 获取最小值
-        if(this.data.min>item.avg_time){
+        //判断数据
+        this.setData({
+          min:this.data.speedDetails[0],
+          max:this.data.speedDetails[0]
+        })
+        this.data.speedDetails.forEach((item,index)=>{
+          // 获取最小值
+          if(this.data.min.avg_time>item.avg_time){
+            this.setData({
+              min:item
+            })
+          }
+          // 获取最大值
+          if(this.data.max.avg_time<item.avg_time){
+            this.setData({
+              max:item
+            })
+          }
+          console.log(6666);
+          // 配速计算
+          let str='speedDetails['+index+'].speedTime';
           this.setData({
-            min:item.avg_time
+            [str]:myFormats.formatAvg(item.avg_time,item.distance||1000)
           })
-        }
-        // 获取最大值
-        if(this.data.max<item.avg_time){
-          this.setData({
-            max:item.avg_time
-          })
-        }
-      })
-      
+        })
+        console.log(this.data.min);
+        this.setData({
+          'showRunData.bestSpeed':myFormats.formatAvg(this.data.min.avg_time,this.data.min.distance||1000)
+        })
+        console.log(this.data.showRunData);
         })
       // 2.跑步结束页面详情
       api
