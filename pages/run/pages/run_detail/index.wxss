@@ -7,13 +7,14 @@
   
   .share-img-box {
     /* background-color: #FFFFFF; */
-    transform: translateY(60%);
+    /* transform: translateY(60%); */
     background: #ffffff;
     margin: 0 20rpx;
   }
   
   .fina-map-box {
-    position: fixed;
+    /* position: fixed; */
+    position: relative;
     width: 100vw;
     transition: all ease 0.5s;
   }

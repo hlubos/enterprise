@@ -317,6 +317,7 @@ Page({
               })
               resolve()
             }else{//如果为结束 或 暂停
+              console.log();
               this.setData({
                 steps:data.steps-this.data.initialStep+this.data.steps,
                 initialStep:data.steps
@@ -329,7 +330,7 @@ Page({
   })
   },
   // 开始跑步
-  async runStart() {
+  async runStart(isFirst=true) {
     // 开始计时
     let second = this.data.runTime
     // let canGetLocation = true
@@ -339,7 +340,7 @@ Page({
     })
     // 初始化当前步数
     console.log("555");
-    await this.setNowStep()
+    await this.setNowStep(isFirst)
     console.log("开始");
     console.log(this.data.steps);
     console.log(this.data.initialStep)
@@ -503,7 +504,7 @@ Page({
     this.setData({
       runStatus: 0,
     })
-    this.runStart()
+    this.runStart(false)
     backgroundAudioManager.src =
       'https://ydcommon.51yund.com/mini_run_voice/voice_1/yundongyihuifu.mp3'
   },
@@ -514,9 +515,10 @@ Page({
     let key = 'run_data_' + user_id
     let kMilesCacheData = getStorageSync(key)
     if (
-      !kMilesCacheData.locaDotArr[0] ||
-      kMilesCacheData.locaDotArr[0].length < 2 ||
-      this.data.runMiles <= 10
+      // !kMilesCacheData.locaDotArr[0] ||
+      // kMilesCacheData.locaDotArr[0].length < 2 ||
+      // this.data.runMiles <= 10
+      false
     ) {
       showModal({
         title: this.data.$language['是否退出跑步'] + ' ？',
@@ -559,7 +561,10 @@ Page({
     })
     // 重新获取当前步数
     await this.setNowStep(false)
-    console.log("暂停");
+    this.setData({
+      steps:this.data.steps||1.4*this.data.runMiles // //在短时间内结束跑步 会导致微信步数更新不及时  采用平均值的的算法 获取步数
+    })
+    console.log("结束");
     console.log(this.data.steps);
     console.log(this.data.initialStep);
     this.setRunDataCache()
@@ -806,7 +811,9 @@ Page({
     let cacheData = this.getRunDataCache()
     // 有残留的运动记录时
     if (cacheData && JSON.stringify(cacheData) != '{}') {
-      // console.log("上次运动未完成")
+      this.setData({
+        initialStep:wx.getStorageSync('initialStep')
+      })
       let {
         calorie,
         kind_id,
@@ -837,7 +844,7 @@ Page({
       // 读取跑步设置缓存
       this.getRunSetCache()
       //
-      this.runStart()
+      this.runStart(false)
       backgroundAudioManager.src =
         'https://ydcommon.51yund.com/mini_run_voice/voice_1/kaishipaobu.mp3'
     } else {
@@ -903,7 +910,10 @@ Page({
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload() {
+  async onUnload() {
+    // 获取缓存 看是否为异常中断
+    let cacheData = this.getRunDataCache()
+
     innerAudioContext.stop()
     innerAudioContext.destroy()
     clearInterval(runGuideCountTimer)
@@ -912,6 +922,15 @@ Page({
     // 关闭定位追踪
     offLocationChange()
     stopLocationUpdate().then((res) => {})
+    // 存储步数
+    console.log("页面卸载");
+
+    if (cacheData && JSON.stringify(cacheData) != '{}') {
+      await this.setNowStep(false)
+      this.setRunDataCache()
+      wx.setStorageSync('initialStep', this.data.initialStep)
+    }
+    
   },
 
   /**

@@ -10,9 +10,7 @@ Component({
     min:Number,
     max:Number
   },
-  created(){
-    console.log(this.data);
-    console.log(this.formatAvg(this.data.speedDetail.avg_time,1000));
+  attached(){
     this.setData({
       avg_speed:this.formatAvg(this.data.speedDetail.avg_time,1000)
     })
@@ -41,9 +39,10 @@ Component({
       var total_m =
         Math.floor(total_data / 60) > 59 ? 59 : Math.floor(total_data / 60)
       var lest_sec = total_data % 60
-      console.log(total_m + "'" + add0(lest_sec) + "''");
-      return total_m + "'" + add0(lest_sec) + "''"
-      
+      return total_m + "'" + this.add0(lest_sec) + "''"
+    },
+    add0(m) {
+      return m < 10 ? '0' + m : m
     }
   }
   

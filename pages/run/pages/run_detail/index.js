@@ -41,7 +41,7 @@ Page({
     shareFlag: false,
     canvasWidth: 0,
     canvasHeight: 0,
-    mapHeight: '900rpx',
+    mapHeight: '600rpx',
     isShowPanel: true,
     pointsList: [],
     polylines: [
@@ -461,7 +461,9 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-
+    this.setData({
+      shareFlag:false
+    })
   },
 
   /**

@@ -568,6 +568,8 @@ Page({
         // points.push(item)
         points = [...points, ...item]
       })
+      console.log("完成页");
+      console.log(data);  
       this.setData({
         pointsList: points,
         'polylines[0].points': points,
@@ -583,8 +585,8 @@ Page({
         'showRunData.avgPace': myFormats.formatAvg(data.runTime, data.runMiles),
         'showRunData.sumTime': myFormats.secTranlateTime(data.runTime),
         'showRunData.kCalorie': (55 * 1.036 * (data.runMiles / 1000)).toFixed(1),
-        'showRunData.stride':((data.distance*100)/data.steps).toFixed(0),
-        'showRunData.avgSpeed':(((this.data.distance/1000)/(this.data.runTime/360))*10).toFixed(1)
+        'showRunData.stride':((data.runMiles*100)/data.steps).toFixed(0),
+        'showRunData.avgSpeed':(((data.runMiles/1000)/(data.runTime/360))*10).toFixed(1)
       })
       // 设置静态地图
       this.setStaticMapInfo()
