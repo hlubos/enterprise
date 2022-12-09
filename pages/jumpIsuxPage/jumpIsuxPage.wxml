@@ -1,5 +1,6 @@
 <!--pages/jumpIsuxPage/jumpIsuxPage.wxml-->
 <!-- 跳转公众号的中转页面 -->
 <view>
-  <web-view src="https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz={{biz}}==#wechat_redirect"></web-view>
+  <!-- <web-view src="https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzA5NjU1NTAzNw==#wechat_redirect" bindload="scc" binderror="err"></web-view> -->
+  <web-view src="{{textUrl}}" bindload="scc" binderror="err"></web-view>
 </view>
