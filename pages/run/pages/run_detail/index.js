@@ -32,8 +32,9 @@ Page({
     //
     runLog: {},
     speedDetails: [],
-    min:0,
-    max:0,
+    min:'',
+    max:'',
+    isOverKm:false,
     loading: true,
     runner_id: 0,
     showPosterImage: false,
@@ -67,7 +68,8 @@ Page({
     // 静态地图
     staticMapUrl: '',
     // 二维码图片
-    qrcodeImg: 'https://ydcommon.51yund.com/wxapp/upimg/mini-qrcode.png',
+    qrcodeImg: 'http://pubpic.51yund.com/1325340800.jpg',
+    triangleImg:'https://ssl-pubpic.51yund.com/1325499742.jpg',
     // echarts的图片
     chartImage: '',
     // 要显示的跑步数据
@@ -376,39 +378,16 @@ Page({
       })
         .then(res => {
           console.log(res);
-          this.setData({
-            speedDetails: JSON.parse( res.speed_detail)
-          })
-        //判断数据
+        //处理配速数据
+        let obj=myFormats.processSpeedData(JSON.parse( res.speed_detail),this.data.runLog.distance)
+        console.log(obj);
         this.setData({
-          min:this.data.speedDetails[0],
-          max:this.data.speedDetails[0]
+          speedDetails:obj.speedDetails,
+          'showRunData.bestSpeed':obj.bestSpeed,
+          max:obj.max,
+          min:obj.min,
+          isOverKm:obj.isOverKm
         })
-        this.data.speedDetails.forEach((item,index)=>{
-          // 获取最小值
-          if(this.data.min.avg_time>item.avg_time){
-            this.setData({
-              min:item
-            })
-          }
-          // 获取最大值
-          if(this.data.max.avg_time<item.avg_time){
-            this.setData({
-              max:item
-            })
-          }
-          console.log(6666);
-          // 配速计算
-          let str='speedDetails['+index+'].speedTime';
-          this.setData({
-            [str]:myFormats.formatAvg(item.avg_time,item.distance||1000)
-          })
-        })
-        console.log(this.data.min);
-        this.setData({
-          'showRunData.bestSpeed':myFormats.formatAvg(this.data.min.avg_time,this.data.min.distance||1000)
-        })
-        console.log(this.data.showRunData);
         })
       // 2.跑步结束页面详情
       api

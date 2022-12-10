@@ -50,6 +50,7 @@ Page({
   },
   // 加载数据
   async loadData() {
+    console.log("66");
     if (!this.data.canLoadData || this.data.has_more == 0) {
       return false
     }
@@ -89,12 +90,11 @@ Page({
       kind_id: 100,
     }
     api.getRunnerInfo(params).then((res) => {
+      console.log(res);
       if (res.code == 0) {
         let infosLen = res.infos.length
         let newInfos = res.infos
-        this.setData({
-          rawRunLog:JSON.parse(JSON.stringify(newInfos))
-        })
+        let rawRunLog=JSON.parse(JSON.stringify(newInfos))
         for (let i = 0; i < newInfos.length; i++) {
           newInfos[i].time = myFormats.formatDate(
             newInfos[i].time,
@@ -132,10 +132,12 @@ Page({
           this.setData({
             runLogList: newInfos,
             loading: false,
+            rawRunLog
           })
         } else if (this.data.runLogList.length > 0) {
           this.setData({
             runLogList: [...this.data.runLogList, ...newInfos],
+            rawRunLog:[...this.data.rawRunLog,...rawRunLog]
           })
         }
         this.setData({

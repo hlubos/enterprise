@@ -1,17 +1,21 @@
 /* run_packege/pages/run_final/index.wxss */
 .backImg {
   /* width: 100%;
-    height: 100vh; */
+      height: 100vh; */
   display: block;
 }
 
 .share-img-box {
   /* background-color: #FFFFFF; */
+  /* transform: translateY(60%); */
   background: #ffffff;
+  margin: 0 20rpx;
 }
 
 .fina-map-box {
+  /* position: fixed; */
   position: relative;
+  width: 100vw;
   transition: all ease 0.5s;
 }
 
@@ -21,6 +25,7 @@
   /* height: 100%; */
   transition: all ease 0.5s;
 }
+
 .static-map {
   width: 100%;
   height: 100%;
@@ -107,15 +112,18 @@
 .title2-left {
   display: flex;
   align-items: flex-end;
+  width: 50%;
 }
 
 .title2-left-kmeter {
-  width: 170rpx;
+  flex: 1;
+
   font-weight: bold;
   font-size: 80rpx;
   color: #333333;
   line-height: 80rpx;
-  margin-right: 24rpx;
+
+  text-align: center;
 }
 
 .title2-left-unit {
@@ -158,7 +166,7 @@
   justify-content: center;
   flex-wrap: wrap;
   margin-bottom: 48rpx;
-}  
+}
 
 .title3-item1,
 .title3-item2,
@@ -204,14 +212,16 @@
   color: rgb(49, 218, 175);
   text-align: center;
 }
-.speed-table{
+
+.speed-table {
   position: relative;
   width: 654rpx;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
 }
-.speed-table::after{
+
+.speed-table::after {
   content: "";
   position: absolute;
   left: 50%;
@@ -219,12 +229,18 @@
   transform: translateX(-50%);
   display: block;
   height: 60%;
-  border:solid 1rpx rgb(222, 222, 222);
+  border: solid 1rpx rgb(222, 222, 222);
 
 }
-.table-title{
+
+.table-title {
   width: 100%;
 }
+.table-item4{
+  width: 50%;
+  text-align: center;
+}
+
 .visual-chart {
   position: relative;
   width: 654rpx;
@@ -260,9 +276,11 @@
   color: #333333;
   font-weight: 900;
 }
-.qrcode-txt view:nth-child(2){
+
+.qrcode-txt view:nth-child(2) {
   margin-left: 100rpx;
 }
+
 .share-btn-box {
   width: 100%;
   display: flex;
@@ -274,32 +292,22 @@
 .share-btn {
   display: flex;
   justify-content: center;
-  width: 552rpx;
+  width: 615rpx;
   height: 104rpx;
   margin-top: 60rpx;
   margin-bottom: 80rpx;
 }
 
-.btn1,
-.btn2 {
-  width: 50%;
+.btn {
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 34rpx;
   color: #ffffff;
   font-weight: 600;
-}
-
-.btn1 {
   background: #4cddb4;
-  border-radius: 52rpx 0 0 52rpx;
-}
-
-.btn2 {
-  background: #4cddb4;
-  opacity: 0.6;
-  border-radius: 0 52rpx 52rpx 0;
+  border-radius: 52rpx;
 }
 
 
@@ -350,4 +358,75 @@
 .poster-img {
   width: 100%;
   height: 100%;
+}
+
+/* 配速条 */
+.Kilometer{
+  width: 654rpx;
+}
+.line-kilometer {
+  
+  flex-wrap: wrap;
+  width: 70rpx;
+  text-align: center;
+}
+
+.record {
+  flex: 1;
+  font-size: 25rpx;
+}
+
+.Kilometer_title {
+  display: flex;
+  flex: 1;
+  justify-content: space-between;
+}
+
+.kilometre_num {
+
+  font-size: 25rpx;
+}
+
+.speed_allocation {
+  width: 150rpx;
+  font-size: 25rpx;
+}
+
+.line {
+  margin-top: 20rpx;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+
+}
+
+.line-wai {
+  flex: 1;
+  height: 18rpx;
+  background-color: #ccc;
+}
+
+.line-nei {
+  width: 50%;
+  height: 18rpx;
+  /* border-radius: 40rpx; */
+  background-color: rgb(2, 148, 245);
+}
+
+.line-triangle {
+  text-align: center;
+  width: 20rpx;
+  padding:  0 20rpx;
+}
+
+.line_sign {
+  margin: auto;
+  width: 10rpx;
+  height: 10rpx;
+  background-color: rgb(24, 236, 42);
+}
+.line-minkm {
+  text-align: center;
+  width: 150rpx;
 }

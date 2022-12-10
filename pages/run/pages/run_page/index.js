@@ -517,9 +517,10 @@ Page({
     let key = 'run_data_' + user_id
     let kMilesCacheData = getStorageSync(key)
     if (
-      !kMilesCacheData.locaDotArr[0] ||
-      kMilesCacheData.locaDotArr[0].length < 2 ||
-      this.data.runMiles <= 10
+      // !kMilesCacheData.locaDotArr[0] ||
+      // kMilesCacheData.locaDotArr[0].length < 2 ||
+      // this.data.runMiles <= 10
+      false
     ) {
       showModal({
         title: this.data.$language['是否退出跑步'] + ' ？',
@@ -931,15 +932,13 @@ Page({
     clearInterval(runGuideCountTimer)
     clearInterval(this.data.runTimer)
     clearInterval(this.data.runGuideCountTimer)
-    console.log("请玩啦");
+    console.log("清完");
     console.log(this.data.runTimer);
     // 关闭定位追踪
     offLocationChange()
     stopLocationUpdate().then((res) => {})
     // 存储步数
     console.log("页面卸载");
-    console.log(this.data.isNormal);
-    console.log(JSON.stringify(cacheData));
     if (cacheData && JSON.stringify(cacheData) != '{}' && !this.data.isNormal) { //如果为异常退出 
       console.log("异常退出");
       await this.setNowStep(false)

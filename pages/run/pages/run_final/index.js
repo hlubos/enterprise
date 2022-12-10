@@ -39,6 +39,10 @@ Page({
     canvasHeight: 0,
     mapHeight: '600rpx',
     isShowPanel: true,
+    speedDetails:[],//配速详情
+    max:'',
+    min:'',
+    isOverKm:false,
     pointsList: [],
     polylines: [
       {
@@ -85,7 +89,7 @@ Page({
       sumTime: '00:00',
       kCalorie: 0,
       stride:0, // 步幅
-      optimalPace:`00'00''`, //最佳配速
+      bestSpeed:`00'00''`, //最佳配速
     },
     // 用户信息
     userInfo: {
@@ -615,7 +619,7 @@ Page({
             let last_pace = parseInt((last_cost_time / last_distance) * 1000)
               ? parseInt((last_cost_time / last_distance) * 1000)
               : 0
-            let now_pace = parseInt((data.runTime / data.runMiles) * 1000)
+            let now_pace = parseInt((this.data.runTime / this.data.runMiles) * 1000)
             let paceCompare = {}
             if (now_pace >= last_pace) {
               paceCompare = {
@@ -634,6 +638,31 @@ Page({
               kmilesPaceCache,
               paceCompare,
             })
+            let storageKey1 = 'run_data_' + user_id
+            let speed_infos=this.data.kmilesPaceCache
+            let data = getStorageSync(storageKey1)
+            console.log("speed_infos");
+            console.log(speed_infos);
+            console.log("data");
+            console.log(data);
+            for(const index in speed_infos){
+              speed_infos[index]={
+                index:speed_infos[index]['kmiles_cut'],
+                distance:speed_infos[index]['outMiles'],
+                avg_time:speed_infos[index]['usetime']
+              }
+            }
+            if(speed_infos.length==0)return
+            let obj=myFormats.processSpeedData(speed_infos,data.runMiles)
+            this.setData({
+              speedDetails:obj.speedDetails,
+              'showRunData.bestSpeed':obj.bestSpeed,
+              max:obj.max,
+              min:obj.min,
+              isOverKm:obj.isOverKm
+            })
+            console.log("obj");
+            console.log(obj);
           }
           // 清除缓存
           setStorageSync(storageKey1, {})

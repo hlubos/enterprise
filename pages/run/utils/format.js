@@ -102,6 +102,31 @@ function formatDate(value, fmt) {
 
   return fmt
 }
+  function  processSpeedData(SpeedDate,distance){
+    let obj={}
+    obj.max=SpeedDate[0]
+    obj.min=SpeedDate[0]
+    SpeedDate.forEach((item,index)=>{
+         // 获取最小值
+         if(obj.min.avg_time>item.avg_time){
+          obj.min=item
+        }
+        // 获取最大值
+        if(obj.max.avg_time<item.avg_time){
+          obj.max=item
+        }
+        // 配速计算
+        item.speedTime=formatAvg(item.avg_time,item.distance||1000)
+    })
+    // 最佳配速
+    obj.bestSpeed=formatAvg(obj.min.avg_time,obj.min.distance||1000)
+    obj.speedDetails=SpeedDate
+    // 最后一公里是否超过或等于一公里
+    if(distance%1000 != 0){
+      obj.isOverKm=true
+    }
+    return obj
+  }
 
 export default {
   calcDistance,
@@ -112,4 +137,5 @@ export default {
   formatDate,
   formatShowAvg,
   clip,
+  processSpeedData
 }
