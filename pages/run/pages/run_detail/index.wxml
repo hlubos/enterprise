@@ -48,24 +48,24 @@
                 <view class="count-line-txt answer_draw_canvas" data-delay="1" data-type="text" data-text="{{ isZh ? '第' : 'You have run ' }}{{userInfo.this_sport_cnt}}{{ isZh ? '次跑步' : ' times' }}">{{ isZh ? '第' : "You've run " }}{{userInfo.this_sport_cnt}}{{ isZh ? '次跑步' : ' times' }}</view>
             </view>
             <view class="speed-table answer_draw_canvas"data-delay="1" data-type="text">
+                <view class="speed-line answer_draw_canvas" data-delay="1" data-type="text" data-background="#ccc"></view>
                 <view class="table-title answer_draw_canvas" data-delay="1" data-type="text" data-text="{{$language['配速']}}">配速</view>
                 <view class="table-item4  answer_draw_canvas"data-delay="1" data-type="text">
                     <view class="title3-num answer_draw_canvas txt2" data-delay="1" data-type="text" data-text="{{showRunData.avgPace}}">{{showRunData.avgPace}}</view>
                     <view class="title3-unit answer_draw_canvas" data-delay="1" data-type="text" data-text="{{ $language['平均配速'] }}">{{ $language['平均配速'] }}</view>
                 </view>
                 <view class="table-item4 answer_draw_canvas" data-delay="1" data-type="text">
-                    <view class="title3-num answer_draw_canvas txt2" data-width="100rpx" data-delay="1" data-type="text" data-text="{{showRunData.bestSpeed}}">{{showRunData.bestSpeed}}</view>
+                    <view class="title3-num answer_draw_canvas txt2"  data-delay="1" data-type="text" data-text="{{showRunData.bestSpeed}}">{{showRunData.bestSpeed}}</view>
                     <view class="title3-unit answer_draw_canvas" data-delay="1" data-type="text" data-text="{{ $language['最佳配速'] }}">{{ $language['最佳配速'] }}</view>
                 </view>
             </view>
             <view class="Kilometer answer_draw_canvas" data-delay="1" data-type="text">
-                <view class="Kilometer-line answer_draw_canvas"></view>
                 <view class="record answer_draw_canvas" data-delay="1" data-type="text" data-text="{{speedDetails.length}}段记录">{{speedDetails.length}}段记录</view>
                 <view class="Kilometer_title answer_draw_canvas" data-delay="1" data-type="text">
                     <view class="kilometre_num answer_draw_canvas " data-delay="1" data-type="text" data-text="{{ $language['公里'] }}">公里</view>
                     <view class="speed_allocation answer_draw_canvas" data-delay="1" data-type="text" data-text="配速（公里）"> 配速（公里）</view>
                 </view>
-                <view class="line answer_draw_canvas" wx:for="{{speedDetails}}" wx:for-item="speedDetail" data-delay="1" data-type="text">
+                <view class="line answer_draw_canvas" wx:for="{{speedDetails}}" wx:for-item="speedDetail" wx:key="index" data-delay="1" data-type="text">
                     <view class="line-kilometer answer_draw_canvas"
                      data-delay="1" 
                      data-type="text" 

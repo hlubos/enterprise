@@ -341,11 +341,7 @@ Page({
       canGetLocation: true,
     })
     // 初始化当前步数
-    console.log("555");
-    await this.setNowStep(isFirst)
     console.log("开始");
-    console.log(this.data.steps);
-    console.log(this.data.initialStep)
     // 跑步计时
     var runTimer = setInterval(() => {
       // 累计跑步时间
@@ -517,10 +513,9 @@ Page({
     let key = 'run_data_' + user_id
     let kMilesCacheData = getStorageSync(key)
     if (
-      // !kMilesCacheData.locaDotArr[0] ||
-      // kMilesCacheData.locaDotArr[0].length < 2 ||
-      // this.data.runMiles <= 10
-      false
+      !kMilesCacheData.locaDotArr[0] ||
+      kMilesCacheData.locaDotArr[0].length < 2 ||
+      this.data.runMiles <= 10
     ) {
       showModal({
         title: this.data.$language['是否退出跑步'] + ' ？',
@@ -928,23 +923,20 @@ Page({
 
     innerAudioContext.stop()
     innerAudioContext.destroy()
-    console.log(this.data.runTimer);
     clearInterval(runGuideCountTimer)
     clearInterval(this.data.runTimer)
     clearInterval(this.data.runGuideCountTimer)
-    console.log("清完");
-    console.log(this.data.runTimer);
     // 关闭定位追踪
     offLocationChange()
     stopLocationUpdate().then((res) => {})
     // 存储步数
     console.log("页面卸载");
-    if (cacheData && JSON.stringify(cacheData) != '{}' && !this.data.isNormal) { //如果为异常退出 
-      console.log("异常退出");
-      await this.setNowStep(false)
-      this.setRunDataCache()
-      wx.setStorageSync('initialStep', this.data.initialStep)
-    }
+    // if (cacheData && JSON.stringify(cacheData) != '{}' && !this.data.isNormal) { //如果为异常退出 
+    //   console.log("异常退出");
+    //   await this.setNowStep(false)
+    //   this.setRunDataCache()
+    //   wx.setStorageSync('initialStep', this.data.initialStep)
+    // }
     
   },
 

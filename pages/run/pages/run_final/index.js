@@ -67,7 +67,9 @@ Page({
     // 静态地图
     staticMapUrl: '',
     // 二维码图片
-    qrcodeImg: 'https://ydcommon.51yund.com/wxapp/upimg/mini-qrcode.png',
+    qrcodeImg: 'https://ydcommon.51yund.com/wxapp/upimg/geely-in-show.png',
+    // 三角形
+    triangleImg:'https://ssl-pubpic.51yund.com/1325499742.jpg',
     // echarts的图片
     chartImage: '',
     // 跑步开始时间(时间戳)

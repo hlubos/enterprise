@@ -48,6 +48,7 @@
                 <view class="count-line-txt answer_draw_canvas" data-delay="1" data-type="text" data-text="{{ isZh ? '第' : 'You have run ' }}{{userInfo.this_sport_cnt}}{{ isZh ? '次跑步' : ' times' }}">{{ isZh ? '第' : "You've run " }}{{userInfo.this_sport_cnt}}{{ isZh ? '次跑步' : ' times' }}</view>
             </view>
             <view class="speed-table answer_draw_canvas"data-delay="1" data-type="text">
+                <view class="speed-line answer_draw_canvas" data-delay="1" data-type="text" data-background="#ccc"></view>
                 <view class="table-title answer_draw_canvas" data-delay="1" data-type="text" data-text="{{$language['配速']}}">配速</view>
                 <view class="table-item4  answer_draw_canvas"data-delay="1" data-type="text">
                     <view class="title3-num answer_draw_canvas txt2" data-delay="1" data-type="text" data-text="{{showRunData.avgPace}}">{{showRunData.avgPace}}</view>

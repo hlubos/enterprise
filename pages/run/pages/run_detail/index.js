@@ -68,7 +68,7 @@ Page({
     // 静态地图
     staticMapUrl: '',
     // 二维码图片
-    qrcodeImg: 'http://pubpic.51yund.com/1325340800.jpg',
+    qrcodeImg: 'https://ydcommon.51yund.com/wxapp/upimg/geely-in-show.png',
     triangleImg:'https://ssl-pubpic.51yund.com/1325499742.jpg',
     // echarts的图片
     chartImage: '',
@@ -307,7 +307,6 @@ Page({
     this.setData({
       runLog: JSON.parse(decodeURIComponent(options.runLog))
     })
-    console.log(this.data.runLog);
     i18nInstance.effect(this)
     wx.setNavigationBarTitle({
       title: this.data.$language['企业悦动'],
@@ -335,7 +334,6 @@ Page({
             'polylines[0].points': points
           })
           var mapFinalCtx = createMapContext('run-final-map', this) // mapId对应地图id属性
-          console.log(this.data.polylines[0].points)
           mapFinalCtx.includePoints({
             padding: [70, 70, 70, 70], // padding类似我们css中的padding，可以有四个值
             points: this.data.polylines[0].points,
@@ -377,10 +375,10 @@ Page({
         now_timestamp: new Date().getTime()
       })
         .then(res => {
-          console.log(res);
+        console.log("每公里配速详情");
+        console.log(res);
         //处理配速数据
         let obj=myFormats.processSpeedData(JSON.parse( res.speed_detail),this.data.runLog.distance)
-        console.log(obj);
         this.setData({
           speedDetails:obj.speedDetails,
           'showRunData.bestSpeed':obj.bestSpeed,
@@ -396,7 +394,6 @@ Page({
           runner_id: this.data.runner_id,
         })
         .then((res) => {
-          console.log(res)
           if (res.code == 0) {
             this.setData({
               'userInfo.head_url': res.user_info.head_url,

@@ -53,7 +53,9 @@ Component({
       subkey: 'L4JBZ-YJ56D-GAO47-P6UQY-ODB46-M2FD2',
       // 'subkey':'V5JBZ-RY5EJ-Z7AFP-FP7OM-YXSFE-P7F4J',
       'layer-style': '1',
-    }
+    },
+    // 是否跳转过页面
+    isGoPage:false
   },
 
   /**
@@ -106,6 +108,7 @@ Component({
     },
     // 开始运动
     startRun:utils.throttle(function() {
+      console.log("我点击了开始");
       // this.selectComponent('#runTypeModal').showFrame();
       // 运动前首先检查权限是否满足，权限满足则允许跑步，不满足则弹出弹框（去设置）
       getSetting().then((res) => {
@@ -152,7 +155,7 @@ Component({
           )
         }
       })
-    },2000),
+    },3000),
     // 进入跑步记录页
     gotoRunHistory() {
       navigateTo({
@@ -244,6 +247,9 @@ Component({
     },
     // 读取用户缓存，判断是否为新用户
     async judgeNewUser() {
+      this.setData({
+        isGoPage:true
+      })
       // let user_id = await getStorageSync('user_id')
       // let storageKey = 'isNewUser_' + user_id
       let storageKey = 'isNewUser'
@@ -305,6 +311,7 @@ Component({
       // 读取缓存查看是否存在未完成的运动
       this.getRunDataCache()
       // 读缓存判断是否为新用户
+      if(this.data.isGoPage) return //如果跳转了提示页 就不再跳转
       this.judgeNewUser()
     },
   },

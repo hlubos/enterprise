@@ -33,6 +33,8 @@ Page({
     }
     api.userSportSummary(params).then((res) => {
       if (res.code == 0) {
+        console.log("用户历史记录");
+        console.log(res);
         this.setData({
           total_cnt: res.summary_detail.sport_cnt,
           total_cost_time: myFormats.secTranlateTime(
@@ -50,7 +52,6 @@ Page({
   },
   // 加载数据
   async loadData() {
-    console.log("66");
     if (!this.data.canLoadData || this.data.has_more == 0) {
       return false
     }
@@ -90,6 +91,7 @@ Page({
       kind_id: 100,
     }
     api.getRunnerInfo(params).then((res) => {
+      console.log("用户跑步记录");
       console.log(res);
       if (res.code == 0) {
         let infosLen = res.infos.length
@@ -162,8 +164,6 @@ Page({
   },
   // 跳转详情页
   gotoDetail(e){
-    console.log(e);
-    console.log(this.data.rawRunLog)
    wx.navigateTo({
      url: `../run_detail/index?runner_id=${
       e.currentTarget.dataset.runnerid

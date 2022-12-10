@@ -220,13 +220,14 @@
   flex-wrap: wrap;
   justify-content: space-around;
 }
-.Kilometer-line{
+.speed-line{
   position: absolute;
   left: 50%;
-  top: 30%;
+  top:35%;
   transform: translateX(-50%);
-  height: 60%;
-  border: solid 1rpx rgb(222, 222, 222);
+  width: 1rpx;
+  height: 100rpx;
+  border-left: solid 1rpx #ccc;
 }
 
 /* .speed-table::after {
