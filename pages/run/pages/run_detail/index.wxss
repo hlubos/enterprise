@@ -4,7 +4,10 @@
       height: 100vh; */
   display: block;
 }
-
+.IndoordImg{
+  width: 500px;
+  height: 100px;
+}
 .share-img-box {
   /* background-color: #FFFFFF; */
   /* transform: translateY(60%); */

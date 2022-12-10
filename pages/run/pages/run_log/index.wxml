@@ -26,7 +26,11 @@
                 <mp-cell wx:for="{{runLogList}}" wx:key="index" data-idx="{{index}}" data-runnerId="{{item.runner_id}}" bindtap="gotoDetail">
                   <view style="display: flex;">
                     <view class="runlog-item-icon">
-                        <image lazy-load src="{{item.pic_url == ''?defaultImg:item.pic_url}}" binderror="errorFunction" data-errorimg="{{index}}"></image>
+                        <image lazy-load 
+                        src="{{item.pic_url == ''?defaultImg:item.pic_url}}" 
+                        binderror="errorFunction" 
+                        data-errorimg="{{index}}"
+                        ></image>
                     </view>
                     <view style="flex: 1;" class="runlog-item-info" slot="footer">
                         <view class="runlog-item-info-line1">

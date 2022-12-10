@@ -70,6 +70,7 @@ Page({
     // 二维码图片
     qrcodeImg: 'https://ydcommon.51yund.com/wxapp/upimg/geely-in-show.png',
     triangleImg:'https://ssl-pubpic.51yund.com/1325499742.jpg',
+    IndoordImg:'https://ssl-pubpic.51yund.com/1325545413.jpg',
     // echarts的图片
     chartImage: '',
     // 要显示的跑步数据
@@ -307,6 +308,8 @@ Page({
     this.setData({
       runLog: JSON.parse(decodeURIComponent(options.runLog))
     })
+    console.log("页面传值");
+    console.log(this.data.runLog,options.runner_id);
     i18nInstance.effect(this)
     wx.setNavigationBarTitle({
       title: this.data.$language['企业悦动'],
@@ -361,7 +364,6 @@ Page({
       }
     }
   },
-
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -394,6 +396,8 @@ Page({
           runner_id: this.data.runner_id,
         })
         .then((res) => {
+          console.log("跑步结束详情页");
+          console.log(res);
           if (res.code == 0) {
             this.setData({
               'userInfo.head_url': res.user_info.head_url,

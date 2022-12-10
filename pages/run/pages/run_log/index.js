@@ -2,6 +2,7 @@
 import api from '../../server/run'
 import myFormats from '../../utils/format'
 import i18nInstance from 'miniprogram-i18n-plus'
+import { logPath } from '../../../../config/env'
 Page({
   /**
    * 页面的初始数据
@@ -24,6 +25,7 @@ Page({
     has_more: 1,
     offset: 0,
     defaultImg: 'https://ssl-pubpic.51yund.com/1301346077.png',
+    IndoordefaultImg:'https://ssl-pubpic.51yund.com/1325542342.jpg'
   },
   // 用户历史数据
   getUserSportSummary() {
@@ -66,6 +68,8 @@ Page({
       offset: this.data.offset,
     })
     if (peakRecordRes.code == 0) {
+      console.log("轨迹图");
+      console.log(peakRecordRes);
       this.setData({
         has_more: peakRecordRes.has_more,
         offset: this.data.offset + peakRecordRes.runner_extra_infos.length,
@@ -119,6 +123,8 @@ Page({
             ).pic_url
           } else {
             newInfos[i].pic_url = ''
+             // 如果是室内跑 換成市内跑默認圖片
+            if (newInfos[i].kind_id == 1) newInfos[i].pic_url = this.data.IndoordefaultImg
           }
         }
         this.setData({
