@@ -85,7 +85,8 @@
             </view>
             <view class="share-btn-box" hidden="{{!isShowPanel}}">
                 <view class="share-btn">
-                    <view class="btn" bindtap="drawCanvas">{{ $language['分享'] }}</view>
+                    <view class="btn1" bindtap="runFinish">{{ $language['完成运动'] }}</view>
+                    <view class="btn2" bindtap="drawCanvas">{{ $language['分享'] }}</view>
                 </view>
             </view>
        

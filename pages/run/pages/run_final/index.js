@@ -692,6 +692,9 @@ Page({
     innerAudioContext = createInnerAudioContext({ useWebAudioImplement: true })
     // innerAudioContext.autoplay = true
     this.getRunSetCache()
+    this.setData({
+      shareFlag:0
+    })
   },
 
   /**
@@ -707,6 +710,7 @@ Page({
     let storageKey2 = 'run_kmiles_pace_arr_' + userId
     setStorageSync(storageKey1, {})
     setStorageSync(storageKey2, [])
+    setStorageSync('initialStep', 0)
   },
 
   /**

@@ -117,16 +117,19 @@ Page({
             this.data.thumbImgList.find(
               (item) => item.runner_id == newInfos[i].runner_id,
             )
+            && newInfos[i].kind_id == 0
           ) {
             newInfos[i].pic_url = this.data.thumbImgList.find(
               (item) => item.runner_id == newInfos[i].runner_id,
             ).pic_url
-          } else {
+          } else if(newInfos[i].kind_id == 1){ // 如果是室内跑 換成市内跑默認圖片
+              newInfos[i].pic_url = this.data.IndoordefaultImg
+          }else{
             newInfos[i].pic_url = ''
-             // 如果是室内跑 換成市内跑默認圖片
-            if (newInfos[i].kind_id == 1) newInfos[i].pic_url = this.data.IndoordefaultImg
           }
         }
+        let a=JSON.parse(JSON.stringify(newInfos))
+        console.log( a);
         this.setData({
           // total_cnt: res.total_cnt,
           // total_cost_time: myFormats.secTranlateTime(res.total_cost_time),
@@ -159,6 +162,9 @@ Page({
    * 图片加载错误触发的事件
    */
   errorFunction(e) {
+    console.log(e);
+    console.log(this.data.runLogList);
+    // debugger
     if (e.type == 'error') {
       var errorImgIndex = e.target.dataset.errorimg //获取错误图片循环的下标
       var runLogList = this.data.runLogList //将图片列表数据绑定到变量

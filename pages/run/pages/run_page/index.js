@@ -129,8 +129,6 @@ Page({
     //
     x: 0,
     y: 0,
-    // 判断是否正常结束跑步
-    isNormal: false,
   },
   // 语音播报
   runAudioReport() {
@@ -529,6 +527,7 @@ Page({
           let storageKey = 'run_kmiles_pace_arr_' + user_id
           setStorageSync(storageKey, [])
           setStorageSync(key, {})
+          setStorageSync('initialStep', 0)
           // 清除定时器
           clearInterval(this.data.runTimer)
           backgroundAudioManager.src =
@@ -540,10 +539,6 @@ Page({
           offLocationChange(this._mylocationChangeFn)
           stopLocationUpdate().then((res) => {})
           offAccelerometerChange()
-          // 正常退出
-          this.setData({
-            isNormal:true
-          })
           switchTab({
             url: '/pages/tabBar/home/home',
           })
@@ -634,12 +629,6 @@ Page({
         stopLocationUpdate().then((res) => {})
         stopAccelerometer()
         offAccelerometerChange()
-        // 跑步正常结束
-        this.setData({
-          isNormal:true
-        })
-        console.log("jies");
-        console.log(this.data.isNormal);
         // 跳转到跑步结算页
         let runner_id = res.runner_id
         redirectTo({
@@ -918,9 +907,11 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   async onUnload() {
-    // 获取缓存 看是否为异常中断
-    let cacheData = this.getRunDataCache()
-
+    console.log("页面卸载");
+    // 存储步数
+    await this.setNowStep(false)
+    this.setRunDataCache()
+    wx.setStorageSync('initialStep', this.data.initialStep)
     innerAudioContext.stop()
     innerAudioContext.destroy()
     clearInterval(runGuideCountTimer)
@@ -929,14 +920,6 @@ Page({
     // 关闭定位追踪
     offLocationChange()
     stopLocationUpdate().then((res) => {})
-    // 存储步数
-    console.log("页面卸载");
-    // if (cacheData && JSON.stringify(cacheData) != '{}' && !this.data.isNormal) { //如果为异常退出 
-    //   console.log("异常退出");
-    //   await this.setNowStep(false)
-    //   this.setRunDataCache()
-    //   wx.setStorageSync('initialStep', this.data.initialStep)
-    // }
     
   },
 

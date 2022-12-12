@@ -30,15 +30,15 @@
         <view class="line" class="answer_draw_canvas"></view>
     </view>
     <!-- 二维码 -->
-    <view hidden="true" class="qrcode-box answer_draw_canvas">
+    <!-- <view hidden="true" class="qrcode-box answer_draw_canvas">
         <image class="qrcode-img answer_draw_canvas" data-delay="1" data-type="image" data-url="{{qrcodeImg}}" src="{{qrcodeImg}}"></image>
         <view class="qrcode-txt answer_draw_canvas">
-            <!-- <view class="answer_draw_canvas" data-delay="1" data-type="text" data-text="{{ $language['全民数字化'] }}">{{ $language['全民数字化'] }}</view> -->
-            <!-- <view class="answer_draw_canvas" data-delay="1" data-type="text" data-text="{{ $language['运动健康管理平台'] }}">{{ $language['运动健康管理平台'] }}</view> -->
+            <view class="answer_draw_canvas" data-delay="1" data-type="text" data-text="{{ $language['全民数字化'] }}">{{ $language['全民数字化'] }}</view>
+            <view class="answer_draw_canvas" data-delay="1" data-type="text" data-text="{{ $language['运动健康管理平台'] }}">{{ $language['运动健康管理平台'] }}</view>
             <view class="answer_draw_canvas" data-delay="1" data-type="text" data-text="{{ $language['吉时出发，为爱奔跑'] }}">{{ $language['吉时出发，为爱奔跑'] }}</view>
             <view class="answer_draw_canvas" data-delay="1" data-type="text" data-text="{{ $language['吉利创业36周年接力跑邀您参赛'] }}">{{ $language['吉利创业36周年接力跑邀您参赛'] }}</view>
         </view>
-    </view>
+    </view> -->
 </view>
 
 <!-- 两个按钮 -->

@@ -15,14 +15,15 @@
         layer-style="{{mapStyle['layer-style']}}" 
         style="width: 100%; height: {{mapHeight}};"
         ></map>
-    </view>
-    <image
+        <image
+        wx:else
         class="IndoordImg answer_draw_canvas"
         src="{{IndoordImg}}"
         data-delay="1" 
         data-type="image" 
         data-url="{{IndoordImg}}" 
         ></image>
+    </view>
     <view class="share-img-box answer_canvas" id="answer-canvas">
         <view class="final-chart-box answer_draw_canvas" data-type="text" data-background="#ffffff">
             <view class="title answer_draw_canvas">
@@ -93,14 +94,19 @@
                      {{isOverKm&&index==speedDetails.length-1?'<'+speedDetail.index:speedDetail.index}}
                     </view>
                     <view class="line-triangle answer_draw_canvas"  data-type="text" data-delay="1">
-                        <image class="line_sign answer_draw_canvas" 
+                        <!-- 三角形 -->
+                        <!-- <image 
+                        wx:if="{{ speedDetail.avg_time == min.avg_time && speedDetail.index==min.index}}"
+                        class="line_sign answer_draw_canvas" 
                         data-delay="1" 
                         data-url="{{triangleImg}}"
                         src="{{triangleImg}}"
-                        data-type="image" wx:if="{{ speedDetail.avg_time == min.avg_time && speedDetail.index==min.index}}"></image>
+                        data-type="image" ></image> -->
                     </view>
                     <view class="line-wai answer_draw_canvas " data-type="text" data-delay="1">
-                        <view class="line-nei answer_draw_canvas" data-type="text" data-delay="1"
+                        <view class="line-nei answer_draw_canvas" 
+                            data-type="text" 
+                            data-delay="1"
                             style="width: {{speedDetail.avg_time == max?'100%':(speedDetail.avg_time/max.avg_time*100+'%')}};background-color:{{speedDetail.avg_time == min.avg_time?'rgb(14, 189, 72)':'rgb(2, 148, 245)'}};"
                         > </view>
                     </view>

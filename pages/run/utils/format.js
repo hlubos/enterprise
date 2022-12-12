@@ -42,6 +42,7 @@ function secTranlateTime(sec) {
 }
 //将秒格式化配速
 function formatAvg(secs, miles) {
+   secs=Math.abs(secs)
   // 走路  5km/h
   // 配速  12min/km
   // 走路大概 6min/km

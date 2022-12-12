@@ -66,7 +66,7 @@ Page({
       scale: 2,
     },
     // 静态地图
-    staticMapUrl: '',
+    showImg: '',
     // 二维码图片
     qrcodeImg: 'https://ydcommon.51yund.com/wxapp/upimg/geely-in-show.png',
     triangleImg:'https://ssl-pubpic.51yund.com/1325499742.jpg',
@@ -168,16 +168,25 @@ Page({
             // imgUrl: url,
             posterImgUrl: url,
           })
-          that.setStaticMapInfo()
+          if(that.data.runLog.kind_id == 1){ //室内跑
+            that.setData({
+              showImg:that.data.IndoordImg
+            })
+          }else{ //室外跑
+            that.setStaticMapInfo()
+          }
           // 跳转到分享页面
+          console.log("de");
+          console.log(url);
           navigateTo({
             url: `../run_share/index?&runner_id=${that.data.runner_id
               }&dataImg=${encodeURIComponent(url)}&mapImg=${encodeURIComponent(
-                that.data.staticMapUrl,
+                that.data.showImg,
               )}`,
           })
         },
         error(res) {
+          console.log("失败原因");
           console.log(res)
           hideLoading()
           // 画失败的原因
@@ -214,7 +223,7 @@ Page({
   },
   // 设置静态地图参数
   setStaticMapInfo(w = 500, h = 400) {
-    if (!!this.data.staticMapUrl) {
+    if (!!this.data.showImg) {
       return
     }
     let base = 'https://apis.map.qq.com/ws/staticmap/v2/'
@@ -243,60 +252,7 @@ Page({
     let size = `${sizeObj.width}*${sizeObj.height}`
     let staticMapUrl = `${base}?size=${size}&scale=2&maptype=roadmap&key=${key}&path=${path}`
     this.setData({
-      staticMapUrl,
-    })
-    this.upMapImg(staticMapUrl)
-    console.log(staticMapUrl)
-  },
-  // 上传静态地图图片
-  upMapImg(staticMapUrl) {
-    if (!!this.data.thumb_url) {
-      return
-    }
-    // 下载网络图片到本地
-    //文件名设置为时间戳
-    let fileName = new Date().valueOf()
-    let that = this
-    wx.downloadFile({
-      //下载图片到本地
-      url: staticMapUrl,
-      // filePath: wx.env.USER_DATA_PATH + '/' + fileName + '.png',
-      filePath: wx.env.USER_DATA_PATH + '/' + fileName + '.jpg',
-      success(res) {
-        if (res.statusCode === 200) {
-          // debugger
-          let img = res.filePath
-          // 上传缩略图图片
-          uploadFile.upload({
-            source: 'wx_ydenterprise',
-            file: img,
-            fail(err) {
-              //   wx.showToast({
-              //     title: '使用图片失败，请重试',
-              //     icon: 'none'
-              //   })
-            },
-            success(obj) {
-              //   wx.showToast({
-              //     title: '上传成功',
-              //     icon: 'none'
-              //   })
-              that.setData({
-                map_orig_url: obj.orig_url,
-                map_thumb_url: obj.thumb_url,
-              })
-              if (that.data.map_thumb_url) {
-                // 上传运动缩略图
-                api.AddTrackPic({
-                  runner_id: that.data.runner_id,
-                  kind_id: 0,
-                  pic_url: that.data.map_thumb_url,
-                })
-              }
-            },
-          })
-        }
-      },
+      showImg:staticMapUrl,
     })
   },
   /**
@@ -320,6 +276,7 @@ Page({
         runner_id: options.runner_id,
       })
       // 获取轨迹集合
+      if(this.data.runLog.kind_id == 0){
       api.getRunnerPathData({
         runner_id: options.runner_id,
         // need_health_report:1
@@ -345,10 +302,15 @@ Page({
             loading: false,
           })
         })
+      }
     }
     // 展示数据
     if (Object.keys(this.data.runLog).length != 0) {
       this.setData({
+        'showRunData.runStartTime': myFormats.formatDate(
+          this.data.runLog.time,
+          'yyyy-MM-dd hh:mm:ss',
+        ),
         'showRunData.runKMiles': myFormats.clip(parseInt(this.data.runLog.distance) / 1000),
         'showRunData.avgPace': myFormats.formatAvg(this.data.runLog.cost_time, this.data.runLog.distance),
         'showRunData.sumTime': myFormats.secTranlateTime(this.data.runLog.cost_time),
@@ -356,6 +318,7 @@ Page({
         'showRunData.avgSpeed': (((this.data.runLog.distance / 1000) / (this.data.runLog.cost_time / 360)) * 10).toFixed(1),
         'showRunData.stride': ((this.data.runLog.distance * 100) / (this.data.runLog.u_steps?this.data.runLog.u_steps:1)).toFixed(0)
       })
+      console.log(this.data.showRunData);
       //
       if(this.data.showRunData.stride==this.data.runLog.distance * 100){ //步幅异常给默认步幅
         this.setData({

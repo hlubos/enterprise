@@ -36,6 +36,8 @@ Page({
           canvasHeight: res.height,
           canvasWidth: res.width,
         })
+        console.log("调整canvas宽高");
+        console.log(res);
       })
       .exec()
   },
@@ -54,6 +56,8 @@ Page({
         scrollOffset: true,
       })
       .exec((res) => {
+        console.log("create");
+        console.log(res);
         setTimeout(() => {
           that.draw()
         }, 1500)
@@ -62,12 +66,13 @@ Page({
   draw() {
     let that = this
     //创建wxml2canvas对象
+    console.log("star draw");
     let drawImage = new Wxml2Canvas(
       {
         element: 'answerCanvas', // canvas节点的id,
         obj: that, // 在组件中使用时，需要传入当前组件的this
         width: this.data.canvasWidth, // 宽 自定义
-        height: this.data.canvasHeight, // 高 自定义
+        height: 5000, // 高 自定义
         background: '#ffffff', // 默认背景色 设置背景色
         scrolly: 0,
         scrollx: 0,
@@ -77,6 +82,7 @@ Page({
           // 绘制进度
         },
         finish(url) {
+          console.log(url);
           hideLoading()
           showToast({
             title: that.data.$language['图片已生成'],
@@ -88,12 +94,15 @@ Page({
           })
         },
         error(res) {
+          console.log("darw");
+          console.log(res);
           hideLoading()
           // 画失败的原因
         },
       },
       that,
     )
+    console.log("drawImage after");
     let data = {
       //直接获取wxml数据
       list: [
@@ -107,8 +116,11 @@ Page({
         },
       ],
     }
+    console.log("setCanvasSize before");
     this.setCanvasSize()
+    console.log("setCanvasSize after");
     drawImage.draw(data, that)
+    console.log("draw after");
   },
   // 保存图片
   clickSaveImg() {
@@ -140,6 +152,7 @@ Page({
 
   // 微信分享
   wxShare() {
+    console.log(this.data.posterImgUrl);
     if (!this.data.posterImgUrl) {
       showToast({
         title: this.data.$language['保存失败'],

@@ -301,23 +301,34 @@
 .share-btn {
   display: flex;
   justify-content: center;
-  width: 615rpx;
+  width: 552rpx;
   height: 104rpx;
   margin-top: 60rpx;
   margin-bottom: 80rpx;
 }
 
-.btn {
-  width: 100%;
+.btn1,
+.btn2 {
+  width: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 34rpx;
   color: #ffffff;
   font-weight: 600;
-  background: #4cddb4;
-  border-radius: 52rpx;
 }
+
+.btn1 {
+  background: #4cddb4;
+  border-radius: 52rpx 0 0 52rpx;
+}
+
+.btn2 {
+  background: #4cddb4;
+  opacity: 0.6;
+  border-radius: 0 52rpx 52rpx 0;
+}
+
 
 
 
