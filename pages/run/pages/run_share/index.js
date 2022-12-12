@@ -27,6 +27,7 @@ Page({
   },
   // 调整canvas宽高
   setCanvasSize() {
+    return new Promise(reslove=>{
     let shareBox = createSelectorQuery()
     shareBox
       .select('.img-area')
@@ -38,8 +39,10 @@ Page({
         })
         console.log("调整canvas宽高");
         console.log(res);
+        reslove()
       })
-      .exec()
+      .exec()      
+    })
   },
   // 生成图片
   createImg() {
@@ -63,7 +66,7 @@ Page({
         }, 1500)
       })
   },
-  draw() {
+  async draw() {
     let that = this
     //创建wxml2canvas对象
     console.log("star draw");
@@ -117,7 +120,7 @@ Page({
       ],
     }
     console.log("setCanvasSize before");
-    this.setCanvasSize()
+    await  this.setCanvasSize()
     console.log("setCanvasSize after");
     drawImage.draw(data, that)
     console.log("draw after");

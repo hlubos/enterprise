@@ -129,6 +129,8 @@ Page({
     //
     x: 0,
     y: 0,
+    // 卸载页面方式
+    isActcion:true  //true 异常退出  false 正常退出   
   },
   // 语音播报
   runAudioReport() {
@@ -311,17 +313,23 @@ Page({
           let data = await api.getUserDayStep(parms)
           if (data.code == 0) {
             if(flag){//如果为初始化步数
+              console.log("setNowStep true");
               this.setData({
                 steps:0,
                 initialStep:data.steps
               })
               resolve()
             }else{//如果为结束 或 暂停
-              console.log();
+              console.log("setNowStep");
+              console.log(this.data.steps);
+              console.log(this.data.initialStep);
               this.setData({
                 steps:data.steps-this.data.initialStep+this.data.steps,
                 initialStep:data.steps
               })
+              console.log("----");
+              console.log(this.data.steps);
+              console.log(this.data.initialStep);
               resolve()
             }
           }
@@ -331,6 +339,7 @@ Page({
   },
   // 开始跑步
   async runStart(isFirst=true) {
+    console.log("开始");
     // 开始计时
     let second = this.data.runTime
     // let canGetLocation = true
@@ -339,9 +348,9 @@ Page({
       canGetLocation: true,
     })
     // 初始化当前步数
-    console.log("开始");
+    await this.setNowStep(true)
     // 跑步计时
-    var runTimer = setInterval(() => {
+    let runTimer = setInterval(() => {
       // 累计跑步时间
       second++
       this.setData({
@@ -511,9 +520,10 @@ Page({
     let key = 'run_data_' + user_id
     let kMilesCacheData = getStorageSync(key)
     if (
-      !kMilesCacheData.locaDotArr[0] ||
-      kMilesCacheData.locaDotArr[0].length < 2 ||
-      this.data.runMiles <= 10
+      // !kMilesCacheData.locaDotArr[0] ||
+      // kMilesCacheData.locaDotArr[0].length < 2 ||
+      // this.data.runMiles <= 10
+      false
     ) {
       showModal({
         title: this.data.$language['是否退出跑步'] + ' ？',
@@ -521,7 +531,7 @@ Page({
         cancelText: this.data.$language['取消'],
         confirmText: this.data.$language['确定'],
       }).then(async (res) => {
-        if (res.confirm) {
+        if (res.confirm) { 
           // 清除运动数据缓存
           let user_id = getStorageSync('user_id')
           let storageKey = 'run_kmiles_pace_arr_' + user_id
@@ -534,6 +544,7 @@ Page({
             'https://ydcommon.51yund.com/mini_run_voice/voice_1/paobujieshu.mp3'
           this.setData({
             runTime: 0,
+            isActcion:false
           })
           // 关闭定位追踪
           offLocationChange(this._mylocationChangeFn)
@@ -623,6 +634,7 @@ Page({
         this.setData({
           runTime: 0,
           runStatus: 1,
+          isActcion:false
         })
         // 关闭定位追踪
         offLocationChange(this._mylocationChangeFn)
@@ -639,6 +651,7 @@ Page({
   },
   // 缓存运动数据
   setRunDataCache() {
+    console.log("缓存运动数据");
     let user_id = getStorageSync('user_id')
     let storageKey = 'run_data_' + user_id
     setStorage({
@@ -802,9 +815,13 @@ Page({
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady() {
+   onReady() {
     // 查看缓存，是否有上次未完成的运动
+    console.log("上次初始步数");
+    console.log(wx.getStorageSync('initialStep'));
+    console.log("上次步数");
     let cacheData = this.getRunDataCache()
+    console.log(cacheData.steps);
     // 有残留的运动记录时
     if (cacheData && JSON.stringify(cacheData) != '{}') {
       this.setData({
@@ -880,6 +897,7 @@ Page({
             runStartTime: parseInt(Date.now() / 1000),
           })
           clearInterval(this.data.runGuideCountTimer)
+          console.log("定时结束");
           this.runStart()
           // innerAudioContext.src = "https://ydcommon.51yund.com/mini_run_voice/voice_1/kaishipaobu.mp3"
           backgroundAudioManager.src =
@@ -909,12 +927,13 @@ Page({
   async onUnload() {
     console.log("页面卸载");
     // 存储步数
-    await this.setNowStep(false)
-    this.setRunDataCache()
-    wx.setStorageSync('initialStep', this.data.initialStep)
+    if(this.data.isActcion && Object.keys(this.getRunDataCache()).length != 0){
+      await this.setNowStep(false)
+      this.setRunDataCache()
+      wx.setStorageSync('initialStep', this.data.initialStep)
+    };
     innerAudioContext.stop()
     innerAudioContext.destroy()
-    clearInterval(runGuideCountTimer)
     clearInterval(this.data.runTimer)
     clearInterval(this.data.runGuideCountTimer)
     // 关闭定位追踪

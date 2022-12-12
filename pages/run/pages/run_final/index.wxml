@@ -45,7 +45,7 @@
                 </view>
             </view>
             <view class="count-line answer_draw_canvas" data-delay="1"  data-type="text" data-background="rgb(49, 218, 175)">
-                <view class="count-line-txt answer_draw_canvas" data-delay="1" data-type="text" data-text="{{ isZh ? '第' : 'You have run ' }}{{userInfo.this_sport_cnt}}{{ isZh ? '次跑步' : ' times' }}">{{ isZh ? '第' : "You've run " }}{{userInfo.this_sport_cnt}}{{ isZh ? '次跑步' : ' times' }}</view>
+                <view class="count-line-txt answer_draw_canvas" data-delay="2" data-type="text" data-text="{{ isZh ? '第' : 'You have run ' }}{{userInfo.this_sport_cnt}}{{ isZh ? '次跑步' : ' times' }}">{{ isZh ? '第' : "You've run " }}{{userInfo.this_sport_cnt}}{{ isZh ? '次跑步' : ' times' }}</view>
             </view>
             <view class="speed-table answer_draw_canvas"data-delay="1" data-type="text">
                 <view class="speed-line answer_draw_canvas" data-delay="1" data-type="text" data-background="#ccc"></view>
@@ -73,7 +73,14 @@
                      {{isOverKm&&index==speedDetails.length-1?'<'+speedDetail.index:speedDetail.index}}
                     </view>
                     <view class="line-triangle answer_draw_canvas"  data-type="text" data-delay="1">
-                        <view class="line_sign answer_draw_canvas" data-delay="1" data-type="text" wx:if="{{ speedDetail.avg_time == min.avg_time && speedDetail.index==1}}"></view>
+                         <!-- 三角形 -->
+                         <image 
+                        wx:if="{{ speedDetail.avg_time == min.avg_time && speedDetail.index==min.index}}"
+                        class="line_sign answer_draw_canvas" 
+                        data-delay="1" 
+                        data-url="{{triangleImg}}"
+                        src="{{triangleImg}}"
+                        data-type="image" ></image>
                     </view>
                     <view class="line-wai answer_draw_canvas " data-type="text" data-delay="1">
                         <view class="line-nei answer_draw_canvas" data-type="text" data-delay="1"

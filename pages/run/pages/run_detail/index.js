@@ -69,7 +69,7 @@ Page({
     showImg: '',
     // 二维码图片
     qrcodeImg: 'https://ydcommon.51yund.com/wxapp/upimg/geely-in-show.png',
-    triangleImg:'https://ssl-pubpic.51yund.com/1325499742.jpg',
+    triangleImg:'../../../../assets/image/tri.png',
     IndoordImg:'https://ssl-pubpic.51yund.com/1325545413.jpg',
     // echarts的图片
     chartImage: '',
@@ -170,7 +170,7 @@ Page({
           })
           if(that.data.runLog.kind_id == 1){ //室内跑
             that.setData({
-              showImg:that.data.IndoordImg
+              showImg:"../../../../assets/image/indoor.jpg"
             })
           }else{ //室外跑
             that.setStaticMapInfo()

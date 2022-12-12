@@ -119,20 +119,15 @@
 }
 
 .title2-left-kmeter {
-  flex: 1;
-
   font-weight: bold;
   font-size: 80rpx;
   color: #333333;
   line-height: 80rpx;
-
-  text-align: center;
 }
 
 .title2-left-unit {
   font-size: 28rpx;
   color: #666666;
-  width: 100rpx;
 }
 
 .title2-right {
