@@ -55,7 +55,9 @@ Component({
       'layer-style': '1',
     },
     // 是否跳转过页面
-    isGoPage:false
+    isGoPage:false,
+    // 是否在能点击其他事件
+    isBtnIng:false
   },
 
   /**
@@ -108,7 +110,10 @@ Component({
     },
     // 开始运动
     startRun:utils.throttle(function() {
-      console.log("我点击了开始");
+      if(this.data.isBtnIng) return
+      this.setData({
+        isBtnIng:true
+      })
       // this.selectComponent('#runTypeModal').showFrame();
       // 运动前首先检查权限是否满足，权限满足则允许跑步，不满足则弹出弹框（去设置）
       getSetting().then((res) => {
@@ -157,18 +162,30 @@ Component({
       })
     },3000),
     // 进入跑步记录页
-    gotoRunHistory() {
+    gotoRunHistory:utils.throttle( function(){
+      let that=this
+      if(this.data.isBtnIng) return
+      this.setData({
+        isBtnIng:true
+      })
       navigateTo({
         url: '/pages/run/pages/run_log/index',
+        complete(){
+          setTimeout(() => {
+            that.setData({
+              isBtnIng:false
+            })
+          },1000);
+        }
       })
-    },
+    },2000),
     // 返回上一页
     back() {
       navigateBack()
     },
     // 进入跑步页面
     gotoRunPage() {
-      this.setData({isStar : true})
+      let that=this
       // 室内跑暂未开发
       if (this.data.runType == 1) {
         showToast({
@@ -183,6 +200,13 @@ Component({
       }
       navigateTo({
         url: '/pages/run/pages/run_page/index',
+        complete(){
+          setTimeout(() => {
+            that.setData({
+              isBtnIng:false
+            })
+          },1000);
+        }
       })
       // hideLoading()
     },

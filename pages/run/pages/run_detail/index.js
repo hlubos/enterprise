@@ -68,7 +68,7 @@ Page({
     // 静态地图
     showImg: '',
     // 二维码图片
-    qrcodeImg: 'https://ydcommon.51yund.com/wxapp/upimg/geely-in-show.png',
+    qrcodeImg: 'https://ydcommon.51yund.com/wxapp/upimg/mini-qrcode.jpg',
     triangleImg:'../../../../assets/image/tri.png',
     IndoordImg:'https://ssl-pubpic.51yund.com/1325545413.jpg',
     // echarts的图片
@@ -102,6 +102,8 @@ Page({
     map_orig_url: '',
     map_thumb_url: '',
     isZh: wx.getStorageSync('language') == 'zh',
+    // 分享按钮防抖
+    shareBtn:false
   },
   handleMap(e) { },
   // 获取echart的图片
@@ -127,6 +129,11 @@ Page({
   },
   // =========================================
   drawCanvas: function () {
+    if(this.data.shareBtn) return
+    this.setData({
+      shareBtn:true,
+      shareFlag:true
+    })
     showLoading({
       title: this.data.$language['分享图片生成中'],
     })
@@ -176,23 +183,30 @@ Page({
             that.setStaticMapInfo()
           }
           // 跳转到分享页面
-          console.log("de");
-          console.log(url);
           navigateTo({
             url: `../run_share/index?&runner_id=${that.data.runner_id
               }&dataImg=${encodeURIComponent(url)}&mapImg=${encodeURIComponent(
                 that.data.showImg,
               )}`,
+            complete(){
+              // 取消按钮锁 清除之前缓存的分享的数据
+              that.setData({
+                shareBtn:false,
+                showImg:'',
+                canvasHeight:0,
+                canvasWidth:0
+              })
+            }    
           })
         },
         error(res) {
-          console.log("失败原因");
-          console.log(res)
           hideLoading()
-          // 画失败的原因
           showToast({
             title: '分享图片失败',
             icon: 'error',
+          })
+          this.setData({
+            shareBtn:false
           })
         },
       },
@@ -212,9 +226,6 @@ Page({
       ],
     }
     //传入数据，画制canvas图片
-    this.setData({
-      shareFlag: true,
-    })
     this.setData({
       showPosterImage: true,
     })

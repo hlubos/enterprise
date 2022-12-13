@@ -67,7 +67,7 @@ Page({
     // 静态地图
     staticMapUrl: '',
     // 二维码图片
-    qrcodeImg: 'https://ydcommon.51yund.com/wxapp/upimg/geely-in-show.png',
+    qrcodeImg: 'https://ydcommon.51yund.com/wxapp/upimg/mini-qrcode.jpg',
     // 三角形
     triangleImg:'../../../../assets/image/tri.png',
     // echarts的图片
@@ -111,6 +111,8 @@ Page({
     map_orig_url: '',
     map_thumb_url: '',
     isZh: wx.getStorageSync('language') == 'zh',
+    // 分享按钮防抖
+    shareBtn:false
   },
   handleMap(e) {},
   // 读取跑步设置缓存
@@ -359,6 +361,11 @@ Page({
   },
   // =========================================
   drawCanvas: function () {
+    if(this.data.shareBtn) return
+    this.setData({
+      shareBtn:true,
+      shareFlag:true
+    })
     showLoading({
       title: this.data.$language['分享图片生成中'],
     })
@@ -408,6 +415,15 @@ Page({
             }&dataImg=${encodeURIComponent(url)}&mapImg=${encodeURIComponent(
               that.data.staticMapUrl,
             )}`,
+            complete(){
+             // 取消按钮锁 清除之前缓存的分享的数据
+             that.setData({
+              shareBtn:false,
+              showImg:'',
+              canvasHeight:0,
+              canvasWidth:0
+            })
+            }    
           })
         },
         error(res) {
@@ -417,6 +433,9 @@ Page({
           showToast({
             title: '分享图片失败',
             icon: 'error',
+          })
+          this.setData({
+            shareBtn:false
           })
         },
       },

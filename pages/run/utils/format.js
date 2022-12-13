@@ -42,7 +42,6 @@ function secTranlateTime(sec) {
 }
 //将秒格式化配速
 function formatAvg(secs, miles) {
-   secs=Math.abs(secs)
   // 走路  5km/h
   // 配速  12min/km
   // 走路大概 6min/km
@@ -108,6 +107,7 @@ function formatDate(value, fmt) {
     obj.max=SpeedDate[0]
     obj.min=SpeedDate[0]
     SpeedDate.forEach((item,index)=>{
+         item.avg_time=Math.abs(item.avg_time)
          // 获取最小值
          if(obj.min.avg_time>item.avg_time){
           obj.min=item
@@ -117,10 +117,10 @@ function formatDate(value, fmt) {
           obj.max=item
         }
         // 配速计算
-        item.speedTime=formatAvg(item.avg_time,item.distance||1000)
+        item.speedTime=formatAvg(item.avg_time,1000)
     })
     // 最佳配速
-    obj.bestSpeed=formatAvg(obj.min.avg_time,obj.min.distance||1000)
+    obj.bestSpeed=formatAvg(obj.min.avg_time,1000)
     obj.speedDetails=SpeedDate
     // 最后一公里是否超过或等于一公里
     if(distance%1000 != 0){

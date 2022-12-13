@@ -106,8 +106,8 @@ Page({
             newInfos[i].time,
             'yyyy/MM/dd hh:mm:ss',
           )
+          newInfos[i].caloric = (55 * 1.036 * (parseInt(newInfos[i].distance) / 1000)).toFixed(1)
           newInfos[i].distance = myFormats.clip(newInfos[i].distance / 1000)
-          newInfos[i].caloric = myFormats.clip(newInfos[i].caloric / 1000)
           newInfos[i].cost_time = myFormats.secTranlateTime(
             newInfos[i].cost_time,
           )

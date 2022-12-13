@@ -130,7 +130,7 @@ Page({
     x: 0,
     y: 0,
     // 卸载页面方式
-    isActcion:true  //true 异常退出  false 正常退出   
+    isActcion:true  //true 正常退出    false  异常退出
   },
   // 语音播报
   runAudioReport() {
@@ -347,8 +347,6 @@ Page({
       runStatus: 0,
       canGetLocation: true,
     })
-    // 初始化当前步数
-    await this.setNowStep(true)
     // 跑步计时
     let runTimer = setInterval(() => {
       // 累计跑步时间
@@ -361,10 +359,17 @@ Page({
       this.getRunShowData()
       // 缓存跑步数据
       this.setRunDataCache()
+      if(this.data.isActcion){
+        clearInterval(runTimer)
+        clearInterval(this.data.runTimer)
+      }
     }, 1000)
     this.setData({
       runTimer: runTimer,
+      isActcion: false
     })
+     // 初始化当前步数
+    await this.setNowStep(true)
     // 监听加速度数据事件
     onAccelerometerChange((absObj) => {
       this.setData({
@@ -487,9 +492,6 @@ Page({
     })
     // 重新获取当前步数
     await this.setNowStep(false)
-    console.log("暂停");
-    console.log(this.data.steps);
-    console.log(this.data.initialStep);
     // 清除跑步计时器
     clearInterval(this.data.runTimer)
     clearTimeout(this.data.locaTimer)
@@ -520,10 +522,9 @@ Page({
     let key = 'run_data_' + user_id
     let kMilesCacheData = getStorageSync(key)
     if (
-      // !kMilesCacheData.locaDotArr[0] ||
-      // kMilesCacheData.locaDotArr[0].length < 2 ||
-      // this.data.runMiles <= 10
-      false
+      !kMilesCacheData.locaDotArr[0] ||
+      kMilesCacheData.locaDotArr[0].length < 2 ||
+      this.data.runMiles <= 10
     ) {
       showModal({
         title: this.data.$language['是否退出跑步'] + ' ？',
@@ -687,7 +688,7 @@ Page({
     }
     let newData = {
       kmiles_cut: this.data.kmilesCount,
-      usetime: this.data.outTime,
+      usetime: Math.abs(this.data.outTime),
       outMiles: this.data.outMiles,
     }
     if (flag == true) {
@@ -928,14 +929,18 @@ Page({
     console.log("页面卸载");
     // 存储步数
     if(this.data.isActcion && Object.keys(this.getRunDataCache()).length != 0){
+      debugger
+      console.log("异常异常异常");
       await this.setNowStep(false)
       this.setRunDataCache()
       wx.setStorageSync('initialStep', this.data.initialStep)
     };
     innerAudioContext.stop()
     innerAudioContext.destroy()
+    clearInterval(runGuideCountTimer)
     clearInterval(this.data.runTimer)
     clearInterval(this.data.runGuideCountTimer)
+     
     // 关闭定位追踪
     offLocationChange()
     stopLocationUpdate().then((res) => {})

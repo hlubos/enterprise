@@ -116,14 +116,10 @@
 }
 
 .title2-left-kmeter {
-  flex: 1;
-
   font-weight: bold;
   font-size: 80rpx;
   color: #333333;
   line-height: 80rpx;
-
-  text-align: center;
 }
 
 .title2-left-unit {
@@ -271,6 +267,7 @@
   align-items: flex-end;
   transition: all ease 0.5s;
   padding-bottom: 100rpx;
+  opacity: 0;
 }
 
 .qrcode-img {
