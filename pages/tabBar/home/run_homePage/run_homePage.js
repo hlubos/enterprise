@@ -222,8 +222,6 @@ Component({
       let key = 'run_kmiles_pace_arr_' + user_id
       setStorageSync(storageKey, {})
       setStorageSync(key, [])
-      console.log('key', getStorageSync('key'))
-      console.log('storageKey', getStorageSync('storageKey'))
     },
     // 继续跑步
     continueRun() {

@@ -86,7 +86,7 @@
                     </view>
                     <view class="line-wai answer_draw_canvas " data-type="text" data-delay="1">
                         <view class="line-nei answer_draw_canvas" data-type="text" data-delay="1"
-                            style="width: {{speedDetail.avg_time == max?'100%':(speedDetail.avg_time/max.avg_time*100+'%')}};background-color:{{speedDetail.avg_time == min.avg_time?'rgb(14, 189, 72)':'rgb(2, 148, 245)'}};"
+                            style="width: {{speedDetail.avg_time == max?'100%':speedDetail.percentage}};background-color:{{speedDetail.avg_time == min.avg_time?'rgb(14, 189, 72)':'rgb(2, 148, 245)'}};"
                         > </view>
                     </view>
                     <view class="line-minkm answer_draw_canvas" data-delay="1" data-type="text" data-text="{{speedDetail.speedTime}}">{{speedDetail.speedTime}}</view>

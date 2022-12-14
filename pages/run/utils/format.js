@@ -104,28 +104,50 @@ function formatDate(value, fmt) {
 }
   function  processSpeedData(SpeedDate,distance){
     let obj={}
-    obj.max=SpeedDate[0]
-    obj.min=SpeedDate[0]
+    let maxspeedTimeArr = []
+    let minspeedTimeArr = []
+    let itemspeedTimeArr = []
+    obj.max=obj.min=SpeedDate[0]
+    obj.max.speedTime=obj.min.speedTime=formatAvg(SpeedDate[0].avg_time,SpeedDate[0].distance||1000)
     SpeedDate.forEach((item,index)=>{
-         item.avg_time=Math.abs(item.avg_time)
-         // 获取最小值
-         if(obj.min.avg_time>item.avg_time){
+      debugger
+      maxspeedTimeArr = obj.max.speedTime.split('\'')
+      minspeedTimeArr = obj.min.speedTime.split('\'')
+      obj.min.Progress = parseInt(minspeedTimeArr[0]*60)+parseInt(minspeedTimeArr[1]) 
+      obj.max.Progress = parseInt(maxspeedTimeArr[0]*60)+parseInt(maxspeedTimeArr[1]) 
+
+      if(item.avg_time<0){ // 后端 返回数据 异常时 处理最后一公里配速
+        item.avg_time=SpeedDate.reduce((ac, cu) => ac + cu.avg_time, 0)
+      }
+       // 配速计算
+      item.speedTime=formatAvg(item.avg_time,item.distance||1000)
+      itemspeedTimeArr=item.speedTime.split('\'')
+      item.Progress=parseInt(itemspeedTimeArr[0]*60)+parseInt(itemspeedTimeArr[1]) 
+      // 获取最小值
+      if(obj.min.Progress>item.Progress){
           obj.min=item
-        }
-        // 获取最大值
-        if(obj.max.avg_time<item.avg_time){
+      }
+       // 获取最大值
+      if(obj.max.Progress<item.Progress){
           obj.max=item
-        }
-        // 配速计算
-        item.speedTime=formatAvg(item.avg_time,1000)
+      }
     })
     // 最佳配速
-    obj.bestSpeed=formatAvg(obj.min.avg_time,1000)
-    obj.speedDetails=SpeedDate
+    obj.bestSpeed=formatAvg(obj.min.avg_time,obj.min.distance||1000)
     // 最后一公里是否超过或等于一公里
     if(distance%1000 != 0){
       obj.isOverKm=true
     }
+    // 百分比计算
+    SpeedDate.forEach((item)=>{
+      if(item.avg_time == obj.max.avg_time){
+        item.percentage='100%'
+      }else{
+        item.percentage=`${item.Progress/obj.max.Progress*100}%`
+      }
+    })
+    obj.speedDetails=SpeedDate
+    console.log(obj);
     return obj
   }
 
@@ -138,5 +160,5 @@ export default {
   formatDate,
   formatShowAvg,
   clip,
-  processSpeedData
+  processSpeedData,
 }
