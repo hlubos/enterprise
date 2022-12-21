@@ -23,6 +23,8 @@ let createMapContext = wxFun.ordinary('createMapContext')
 let createSelectorQuery = wxFun.ordinary('createSelectorQuery')
 
 let innerAudioContext = createInnerAudioContext({ useWebAudioImplement: true })
+
+var log = require("../../../../common/log")
 // innerAudioContext.autoplay = true
 Page({
   /**
@@ -126,10 +128,15 @@ Page({
           mapStyle: res.nowMapStyInfo,
         })
       }
-    } catch (e) {}
+    } catch (e) {
+      log.error({
+        "读取跑步设置缓存":e
+      })
+    }
   },
   // 打开/关闭面板
   switchPanel() {
+    try{
     if (this.data.isShowPanel) {
       this.setData({
         isShowPanel: false,
@@ -156,6 +163,11 @@ Page({
         points: this.data.pointsList,
       })
     }, 500)
+  }catch(err){
+    log.error({
+      "打开/关闭面板":err
+    })
+  }
   },
   // 结束跑步
   async runFinish() {
@@ -170,7 +182,11 @@ Page({
       setStorageSync(key, [])
       // removeStorageSync(storageKey)
       // removeStorageSync(key)
-    } catch (error) {}
+    } catch (error) {
+      log.error({
+        "结束跑步1":error
+      })
+    }
     navigateBack()
   },
   playFinalVoice(src) {
@@ -180,6 +196,7 @@ Page({
   // 跑步结束语音播报
   runFinishAudio() {
     //
+    try{
     let auidos = this.audioDidy()
     let index = 0
     // innerAudioContext.src = `https://ydcommon.51yund.com/mini_run_voice/voice_1/${auidos[index]}.mp3`
@@ -197,10 +214,15 @@ Page({
         innerAudioContext.offEnded()
       }
     })
+  }catch(err){
+    log.error({
+      "跑步结束语音播报":err
+    })
+  }
   },
   // 语音播报内容整理
   audioDidy() {
-    // 总里程 xx点xx公里 总用时 xx小时xx分xx秒 平均配速 xx分xx秒 每公里
+try{    // 总里程 xx点xx公里 总用时 xx小时xx分xx秒 平均配速 xx分xx秒 每公里
     let allAudio = ['paobujieshu']
     let { runKMiles, avgPace, sumTime } = this.data.showRunData
     // 总里程语音播报数组=======================start============================
@@ -336,7 +358,11 @@ Page({
     // 合并所有
     // allAudio = [...allAudio,...runKMilesAudioList,...sumTimeAudioList,...avgPaceAudioList]
     allAudio = [...allAudio, ...runKMilesAudioList]
-    return allAudio
+    return allAudio}catch(err){
+      log.error({
+        "语音播报内容整理":err
+      })
+    }
   },
   // 获取echart的图片
   getChartImage(e) {
@@ -427,7 +453,9 @@ Page({
           })
         },
         error(res) {
-          console.log(res)
+          log.error({
+            "分享失败":res
+          })
           hideLoading()
           // 画失败的原因
           showToast({
@@ -564,6 +592,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
+    try{
     i18nInstance.effect(this)
     wx.setNavigationBarTitle({
       title: this.data.$language['企业悦动'],
@@ -575,6 +604,11 @@ Page({
       })
     }
     // this.setCanvasSize()
+  }catch(err){
+    log.error({
+      "生命周期函数--监听页面加载":err
+    })
+  }
   },
 
   /**
@@ -607,7 +641,7 @@ Page({
           'yyyy-MM-dd hh:mm:ss',
         ),
         'showRunData.runKMiles': myFormats.clip(parseInt(data.runMiles) / 1000),
-        'showRunData.avgPace': myFormats.formatAvg(data.runTime, data.runMiles),
+        'showRunData.avgPace': myFormats.formatAvg(data.runTime,data.runMiles),
         'showRunData.sumTime': myFormats.secTranlateTime(data.runTime),
         'showRunData.kCalorie': (55 * 1.036 * (data.runMiles / 1000)).toFixed(1),
         'showRunData.stride':((data.runMiles*100)/data.steps).toFixed(0),
@@ -689,7 +723,7 @@ Page({
           setStorageSync(storageKey1, {})
           setStorageSync(storageKey2, [])
         })
-    } catch (error) {}
+   
 
     //
     var mapFinalCtx = createMapContext('run-final-map', this) // mapId对应地图id属性
@@ -702,18 +736,30 @@ Page({
     })
     // 语音播报
     this.runFinishAudio()
+     } catch (error) {
+      log.error({
+        "结束页加载错误":error
+      })
+    }
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow() {
-    innerAudioContext = createInnerAudioContext({ useWebAudioImplement: true })
-    // innerAudioContext.autoplay = true
-    this.getRunSetCache()
-    this.setData({
-      shareFlag:0
-    })
+    try{
+      innerAudioContext = createInnerAudioContext({ useWebAudioImplement: true })
+      // innerAudioContext.autoplay = true
+      this.getRunSetCache()
+      this.setData({
+        shareFlag:0
+      })
+    }catch(err){
+      log.error({
+        "show":err
+      })
+    }
+   
   },
 
   /**
@@ -729,7 +775,6 @@ Page({
     let storageKey2 = 'run_kmiles_pace_arr_' + userId
     setStorageSync(storageKey1, {})
     setStorageSync(storageKey2, [])
-    setStorageSync('initialStep', 0)
   },
 
   /**

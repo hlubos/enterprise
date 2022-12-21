@@ -2,6 +2,7 @@
 import api from '../../server/run'
 import myFormats from '../../utils/format'
 import i18nInstance from 'miniprogram-i18n-plus'
+import utils from '../../../../common/utils'
 import { logPath } from '../../../../config/env'
 Page({
   /**
@@ -128,8 +129,6 @@ Page({
             newInfos[i].pic_url = ''
           }
         }
-        let a=JSON.parse(JSON.stringify(newInfos))
-        console.log( a);
         this.setData({
           // total_cnt: res.total_cnt,
           // total_cost_time: myFormats.secTranlateTime(res.total_cost_time),
@@ -175,13 +174,13 @@ Page({
     }
   },
   // 跳转详情页
-  gotoDetail(e){
+  gotoDetail:utils.throttle(function(e){
    wx.navigateTo({
      url: `../run_detail/index?runner_id=${
       e.currentTarget.dataset.runnerid
     }&runLog=${encodeURIComponent(JSON.stringify(this.data.rawRunLog[e.currentTarget.dataset.idx]))}`,
    })
-  },
+  },2000),
   /**
    * 生命周期函数--监听页面加载
    */

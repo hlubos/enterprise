@@ -4,6 +4,7 @@ import myFormats from '../../utils/format'
 import api from '../../server/run'
 import wxFun from '../../utils/wxFun'
 import i18nInstance from 'miniprogram-i18n-plus'
+import utils from '../../../../common/utils'
 let getLocation = wxFun.promisify('getLocation')
 let redirectTo = wxFun.promisify('redirectTo')
 let navigateBack = wxFun.promisify('navigateBack')
@@ -29,7 +30,7 @@ let onAccelerometerChange = wxFun.ordinary('onAccelerometerChange')
 let offAccelerometerChange = wxFun.ordinary('offAccelerometerChange')
 let getBackgroundAudioManager = wxFun.ordinary('getBackgroundAudioManager')
 let nextTick = wxFun.ordinary('nextTick')
-
+var log = require("../../../../common/log")
 // const backgroundAudioManager = wx.getBackgroundAudioManager()
 // let innerAudioContext = createInnerAudioContext({useWebAudioImplement:true})
 // innerAudioContext.autoplay = true
@@ -197,7 +198,7 @@ Page({
           // 播放语音
         }
       }
-      let play = createInnerAudioContext({ useWebAudioImplement: true })
+      let play = createInnerAudioContext({ useWebAudioImplement: false })
       let index = 0
       play.src = `https://ydcommon.51yund.com/mini_run_voice/voice_1/${auidos[index]}.mp3`
       play.onCanplay(() => {
@@ -236,7 +237,7 @@ Page({
     })
     // 每公里缓存一次配速(秒/公里)
     let cut = parseInt(runMiles / 1000) + 1
-    let outMiles = runMiles % 1000
+    let outMiles = runMiles % 1000 
     if (cut > this.data.kmilesCount) {
       this.setKmilesCache()
       this.setData({
@@ -511,7 +512,9 @@ Page({
       'https://ydcommon.51yund.com/mini_run_voice/voice_1/yundongyihuifu.mp3'
   },
   // 结束跑步
-  runStop() {
+  runStop:utils.throttle(function(){
+    console.log("毒")
+    try{
     // 读取缓存的轨迹数组，没有移动则不允许结算
     let user_id = getStorageSync('user_id')
     let key = 'run_data_' + user_id
@@ -572,6 +575,9 @@ Page({
     // 处理缓存数据
     let speed_infos=this.getKmilesCache()
     console.log("处理前的每公里配速");
+    log.info({
+      "处理前的每公里配速":speed_infos
+    })
     console.log(speed_infos);
     for(const index in speed_infos){
       speed_infos[index]={
@@ -581,6 +587,9 @@ Page({
       }
     }
     console.log("处理后的每公里配速");
+    log.info({
+      "处理后的每公里配速":speed_infos
+    })
     console.log(speed_infos);
     // 上报跑步数据
     let params = {
@@ -613,6 +622,9 @@ Page({
       ).toFixed(2)
     }
     console.log("上传参数");
+    log.info({
+      "上传参数":params
+    })
     console.log(params);
     api.reportRunnerInfo(params).then((res) => {
       // 获取runner_id
@@ -647,7 +659,11 @@ Page({
         })
       }
     })
-  },
+  }catch(err){
+    log.error(err);
+  }
+  
+  },1500),
   // 缓存运动数据
   setRunDataCache() {
     console.log("缓存运动数据");
@@ -686,11 +702,17 @@ Page({
     if (getStorageSync(key)) {
       oldArr = getStorageSync(key)
     }
+    log.info({
+      "oldArr":getStorageSync(key)
+    })
     let newData = {
       kmiles_cut: this.data.kmilesCount,
       usetime: Math.abs(this.data.outTime),
       outMiles: this.data.outMiles,
     }
+    log.info({
+      "newData":newData
+    })
     if (flag == true) {
       // 最后结束时的缓存
       newData.avg_pace = this.data.outTime
@@ -698,7 +720,23 @@ Page({
       // 正常每公里缓存
       newData.avg_pace = (this.data.outTime / this.data.outMiles) * 1000
     }
-    let newArr = [...oldArr, newData]
+
+    // 网络中断或者异常结束会导致多条数据重复记录 这里采用只使用最后一次的数据
+    let idx = 0
+    let newArr = []
+    let isExist = oldArr.find((item,index)=>{
+      idx=index
+      return item.kmiles_cut == newData.kmiles_cut
+    })
+    if(isExist){
+      oldArr[idx]=newData
+      newArr = oldArr[idx]
+    }else{
+      newArr = [...oldArr, newData]
+    } 
+    log.info({
+      "newArr":newArr
+    })
     setStorageSync(key, newArr)
   },
   // 读取每公里配速缓存

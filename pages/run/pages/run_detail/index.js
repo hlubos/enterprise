@@ -293,6 +293,8 @@ Page({
         // need_health_report:1
       })
         .then(res => {
+          console.log("// 获取轨迹集合");
+          console.log(res);
           let detail = JSON.parse(res.detail)
           for (const key in detail) {
             points.push({
@@ -323,7 +325,7 @@ Page({
           'yyyy-MM-dd hh:mm:ss',
         ),
         'showRunData.runKMiles': myFormats.clip(parseInt(this.data.runLog.distance) / 1000),
-        'showRunData.avgPace': myFormats.formatAvg(this.data.runLog.cost_time, this.data.runLog.distance),
+        'showRunData.avgPace': myFormats.formatShowAvg(this.data.runLog.avg_pace),
         'showRunData.sumTime': myFormats.secTranlateTime(this.data.runLog.cost_time),
         'showRunData.kCalorie': (55 * 1.036 * (parseInt(this.data.runLog.distance) / 1000)).toFixed(1),
         'showRunData.avgSpeed': (((this.data.runLog.distance / 1000) / (this.data.runLog.cost_time / 360)) * 10).toFixed(1),

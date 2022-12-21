@@ -114,20 +114,30 @@
 
 .title2-left {
   display: flex;
-  align-items: flex-end;
+  justify-content: center;
   width: 50%;
 }
 
 .title2-left-kmeter {
+  flex:1;
+  align-self: center;
+  text-align: center;
   font-weight: bold;
   font-size: 80rpx;
   color: #333333;
   line-height: 80rpx;
+  /* background-color: #4cdd70; */
 }
-
+.title2-left-kmeter-in{
+  
+  text-align: left;
+  /* background-color: #4cddb4; */
+}
 .title2-left-unit {
+padding-right: 2rem;
   font-size: 28rpx;
   color: #666666;
+  align-self: flex-end;
 }
 
 .title2-right {

@@ -11,6 +11,7 @@ let previewImage = wxFun.promisify('previewImage')
 let saveImageToPhotosAlbum = wxFun.promisify('saveImageToPhotosAlbum')
 let createSelectorQuery = wxFun.ordinary('createSelectorQuery')
 let getStorageSync = wxFun.ordinary('getStorageSync')
+var log = require("../../../../common/log")
 Page({
   /**
    * 页面的初始数据
@@ -85,7 +86,7 @@ Page({
           // 绘制进度
         },
         finish(url) {
-          console.log(url);
+          console.log(url)
           hideLoading()
           showToast({
             title: that.data.$language['图片已生成'],
@@ -99,6 +100,9 @@ Page({
         error(res) {
           console.log("darw");
           console.log(res);
+          log.error({
+            "share_err":res
+          })
           hideLoading()
           // 画失败的原因
         },
@@ -128,6 +132,9 @@ Page({
   // 保存图片
   clickSaveImg() {
     console.log('filePath', this.data.posterImgUrl)
+    log.error({
+      "保存图片":this.data.posterImgUrl
+    })
     if (!this.data.posterImgUrl) {
       showToast({
         title: this.data.$language['保存失败'],
@@ -155,7 +162,7 @@ Page({
 
   // 微信分享
   wxShare() {
-    console.log(this.data.posterImgUrl);
+    let that=this
     if (!this.data.posterImgUrl) {
       showToast({
         title: this.data.$language['保存失败'],
@@ -164,15 +171,18 @@ Page({
       })
       return
     }
-    previewImage({
-      urls: [this.data.posterImgUrl],
-    }).then((res) => {
-      showToast({
-        title: this.data.$language['长按图片分享'],
-        icon: 'none',
-        duration: 1500,
-      })
+    wx.showToast({
+      title: this.data.$language['长按图片分享'],
+      icon:'none',
+      duration:1500
     })
+    setTimeout(() => {
+      previewImage({
+        urls: [that.data.posterImgUrl],
+      }).then(()=>{
+        wx.hideLoading()
+      })
+    }, 1000);
   },
   /**
    * 生命周期函数--监听页面加载

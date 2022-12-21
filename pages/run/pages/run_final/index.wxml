@@ -18,8 +18,8 @@
                 <view class="title2 answer_draw_canvas" data-delay="1" data-type="text">
                     <view class="title2-left answer_draw_canvas" data-delay="1" data-type="text">
                         <view class="title2-left-kmeter answer_draw_canvas">
-                        <view class="title2-left-kmeter answer_draw_canvas txt1" data-delay="1" data-type="text" data-text="{{showRunData.runKMiles}}">{{showRunData.runKMiles}}</view>
-                    </view>
+                        <view class="title2-left-kmeter answer_draw_canvas txt1" data-delay="1" data-type="text" data-text="{{showRunData.runKMiles}} ">{{showRunData.runKMiles}}</view>
+                      </view>
                         <view class="title2-left-unit answer_draw_canvas" data-delay="1" data-type="text" data-text="{{ $language['公里'] }}">{{ $language['公里'] }}</view>
                     </view>
                     <view class="title2-right answer_draw_canvas" data-delay="1" data-type="text">
@@ -67,12 +67,13 @@
                     <view class="kilometre_num answer_draw_canvas " data-delay="1" data-type="text" data-text="{{ $language['公里'] }}">公里</view>
                     <view class="speed_allocation answer_draw_canvas" data-delay="1" data-type="text" data-text="配速（公里）"> 配速（公里）</view>
                 </view>
-                <view class="line answer_draw_canvas" wx:for="{{speedDetails}}" wx:for-item="speedDetail" data-delay="1" data-type="text">
+                <view class="line answer_draw_canvas" wx:for="{{speedDetails}}" wx:for-item="speedDetail" wx:key="index" data-delay="1" data-type="text" >
                     <view class="line-kilometer answer_draw_canvas"
                      data-delay="1" 
                      data-type="text" 
                      data-text="{{isOverKm&&index==speedDetails.length-1?'<'+speedDetail.index:speedDetail.index}}">
                      {{isOverKm&&index==speedDetails.length-1?'<'+speedDetail.index:speedDetail.index}}
+              
                     </view>
                     <view class="line-triangle answer_draw_canvas"  data-type="text" data-delay="1">
                          <!-- 三角形 -->
