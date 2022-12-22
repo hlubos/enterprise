@@ -56,6 +56,8 @@ Page({
     },
     // 引导页显示
     guidePageShow: false,
+    // 页面误触遮罩
+    touchShade: true,
     // 跑步倒计时
     runGuideCount: 3,
     // 跑步倒计时计时器
@@ -513,7 +515,6 @@ Page({
   },
   // 结束跑步
   runStop:utils.throttle(function(){
-    console.log("毒")
     try{
     // 读取缓存的轨迹数组，没有移动则不允许结算
     let user_id = getStorageSync('user_id')
@@ -707,7 +708,7 @@ Page({
     })
     let newData = {
       kmiles_cut: this.data.kmilesCount,
-      usetime: Math.abs(this.data.outTime),
+      usetime: this.data.outTime,
       outMiles: this.data.outMiles,
     }
     log.info({
@@ -715,6 +716,12 @@ Page({
     })
     if (flag == true) {
       // 最后结束时的缓存
+      if(!newData.usetime){
+        newData.usetime=1
+        this.setData({
+          runTime:this.data.runTime+newData.usetime
+        })
+      }
       newData.avg_pace = this.data.outTime
     } else if (flag == false) {
       // 正常每公里缓存
@@ -734,6 +741,13 @@ Page({
     }else{
       newArr = [...oldArr, newData]
     } 
+    // 如果最后跑步的距离不足10m将不存到配速详情里面
+    if(newArr[newArr.length-1].outMiles < 10){
+      // 记录到上一条记录里面
+      newArr[newArr.length-2].outMiles += newArr[newArr.length-1].outMiles
+      newArr[newArr.length-2].usetime += newArr[newArr.length-1].usetime
+      newArr.splice(newArr.length-1,1)
+    }
     log.info({
       "newArr":newArr
     })
@@ -883,6 +897,7 @@ Page({
         outTime,
         steps,
         initialStep,
+        touchShade: false //关闭误触遮罩
       })
       // 查看每公里配速缓存
       let kMilesCache = this.getKmilesCache()
@@ -931,6 +946,7 @@ Page({
         } else if (c == 3000) {
           this.setData({
             guidePageShow: false,
+            touchShade: false, //关闭误触遮罩
             runStartTime: parseInt(Date.now() / 1000),
           })
           clearInterval(this.data.runGuideCountTimer)

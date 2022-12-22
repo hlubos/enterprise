@@ -109,7 +109,7 @@ function processSpeedData(SpeedDate, distance) {
   let itemspeedTimeArr = []
   let maxKmIdx = SpeedDate[SpeedDate.length - 1].index
   obj.max = obj.min = SpeedDate[0]
-  obj.max.speedTime = obj.min.speedTime = formatAvg(SpeedDate[0].avg_time,(SpeedDate[0].distance).toFixed(2) || 1000)
+  obj.max.speedTime = obj.min.speedTime = formatAvg(SpeedDate[0].avg_time,!(SpeedDate[0].distance)?1000:(SpeedDate[0].distance).toFixed(3))
   try {
     SpeedDate.forEach((item, index) => {
       maxspeedTimeArr = obj.max.speedTime.split('\'')
@@ -121,7 +121,7 @@ function processSpeedData(SpeedDate, distance) {
         item.avg_time = SpeedDate.reduce((ac, cu) => ac + cu.avg_time, 0)
       }
       // 配速计算
-      item.speedTime = formatAvg(item.avg_time, (item.distance).toFixed(2) || 1000)
+      item.speedTime = formatAvg(item.avg_time, !(item.distance) ?1000:(item.distance).toFixed(3))
       itemspeedTimeArr = item.speedTime.split('\'')
       item.Progress = parseInt(itemspeedTimeArr[0] * 60) + parseInt(itemspeedTimeArr[1])
       // 获取最小值
