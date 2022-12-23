@@ -60,8 +60,6 @@ Page({
         scrollOffset: true,
       })
       .exec((res) => {
-        console.log("create");
-        console.log(res);
         setTimeout(() => {
           that.draw()
         }, 1500)

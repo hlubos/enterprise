@@ -261,12 +261,12 @@ class Wxml2Canvas {
                   resolve({ tempFilePath: url })
                 },
                 fail(res) {
-                  console.log('22222')
                   reject(res)
                 },
               })
             }
           } else {
+            console.log(item.url);
             wx.downloadFile({
               url: item.url.replace(/^https?/, 'https'),
               success: function (res) {
@@ -282,7 +282,6 @@ class Wxml2Canvas {
                     resolve(res)
                   },
                   fail(res) {
-                    console.log('33333')
                     reject(res)
                   },
                 })

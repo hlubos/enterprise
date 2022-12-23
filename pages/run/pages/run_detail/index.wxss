@@ -128,11 +128,6 @@
   line-height: 80rpx;
   /* background-color: #4cdd70; */
 }
-.title2-left-kmeter-in{
-  
-  text-align: left;
-  /* background-color: #4cddb4; */
-}
 .title2-left-unit {
 padding-right: 2rem;
   font-size: 28rpx;

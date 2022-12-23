@@ -38,10 +38,12 @@
                 </view>
                 <view class="title2 answer_draw_canvas" data-delay="1" data-type="text">
                     <view class="title2-left answer_draw_canvas" data-delay="1" data-type="text">
-                    <view class="title2-left-kmeter answer_draw_canvas">
-                        <view class="title2-left-kmeter-in answer_draw_canvas" data-delay="2"  data-type="text" data-text="{{showRunData.runKMiles}}">{{showRunData.runKMiles}}</view>
-                    </view>
-                        <view class="title2-left-unit answer_draw_canvas" data-delay="1" data-type="text" data-text="{{ $language['公里'] }}">{{ $language['公里'] }}</view>
+                      <view class="title2-left-kmeter answer_draw_canvas" data-delay="2" data-type="text" data-text="{{showRunData.runKMiles}}">
+                        {{showRunData.runKMiles}}
+                      </view>
+                      <view class="title2-left-unit answer_draw_canvas" data-delay="1" data-type="text" data-text="{{ $language['公里'] }}">
+                        {{ $language['公里'] }}
+                      </view>
                     </view>
                     <view class="title2-right answer_draw_canvas" data-delay="1" data-type="text">
                         <view class="title2-right-name answer_draw_canvas" data-delay="1" data-left="0" data-type="text" data-text="{{userInfo.nick}}">{{userInfo.nick}}</view>
