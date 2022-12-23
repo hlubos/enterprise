@@ -32,9 +32,9 @@ Page({
     //
     runLog: {},
     speedDetails: [],
-    min:'',
-    max:'',
-    isOverKm:false,
+    min: '',
+    max: '',
+    isOverKm: false,
     loading: true,
     runner_id: 0,
     showPosterImage: false,
@@ -69,8 +69,8 @@ Page({
     showImg: '',
     // 二维码图片
     qrcodeImg: 'https://ydcommon.51yund.com/wxapp/upimg/mini-qrcode.jpg',
-    triangleImg:'../../../../assets/image/tri.png',
-    IndoordImg:'https://ssl-pubpic.51yund.com/1325545413.jpg',
+    triangleImg: '../../../../assets/image/tri.png',
+    IndoordImg: 'https://ssl-pubpic.51yund.com/1325545413.jpg',
     // echarts的图片
     chartImage: '',
     // 要显示的跑步数据
@@ -82,7 +82,7 @@ Page({
       kCalorie: 0,
       avgSpeed: '0.00',
       stride: 0,
-      bestSpeed:`00'00''`,
+      bestSpeed: `00'00''`,
     },
     // 用户信息
     userInfo: {
@@ -103,9 +103,9 @@ Page({
     map_thumb_url: '',
     isZh: wx.getStorageSync('language') == 'zh',
     // 分享按钮防抖
-    shareBtn:false
+    shareBtn: false,
   },
-  handleMap(e) { },
+  handleMap(e) {},
   // 获取echart的图片
   getChartImage(e) {
     let chartImage = e.detail.chartImage
@@ -129,10 +129,10 @@ Page({
   },
   // =========================================
   drawCanvas: function () {
-    if(this.data.shareBtn) return
+    if (this.data.shareBtn) return
     this.setData({
-      shareBtn:true,
-      shareFlag:true
+      shareBtn: true,
+      shareFlag: true,
     })
     showLoading({
       title: this.data.$language['分享图片生成中'],
@@ -175,28 +175,31 @@ Page({
             // imgUrl: url,
             posterImgUrl: url,
           })
-          if(that.data.runLog.kind_id == 1){ //室内跑
+          if (that.data.runLog.kind_id == 1) {
+            //室内跑
             that.setData({
-              showImg:"../../../../assets/image/indoor.jpg"
+              showImg: '../../../../assets/image/indoor.jpg',
             })
-          }else{ //室外跑
+          } else {
+            //室外跑
             that.setStaticMapInfo()
           }
           // 跳转到分享页面
           navigateTo({
-            url: `../run_share/index?&runner_id=${that.data.runner_id
-              }&dataImg=${encodeURIComponent(url)}&mapImg=${encodeURIComponent(
-                that.data.showImg,
-              )}`,
-            complete(){
+            url: `../run_share/index?&runner_id=${
+              that.data.runner_id
+            }&dataImg=${encodeURIComponent(url)}&mapImg=${encodeURIComponent(
+              that.data.showImg,
+            )}`,
+            complete() {
               // 取消按钮锁 清除之前缓存的分享的数据
               that.setData({
-                shareBtn:false,
-                showImg:'',
-                canvasHeight:0,
-                canvasWidth:0
+                shareBtn: false,
+                showImg: '',
+                canvasHeight: 0,
+                canvasWidth: 0,
               })
-            }    
+            },
           })
         },
         error(res) {
@@ -206,7 +209,7 @@ Page({
             icon: 'error',
           })
           this.setData({
-            shareBtn:false
+            shareBtn: false,
           })
         },
       },
@@ -263,7 +266,7 @@ Page({
     let size = `${sizeObj.width}*${sizeObj.height}`
     let staticMapUrl = `${base}?size=${size}&scale=2&maptype=roadmap&key=${key}&path=${path}`
     this.setData({
-      showImg:staticMapUrl,
+      showImg: staticMapUrl,
     })
   },
   /**
@@ -273,10 +276,10 @@ Page({
     let points = []
     // 把原始数据存到 runLog 里面
     this.setData({
-      runLog: JSON.parse(decodeURIComponent(options.runLog))
+      runLog: JSON.parse(decodeURIComponent(options.runLog)),
     })
-    console.log("页面传值");
-    console.log(this.data.runLog,options.runner_id);
+    console.log('页面传值')
+    console.log(this.data.runLog, options.runner_id)
     i18nInstance.effect(this)
     wx.setNavigationBarTitle({
       title: this.data.$language['企业悦动'],
@@ -287,34 +290,35 @@ Page({
         runner_id: options.runner_id,
       })
       // 获取轨迹集合
-      if(this.data.runLog.kind_id == 0){
-      api.getRunnerPathData({
-        runner_id: options.runner_id,
-        // need_health_report:1
-      })
-        .then(res => {
-          console.log("// 获取轨迹集合");
-          console.log(res);
-          let detail = JSON.parse(res.detail)
-          for (const key in detail) {
-            points.push({
-              longitude: detail[key].longitude,
-              latitude: detail[key].latitude
+      if (this.data.runLog.kind_id == 0) {
+        api
+          .getRunnerPathData({
+            runner_id: options.runner_id,
+            // need_health_report:1
+          })
+          .then((res) => {
+            console.log('// 获取轨迹集合')
+            console.log(res)
+            let detail = JSON.parse(res.detail)
+            for (const key in detail) {
+              points.push({
+                longitude: detail[key].longitude,
+                latitude: detail[key].latitude,
+              })
+            }
+            this.setData({
+              pointsList: points,
+              'polylines[0].points': points,
             })
-          }
-          this.setData({
-            pointsList: points,
-            'polylines[0].points': points
+            var mapFinalCtx = createMapContext('run-final-map', this) // mapId对应地图id属性
+            mapFinalCtx.includePoints({
+              padding: [70, 70, 70, 70], // padding类似我们css中的padding，可以有四个值
+              points: this.data.polylines[0].points,
+            })
+            this.setData({
+              loading: false,
+            })
           })
-          var mapFinalCtx = createMapContext('run-final-map', this) // mapId对应地图id属性
-          mapFinalCtx.includePoints({
-            padding: [70, 70, 70, 70], // padding类似我们css中的padding，可以有四个值
-            points: this.data.polylines[0].points,
-          })
-          this.setData({
-            loading: false,
-          })
-        })
       }
     }
     // 展示数据
@@ -324,18 +328,37 @@ Page({
           this.data.runLog.time,
           'yyyy-MM-dd hh:mm:ss',
         ),
-        'showRunData.runKMiles': myFormats.clip(parseInt(this.data.runLog.distance) / 1000),
-        'showRunData.avgPace': myFormats.formatShowAvg(this.data.runLog.avg_pace),
-        'showRunData.sumTime': myFormats.secTranlateTime(this.data.runLog.cost_time),
-        'showRunData.kCalorie': (55 * 1.036 * (parseInt(this.data.runLog.distance) / 1000)).toFixed(1),
-        'showRunData.avgSpeed': (((this.data.runLog.distance / 1000) / (this.data.runLog.cost_time / 360)) * 10).toFixed(1),
-        'showRunData.stride': ((this.data.runLog.distance * 100) / (this.data.runLog.u_steps?this.data.runLog.u_steps:1)).toFixed(0)
+        'showRunData.runKMiles': myFormats.clip(
+          parseInt(this.data.runLog.distance) / 1000,
+        ),
+        'showRunData.avgPace': myFormats.formatShowAvg(
+          this.data.runLog.avg_pace,
+        ),
+        'showRunData.sumTime': myFormats.secTranlateTime(
+          this.data.runLog.cost_time,
+        ),
+        'showRunData.kCalorie': (
+          55 *
+          1.036 *
+          (parseInt(this.data.runLog.distance) / 1000)
+        ).toFixed(1),
+        'showRunData.avgSpeed': (
+          (this.data.runLog.distance /
+            1000 /
+            (this.data.runLog.cost_time / 360)) *
+          10
+        ).toFixed(1),
+        'showRunData.stride': (
+          (this.data.runLog.distance * 100) /
+          (this.data.runLog.u_steps ? this.data.runLog.u_steps : 1)
+        ).toFixed(0),
       })
-      console.log(this.data.showRunData);
+      console.log(this.data.showRunData)
       //
-      if(this.data.showRunData.stride==this.data.runLog.distance * 100){ //步幅异常给默认步幅
+      if (this.data.showRunData.stride == this.data.runLog.distance * 100) {
+        //步幅异常给默认步幅
         this.setData({
-          'showRunData.stride':75
+          'showRunData.stride': 75,
         })
       }
     }
@@ -347,23 +370,28 @@ Page({
     // 加载数据
     try {
       //1.获取每公里配速详情
-      api.getRunnerPathData({
-        runner_id: this.data.runner_id,
-        oper_type: "speed_info",
-        now_timestamp: new Date().getTime()
-      })
-        .then(res => {
-        console.log("每公里配速详情");
-        console.log(res);
-        //处理配速数据
-        let obj=myFormats.processSpeedData(JSON.parse( res.speed_detail),this.data.runLog.distance)
-        this.setData({
-          speedDetails:obj.speedDetails,
-          'showRunData.bestSpeed':obj.bestSpeed,
-          max:obj.max,
-          min:obj.min,
-          isOverKm:obj.isOverKm
+      api
+        .getRunnerPathData({
+          runner_id: this.data.runner_id,
+          oper_type: 'speed_info',
+          now_timestamp: new Date().getTime(),
         })
+        .then((res) => {
+          console.log('每公里配速详情')
+          console.log(res)
+          //处理配速数据
+          let obj = myFormats.processSpeedData(
+            JSON.parse(res.speed_detail),
+            this.data.runLog.distance,
+            this.data.runLog.avg_pace,
+          )
+          this.setData({
+            speedDetails: obj.speedDetails,
+            'showRunData.bestSpeed': obj.bestSpeed,
+            max: obj.max,
+            min: obj.min,
+            isOverKm: obj.isOverKm,
+          })
         })
       // 2.跑步结束页面详情
       api
@@ -372,8 +400,8 @@ Page({
           runner_id: this.data.runner_id,
         })
         .then((res) => {
-          console.log("跑步结束详情页");
-          console.log(res);
+          console.log('跑步结束详情页')
+          console.log(res)
           if (res.code == 0) {
             this.setData({
               'userInfo.head_url': res.user_info.head_url,
@@ -391,7 +419,9 @@ Page({
             let last_pace = parseInt((last_cost_time / last_distance) * 1000)
               ? parseInt((last_cost_time / last_distance) * 1000)
               : 0
-            let now_pace = parseInt((this.data.runTime / this.data.runMiles) * 1000)
+            let now_pace = parseInt(
+              (this.data.runTime / this.data.runMiles) * 1000,
+            )
             let paceCompare = {}
             if (now_pace >= last_pace) {
               paceCompare = {
@@ -411,7 +441,7 @@ Page({
             })
           }
         })
-    } catch (error) { }
+    } catch (error) {}
 
     //
     var mapFinalCtx = createMapContext('run-final-map', this) // mapId对应地图id属性
@@ -429,19 +459,19 @@ Page({
    */
   onShow() {
     this.setData({
-      shareFlag:false
+      shareFlag: false,
     })
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  async onHide() { },
+  async onHide() {},
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  async onUnload() { },
+  async onUnload() {},
   // 下拉
   // onPageScroll: function(e) {
   //     if (e.scrollTop < 0) {
@@ -453,15 +483,15 @@ Page({
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh() { },
+  onPullDownRefresh() {},
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom() { },
+  onReachBottom() {},
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage() { },
+  onShareAppMessage() {},
 })

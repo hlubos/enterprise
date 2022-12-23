@@ -17,9 +17,9 @@
                 </view>
                 <view class="title2 answer_draw_canvas" data-delay="1" data-type="text">
                     <view class="title2-left answer_draw_canvas" data-delay="1" data-type="text">
-                        <view class="title2-left-kmeter answer_draw_canvas">
+                        
                         <view class="title2-left-kmeter answer_draw_canvas txt1" data-delay="1" data-type="text" data-text="{{showRunData.runKMiles}} ">{{showRunData.runKMiles}}</view>
-                      </view>
+                      
                         <view class="title2-left-unit answer_draw_canvas" data-delay="1" data-type="text" data-text="{{ $language['公里'] }}">{{ $language['公里'] }}</view>
                     </view>
                     <view class="title2-right answer_draw_canvas" data-delay="1" data-type="text">
@@ -47,7 +47,7 @@
                 </view>
             </view>
             <view class="count-line answer_draw_canvas" data-delay="1"  data-type="text" data-background="rgb(49, 218, 175)">
-                <view class="count-line-txt answer_draw_canvas" data-delay="2" data-type="text" data-text="{{ isZh ? '第' : 'You have run ' }}{{userInfo.this_sport_cnt}}{{ isZh ? '次跑步' : ' times' }}">{{ isZh ? '第' : "You've run " }}{{userInfo.this_sport_cnt}}{{ isZh ? '次跑步' : ' times' }}</view>
+                <view class="count-line-txt answer_draw_canvas" data-delay="2" data-type="text" data-text="{{ isZh ? '第' : 'You have run ' }}{{userInfo.this_sport_cnt}}{{ isZh ? '次跑步' : ' times' }}">{{ isZh ? '第' : "You have run " }}{{userInfo.this_sport_cnt}}{{ isZh ? '次跑步' : ' times' }}</view>
             </view>
             <view class="speed-table answer_draw_canvas"data-delay="1" data-type="text">
                 <view class="speed-line answer_draw_canvas" data-delay="1" data-type="text" data-background="#ccc"></view>
@@ -103,7 +103,6 @@
             <!-- 二维码 -->
             <view hidden="{{!shareFlag}}" class="qrcode-box answer_draw_canvas">
                 <image class="qrcode-img answer_draw_canvas" data-delay="1" data-type="image" data-url="{{qrcodeImg}}" src="{{qrcodeImg}}"></image>
-            
                 <view class="qrcode-txt answer_draw_canvas">
                     <view class="answer_draw_canvas" data-delay="1" data-type="text" data-text="全民数字化">全民数字化</view>
                     <view class="answer_draw_canvas" data-delay="1" data-type="text" data-text="运动健康管理平台">运动健康管理平台</view>

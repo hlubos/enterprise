@@ -116,6 +116,21 @@
 }
 
 .title2-left-kmeter {
+  /* font-weight: bold;
+  font-size: 80rpx;
+  color: #333333;
+  line-height: 80rpx; */
+  flex:1;
+  align-self: center;
+  text-align: center;
+  font-weight: bold;
+  font-size: 80rpx;
+  color: #333333;
+  line-height: 80rpx;
+
+  flex:1;
+  align-self: center;
+  text-align: center;
   font-weight: bold;
   font-size: 80rpx;
   color: #333333;

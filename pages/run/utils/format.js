@@ -102,55 +102,73 @@ function formatDate(value, fmt) {
 
   return fmt
 }
-function processSpeedData(SpeedDate, distance) {
+function processSpeedData(SpeedDate, distance, avg_pace, flag = false) {
   let obj = {}
   let maxspeedTimeArr = []
   let minspeedTimeArr = []
   let itemspeedTimeArr = []
   let maxKmIdx = SpeedDate[SpeedDate.length - 1].index
   obj.max = obj.min = SpeedDate[0]
-  obj.max.speedTime = obj.min.speedTime = formatAvg(SpeedDate[0].avg_time,!(SpeedDate[0].distance)?1000:(SpeedDate[0].distance).toFixed(3))
+  obj.max.speedTime = obj.min.speedTime = formatAvg(
+    SpeedDate[0].avg_time,
+    !SpeedDate[0].distance ? 1000 : SpeedDate[0].distance.toFixed(3),
+  )
   try {
     SpeedDate.forEach((item, index) => {
-      maxspeedTimeArr = obj.max.speedTime.split('\'')
-      minspeedTimeArr = obj.min.speedTime.split('\'')
-      obj.min.Progress = parseInt(minspeedTimeArr[0] * 60) + parseInt(minspeedTimeArr[1])
-      obj.max.Progress = parseInt(maxspeedTimeArr[0] * 60) + parseInt(maxspeedTimeArr[1])
+      maxspeedTimeArr = obj.max.speedTime.split("'")
+      minspeedTimeArr = obj.min.speedTime.split("'")
+      obj.min.Progress =
+        parseInt(minspeedTimeArr[0] * 60) + parseInt(minspeedTimeArr[1])
+      obj.max.Progress =
+        parseInt(maxspeedTimeArr[0] * 60) + parseInt(maxspeedTimeArr[1])
 
-      if (item.avg_time < 0) { // 后端 返回数据 异常时 处理最后一公里配速
+      if (item.avg_time < 0) {
+        // 后端 返回数据 异常时 处理最后一公里配速
         item.avg_time = SpeedDate.reduce((ac, cu) => ac + cu.avg_time, 0)
       }
       // 配速计算
-      item.speedTime = formatAvg(item.avg_time, !(item.distance) ?1000:(item.distance).toFixed(3))
-      itemspeedTimeArr = item.speedTime.split('\'')
-      item.Progress = parseInt(itemspeedTimeArr[0] * 60) + parseInt(itemspeedTimeArr[1])
+      item.speedTime = formatAvg(
+        item.avg_time,
+        !item.distance ? 1000 : item.distance.toFixed(3),
+      )
+      itemspeedTimeArr = item.speedTime.split("'")
+      item.Progress =
+        parseInt(itemspeedTimeArr[0] * 60) + parseInt(itemspeedTimeArr[1])
       // 获取最小值
-      if (obj.min.Progress > item.Progress ) {
+      if (obj.min.Progress > item.Progress) {
         obj.min = item
       }
       // 获取最大值
-      if (obj.max.Progress < item.Progress ) {
+      if (obj.max.Progress < item.Progress) {
         obj.max = item
       }
       if (item.index == maxKmIdx) throw Error()
     })
-  } catch { }
+  } catch {}
   // 最佳配速
+  if (distance < 1010) {
+    if (flag) {
+      obj.min.speedTime = avg_pace
+    } else {
+      obj.min.speedTime = formatShowAvg(avg_pace)
+    }
+  }
   obj.bestSpeed = obj.min.speedTime
   // 最后一公里是否超过或等于一公里
   if (distance % 1000 != 0) {
     obj.isOverKm = true
   }
+
   // 百分比计算
   SpeedDate.forEach((item) => {
     if (item.avg_time == obj.max.avg_time) {
       item.percentage = '100%'
     } else {
-      item.percentage = `${item.Progress / obj.max.Progress * 100}%`
+      item.percentage = `${(item.Progress / obj.max.Progress) * 100}%`
     }
   })
-  obj.speedDetails = SpeedDate.filter(el => el.speedTime)
-  console.log(obj);
+  obj.speedDetails = SpeedDate.filter((el) => el.speedTime)
+  console.log(obj)
   return obj
 }
 

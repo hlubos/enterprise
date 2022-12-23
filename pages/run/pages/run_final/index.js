@@ -24,7 +24,7 @@ let createSelectorQuery = wxFun.ordinary('createSelectorQuery')
 
 let innerAudioContext = createInnerAudioContext({ useWebAudioImplement: true })
 
-var log = require("../../../../common/log")
+var log = require('../../../../common/log')
 // innerAudioContext.autoplay = true
 Page({
   /**
@@ -41,10 +41,10 @@ Page({
     canvasHeight: 0,
     mapHeight: '600rpx',
     isShowPanel: true,
-    speedDetails:[],//配速详情
-    max:'',
-    min:'',
-    isOverKm:false,
+    speedDetails: [], //配速详情
+    max: '',
+    min: '',
+    isOverKm: false,
     pointsList: [],
     polylines: [
       {
@@ -71,7 +71,7 @@ Page({
     // 二维码图片
     qrcodeImg: 'https://ydcommon.51yund.com/wxapp/upimg/mini-qrcode.jpg',
     // 三角形
-    triangleImg:'../../../../assets/image/tri.png',
+    triangleImg: '../../../../assets/image/tri.png',
     // echarts的图片
     chartImage: '',
     // 跑步开始时间(时间戳)
@@ -92,8 +92,8 @@ Page({
       avgPace: `00'00''`,
       sumTime: '00:00',
       kCalorie: 0,
-      stride:0, // 步幅
-      bestSpeed:`00'00''`, //最佳配速
+      stride: 0, // 步幅
+      bestSpeed: `00'00''`, //最佳配速
     },
     // 用户信息
     userInfo: {
@@ -114,7 +114,7 @@ Page({
     map_thumb_url: '',
     isZh: wx.getStorageSync('language') == 'zh',
     // 分享按钮防抖
-    shareBtn:false
+    shareBtn: false,
   },
   handleMap(e) {},
   // 读取跑步设置缓存
@@ -130,44 +130,44 @@ Page({
       }
     } catch (e) {
       log.error({
-        "读取跑步设置缓存":e
+        读取跑步设置缓存: e,
       })
     }
   },
   // 打开/关闭面板
   switchPanel() {
-    try{
-    if (this.data.isShowPanel) {
-      this.setData({
-        isShowPanel: false,
-        mapHeight: '100vh',
+    try {
+      if (this.data.isShowPanel) {
+        this.setData({
+          isShowPanel: false,
+          mapHeight: '100vh',
+        })
+        // let mapBox = wx.createSelectorQuery()
+        // mapBox.select('.fina-map-box').boundingClientRect(res => {
+        //     this.setStaticMapInfo(res.width,res.height)
+        // }).exec()
+      } else {
+        this.setData({
+          isShowPanel: true,
+          mapHeight: '600rpx',
+        })
+        // let mapBox = wx.createSelectorQuery()
+        // mapBox.select('.fina-map-box').boundingClientRect(res => {
+        //     this.setStaticMapInfo(res.width,res.height)
+        // }).exec()
+      }
+      setTimeout(() => {
+        let mapFinalCtx = createMapContext('run-final-map', this) // mapId对应地图id属性
+        mapFinalCtx.includePoints({
+          padding: [70, 70, 70, 70], // padding类似我们css中的padding，可以有四个值
+          points: this.data.pointsList,
+        })
+      }, 500)
+    } catch (err) {
+      log.error({
+        '打开/关闭面板': err,
       })
-      // let mapBox = wx.createSelectorQuery()
-      // mapBox.select('.fina-map-box').boundingClientRect(res => {
-      //     this.setStaticMapInfo(res.width,res.height)
-      // }).exec()
-    } else {
-      this.setData({
-        isShowPanel: true,
-        mapHeight: '600rpx',
-      })
-      // let mapBox = wx.createSelectorQuery()
-      // mapBox.select('.fina-map-box').boundingClientRect(res => {
-      //     this.setStaticMapInfo(res.width,res.height)
-      // }).exec()
     }
-    setTimeout(() => {
-      let mapFinalCtx = createMapContext('run-final-map', this) // mapId对应地图id属性
-      mapFinalCtx.includePoints({
-        padding: [70, 70, 70, 70], // padding类似我们css中的padding，可以有四个值
-        points: this.data.pointsList,
-      })
-    }, 500)
-  }catch(err){
-    log.error({
-      "打开/关闭面板":err
-    })
-  }
   },
   // 结束跑步
   async runFinish() {
@@ -184,7 +184,7 @@ Page({
       // removeStorageSync(key)
     } catch (error) {
       log.error({
-        "结束跑步1":error
+        结束跑步1: error,
       })
     }
     navigateBack()
@@ -196,171 +196,179 @@ Page({
   // 跑步结束语音播报
   runFinishAudio() {
     //
-    try{
-    let auidos = this.audioDidy()
-    let index = 0
-    // innerAudioContext.src = `https://ydcommon.51yund.com/mini_run_voice/voice_1/${auidos[index]}.mp3`
-    this.playFinalVoice(
-      `https://ydcommon.51yund.com/mini_run_voice/voice_1/${auidos[index]}.mp3`,
-    )
-    // 监听音频自然结束
-    innerAudioContext.onEnded(() => {
-      index++
+    try {
+      let auidos = this.audioDidy()
+      let index = 0
       // innerAudioContext.src = `https://ydcommon.51yund.com/mini_run_voice/voice_1/${auidos[index]}.mp3`
       this.playFinalVoice(
         `https://ydcommon.51yund.com/mini_run_voice/voice_1/${auidos[index]}.mp3`,
       )
-      if (index >= auidos.length - 1) {
-        innerAudioContext.offEnded()
-      }
-    })
-  }catch(err){
-    log.error({
-      "跑步结束语音播报":err
-    })
-  }
+      // 监听音频自然结束
+      innerAudioContext.onEnded(() => {
+        index++
+        // innerAudioContext.src = `https://ydcommon.51yund.com/mini_run_voice/voice_1/${auidos[index]}.mp3`
+        this.playFinalVoice(
+          `https://ydcommon.51yund.com/mini_run_voice/voice_1/${auidos[index]}.mp3`,
+        )
+        if (index >= auidos.length - 1) {
+          innerAudioContext.offEnded()
+        }
+      })
+    } catch (err) {
+      log.error({
+        跑步结束语音播报: err,
+      })
+    }
   },
   // 语音播报内容整理
   audioDidy() {
-try{    // 总里程 xx点xx公里 总用时 xx小时xx分xx秒 平均配速 xx分xx秒 每公里
-    let allAudio = ['paobujieshu']
-    let { runKMiles, avgPace, sumTime } = this.data.showRunData
-    // 总里程语音播报数组=======================start============================
-    let runKMilesAudioList = []
-    runKMilesAudioList.push('zonglicheng')
-    let runKMilesArr = String(runKMiles).split('.')
-    // 小数点前面的
-    // 分成0,被10整除,和不被10整除
-    if (Number(runKMilesArr[0]) == 0) {
-      runKMilesAudioList = [...runKMilesAudioList, 0]
-    } else if (
-      Number(runKMilesArr[0]) % 10 == 0 &&
-      Number(runKMilesArr[0]) > 0
-    ) {
-      // 分成等于10和大于10
-      if (Number(runKMilesArr[0]) == 10) {
-        runKMilesAudioList = [...runKMilesAudioList, 10]
-      } else if (Number(runKMilesArr[0]) > 10) {
-        let firstNum = Number(runKMilesArr[0]) / 10
-        runKMilesAudioList = [...runKMilesAudioList, ...[firstNum, 10]]
-      }
-    } else if (Number(runKMilesArr[0]) % 10 > 0) {
-      // 分成大于20、小于20大于10、小于10
-      if (Number(runKMilesArr[0]) < 10) {
-        runKMilesAudioList = [...runKMilesAudioList, Number(runKMilesArr[0])]
-      } else if (Number(runKMilesArr[0]) > 10 && Number(runKMilesArr[0]) < 20) {
-        let lastNum = Number(runKMilesArr[0]) % 10
-        runKMilesAudioList = [...runKMilesAudioList, ...[10, lastNum]]
-      } else if (Number(runKMilesArr[0]) > 20) {
-        let firstNum = Number(runKMilesArr[0]) / 10
-        let lastNum = Number(runKMilesArr[0]) % 10
-        runKMilesAudioList = [...runKMilesAudioList, ...[firstNum, 10, lastNum]]
-      }
-    }
-    // 小数点后面的
-    if (Number(runKMilesArr[1]) > 0 && Number(runKMilesArr[1])) {
-      runKMilesAudioList = [...runKMilesAudioList, 'dian']
-      let newArr = String(runKMilesArr[1]).split('')
-      for (let i = 0; i < newArr.length; i++) {
-        runKMilesAudioList.push(newArr[i])
-      }
-    }
-    runKMilesAudioList.push('gongli')
-    // 总里程语音播报数组=====================end==============================
-    // 总用时================================start=================================
-    let sumTimeAudioList = []
-    sumTimeAudioList.push('zongyongshi')
-    let sumTimeArr = sumTime.split(':')
-    sumTimeArr.forEach((item, index) => {
-      // 数字
-      // 分为0,被10整除,和不被10整除
-      if (Number(item) == 0) {
-        sumTimeAudioList = [...sumTimeAudioList, 0]
-      } else if (Number(item) % 10 == 0 && Number(item) > 0) {
-        if (Number(item) > 10) {
-          let firstNum = Number(item) / 10
-          sumTimeAudioList = [...sumTimeAudioList, ...[firstNum, 10]]
-        } else if (Number(item) == 10) {
-          sumTimeAudioList = [...sumTimeAudioList, ...[10]]
+    try {
+      // 总里程 xx点xx公里 总用时 xx小时xx分xx秒 平均配速 xx分xx秒 每公里
+      let allAudio = ['paobujieshu']
+      let { runKMiles, avgPace, sumTime } = this.data.showRunData
+      // 总里程语音播报数组=======================start============================
+      let runKMilesAudioList = []
+      runKMilesAudioList.push('zonglicheng')
+      let runKMilesArr = String(runKMiles).split('.')
+      // 小数点前面的
+      // 分成0,被10整除,和不被10整除
+      if (Number(runKMilesArr[0]) == 0) {
+        runKMilesAudioList = [...runKMilesAudioList, 0]
+      } else if (
+        Number(runKMilesArr[0]) % 10 == 0 &&
+        Number(runKMilesArr[0]) > 0
+      ) {
+        // 分成等于10和大于10
+        if (Number(runKMilesArr[0]) == 10) {
+          runKMilesAudioList = [...runKMilesAudioList, 10]
+        } else if (Number(runKMilesArr[0]) > 10) {
+          let firstNum = Number(runKMilesArr[0]) / 10
+          runKMilesAudioList = [...runKMilesAudioList, ...[firstNum, 10]]
         }
-      } else if (Number(item) % 10 > 0) {
+      } else if (Number(runKMilesArr[0]) % 10 > 0) {
         // 分成大于20、小于20大于10、小于10
-        if (Number(Number(item) < 10)) {
-          sumTimeAudioList = [...sumTimeAudioList, Number(item)]
-        } else if (Number(item) > 10 && Number(item) < 20) {
-          let lastNum = Number(item) % 10
-          sumTimeAudioList = [...sumTimeAudioList, ...[10, lastNum]]
-        } else if (Number(item) > 20) {
-          let firstNum = Number(item) / 10
-          let lastNum = Number(item) % 10
-          sumTimeAudioList = [...sumTimeAudioList, ...[firstNum, 10, lastNum]]
+        if (Number(runKMilesArr[0]) < 10) {
+          runKMilesAudioList = [...runKMilesAudioList, Number(runKMilesArr[0])]
+        } else if (
+          Number(runKMilesArr[0]) > 10 &&
+          Number(runKMilesArr[0]) < 20
+        ) {
+          let lastNum = Number(runKMilesArr[0]) % 10
+          runKMilesAudioList = [...runKMilesAudioList, ...[10, lastNum]]
+        } else if (Number(runKMilesArr[0]) > 20) {
+          let firstNum = Number(runKMilesArr[0]) / 10
+          let lastNum = Number(runKMilesArr[0]) % 10
+          runKMilesAudioList = [
+            ...runKMilesAudioList,
+            ...[firstNum, 10, lastNum],
+          ]
         }
       }
-      // 单位
-      if (sumTimeArr.length == 3) {
+      // 小数点后面的
+      if (Number(runKMilesArr[1]) > 0 && Number(runKMilesArr[1])) {
+        runKMilesAudioList = [...runKMilesAudioList, 'dian']
+        let newArr = String(runKMilesArr[1]).split('')
+        for (let i = 0; i < newArr.length; i++) {
+          runKMilesAudioList.push(newArr[i])
+        }
+      }
+      runKMilesAudioList.push('gongli')
+      // 总里程语音播报数组=====================end==============================
+      // 总用时================================start=================================
+      let sumTimeAudioList = []
+      sumTimeAudioList.push('zongyongshi')
+      let sumTimeArr = sumTime.split(':')
+      sumTimeArr.forEach((item, index) => {
+        // 数字
+        // 分为0,被10整除,和不被10整除
+        if (Number(item) == 0) {
+          sumTimeAudioList = [...sumTimeAudioList, 0]
+        } else if (Number(item) % 10 == 0 && Number(item) > 0) {
+          if (Number(item) > 10) {
+            let firstNum = Number(item) / 10
+            sumTimeAudioList = [...sumTimeAudioList, ...[firstNum, 10]]
+          } else if (Number(item) == 10) {
+            sumTimeAudioList = [...sumTimeAudioList, ...[10]]
+          }
+        } else if (Number(item) % 10 > 0) {
+          // 分成大于20、小于20大于10、小于10
+          if (Number(Number(item) < 10)) {
+            sumTimeAudioList = [...sumTimeAudioList, Number(item)]
+          } else if (Number(item) > 10 && Number(item) < 20) {
+            let lastNum = Number(item) % 10
+            sumTimeAudioList = [...sumTimeAudioList, ...[10, lastNum]]
+          } else if (Number(item) > 20) {
+            let firstNum = Number(item) / 10
+            let lastNum = Number(item) % 10
+            sumTimeAudioList = [...sumTimeAudioList, ...[firstNum, 10, lastNum]]
+          }
+        }
+        // 单位
+        if (sumTimeArr.length == 3) {
+          if (index == 0) {
+            sumTimeAudioList.push('xiaoshi')
+          } else if (index == 1) {
+            sumTimeAudioList.push('fen')
+          } else if (index == 2) {
+            sumTimeAudioList.push('miao')
+          }
+        } else if (sumTimeArr.length == 2) {
+          if (index == 0) {
+            sumTimeAudioList.push('fen')
+          } else if (index == 1) {
+            sumTimeAudioList.push('miao')
+          }
+        }
+      })
+      // 总用时================================end====================
+      // 平均配速==============================start=================
+      let avgPaceAudioList = []
+      avgPaceAudioList.push('pingjunpeisu')
+      // 清除数组空元素
+      let avgPaceArr = avgPace.split("'").filter(function (s) {
+        return s && s.trim()
+      })
+      avgPaceArr.forEach((item, index) => {
+        // 数字
+        // 分为0,被10整除,和不被10整除
+        if (Number(item) == 0) {
+          avgPaceAudioList = [...avgPaceAudioList, 0]
+        } else if (Number(item) % 10 == 0 && Number(item) > 0) {
+          if (Number(item) > 10) {
+            let firstNum = Number(item) / 10
+            avgPaceAudioList = [...avgPaceAudioList, ...[firstNum, 10]]
+          } else if (Number(item) == 10) {
+            avgPaceAudioList = [...avgPaceAudioList, ...[10]]
+          }
+        } else if (Number(item) % 10 > 0) {
+          // 分成大于20、小于20大于10、小于10
+          if (Number(item) < 10) {
+            avgPaceAudioList = [...avgPaceAudioList, item]
+          } else if (Number(item) > 10 && Number(item) < 20) {
+            let lastNum = Number(item) % 10
+            avgPaceAudioList = [...avgPaceAudioList, ...[10, lastNum]]
+          } else if (Number(item) > 20) {
+            let firstNum = parseInt(Number(item) / 10)
+            let lastNum = Number(item) % 10
+            avgPaceAudioList = [...avgPaceAudioList, ...[firstNum, 10, lastNum]]
+          }
+        }
+        // 单位
         if (index == 0) {
-          sumTimeAudioList.push('xiaoshi')
+          avgPaceAudioList.push('fen')
         } else if (index == 1) {
-          sumTimeAudioList.push('fen')
-        } else if (index == 2) {
-          sumTimeAudioList.push('miao')
+          avgPaceAudioList.push('miao')
         }
-      } else if (sumTimeArr.length == 2) {
-        if (index == 0) {
-          sumTimeAudioList.push('fen')
-        } else if (index == 1) {
-          sumTimeAudioList.push('miao')
-        }
-      }
-    })
-    // 总用时================================end====================
-    // 平均配速==============================start=================
-    let avgPaceAudioList = []
-    avgPaceAudioList.push('pingjunpeisu')
-    // 清除数组空元素
-    let avgPaceArr = avgPace.split("'").filter(function (s) {
-      return s && s.trim()
-    })
-    avgPaceArr.forEach((item, index) => {
-      // 数字
-      // 分为0,被10整除,和不被10整除
-      if (Number(item) == 0) {
-        avgPaceAudioList = [...avgPaceAudioList, 0]
-      } else if (Number(item) % 10 == 0 && Number(item) > 0) {
-        if (Number(item) > 10) {
-          let firstNum = Number(item) / 10
-          avgPaceAudioList = [...avgPaceAudioList, ...[firstNum, 10]]
-        } else if (Number(item) == 10) {
-          avgPaceAudioList = [...avgPaceAudioList, ...[10]]
-        }
-      } else if (Number(item) % 10 > 0) {
-        // 分成大于20、小于20大于10、小于10
-        if (Number(item) < 10) {
-          avgPaceAudioList = [...avgPaceAudioList, item]
-        } else if (Number(item) > 10 && Number(item) < 20) {
-          let lastNum = Number(item) % 10
-          avgPaceAudioList = [...avgPaceAudioList, ...[10, lastNum]]
-        } else if (Number(item) > 20) {
-          let firstNum = parseInt(Number(item) / 10)
-          let lastNum = Number(item) % 10
-          avgPaceAudioList = [...avgPaceAudioList, ...[firstNum, 10, lastNum]]
-        }
-      }
-      // 单位
-      if (index == 0) {
-        avgPaceAudioList.push('fen')
-      } else if (index == 1) {
-        avgPaceAudioList.push('miao')
-      }
-    })
-    avgPaceAudioList.push('meigongli')
-    // 平均配速==============================end=================
-    // 合并所有
-    // allAudio = [...allAudio,...runKMilesAudioList,...sumTimeAudioList,...avgPaceAudioList]
-    allAudio = [...allAudio, ...runKMilesAudioList]
-    return allAudio}catch(err){
+      })
+      avgPaceAudioList.push('meigongli')
+      // 平均配速==============================end=================
+      // 合并所有
+      // allAudio = [...allAudio,...runKMilesAudioList,...sumTimeAudioList,...avgPaceAudioList]
+      allAudio = [...allAudio, ...runKMilesAudioList]
+      return allAudio
+    } catch (err) {
       log.error({
-        "语音播报内容整理":err
+        语音播报内容整理: err,
       })
     }
   },
@@ -387,10 +395,10 @@ try{    // 总里程 xx点xx公里 总用时 xx小时xx分xx秒 平均配速 xx�
   },
   // =========================================
   drawCanvas: function () {
-    if(this.data.shareBtn) return
+    if (this.data.shareBtn) return
     this.setData({
-      shareBtn:true,
-      shareFlag:true
+      shareBtn: true,
+      shareFlag: true,
     })
     showLoading({
       title: this.data.$language['分享图片生成中'],
@@ -441,20 +449,20 @@ try{    // 总里程 xx点xx公里 总用时 xx小时xx分xx秒 平均配速 xx�
             }&dataImg=${encodeURIComponent(url)}&mapImg=${encodeURIComponent(
               that.data.staticMapUrl,
             )}`,
-            complete(){
-             // 取消按钮锁 清除之前缓存的分享的数据
-             that.setData({
-              shareBtn:false,
-              showImg:'',
-              canvasHeight:0,
-              canvasWidth:0
-            })
-            }    
+            complete() {
+              // 取消按钮锁 清除之前缓存的分享的数据
+              that.setData({
+                shareBtn: false,
+                showImg: '',
+                canvasHeight: 0,
+                canvasWidth: 0,
+              })
+            },
           })
         },
         error(res) {
           log.error({
-            "分享失败":res
+            分享失败: res,
           })
           hideLoading()
           // 画失败的原因
@@ -463,7 +471,7 @@ try{    // 总里程 xx点xx公里 总用时 xx小时xx分xx秒 平均配速 xx�
             icon: 'error',
           })
           this.setData({
-            shareBtn:false
+            shareBtn: false,
           })
         },
       },
@@ -592,23 +600,23 @@ try{    // 总里程 xx点xx公里 总用时 xx小时xx分xx秒 平均配速 xx�
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    try{
-    i18nInstance.effect(this)
-    wx.setNavigationBarTitle({
-      title: this.data.$language['企业悦动'],
-    })
-    //
-    if (options.runner_id) {
-      this.setData({
-        runner_id: options.runner_id,
+    try {
+      i18nInstance.effect(this)
+      wx.setNavigationBarTitle({
+        title: this.data.$language['企业悦动'],
+      })
+      //
+      if (options.runner_id) {
+        this.setData({
+          runner_id: options.runner_id,
+        })
+      }
+      // this.setCanvasSize()
+    } catch (err) {
+      log.error({
+        '生命周期函数--监听页面加载': err,
       })
     }
-    // this.setCanvasSize()
-  }catch(err){
-    log.error({
-      "生命周期函数--监听页面加载":err
-    })
-  }
   },
 
   /**
@@ -627,8 +635,8 @@ try{    // 总里程 xx点xx公里 总用时 xx小时xx分xx秒 平均配速 xx�
         // points.push(item)
         points = [...points, ...item]
       })
-      console.log("完成页");
-      console.log(data);  
+      console.log('完成页')
+      console.log(data)
       this.setData({
         pointsList: points,
         'polylines[0].points': points,
@@ -641,11 +649,16 @@ try{    // 总里程 xx点xx公里 总用时 xx小时xx分xx秒 平均配速 xx�
           'yyyy-MM-dd hh:mm:ss',
         ),
         'showRunData.runKMiles': myFormats.clip(parseInt(data.runMiles) / 1000),
-        'showRunData.avgPace': myFormats.formatAvg(data.runTime,data.runMiles),
+        'showRunData.avgPace': myFormats.formatAvg(data.runTime, data.runMiles),
         'showRunData.sumTime': myFormats.secTranlateTime(data.runTime),
-        'showRunData.kCalorie': (55 * 1.036 * (data.runMiles / 1000)).toFixed(1),
-        'showRunData.stride':((data.runMiles*100)/data.steps).toFixed(0),
-        'showRunData.avgSpeed':(((data.runMiles/1000)/(data.runTime/360))*10).toFixed(1)
+        'showRunData.kCalorie': (55 * 1.036 * (data.runMiles / 1000)).toFixed(
+          1,
+        ),
+        'showRunData.stride': ((data.runMiles * 100) / data.steps).toFixed(0),
+        'showRunData.avgSpeed': (
+          (data.runMiles / 1000 / (data.runTime / 360)) *
+          10
+        ).toFixed(1),
       })
       // 设置静态地图
       this.setStaticMapInfo()
@@ -674,7 +687,9 @@ try{    // 总里程 xx点xx公里 总用时 xx小时xx分xx秒 平均配速 xx�
             let last_pace = parseInt((last_cost_time / last_distance) * 1000)
               ? parseInt((last_cost_time / last_distance) * 1000)
               : 0
-            let now_pace = parseInt((this.data.runTime / this.data.runMiles) * 1000)
+            let now_pace = parseInt(
+              (this.data.runTime / this.data.runMiles) * 1000,
+            )
             let paceCompare = {}
             if (now_pace >= last_pace) {
               paceCompare = {
@@ -694,51 +709,56 @@ try{    // 总里程 xx点xx公里 总用时 xx小时xx分xx秒 平均配速 xx�
               paceCompare,
             })
             let storageKey1 = 'run_data_' + user_id
-            let speed_infos=this.data.kmilesPaceCache
+            let speed_infos = this.data.kmilesPaceCache
             let data = getStorageSync(storageKey1)
-            console.log("speed_infos");
-            console.log(speed_infos);
-            console.log("data");
-            console.log(data);
-            for(const index in speed_infos){
-              speed_infos[index]={
-                index:speed_infos[index]['kmiles_cut'],
-                distance:speed_infos[index]['outMiles'],
-                avg_time:speed_infos[index]['usetime']
+            console.log('speed_infos')
+            console.log(speed_infos)
+            console.log('data')
+            console.log(data)
+            for (const index in speed_infos) {
+              speed_infos[index] = {
+                index: speed_infos[index]['kmiles_cut'],
+                distance: speed_infos[index]['outMiles'],
+                avg_time: speed_infos[index]['usetime'],
               }
             }
-            if(speed_infos.length==0)return
-            let obj=myFormats.processSpeedData(speed_infos,data.runMiles)
+            if (speed_infos.length == 0) return
+            let obj = myFormats.processSpeedData(
+              speed_infos,
+              data.runMiles,
+              this.data.showRunData.avgPace,
+              true,
+            )
+            console.log('111', this.data.showRunData.avgPace)
             this.setData({
-              speedDetails:obj.speedDetails,
-              'showRunData.bestSpeed':obj.bestSpeed,
-              max:obj.max,
-              min:obj.min,
-              isOverKm:obj.isOverKm
+              speedDetails: obj.speedDetails,
+              'showRunData.bestSpeed': obj.bestSpeed,
+              max: obj.max,
+              min: obj.min,
+              isOverKm: obj.isOverKm,
             })
-            console.log("obj");
-            console.log(obj);
+            console.log('obj')
+            console.log(obj)
           }
           // 清除缓存
           setStorageSync(storageKey1, {})
           setStorageSync(storageKey2, [])
         })
-   
 
-    //
-    var mapFinalCtx = createMapContext('run-final-map', this) // mapId对应地图id属性
-    mapFinalCtx.includePoints({
-      padding: [70, 70, 70, 70], // padding类似我们css中的padding，可以有四个值
-      points: this.data.pointsList,
-    })
-    this.setData({
-      loading: false,
-    })
-    // 语音播报
-    this.runFinishAudio()
-     } catch (error) {
+      //
+      var mapFinalCtx = createMapContext('run-final-map', this) // mapId对应地图id属性
+      mapFinalCtx.includePoints({
+        padding: [70, 70, 70, 70], // padding类似我们css中的padding，可以有四个值
+        points: this.data.pointsList,
+      })
+      this.setData({
+        loading: false,
+      })
+      // 语音播报
+      this.runFinishAudio()
+    } catch (error) {
       log.error({
-        "结束页加载错误":error
+        结束页加载错误: error,
       })
     }
   },
@@ -747,19 +767,20 @@ try{    // 总里程 xx点xx公里 总用时 xx小时xx分xx秒 平均配速 xx�
    * 生命周期函数--监听页面显示
    */
   onShow() {
-    try{
-      innerAudioContext = createInnerAudioContext({ useWebAudioImplement: true })
+    try {
+      innerAudioContext = createInnerAudioContext({
+        useWebAudioImplement: true,
+      })
       // innerAudioContext.autoplay = true
       this.getRunSetCache()
       this.setData({
-        shareFlag:0
+        shareFlag: 0,
       })
-    }catch(err){
+    } catch (err) {
       log.error({
-        "show":err
+        show: err,
       })
     }
-   
   },
 
   /**
