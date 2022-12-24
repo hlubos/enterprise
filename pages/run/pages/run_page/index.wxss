@@ -16,7 +16,7 @@
   line-height: 320rpx;
   color: #ffffff;
 }
-.run-touch-shade{
+.run-touch-shade {
   position: absolute;
   top: 0;
   left: 0;

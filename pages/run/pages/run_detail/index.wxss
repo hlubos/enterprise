@@ -4,7 +4,7 @@
       height: 100vh; */
   display: block;
 }
-.IndoordImg{
+.IndoordImg {
   width: 100%;
   height: 100%;
 }
@@ -119,7 +119,7 @@
 }
 
 .title2-left-kmeter {
-  flex:1;
+  flex: 1;
   align-self: center;
   text-align: center;
   font-weight: bold;
@@ -129,7 +129,7 @@
   /* background-color: #4cdd70; */
 }
 .title2-left-unit {
-padding-right: 2rem;
+  padding-right: 2rem;
   font-size: 28rpx;
   color: #666666;
   align-self: flex-end;
@@ -223,10 +223,10 @@ padding-right: 2rem;
   flex-wrap: wrap;
   justify-content: space-around;
 }
-.speed-line{
+.speed-line {
   position: absolute;
   left: 50%;
-  top:35%;
+  top: 35%;
   transform: translateX(-50%);
   width: 1rpx;
   height: 100rpx;
@@ -248,7 +248,7 @@ padding-right: 2rem;
 .table-title {
   width: 100%;
 }
-.table-item4{
+.table-item4 {
   width: 50%;
   text-align: center;
 }
@@ -323,8 +323,6 @@ padding-right: 2rem;
   border-radius: 52rpx;
 }
 
-
-
 .share-type-box {
   /* position: absolute; */
   /* bottom: 226rpx; */
@@ -374,11 +372,10 @@ padding-right: 2rem;
 }
 
 /* 配速条 */
-.Kilometer{
+.Kilometer {
   width: 654rpx;
 }
 .line-kilometer {
-  
   flex-wrap: wrap;
   width: 70rpx;
   text-align: center;
@@ -396,7 +393,6 @@ padding-right: 2rem;
 }
 
 .kilometre_num {
-
   font-size: 25rpx;
 }
 
@@ -411,7 +407,6 @@ padding-right: 2rem;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-
 }
 
 .line-wai {
@@ -434,9 +429,8 @@ padding-right: 2rem;
 
 .line_sign {
   margin: auto;
-  width:100%;
+  width: 100%;
   height: 40rpx;
- 
 }
 
 .line-minkm {

@@ -1,44 +1,40 @@
-
- .line{
+.line {
   position: relative;
   display: flex;
   align-items: center;
   width: 654rpx;
   height: 62rpx;
-  
 }
-.line-wai{
- flex:1;
- height: 18rpx;
- border: 0.1rpx black solid;
- /* border-radius: 40rpx; */
- margin: 0 20rpx;
- order: 4;
+.line-wai {
+  flex: 1;
+  height: 18rpx;
+  border: 0.1rpx black solid;
+  /* border-radius: 40rpx; */
+  margin: 0 20rpx;
+  order: 4;
 }
-.line-nei{
- width: 50%;
- height: 18rpx;
- /* border-radius: 40rpx; */
- background-color: rgb(2, 148, 245);
+.line-nei {
+  width: 50%;
+  height: 18rpx;
+  /* border-radius: 40rpx; */
+  background-color: rgb(2, 148, 245);
 }
-.line-kilometer{
- width: 50rpx;
- font-size: 27rpx;
- order: 1;
+.line-kilometer {
+  width: 50rpx;
+  font-size: 27rpx;
+  order: 1;
 }
-.line-triangle{
- position: absolute;
- left: 4%;
- width: 0rpx;
- height: 0rpx;
- border:13rpx solid transparent ;
- border-left-color: rgb(14, 189, 72);
- order: 2;
+.line-triangle {
+  position: absolute;
+  left: 4%;
+  width: 0rpx;
+  height: 0rpx;
+  border: 13rpx solid transparent;
+  border-left-color: rgb(14, 189, 72);
+  order: 2;
 }
-.line-minkm{
+.line-minkm {
   width: 61rpx;
   font-size: 27rpx;
   order: 5;
-} 
-
-
+}

@@ -120,7 +120,7 @@
   font-size: 80rpx;
   color: #333333;
   line-height: 80rpx; */
-  flex:1;
+  flex: 1;
   align-self: center;
   text-align: center;
   font-weight: bold;
@@ -128,7 +128,7 @@
   color: #333333;
   line-height: 80rpx;
 
-  flex:1;
+  flex: 1;
   align-self: center;
   text-align: center;
   font-weight: bold;
@@ -231,10 +231,10 @@
   flex-wrap: wrap;
   justify-content: space-around;
 }
-.speed-line{
+.speed-line {
   position: absolute;
   left: 50%;
-  top:35%;
+  top: 35%;
   transform: translateX(-50%);
   width: 1rpx;
   height: 100rpx;
@@ -256,7 +256,7 @@
 .table-title {
   width: 100%;
 }
-.table-item4{
+.table-item4 {
   width: 50%;
   text-align: center;
 }
@@ -341,9 +341,6 @@
   border-radius: 0 52rpx 52rpx 0;
 }
 
-
-
-
 .share-type-box {
   /* position: absolute; */
   /* bottom: 226rpx; */
@@ -393,11 +390,10 @@
 }
 
 /* 配速条 */
-.Kilometer{
+.Kilometer {
   width: 654rpx;
 }
 .line-kilometer {
-  
   flex-wrap: wrap;
   width: 70rpx;
   text-align: center;
@@ -415,7 +411,6 @@
 }
 
 .kilometre_num {
-
   font-size: 25rpx;
 }
 
@@ -430,7 +425,6 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-
 }
 
 .line-wai {
@@ -453,9 +447,8 @@
 
 .line_sign {
   margin: auto;
-  width:100%;
+  width: 100%;
   height: 40rpx;
- 
 }
 
 .line-minkm {

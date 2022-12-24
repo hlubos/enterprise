@@ -16,5 +16,5 @@ export default {
   // 获取轨迹点集合
   getRunnerPathData: '/sport/get_runner_path_data',
   // 同步步数
-  getUserDayStep: '/wx_app/get_user_day_step', 
+  getUserDayStep: '/wx_app/get_user_day_step',
 }

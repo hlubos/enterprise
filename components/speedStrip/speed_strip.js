@@ -7,20 +7,19 @@ Component({
    */
   properties: {
     speedDetail: Object,
-    min:Number,
-    max:Number
+    min: Number,
+    max: Number,
   },
-  attached(){
+  attached() {
     this.setData({
-      avg_speed:this.formatAvg(this.data.speedDetail.avg_time,1000)
+      avg_speed: this.formatAvg(this.data.speedDetail.avg_time, 1000),
     })
-
   },
   /**
    * 组件的初始数据
    */
   data: {
-    avg_speed:`0'00''`
+    avg_speed: `0'00''`,
   },
 
   /**
@@ -34,7 +33,7 @@ Component({
       if (miles == 0) {
         return "0'00''"
       }
-      
+
       var total_data = Math.floor((secs * 1000) / miles)
       var total_m =
         Math.floor(total_data / 60) > 59 ? 59 : Math.floor(total_data / 60)
@@ -43,7 +42,6 @@ Component({
     },
     add0(m) {
       return m < 10 ? '0' + m : m
-    }
-  }
-  
+    },
+  },
 })

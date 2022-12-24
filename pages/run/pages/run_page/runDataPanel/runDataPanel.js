@@ -94,7 +94,7 @@ Component({
       startStopRunTimer = setInterval(() => {
         if (this.data.stopRunVal >= 100) {
           clearInterval(startStopRunTimer)
-          utils.throttle(this.runStop()) //网络异常  进行节流 
+          utils.throttle(this.runStop()) //网络异常  进行节流
         } else {
           this.setData({
             stopRunVal: this.data.stopRunVal + 1,
