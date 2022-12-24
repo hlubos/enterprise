@@ -738,7 +738,7 @@ Page({
     })
     if (isExist) {
       oldArr[idx] = newData
-      newArr = oldArr[idx]
+      newArr = oldArr
     } else {
       newArr = [...oldArr, newData]
     }
@@ -872,6 +872,13 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady() {
+    //查看是否有多个页面加载
+    const pages = getCurrentPages()
+    if (pages.length > 2) {
+      if (pages[pages.length - 1].route == pages[pages.length - 2].route) {
+        wx.navigateBack()
+      }
+    }
     // 查看缓存，是否有上次未完成的运动
     let cacheData = this.getRunDataCache()
     console.log(cacheData)

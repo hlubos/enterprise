@@ -2,7 +2,7 @@
 import api from '../../../../server/run'
 import tool from '../../../../common/tool'
 import loginApi from '../../../../server/login'
-import utils from "../../../../common/utils"
+import utils from '../../../../common/utils'
 import i18nInstance from 'miniprogram-i18n-plus'
 
 const app = getApp()
@@ -55,9 +55,9 @@ Component({
       'layer-style': '1',
     },
     // 是否跳转过页面
-    isGoPage:false,
+    isGoPage: false,
     // 是否在能点击其他事件
-    isBtnIng:false
+    isBtnIng: false,
   },
 
   /**
@@ -109,10 +109,10 @@ Component({
       })
     },
     // 开始运动
-    startRun:utils.throttle(function() {
-      if(this.data.isBtnIng) return
+    startRun: utils.throttle(function () {
+      if (this.data.isBtnIng) return
       this.setData({
-        isBtnIng:true
+        isBtnIng: true,
       })
       // this.selectComponent('#runTypeModal').showFrame();
       // 运动前首先检查权限是否满足，权限满足则允许跑步，不满足则弹出弹框（去设置）
@@ -160,32 +160,32 @@ Component({
           )
         }
       })
-    },3000),
+    }, 3000),
     // 进入跑步记录页
-    gotoRunHistory:utils.throttle( function(){
-      let that=this
-      if(this.data.isBtnIng) return
+    gotoRunHistory: utils.throttle(function () {
+      let that = this
+      if (this.data.isBtnIng) return
       this.setData({
-        isBtnIng:true
+        isBtnIng: true,
       })
       navigateTo({
         url: '/pages/run/pages/run_log/index',
-        complete(){
+        complete() {
           setTimeout(() => {
             that.setData({
-              isBtnIng:false
+              isBtnIng: false,
             })
-          },1000);
-        }
+          }, 1000)
+        },
       })
-    },2000),
+    }, 2000),
     // 返回上一页
     back() {
       navigateBack()
     },
     // 进入跑步页面
     gotoRunPage() {
-      let that=this
+      let that = this
       // 室内跑暂未开发
       if (this.data.runType == 1) {
         showToast({
@@ -200,13 +200,13 @@ Component({
       }
       navigateTo({
         url: '/pages/run/pages/run_page/index',
-        complete(){
+        complete() {
           setTimeout(() => {
             that.setData({
-              isBtnIng:false
+              isBtnIng: false,
             })
-          },1000);
-        }
+          }, 1000)
+        },
       })
       // hideLoading()
     },
@@ -270,7 +270,7 @@ Component({
     // 读取用户缓存，判断是否为新用户
     async judgeNewUser() {
       this.setData({
-        isGoPage:true
+        isGoPage: true,
       })
       // let user_id = await getStorageSync('user_id')
       // let storageKey = 'isNewUser_' + user_id
@@ -333,7 +333,7 @@ Component({
       // 读取缓存查看是否存在未完成的运动
       this.getRunDataCache()
       // 读缓存判断是否为新用户
-      if(this.data.isGoPage) return //如果跳转了提示页 就不再跳转
+      if (this.data.isGoPage) return //如果跳转了提示页 就不再跳转
       this.judgeNewUser()
     },
   },

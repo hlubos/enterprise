@@ -3,6 +3,7 @@ import api from '../../server/run'
 import Wxml2Canvas from '../../wxml2canvas/index'
 import wxFun from '../../utils/wxFun'
 import i18nInstance from 'miniprogram-i18n-plus'
+import utils from '../../../../common/utils'
 let navigateTo = wxFun.promisify('navigateTo')
 let showLoading = wxFun.promisify('showLoading')
 let hideLoading = wxFun.promisify('hideLoading')
@@ -11,7 +12,7 @@ let previewImage = wxFun.promisify('previewImage')
 let saveImageToPhotosAlbum = wxFun.promisify('saveImageToPhotosAlbum')
 let createSelectorQuery = wxFun.ordinary('createSelectorQuery')
 let getStorageSync = wxFun.ordinary('getStorageSync')
-var log = require("../../../../common/log")
+var log = require('../../../../common/log')
 Page({
   /**
    * 页面的初始数据
@@ -25,24 +26,25 @@ Page({
     posterImgUrl: '',
     canvasWidth: 750,
     canvasHeight: 1000,
+    isFinish: false,
   },
   // 调整canvas宽高
   setCanvasSize() {
-    return new Promise(reslove=>{
-    let shareBox = createSelectorQuery()
-    shareBox
-      .select('.img-area')
-      .boundingClientRect((res) => {
-        // myCanvasHeight = res.height
-        this.setData({
-          canvasHeight: res.height,
-          canvasWidth: res.width,
+    return new Promise((reslove) => {
+      let shareBox = createSelectorQuery()
+      shareBox
+        .select('.img-area')
+        .boundingClientRect((res) => {
+          // myCanvasHeight = res.height
+          this.setData({
+            canvasHeight: res.height,
+            canvasWidth: res.width,
+          })
+          console.log('调整canvas宽高')
+          console.log(res)
+          reslove()
         })
-        console.log("调整canvas宽高");
-        console.log(res);
-        reslove()
-      })
-      .exec()      
+        .exec()
     })
   },
   // 生成图片
@@ -68,7 +70,7 @@ Page({
   async draw() {
     let that = this
     //创建wxml2canvas对象
-    console.log("star draw");
+    console.log('star draw')
     let drawImage = new Wxml2Canvas(
       {
         element: 'answerCanvas', // canvas节点的id,
@@ -93,13 +95,14 @@ Page({
           })
           that.setData({
             posterImgUrl: url,
+            isFinish: true,
           })
         },
         error(res) {
-          console.log("darw");
-          console.log(res);
+          console.log('darw')
+          console.log(res)
           log.error({
-            "share_err":res
+            share_err: res,
           })
           hideLoading()
           // 画失败的原因
@@ -107,7 +110,7 @@ Page({
       },
       that,
     )
-    console.log("drawImage after");
+    console.log('drawImage after')
     let data = {
       //直接获取wxml数据
       list: [
@@ -121,17 +124,18 @@ Page({
         },
       ],
     }
-    console.log("setCanvasSize before");
-    await  this.setCanvasSize()
-    console.log("setCanvasSize after");
+    console.log('setCanvasSize before')
+    await this.setCanvasSize()
+    console.log('setCanvasSize after')
     drawImage.draw(data, that)
-    console.log("draw after");
+    console.log('draw after')
   },
   // 保存图片
   clickSaveImg() {
+    if (!this.data.isFinish) return
     console.log('filePath', this.data.posterImgUrl)
     log.error({
-      "保存图片":this.data.posterImgUrl
+      保存图片: this.data.posterImgUrl,
     })
     if (!this.data.posterImgUrl) {
       showToast({
@@ -159,8 +163,9 @@ Page({
   },
 
   // 微信分享
-  wxShare() {
-    let that=this
+  wxShare: utils.throttle(function () {
+    if (!this.data.isFinish) return
+    let that = this
     if (!this.data.posterImgUrl) {
       showToast({
         title: this.data.$language['保存失败'],
@@ -171,17 +176,17 @@ Page({
     }
     wx.showToast({
       title: this.data.$language['长按图片分享'],
-      icon:'none',
-      duration:1500
+      icon: 'none',
+      duration: 1500,
     })
     setTimeout(() => {
       previewImage({
         urls: [that.data.posterImgUrl],
-      }).then(()=>{
+      }).then(() => {
         wx.hideLoading()
       })
-    }, 1000);
-  },
+    }, 1000)
+  }, 2000),
   /**
    * 生命周期函数--监听页面加载
    */
@@ -218,9 +223,7 @@ Page({
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload() {
-    
-  },
+  onUnload() {},
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
