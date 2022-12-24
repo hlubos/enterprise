@@ -332,7 +332,8 @@ Page({
           parseInt(this.data.runLog.distance) / 1000,
         ),
         'showRunData.avgPace': myFormats.formatShowAvg(
-          this.data.runLog.avg_pace,
+          this.data.runLog.avg_pace ||
+            this.data.runLog.cost_time / (this.data.runLog.distance / 1000),
         ),
         'showRunData.sumTime': myFormats.secTranlateTime(
           this.data.runLog.cost_time,
@@ -383,7 +384,8 @@ Page({
           let obj = myFormats.processSpeedData(
             JSON.parse(res.speed_detail),
             this.data.runLog.distance,
-            this.data.runLog.avg_pace,
+            this.data.runLog.avg_pace ||
+              this.data.runLog.cost_time / (this.data.runLog.distance / 1000),
           )
           this.setData({
             speedDetails: obj.speedDetails,
