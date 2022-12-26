@@ -317,7 +317,6 @@ Page({
           if (data.code == 0) {
             if (flag) {
               //如果为初始化步数
-              console.log('setNowStep true')
               this.setData({
                 steps: 0,
                 initialStep: data.steps,
@@ -325,16 +324,10 @@ Page({
               resolve()
             } else {
               //如果为结束 或 暂停
-              console.log('setNowStep')
-              console.log(this.data.steps)
-              console.log(this.data.initialStep)
               this.setData({
                 steps: data.steps - this.data.initialStep + this.data.steps,
                 initialStep: data.steps,
               })
-              console.log('----')
-              console.log(this.data.steps)
-              console.log(this.data.initialStep)
               resolve()
             }
           }
@@ -344,7 +337,6 @@ Page({
   },
   // 开始跑步
   async runStart(isFirst = true) {
-    console.log('开始')
     // 开始计时
     let second = this.data.runTime
     // let canGetLocation = true
@@ -571,17 +563,12 @@ Page({
       this.setData({
         steps: this.data.steps || 1.4 * this.data.runMiles, // //在短时间内结束跑步 会导致微信步数更新不及时  采用平均值的的算法 获取步数
       })
-      console.log('结束')
-      console.log(this.data.steps)
-      console.log(this.data.initialStep)
       this.setRunDataCache()
       // 处理缓存数据
       let speed_infos = this.getKmilesCache()
-      console.log('处理前的每公里配速')
       log.info({
         处理前的每公里配速: speed_infos,
       })
-      console.log(speed_infos)
       for (const index in speed_infos) {
         speed_infos[index] = {
           index: speed_infos[index]['kmiles_cut'],
@@ -589,11 +576,9 @@ Page({
           avg_time: speed_infos[index]['usetime'],
         }
       }
-      console.log('处理后的每公里配速')
       log.info({
         处理后的每公里配速: speed_infos,
       })
-      console.log(speed_infos)
       // 上报跑步数据
       let params = {
         kind_id: 0,
@@ -624,11 +609,9 @@ Page({
           (this.data.runTime / 3600)
         ).toFixed(2)
       }
-      console.log('上传参数')
       log.info({
         上传参数: params,
       })
-      console.log(params)
       api.reportRunnerInfo(params).then((res) => {
         // 获取runner_id
         let runId = res.runner_id
@@ -668,7 +651,6 @@ Page({
   }, 1500),
   // 缓存运动数据
   setRunDataCache() {
-    console.log('缓存运动数据')
     let user_id = getStorageSync('user_id')
     let storageKey = 'run_data_' + user_id
     setStorage({
@@ -881,7 +863,6 @@ Page({
     }
     // 查看缓存，是否有上次未完成的运动
     let cacheData = this.getRunDataCache()
-    console.log(cacheData)
     // 有残留的运动记录时
     if (cacheData && JSON.stringify(cacheData) != '{}') {
       let {
@@ -958,7 +939,6 @@ Page({
             runStartTime: parseInt(Date.now() / 1000),
           })
           clearInterval(this.data.runGuideCountTimer)
-          console.log('定时结束')
           this.runStart()
           // innerAudioContext.src = "https://ydcommon.51yund.com/mini_run_voice/voice_1/kaishipaobu.mp3"
           backgroundAudioManager.src =
@@ -989,7 +969,6 @@ Page({
     let user_id = getStorageSync('user_id')
     let storageKey = 'run_data_' + user_id
     let cacheData = getStorageSync('storageKey')
-    console.log('页面卸载')
     // 存储步数
 
     if (cacheData && JSON.stringify(cacheData) != '{}') {

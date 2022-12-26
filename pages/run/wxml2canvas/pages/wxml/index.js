@@ -92,7 +92,6 @@ Page({
       background: '#f0f0f0',
       progress(percent) {},
       finish(url) {
-        console.log(url)
         let imgs = self.data.imgs
         imgs.push(url)
 

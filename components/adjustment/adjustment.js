@@ -22,7 +22,6 @@ Component({
       success() {
         //加速数据事件回调函数
         wx.onAccelerometerChange((el) => {
-          console.log(Math.atan2(el.y, el.z))
           var s = 0
           ;(s =
             (n = 180 + 57.3 * Math.atan2(el.y, el.z)) * a < 0
@@ -30,10 +29,9 @@ Component({
               : n * a > 424
               ? 380
               : n * a),
-            console.log(n, '789')
-          that.setData({
-            styleTop: s,
-          })
+            that.setData({
+              styleTop: s,
+            })
           const num = Math.floor(n)
           if (num < 65) {
             if (that.data.isTocanvas == true) {
@@ -79,9 +77,7 @@ Component({
           }
         })
       },
-      fail(res) {
-        console.log('失败')
-      },
+      fail(res) {},
     })
   },
   methods: {},

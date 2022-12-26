@@ -425,7 +425,7 @@ Page({
     var t = this,
       e = arguments.length > 0 && void 0 !== arguments[0] && arguments[0],
       i = this
-    if (this.data.gameEnd) return console.log('结束啦'), void this.clearTimer()
+    if (this.data.gameEnd) return void this.clearTimer()
     var a = [5, 6, 9, 10, 11, 12],
       n = i.isMoving(a)
     i.data.time != i.data.recordTime &&
@@ -595,8 +595,7 @@ Page({
               i.setData({
                 predicting: !1,
               }),
-                i.data.gameStart && i.isOutScreen(!0),
-                console.log(t, t.stack)
+                i.data.gameStart && i.isOutScreen(!0)
             })
         },
       )

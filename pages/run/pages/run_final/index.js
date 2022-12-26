@@ -635,8 +635,6 @@ Page({
         // points.push(item)
         points = [...points, ...item]
       })
-      console.log('完成页')
-      console.log(data)
       this.setData({
         pointsList: points,
         'polylines[0].points': points,
@@ -711,10 +709,6 @@ Page({
             let storageKey1 = 'run_data_' + user_id
             let speed_infos = this.data.kmilesPaceCache
             let data = getStorageSync(storageKey1)
-            console.log('speed_infos')
-            console.log(speed_infos)
-            console.log('data')
-            console.log(data)
             for (const index in speed_infos) {
               speed_infos[index] = {
                 index: speed_infos[index]['kmiles_cut'],
@@ -729,7 +723,6 @@ Page({
               this.data.showRunData.avgPace,
               true,
             )
-            console.log('111', this.data.showRunData.avgPace)
             this.setData({
               speedDetails: obj.speedDetails,
               'showRunData.bestSpeed': obj.bestSpeed,
@@ -737,8 +730,6 @@ Page({
               min: obj.min,
               isOverKm: obj.isOverKm,
             })
-            console.log('obj')
-            console.log(obj)
           }
           // 清除缓存
           setStorageSync(storageKey1, {})

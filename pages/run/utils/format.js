@@ -168,7 +168,6 @@ function processSpeedData(SpeedDate, distance, avg_pace, flag = false) {
     }
   })
   obj.speedDetails = SpeedDate.filter((el) => el.speedTime)
-  console.log(obj)
   return obj
 }
 

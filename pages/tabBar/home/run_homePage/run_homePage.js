@@ -352,15 +352,12 @@ Component({
             scope: 'scope.userLocationBackground',
           })
             .then((ress) => {
-              console.log(ress)
               this.setData({
                 'auth.hasAuthUserLocation': true,
                 'auth.hasAuthUserLocationBackground': true,
               })
             })
-            .catch((err) => {
-              console.log(err)
-            })
+            .catch((err) => {})
         }
       })
     },

@@ -278,8 +278,6 @@ Page({
     this.setData({
       runLog: JSON.parse(decodeURIComponent(options.runLog)),
     })
-    console.log('页面传值')
-    console.log(this.data.runLog, options.runner_id)
     i18nInstance.effect(this)
     wx.setNavigationBarTitle({
       title: this.data.$language['企业悦动'],
@@ -297,8 +295,6 @@ Page({
             // need_health_report:1
           })
           .then((res) => {
-            console.log('// 获取轨迹集合')
-            console.log(res)
             let detail = JSON.parse(res.detail)
             for (const key in detail) {
               points.push({
@@ -354,7 +350,6 @@ Page({
           (this.data.runLog.u_steps ? this.data.runLog.u_steps : 1)
         ).toFixed(0),
       })
-      console.log(this.data.showRunData)
       //
       if (this.data.showRunData.stride == this.data.runLog.distance * 100) {
         //步幅异常给默认步幅
@@ -378,8 +373,6 @@ Page({
           now_timestamp: new Date().getTime(),
         })
         .then((res) => {
-          console.log('每公里配速详情')
-          console.log(res)
           //处理配速数据
           let obj = myFormats.processSpeedData(
             JSON.parse(res.speed_detail),
@@ -402,8 +395,6 @@ Page({
           runner_id: this.data.runner_id,
         })
         .then((res) => {
-          console.log('跑步结束详情页')
-          console.log(res)
           if (res.code == 0) {
             this.setData({
               'userInfo.head_url': res.user_info.head_url,

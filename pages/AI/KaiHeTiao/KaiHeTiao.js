@@ -408,7 +408,7 @@ Page({
     var t = this,
       i = arguments.length > 0 && void 0 !== arguments[0] && arguments[0],
       a = this
-    if (this.data.gameEnd) return console.log('结束啦'), void this.clearTimer()
+    if (this.data.gameEnd) return void this.clearTimer()
     var e = [5, 6, 11, 12, 15, 16],
       n = a.isMoving(e)
     a.data.time != a.data.recordTime &&
@@ -634,10 +634,9 @@ Page({
               }
             })
             .catch(function (t) {
-              console.log(t, t.stack),
-                e.setData({
-                  predicting: !1,
-                }),
+              e.setData({
+                predicting: !1,
+              }),
                 e.data.gameStart && e.isOutScreen(!0)
             })
         },

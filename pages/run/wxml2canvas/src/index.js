@@ -137,7 +137,6 @@ class Wxml2Canvas {
         })
       })
       .catch((e) => {
-        console.log(e)
         self.errorHandler(e)
       })
 
@@ -240,7 +239,6 @@ class Wxml2Canvas {
                   imageInfo(item.url)
                 },
                 fail(res) {
-                  console.log('11111')
                   reject(res)
                 },
               })
@@ -266,7 +264,6 @@ class Wxml2Canvas {
               })
             }
           } else {
-            console.log(item.url);
             wx.downloadFile({
               url: item.url.replace(/^https?/, 'https'),
               success: function (res) {
@@ -287,7 +284,6 @@ class Wxml2Canvas {
                 })
               },
               fail: (res) => {
-                console.log('444444')
                 self.errorHandler(res)
                 reject({ errcode: 1001, errmsg: 'download pic error' })
               },

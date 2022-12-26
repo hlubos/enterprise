@@ -40,8 +40,6 @@ Page({
             canvasHeight: res.height,
             canvasWidth: res.width,
           })
-          console.log('调整canvas宽高')
-          console.log(res)
           reslove()
         })
         .exec()
@@ -70,7 +68,6 @@ Page({
   async draw() {
     let that = this
     //创建wxml2canvas对象
-    console.log('star draw')
     let drawImage = new Wxml2Canvas(
       {
         element: 'answerCanvas', // canvas节点的id,
@@ -86,7 +83,6 @@ Page({
           // 绘制进度
         },
         finish(url) {
-          console.log(url)
           hideLoading()
           showToast({
             title: that.data.$language['图片已生成'],
@@ -99,8 +95,6 @@ Page({
           })
         },
         error(res) {
-          console.log('darw')
-          console.log(res)
           log.error({
             share_err: res,
           })
@@ -110,7 +104,6 @@ Page({
       },
       that,
     )
-    console.log('drawImage after')
     let data = {
       //直接获取wxml数据
       list: [
@@ -124,16 +117,12 @@ Page({
         },
       ],
     }
-    console.log('setCanvasSize before')
     await this.setCanvasSize()
-    console.log('setCanvasSize after')
     drawImage.draw(data, that)
-    console.log('draw after')
   },
   // 保存图片
   clickSaveImg() {
     if (!this.data.isFinish) return
-    console.log('filePath', this.data.posterImgUrl)
     log.error({
       保存图片: this.data.posterImgUrl,
     })

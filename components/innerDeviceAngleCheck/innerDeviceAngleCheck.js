@@ -31,14 +31,10 @@ Component({
             : 'android' == t.platform && (e.platform = 'android'),
           e.deviceLinstener()
       },
-      fail: function (e) {
-        console.log(e)
-      },
+      fail: function (e) {},
     })
   },
-  detached: function () {
-    console.log('移除'), this.closeListent()
-  },
+  detached: function () {},
   methods: {
     deviceLinstener: function () {
       var e = this
@@ -91,9 +87,7 @@ Component({
                   clearInterval(e.countDownInterVal))
           })
         },
-        fail: function (e) {
-          console.log(e)
-        },
+        fail: function (e) {},
       })
     },
     closeListent: function () {

@@ -36,8 +36,6 @@ Page({
     }
     api.userSportSummary(params).then((res) => {
       if (res.code == 0) {
-        console.log('用户历史记录')
-        console.log(res)
         this.setData({
           total_cnt: res.summary_detail.sport_cnt,
           total_cost_time: myFormats.secTranlateTime(
@@ -69,8 +67,6 @@ Page({
       offset: this.data.offset,
     })
     if (peakRecordRes.code == 0) {
-      console.log('轨迹图')
-      console.log(peakRecordRes)
       this.setData({
         has_more: peakRecordRes.has_more,
         offset: this.data.offset + peakRecordRes.runner_extra_infos.length,
@@ -96,8 +92,6 @@ Page({
       kind_id: 100,
     }
     api.getRunnerInfo(params).then((res) => {
-      console.log('用户跑步记录')
-      console.log(res)
       if (res.code == 0) {
         let infosLen = res.infos.length
         let newInfos = res.infos
@@ -120,7 +114,6 @@ Page({
             newInfos[i].cost_time,
           )
           // avg_pace formatAvg
-          console.log(newInfos[i])
 
           if (
             this.data.thumbImgList.find(
@@ -170,8 +163,6 @@ Page({
    * 图片加载错误触发的事件
    */
   errorFunction(e) {
-    console.log(e)
-    console.log(this.data.runLogList)
     // debugger
     if (e.type == 'error') {
       var errorImgIndex = e.target.dataset.errorimg //获取错误图片循环的下标

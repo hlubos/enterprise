@@ -224,14 +224,12 @@ Page({
   },
   // 保存二维码图片
   saveQRcodeImg(e) {
-    console.log(e, 'e')
     let img = e.detail.data[0].qrImgData
     wx.getFileSystemManager().writeFile({
       filePath: wx.env.USER_DATA_PATH + '/qrcode.jpeg', //这里先把文件写到临时目录里.
       data: img.slice(22), //注意这里
       encoding: 'base64',
       success: (res) => {
-        console.log('success')
         wx.saveImageToPhotosAlbum({
           filePath: wx.env.USER_DATA_PATH + '/qrcode.jpeg', //这是把临时文件 保存到 相册, 收工
           success: (res) => {
@@ -239,14 +237,10 @@ Page({
               title: '保存成功！',
             })
           },
-          fail: (error) => {
-            console.log(error)
-          },
+          fail: (error) => {},
         })
       },
-      fail: (error) => {
-        console.log(error)
-      },
+      fail: (error) => {},
     })
   },
 })
