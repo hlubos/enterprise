@@ -413,15 +413,13 @@
   flex: 1;
   height: 18rpx;
   background-color: #ccc;
-  border-radius: 100rpx;
-}
+  }
 
 .line-nei {
   width: 50%;
   height: 18rpx;
   /* border-radius: 40rpx; */
   background-color: rgb(2, 148, 245);
-  border-radius: 100rpx;
 }
 
 .line-triangle {
