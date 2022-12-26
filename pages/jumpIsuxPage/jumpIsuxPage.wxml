@@ -1,0 +1,5 @@
+<!--pages/jumpIsuxPage/jumpIsuxPage.wxml-->
+<!-- 跳转公众号的中转页面 -->
+<view>
+  <web-view src="{{textUrl}}" bindload="scc" binderror="err"></web-view>
+</view>

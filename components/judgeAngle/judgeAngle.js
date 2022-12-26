@@ -68,6 +68,7 @@ Component({
         success: function (r) {
           //加速数据事件回调函数
           wx.onAccelerometerChange((el) => {
+            console.log(Math.atan2(el.y, el.z))
             if (
               that.properties.angleRange &&
               that.data.angleRangeArr.length == 0
@@ -89,6 +90,7 @@ Component({
               styleTop: s,
             })
             const num = Math.floor(n)
+            console.log(num, '999999')
             if (num < 65) {
               if (that.data.isTocanvas == true) {
                 clearInterval(that.data.countDownInterVal)
@@ -137,7 +139,9 @@ Component({
             }
           })
         },
-        fail(res) {},
+        fail(res) {
+          console.log('失败')
+        },
       })
     },
     removeListent: function () {

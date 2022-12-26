@@ -355,6 +355,7 @@ Page({
     }, 1e3)
   },
   uploadScore: function () {
+    console.log(`=====uploadScore====`)
     var t = this
     clearInterval(t.timerDown),
       this.backgroundVideo && this.backgroundVideo.stop(),
@@ -389,7 +390,7 @@ Page({
     var t = this,
       i = arguments.length > 0 && void 0 !== arguments[0] && arguments[0],
       a = this
-    if (this.data.gameEnd) return void this.clearTimer()
+    if (this.data.gameEnd) return console.log('结束啦'), void this.clearTimer()
     var e = [5, 6, 7, 8],
       o = a.isMoving(e)
     a.data.time != a.data.recordTime &&
@@ -629,10 +630,11 @@ Page({
           i.hideLoadingToast()
         })
         .catch(function (t) {
-          wx.showToast({
-            title: '网络连接异常',
-            icon: 'none',
-          })
+          console.log(t),
+            wx.showToast({
+              title: '网络连接异常',
+              icon: 'none',
+            })
         })
   },
   showLoadingToast: function () {

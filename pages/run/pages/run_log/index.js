@@ -163,7 +163,6 @@ Page({
    * 图片加载错误触发的事件
    */
   errorFunction(e) {
-    // debugger
     if (e.type == 'error') {
       var errorImgIndex = e.target.dataset.errorimg //获取错误图片循环的下标
       var runLogList = this.data.runLogList //将图片列表数据绑定到变量

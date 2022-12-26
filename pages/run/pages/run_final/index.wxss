@@ -25,7 +25,6 @@
   /* height: 100%; */
   transition: all ease 0.5s;
 }
-
 .static-map {
   width: 100%;
   height: 100%;

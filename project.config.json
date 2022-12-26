@@ -1,30 +1,24 @@
 {
   "appid": "wx6beecc00b14f8817",
-  "projectname": "enterprise-master",
+  "projectname": "企业悦动",
   "compileType": "miniprogram",
   "packOptions": {
     "ignore": [],
     "include": []
   },
   "setting": {
-    "urlCheck": false,
-    "es6": true,
-    "enhance": true,
-    "postcss": true,
-    "preloadBackgroundData": false,
-    "minified": true,
-    "newFeature": false,
     "coverView": true,
-    "nodeModules": false,
-    "autoAudits": false,
+    "es6": true,
+    "postcss": true,
+    "minified": true,
+    "enhance": true,
     "showShadowRootInWxmlPanel": true,
     "scopeDataCheck": false,
     "uglifyFileName": false,
     "checkInvalidKey": true,
-    "checkSiteMap": false,
+    "checkSiteMap": true,
     "uploadWithSourceMap": true,
     "compileHotReLoad": false,
-    "lazyloadPlaceholderEnable": false,
     "useMultiFrameRuntime": true,
     "useApiHook": true,
     "useApiHostProcess": true,
@@ -33,7 +27,11 @@
       "disablePlugins": [],
       "outputPath": ""
     },
+    "enableEngineNative": false,
+    "bundle": false,
     "useIsolateContext": true,
+    "useCompilerModule": true,
+    "userConfirmedUseCompilerModuleSwitch": false,
     "userConfirmedBundleSwitch": false,
     "packNpmManually": true,
     "packNpmRelationList": [
@@ -43,17 +41,12 @@
       }
     ],
     "minifyWXSS": true,
-    "disableUseStrict": false,
-    "minifyWXML": true,
-    "showES6CompileOption": false,
-    "useCompilerPlugins": false,
     "ignoreUploadUnusedFiles": true
   },
   "editorSetting": {
     "tabIndent": "insertSpaces",
     "tabSize": 2
   },
-  "libVersion": "2.26.1",
   "condition": {
     "miniprogram": {
       "list": [

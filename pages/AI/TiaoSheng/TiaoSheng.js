@@ -73,6 +73,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    console.log(`options==`, options)
     if (options.limit_time > 0) {
       let limitTime = parseInt(options.limit_time)
       this.setData({
@@ -202,6 +203,7 @@ Page({
         this.hideLoadingToast()
       })
       .catch((err) => {
+        console.log(err)
         wx.showToast({
           title: '网络连接异常，请返回重试',
           icon: 'none',
@@ -237,6 +239,10 @@ Page({
                 })
                 if (!that.reStartTimer) {
                   that.reStartTimer = setInterval(function () {
+                    console.log(
+                      `a.data.reStartCountDown===`,
+                      that.data.reStartCountDown,
+                    )
                     if (that.data.reStartCountDown > 1) {
                       that.setData({
                         reStartCountDown: that.data.reStartCountDown - 1,
@@ -255,7 +261,9 @@ Page({
                 this.calculateScore(pose)
               }
             })
-            .catch((err) => {})
+            .catch((err) => {
+              console.log(err, err.stack)
+            })
         },
       )
     }
@@ -313,6 +321,7 @@ Page({
               (a.setData({
                 num: a.data.num + 1,
               }),
+              console.log(`a.data.num===`, a.data.num, a.data.costTime),
               a.data.num && a.playMusic('appear')),
             C > -1 && (r = C),
             y,
@@ -421,6 +430,7 @@ Page({
     // this.startTimer && clearInterval(this.startTimer) // 开始前的倒计时 3s
     // this.endTimer && clearInterval(this.endTimer) // 结束倒计时
     // this.notMovingTimer && clearInterval(this.notMovingTimer) // 未运动倒计时
+    console.log(`cleartTimer countDownTimer == `, this.countDownTimer)
     this.setData({
       showDevicePage: false,
     })
@@ -469,6 +479,7 @@ Page({
     } else {
       var a = [5, 6],
         n = i.isMoving(a)
+      console.log(`isMoving==`, n)
       if (i.data.costTime != i.data.recordTime) {
         i.setData({
           recordTime: i.data.costTime,
@@ -528,6 +539,7 @@ Page({
   },
   setTimeDown: function () {
     var t = this
+    console.log(`====setTimeDown====`)
     t.timerDown = setInterval(function () {
       if (t.data.lastTime > 0) {
         if (21 === t.data.lastTime) {

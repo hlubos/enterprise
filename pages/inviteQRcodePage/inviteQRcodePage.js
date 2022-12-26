@@ -28,6 +28,7 @@ Page({
       filePath: wx.env.USER_DATA_PATH + '/pic' + number + '.png',
       url: imgSrc,
       success: (res) => {
+        console.log(res)
         if (res.statusCode === 200) {
           wx.saveImageToPhotosAlbum({
             filePath: wx.env.USER_DATA_PATH + '/pic' + number + '.png',
@@ -38,6 +39,7 @@ Page({
               })
             },
             fail: function (err) {
+              console.log(err)
               wx.hideLoading()
               wx.showToast({
                 title: '保存失败',
@@ -48,6 +50,7 @@ Page({
         }
       },
       fail: (err) => {
+        console.log(err)
         wx.hideLoading()
         wx.showToast({
           title: '下载失败',

@@ -18,11 +18,13 @@ Component({
           code: this.properties.skinCode,
         },
         function (l) {
-          l.result.ballNormalUrl.split(',').length > 0 &&
-            (l.result.ballNormalUrl = l.result.ballNormalUrl.split(',')),
+          console.log(l),
+            l.result.ballNormalUrl.split(',').length > 0 &&
+              (l.result.ballNormalUrl = l.result.ballNormalUrl.split(',')),
             e.setData({
               skin: l.result,
-            })
+            }),
+            console.log(e.data.skin)
         },
       )
     },

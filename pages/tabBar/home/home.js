@@ -81,8 +81,12 @@ Page({
     if (user_id) {
       wx.navigateTo({
         url: `${info.path}?video_id=${info.video_id}&video_name=${info.name}`,
-        success: (res) => {},
-        fail: (res) => {},
+        success: (res) => {
+          console.log(res)
+        },
+        fail: (res) => {
+          console.log(res)
+        },
       })
     }
   },

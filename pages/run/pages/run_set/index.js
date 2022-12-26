@@ -345,6 +345,7 @@ Page({
     })
   },
   changeVoiceIndex(e) {
+    console.log(e)
     this.setData({
       voiceIndex: e.detail.value,
     })

@@ -154,7 +154,8 @@ Page({
       }))
   },
   onUnload: function () {
-    this.data.gameStart && !this.data.gameEnd && this.uploadScore('退出'),
+    console.log('退出页面'),
+      this.data.gameStart && !this.data.gameEnd && this.uploadScore('退出'),
       wx.setKeepScreenOn({
         keepScreenOn: !1,
       }),
@@ -347,7 +348,7 @@ Page({
     }, 1e3)
   },
   uploadScore: function (t) {
-    if (!this.doUpload) {
+    if ((console.log(t), !this.doUpload)) {
       this.doUpload = !0
       var i = this
       this.backgroundVideo && this.backgroundVideo.stop(),
@@ -547,7 +548,8 @@ Page({
               }
             })
             .catch(function (t) {
-              e.data.gameStart && !e.data.gameEnd && e.isOutScreen(!0),
+              console.log(t, t.stack),
+                e.data.gameStart && !e.data.gameEnd && e.isOutScreen(!0),
                 e.setData({
                   predicting: !1,
                 })
@@ -579,10 +581,11 @@ Page({
           i.hideLoadingToast()
         })
         .catch(function (t) {
-          wx.showToast({
-            title: '网络连接异常',
-            icon: 'none',
-          })
+          console.log(t),
+            wx.showToast({
+              title: '网络连接异常',
+              icon: 'none',
+            })
         })
   },
   showLoadingToast: function () {
