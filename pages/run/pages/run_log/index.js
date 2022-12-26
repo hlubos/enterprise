@@ -75,7 +75,7 @@ Page({
         this.setData({
           thumbImgList: peakRecordRes.runner_extra_infos,
         })
-      } else if (this.data.thumbImgList.length == 0) {
+      } else if (this.data.thumbImgList.length > 0) {
         this.setData({
           thumbImgList: [
             ...this.data.thumbImgList,
