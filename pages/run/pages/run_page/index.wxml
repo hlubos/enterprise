@@ -3,6 +3,8 @@
 <view hidden="{{!guidePageShow}}" class="run-guide-modal">
     {{runGuideCount}}
 </view>
+<!-- 误触遮罩 -->
+<view hidden="{{!touchShade}}" class="run-touch-shade"></view>
 <!-- 数据面板 -->
 <view>
     <run-data-panel 

@@ -35,4 +35,7 @@ export default class LoginMember {
   static getRunnerPathData(params) {
     return $http.post(url.getRunnerPathData, params)
   }
+  static getUserDayStep(params) {
+    return $http.post(url.getUserDayStep, params)
+  }
 }

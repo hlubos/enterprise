@@ -1,5 +1,6 @@
 // plugin/pages/run_page/components/runDataPanel/runDataPanel.js
 import i18nInstance from 'miniprogram-i18n-plus'
+import utils from '../../../../../common/utils'
 var breakUnlockTimer
 var startUnlockTimer
 var startStopRunTimer
@@ -93,7 +94,7 @@ Component({
       startStopRunTimer = setInterval(() => {
         if (this.data.stopRunVal >= 100) {
           clearInterval(startStopRunTimer)
-          this.runStop()
+          utils.throttle(this.runStop()) //网络异常  进行节流
         } else {
           this.setData({
             stopRunVal: this.data.stopRunVal + 1,

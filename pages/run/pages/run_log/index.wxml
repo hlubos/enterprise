@@ -23,10 +23,14 @@
     <scroll-view class="runlog-list" scroll-y bindscrolltolower='loadData'>
         <view>
             <mp-cells ext-class="my-cells">
-                <mp-cell wx:for="{{runLogList}}" wx:key="index">
+                <mp-cell wx:for="{{runLogList}}" wx:key="index" data-idx="{{index}}" data-runnerId="{{item.runner_id}}" bindtap="gotoDetail">
                   <view style="display: flex;">
                     <view class="runlog-item-icon">
-                        <image lazy-load src="{{item.pic_url == ''?defaultImg:item.pic_url}}" binderror="errorFunction" data-errorimg="{{index}}"></image>
+                        <image lazy-load 
+                        src="{{item.pic_url == ''?defaultImg:item.pic_url}}" 
+                        binderror="errorFunction" 
+                        data-errorimg="{{index}}"
+                        ></image>
                     </view>
                     <view style="flex: 1;" class="runlog-item-info" slot="footer">
                         <view class="runlog-item-info-line1">
@@ -41,7 +45,7 @@
                                 <text class="runlog-item-info-line2-txt1">{{(item.distance)}} {{ $language['公里'] }}</text>
                                 <text class="runlog-item-info-line2-txt2">{{item.kind_id==0?$language['室外跑']:$language['室内跑']}}</text>
                             </view>
-                            <!-- <image class="right-icon" src="https://ssl-pubpic.51yund.com/1221022777.png"></image> -->
+                            <image class="right-icon" src="https://ssl-pubpic.51yund.com/1221022777.png"></image>
                         </view>
                         <view class="runlog-item-info-line3">
                             <view class="line3-item">

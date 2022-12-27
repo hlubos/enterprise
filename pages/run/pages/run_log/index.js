@@ -2,6 +2,8 @@
 import api from '../../server/run'
 import myFormats from '../../utils/format'
 import i18nInstance from 'miniprogram-i18n-plus'
+import utils from '../../../../common/utils'
+import { logPath } from '../../../../config/env'
 Page({
   /**
    * 页面的初始数据
@@ -16,6 +18,7 @@ Page({
     end_cnt: 60,
     len: 60,
     runLogList: [],
+    rawRunLog: [],
     thumbImgList: [],
     // 节流阀
     canLoadData: true,
@@ -23,6 +26,7 @@ Page({
     has_more: 1,
     offset: 0,
     defaultImg: 'https://ssl-pubpic.51yund.com/1301346077.png',
+    IndoordefaultImg: 'https://ssl-pubpic.51yund.com/1325542342.jpg',
   },
   // 用户历史数据
   getUserSportSummary() {
@@ -71,7 +75,7 @@ Page({
         this.setData({
           thumbImgList: peakRecordRes.runner_extra_infos,
         })
-      } else if (this.data.thumbImgList.length == 0) {
+      } else if (this.data.thumbImgList.length > 0) {
         this.setData({
           thumbImgList: [
             ...this.data.thumbImgList,
@@ -89,29 +93,40 @@ Page({
     }
     api.getRunnerInfo(params).then((res) => {
       if (res.code == 0) {
-        // console.log(res)
         let infosLen = res.infos.length
         let newInfos = res.infos
+        let rawRunLog = JSON.parse(JSON.stringify(newInfos))
         for (let i = 0; i < newInfos.length; i++) {
+          newInfos[i].avg_pace = myFormats.formatShowAvg(
+            newInfos[i].cost_time / (newInfos[i].distance / 1000),
+          )
           newInfos[i].time = myFormats.formatDate(
             newInfos[i].time,
             'yyyy/MM/dd hh:mm:ss',
           )
+          newInfos[i].caloric = (
+            55 *
+            1.036 *
+            (parseInt(newInfos[i].distance) / 1000)
+          ).toFixed(1)
           newInfos[i].distance = myFormats.clip(newInfos[i].distance / 1000)
-          newInfos[i].caloric = myFormats.clip(newInfos[i].caloric / 1000)
           newInfos[i].cost_time = myFormats.secTranlateTime(
             newInfos[i].cost_time,
           )
           // avg_pace formatAvg
-          newInfos[i].avg_pace = myFormats.formatShowAvg(newInfos[i].avg_pace)
+
           if (
             this.data.thumbImgList.find(
               (item) => item.runner_id == newInfos[i].runner_id,
-            )
+            ) &&
+            newInfos[i].kind_id == 0
           ) {
             newInfos[i].pic_url = this.data.thumbImgList.find(
               (item) => item.runner_id == newInfos[i].runner_id,
             ).pic_url
+          } else if (newInfos[i].kind_id == 1) {
+            // 如果是室内跑 換成市内跑默認圖片
+            newInfos[i].pic_url = this.data.IndoordefaultImg
           } else {
             newInfos[i].pic_url = ''
           }
@@ -129,10 +144,12 @@ Page({
           this.setData({
             runLogList: newInfos,
             loading: false,
+            rawRunLog,
           })
         } else if (this.data.runLogList.length > 0) {
           this.setData({
             runLogList: [...this.data.runLogList, ...newInfos],
+            rawRunLog: [...this.data.rawRunLog, ...rawRunLog],
           })
         }
         this.setData({
@@ -155,6 +172,16 @@ Page({
       })
     }
   },
+  // 跳转详情页
+  gotoDetail: utils.throttle(function (e) {
+    wx.navigateTo({
+      url: `../run_detail/index?runner_id=${
+        e.currentTarget.dataset.runnerid
+      }&runLog=${encodeURIComponent(
+        JSON.stringify(this.data.rawRunLog[e.currentTarget.dataset.idx]),
+      )}`,
+    })
+  }, 2000),
   /**
    * 生命周期函数--监听页面加载
    */

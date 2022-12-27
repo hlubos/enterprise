@@ -1,7 +1,28 @@
 <!--pages/run/pages/run_detail/index.wxml-->
 <scroll-view scroll-y="true" class="content" :enhanced="true" style="height: 100vh;width: 100vw;" :bounces="false" :show-scrollbar="false">
     <view class="fina-map-box" style="height: {{mapHeight}};">
-        <map id="run-final-map" class="run-final-map" name="run_final_map" latitude="39.92082670727589" longitude:="116.45972113140078" show-location="true" bindtap="handleMap" polyline="{{polylines}}" subkey="{{mapStyle.subkey}}" layer-style="{{mapStyle['layer-style']}}" style="width: 100%; height: {{mapHeight}};"></map>
+        <map 
+        wx:if="{{runLog.kind_id==0}}"
+        id="run-final-map" 
+        class="run-final-map" 
+        name="run_final_map" 
+        latitude="39.92082670727589" 
+        longitude:="116.45972113140078" 
+        show-location="true" 
+        bindtap="handleMap" 
+        polyline="{{polylines}}" 
+        subkey="{{mapStyle.subkey}}" 
+        layer-style="{{mapStyle['layer-style']}}" 
+        style="width: 100%; height: {{mapHeight}};"
+        ></map>
+        <image
+        wx:else
+        class="IndoordImg answer_draw_canvas"
+        src="{{IndoordImg}}"
+        data-delay="1" 
+        data-type="image" 
+        data-url="{{IndoordImg}}" 
+        ></image>
     </view>
     <view class="share-img-box answer_canvas" id="answer-canvas">
         <view class="final-chart-box answer_draw_canvas" data-type="text" data-background="#ffffff">
@@ -47,7 +68,7 @@
                 </view>
             </view>
             <view class="count-line answer_draw_canvas" data-delay="1"  data-type="text" data-background="rgb(49, 218, 175)">
-                <view class="count-line-txt answer_draw_canvas" data-delay="2" data-type="text" data-text="{{ isZh ? '第' : 'You have run ' }}{{userInfo.this_sport_cnt}}{{ isZh ? '次跑步' : ' times' }}">{{ isZh ? '第' : "You have run " }}{{userInfo.this_sport_cnt}}{{ isZh ? '次跑步' : ' times' }}</view>
+                <view class="count-line-txt answer_draw_canvas" data-delay="2" data-background="white" data-type="text" data-text="{{ isZh ? '第' : 'You have run ' }}{{userInfo.this_sport_cnt}}{{ isZh ? '次跑步' : ' times' }}">{{ isZh ? '第' : "You've run " }}{{userInfo.this_sport_cnt}}{{ isZh ? '次跑步' : ' times' }}</view>
             </view>
             <view class="speed-table answer_draw_canvas"data-delay="1" data-type="text">
                 <view class="speed-line answer_draw_canvas" data-delay="1" data-type="text" data-background="#ccc"></view>
@@ -57,7 +78,7 @@
                     <view class="title3-unit answer_draw_canvas" data-delay="1" data-type="text" data-text="{{ $language['平均配速'] }}">{{ $language['平均配速'] }}</view>
                 </view>
                 <view class="table-item4 answer_draw_canvas" data-delay="1" data-type="text">
-                    <view class="title3-num answer_draw_canvas txt2" data-width="100rpx" data-delay="1" data-type="text" data-text="{{showRunData.bestSpeed}}">{{showRunData.bestSpeed}}</view>
+                    <view class="title3-num answer_draw_canvas txt2"  data-delay="1" data-type="text" data-text="{{showRunData.bestSpeed}}">{{showRunData.bestSpeed}}</view>
                     <view class="title3-unit answer_draw_canvas" data-delay="1" data-type="text" data-text="{{ $language['最佳配速'] }}">{{ $language['最佳配速'] }}</view>
                 </view>
             </view>
@@ -67,17 +88,17 @@
                     <view class="kilometre_num answer_draw_canvas " data-delay="1" data-type="text" data-text="{{ $language['公里'] }}">公里</view>
                     <view class="speed_allocation answer_draw_canvas" data-delay="1" data-type="text" data-text="配速（公里）"> 配速（公里）</view>
                 </view>
-                <view class="line answer_draw_canvas" wx:for="{{speedDetails}}" wx:for-item="speedDetail" wx:key="index" data-delay="1" data-type="text" >
+                <view class="line answer_draw_canvas" wx:for="{{speedDetails}}" wx:for-item="speedDetail" wx:key="index" data-delay="1" data-type="text"
+                 >
                     <view class="line-kilometer answer_draw_canvas"
                      data-delay="1" 
                      data-type="text" 
-                     data-text="{{isOverKm&&index==speedDetails.length-1?'<'+speedDetail.index:speedDetail.index}}">
+                     data-text="{{isOverKm&&index==speedDetails.length-1?'<'+speedDetail.index:speedDetail.index}} ">
                      {{isOverKm&&index==speedDetails.length-1?'<'+speedDetail.index:speedDetail.index}}
-              
                     </view>
                     <view class="line-triangle answer_draw_canvas"  data-type="text" data-delay="1">
-                         <!-- 三角形 -->
-                         <image 
+                        <!-- 三角形 -->
+                        <image 
                         wx:if="{{ speedDetail.avg_time == min.avg_time && speedDetail.index==min.index}}"
                         class="line_sign answer_draw_canvas" 
                         data-delay="1" 
@@ -86,23 +107,25 @@
                         data-type="image" ></image>
                     </view>
                     <view class="line-wai answer_draw_canvas " data-type="text" data-delay="1">
-                        <view class="line-nei answer_draw_canvas" data-type="text" data-delay="1"
+                        <view class="line-nei answer_draw_canvas" 
+                            data-type="text" 
+                            data-delay="1"
                             style="width: {{speedDetail.avg_time == max?'100%':speedDetail.percentage}};background-color:{{speedDetail.avg_time == min.avg_time?'rgb(14, 189, 72)':'rgb(2, 148, 245)'}};"
                         > </view>
                     </view>
-                    <view class="line-minkm answer_draw_canvas" data-delay="1" data-type="text" data-text="{{speedDetail.speedTime}}">{{speedDetail.speedTime}}</view>
+                    <view class="line-minkm answer_draw_canvas" data-delay="1" data-type="text"  data-text="{{speedDetail.speedTime}}">{{speedDetail.speedTime}}</view>
                 </view>
             </view>
             <view class="share-btn-box" hidden="{{!isShowPanel}}">
                 <view class="share-btn">
-                    <view class="btn1" bindtap="runFinish">{{ $language['完成运动'] }}</view>
-                    <view class="btn2" bindtap="drawCanvas">{{ $language['分享'] }}</view>
+                    <view class="btn" bindtap="drawCanvas">{{ $language['分享'] }}</view>
                 </view>
             </view>
        
             <!-- 二维码 -->
             <view hidden="{{!shareFlag}}" class="qrcode-box answer_draw_canvas">
                 <image class="qrcode-img answer_draw_canvas" data-delay="1" data-type="image" data-url="{{qrcodeImg}}" src="{{qrcodeImg}}"></image>
+                
                 <view class="qrcode-txt answer_draw_canvas">
                     <view class="answer_draw_canvas" data-delay="1" data-type="text" data-text="全民数字化">全民数字化</view>
                     <view class="answer_draw_canvas" data-delay="1" data-type="text" data-text="运动健康管理平台">运动健康管理平台</view>

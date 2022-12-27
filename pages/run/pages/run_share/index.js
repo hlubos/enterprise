@@ -3,6 +3,7 @@ import api from '../../server/run'
 import Wxml2Canvas from '../../wxml2canvas/index'
 import wxFun from '../../utils/wxFun'
 import i18nInstance from 'miniprogram-i18n-plus'
+import utils from '../../../../common/utils'
 let navigateTo = wxFun.promisify('navigateTo')
 let showLoading = wxFun.promisify('showLoading')
 let hideLoading = wxFun.promisify('hideLoading')
@@ -11,6 +12,7 @@ let previewImage = wxFun.promisify('previewImage')
 let saveImageToPhotosAlbum = wxFun.promisify('saveImageToPhotosAlbum')
 let createSelectorQuery = wxFun.ordinary('createSelectorQuery')
 let getStorageSync = wxFun.ordinary('getStorageSync')
+var log = require('../../../../common/log')
 Page({
   /**
    * 页面的初始数据
@@ -19,25 +21,29 @@ Page({
     dataImg: '',
     staticMapUrl:
       'https://apis.map.qq.com/ws/staticmap/v2/?key=L4JBZ-YJ56D-GAO47-P6UQY-ODB46-M2FD2&scale=2&size=500x400&center=39.12,116.54&zoom=12',
-    // qrcodeImg: 'https://ydcommon.51yund.com/wxapp/upimg/mini-qrcode.jpg',
-    qrcodeImg: 'https://ydcommon.51yund.com/wxapp/upimg/geely-in-show.png',
+    qrcodeImg: 'https://ydcommon.51yund.com/wxapp/upimg/mini-qrcode.jpg',
+    // qrcodeImg: 'https://ydcommon.51yund.com/wxapp/upimg/geely-in-show.png',
     posterImgUrl: '',
     canvasWidth: 750,
     canvasHeight: 1000,
+    isFinish: false,
   },
   // 调整canvas宽高
   setCanvasSize() {
-    let shareBox = createSelectorQuery()
-    shareBox
-      .select('.img-area')
-      .boundingClientRect((res) => {
-        // myCanvasHeight = res.height
-        this.setData({
-          canvasHeight: res.height,
-          canvasWidth: res.width,
+    return new Promise((reslove) => {
+      let shareBox = createSelectorQuery()
+      shareBox
+        .select('.img-area')
+        .boundingClientRect((res) => {
+          // myCanvasHeight = res.height
+          this.setData({
+            canvasHeight: res.height,
+            canvasWidth: res.width,
+          })
+          reslove()
         })
-      })
-      .exec()
+        .exec()
+    })
   },
   // 生成图片
   createImg() {
@@ -59,7 +65,7 @@ Page({
         }, 1500)
       })
   },
-  draw() {
+  async draw() {
     let that = this
     //创建wxml2canvas对象
     let drawImage = new Wxml2Canvas(
@@ -67,7 +73,7 @@ Page({
         element: 'answerCanvas', // canvas节点的id,
         obj: that, // 在组件中使用时，需要传入当前组件的this
         width: this.data.canvasWidth, // 宽 自定义
-        height: this.data.canvasHeight, // 高 自定义
+        height: 5000, // 高 自定义
         background: '#ffffff', // 默认背景色 设置背景色
         scrolly: 0,
         scrollx: 0,
@@ -85,9 +91,13 @@ Page({
           })
           that.setData({
             posterImgUrl: url,
+            isFinish: true,
           })
         },
         error(res) {
+          log.error({
+            share_err: res,
+          })
           hideLoading()
           // 画失败的原因
         },
@@ -107,12 +117,15 @@ Page({
         },
       ],
     }
-    this.setCanvasSize()
+    await this.setCanvasSize()
     drawImage.draw(data, that)
   },
   // 保存图片
   clickSaveImg() {
-    console.log('filePath', this.data.posterImgUrl)
+    if (!this.data.isFinish) return
+    log.error({
+      保存图片: this.data.posterImgUrl,
+    })
     if (!this.data.posterImgUrl) {
       showToast({
         title: this.data.$language['保存失败'],
@@ -139,7 +152,9 @@ Page({
   },
 
   // 微信分享
-  wxShare() {
+  wxShare: utils.throttle(function () {
+    if (!this.data.isFinish) return
+    let that = this
     if (!this.data.posterImgUrl) {
       showToast({
         title: this.data.$language['保存失败'],
@@ -148,16 +163,19 @@ Page({
       })
       return
     }
-    previewImage({
-      urls: [this.data.posterImgUrl],
-    }).then((res) => {
-      showToast({
-        title: this.data.$language['长按图片分享'],
-        icon: 'none',
-        duration: 1500,
-      })
+    wx.showToast({
+      title: this.data.$language['长按图片分享'],
+      icon: 'none',
+      duration: 1500,
     })
-  },
+    setTimeout(() => {
+      previewImage({
+        urls: [that.data.posterImgUrl],
+      }).then(() => {
+        wx.hideLoading()
+      })
+    }, 1000)
+  }, 2000),
   /**
    * 生命周期函数--监听页面加载
    */

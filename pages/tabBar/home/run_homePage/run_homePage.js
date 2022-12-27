@@ -2,6 +2,7 @@
 import api from '../../../../server/run'
 import tool from '../../../../common/tool'
 import loginApi from '../../../../server/login'
+import utils from '../../../../common/utils'
 import i18nInstance from 'miniprogram-i18n-plus'
 
 const app = getApp()
@@ -53,6 +54,10 @@ Component({
       // 'subkey':'V5JBZ-RY5EJ-Z7AFP-FP7OM-YXSFE-P7F4J',
       'layer-style': '1',
     },
+    // 是否跳转过页面
+    isGoPage: false,
+    // 是否在能点击其他事件
+    isBtnIng: false,
   },
 
   /**
@@ -104,7 +109,11 @@ Component({
       })
     },
     // 开始运动
-    startRun() {
+    startRun: utils.throttle(function () {
+      if (this.data.isBtnIng) return
+      this.setData({
+        isBtnIng: true,
+      })
       // this.selectComponent('#runTypeModal').showFrame();
       // 运动前首先检查权限是否满足，权限满足则允许跑步，不满足则弹出弹框（去设置）
       getSetting().then((res) => {
@@ -151,19 +160,32 @@ Component({
           )
         }
       })
-    },
+    }, 3000),
     // 进入跑步记录页
-    gotoRunHistory() {
+    gotoRunHistory: utils.throttle(function () {
+      let that = this
+      if (this.data.isBtnIng) return
+      this.setData({
+        isBtnIng: true,
+      })
       navigateTo({
         url: '/pages/run/pages/run_log/index',
+        complete() {
+          setTimeout(() => {
+            that.setData({
+              isBtnIng: false,
+            })
+          }, 1000)
+        },
       })
-    },
+    }, 2000),
     // 返回上一页
     back() {
       navigateBack()
     },
     // 进入跑步页面
     gotoRunPage() {
+      let that = this
       // 室内跑暂未开发
       if (this.data.runType == 1) {
         showToast({
@@ -178,6 +200,13 @@ Component({
       }
       navigateTo({
         url: '/pages/run/pages/run_page/index',
+        complete() {
+          setTimeout(() => {
+            that.setData({
+              isBtnIng: false,
+            })
+          }, 1000)
+        },
       })
       // hideLoading()
     },
@@ -193,8 +222,6 @@ Component({
       let key = 'run_kmiles_pace_arr_' + user_id
       setStorageSync(storageKey, {})
       setStorageSync(key, [])
-      console.log('key', getStorageSync('key'))
-      console.log('storageKey', getStorageSync('storageKey'))
     },
     // 继续跑步
     continueRun() {
@@ -242,6 +269,9 @@ Component({
     },
     // 读取用户缓存，判断是否为新用户
     async judgeNewUser() {
+      this.setData({
+        isGoPage: true,
+      })
       // let user_id = await getStorageSync('user_id')
       // let storageKey = 'isNewUser_' + user_id
       let storageKey = 'isNewUser'
@@ -303,12 +333,14 @@ Component({
       // 读取缓存查看是否存在未完成的运动
       this.getRunDataCache()
       // 读缓存判断是否为新用户
+      if (this.data.isGoPage) return //如果跳转了提示页 就不再跳转
       this.judgeNewUser()
     },
   },
   lifetimes: {
     created() {
       // 在组件实例刚刚被创建时执行
+      this.initPage()
     },
     attached: function () {
       i18nInstance.effect(this)
@@ -320,15 +352,12 @@ Component({
             scope: 'scope.userLocationBackground',
           })
             .then((ress) => {
-              console.log(ress)
               this.setData({
                 'auth.hasAuthUserLocation': true,
                 'auth.hasAuthUserLocationBackground': true,
               })
             })
-            .catch((err) => {
-              console.log(err)
-            })
+            .catch((err) => {})
         }
       })
     },
