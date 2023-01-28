@@ -413,7 +413,7 @@
   flex: 1;
   height: 18rpx;
   background-color: #ccc;
-  }
+}
 
 .line-nei {
   width: 50%;

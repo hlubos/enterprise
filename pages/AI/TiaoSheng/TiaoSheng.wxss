@@ -248,7 +248,7 @@
 .button {
   width: 100%;
 }
-.button button{
+.button button {
   width: 100%;
   background-color: #4cddb4;
   color: black;
@@ -256,4 +256,3 @@
   border-bottom-right-radius: 16rpx;
   color: #ffffff;
 }
-
