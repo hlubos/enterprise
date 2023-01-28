@@ -168,7 +168,45 @@ Page({
       })
     })
   },
+  numinput(e) {
+    this.setData({
+      num: e.detail.value,
+    })
+  },
+  timeinput(e) {
+    this.setData({
+      time: e.detail.value,
+    })
+  },
+  confirm() {
+    let param = {
+      video_id: this.data.videoId,
+      video_name: this.data.videoName,
+      start_ts: parseInt(Date.parse(new Date()) / 1000),
+      cost_time: this.data.time,
+      action_times: this.data.num,
+    }
+
+    if (param.cost_time == 60 || param.action_times == 0) {
+      wx.navigateBack()
+    } else {
+      api.reportUserAISportData(param).then((t) => {
+        // do
+      })
+      wx.navigateBack()
+    }
+  },
   clearTimer: function () {
+    // let param = {
+    //   video_id: this.data.videoId,
+    //   video_name: this.data.videoName,
+    //   start_ts: parseInt(Date.parse(new Date()) / 1000),
+    //   cost_time: 47,
+    //   action_times: 59,
+    // }
+    // api.reportUserAISportData(param).then((t) => {
+    //   // do
+    // })
     this.timer && clearInterval(this.timer),
       this.timerDown && clearInterval(this.timerDown),
       this.reStartTimer && clearInterval(this.reStartTimer),

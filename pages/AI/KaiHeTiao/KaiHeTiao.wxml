@@ -1,20 +1,42 @@
 <view class="page__bd">
-    <background-video id="backgroundVideo"></background-video>
+    <!-- <background-video id="backgroundVideo"></background-video>
     <camera binderror="error" class="camera" devicePosition="front" flash="off" frameSize="medium">
         <canvas canvasId="canvas" class="canvas" id="canvas"></canvas>
     </camera>
-    <cover-view class="stage">
+    <cover-view class="stage"> -->
         <!-- <inner-device-angle angleRange="{{angleRange}}" bind:angleSuccess="angleSuccess" bind:stopGame="stopGame" code="{{code}}" gameEnd="{{gameEnd}}" gameStart="{{gameStart}}" id="inner-device-angle" wx:if="{{showDevicePage}}"></inner-device-angle> -->
-        <sport-score-view wx:if="{{gameStart}}" limitTime="{{limitTime}}" costTimeStr="{{costTimeStr}}" num="{{num&&num-1}}" timeProgress="{{timeProgress}}"></sport-score-view>
+        <!-- <sport-score-view wx:if="{{gameStart}}" limitTime="{{limitTime}}" costTimeStr="{{costTimeStr}}" num="{{num&&num-1}}" timeProgress="{{timeProgress}}"></sport-score-view>
         <cover-view class="fetch-box" wx:if="{{!show_in_box&&show_tip&&!gameEnd}}"></cover-view>
         <cover-view class="blue point top_mid {{top_mid?'green':''}}" wx:if="{{!doClose&&!gameEnd||1}}"></cover-view>
         <cover-view class="blue point bot_mid {{bot_mid?'green':''}}" wx:if="{{doClose&&!gameEnd||1}}"></cover-view>
         <cover-view class="blue point left_mid {{left_mid?'green':''}}" style="left:{{left_point_pos}}px;" wx:if="{{left_point_pos&&0}}"></cover-view>
         <cover-view class="blue point right_mid {{right_mid?'green':''}}" style="left:{{right_point_pos}}px;" wx:if="{{right_point_pos&&0}}"></cover-view>
-        <cover-image class="img_tips" src="https://ydcommon.51yund.com/AI/ready_tips_positive.png" wx:if="{{!show_in_box&&show_tip&&!gameEnd}}"></cover-image>
+        <cover-image class="img_tips" src="https://ydcommon.51yund.com/AI/ready_tips_positive.png" wx:if="{{!show_in_box&&show_tip&&!gameEnd}}"></cover-image> -->
         <!-- <cover-image class="img_in_box" src="https://ydcommon.51yund.com/AI/backOff-tips.png" wx:if="{{show_in_box}}"></cover-image> -->
-        <start-countdown startCountdown="{{countDownSrc}}" wx:if="{{countDown}}"></start-countdown>
+        <!-- <start-countdown startCountdown="{{countDownSrc}}" wx:if="{{countDown}}"></start-countdown> -->
         <!-- <cover-image class="img_start" src="https://ydcommon.51yund.com/AI/countdown-start.png" wx:if="{{countDown===0}}"></cover-image> -->
-        <sport-end-score-dailog num="{{num&&num-1}}" costTimeStr="{{costTimeStr}}" bind:goBack="goBack" bind:reStart="reStart" id="sport-end-score-dailog" wx:if="{{gameEnd}}"></sport-end-score-dailog>
-    </cover-view>
+        <!-- <sport-end-score-dailog num="{{num&&num-1}}" costTimeStr="{{costTimeStr}}" bind:goBack="goBack" bind:reStart="reStart" id="sport-end-score-dailog" wx:if="{{gameEnd}}"></sport-end-score-dailog>
+    </cover-view> -->
+    <view class='toast-box'>
+        <view class='toastbg'></view>
+        <view class='showToast'>
+            <view class='toast-title'>
+                <text>开合跳</text>
+            </view>
+            <view class='toast-main'>
+                <view class='toast-input'>
+                    <input type="text" placeholder="输入开合跳个数" bindinput="numinput"></input>
+                </view>
+                <view style="height: 20rpx;"></view>
+                <view class='toast-input'>
+                    <input type="text" placeholder="输入跳绳时间" bindinput="timeinput"></input>
+                </view>
+            </view>
+            <view class='toast-button'>
+                <view class='button'>
+                    <button bindtap="confirm">确定</button>
+                </view>
+            </view>
+        </view>
+    </view>
 </view>

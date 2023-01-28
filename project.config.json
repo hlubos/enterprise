@@ -1,92 +1,98 @@
 {
-  "appid": "wx6beecc00b14f8817",
-  "projectname": "企业悦动",
-  "compileType": "miniprogram",
-  "packOptions": {
-    "ignore": [],
-    "include": []
-  },
-  "setting": {
-    "coverView": true,
-    "es6": true,
-    "postcss": true,
-    "minified": true,
-    "enhance": true,
-    "showShadowRootInWxmlPanel": true,
-    "scopeDataCheck": false,
-    "uglifyFileName": false,
-    "checkInvalidKey": true,
-    "checkSiteMap": true,
-    "uploadWithSourceMap": true,
-    "compileHotReLoad": false,
-    "useMultiFrameRuntime": true,
-    "useApiHook": true,
-    "useApiHostProcess": true,
-    "babelSetting": {
-      "ignore": [],
-      "disablePlugins": [],
-      "outputPath": ""
+    "appid": "wx6beecc00b14f8817",
+    "projectname": "%E4%BC%81%E4%B8%9A%E6%82%A6%E5%8A%A8",
+    "compileType": "miniprogram",
+    "packOptions": {
+        "ignore": [],
+        "include": []
     },
-    "enableEngineNative": false,
-    "bundle": false,
-    "useIsolateContext": true,
-    "useCompilerModule": true,
-    "userConfirmedUseCompilerModuleSwitch": false,
-    "userConfirmedBundleSwitch": false,
-    "packNpmManually": true,
-    "packNpmRelationList": [
-      {
-        "packageJsonPath": "./package.json",
-        "miniprogramNpmDistDir": "./"
-      }
-    ],
-    "minifyWXSS": true,
-    "ignoreUploadUnusedFiles": true
-  },
-  "editorSetting": {
-    "tabIndent": "insertSpaces",
-    "tabSize": 2
-  },
-  "condition": {
-    "miniprogram": {
-      "list": [
-        {
-          "name": "登陆页面",
-          "pathName": "pages/login/login",
-          "query": "",
-          "scene": null
+    "setting": {
+        "urlCheck": true,
+        "es6": true,
+        "enhance": true,
+        "postcss": true,
+        "preloadBackgroundData": false,
+        "minified": true,
+        "newFeature": false,
+        "coverView": true,
+        "nodeModules": false,
+        "autoAudits": false,
+        "showShadowRootInWxmlPanel": true,
+        "scopeDataCheck": false,
+        "uglifyFileName": false,
+        "checkInvalidKey": true,
+        "checkSiteMap": true,
+        "uploadWithSourceMap": true,
+        "compileHotReLoad": false,
+        "lazyloadPlaceholderEnable": false,
+        "useMultiFrameRuntime": true,
+        "useApiHook": true,
+        "useApiHostProcess": true,
+        "babelSetting": {
+            "ignore": [],
+            "disablePlugins": [],
+            "outputPath": ""
         },
-        {
-          "name": "姿态识别demo页面",
-          "pathName": "pages/test/tensorflow/demo",
-          "query": "",
-          "scene": null
-        },
-        {
-          "name": "跳绳",
-          "pathName": "pages/AI/TiaoSheng/TiaoSheng",
-          "query": "",
-          "scene": null
-        },
-        {
-          "name": "企业tab",
-          "pathName": "pages/tabBar/work/work",
-          "query": "a=1",
-          "scene": null
-        },
-        {
-          "name": "dialog页面",
-          "pathName": "pages/dialog/dialog",
-          "query": "dialogType=isStep&level=3",
-          "scene": null
-        },
-        {
-          "name": "历史记录页面",
-          "pathName": "pages/history/history",
-          "query": "",
-          "scene": null
+        "useIsolateContext": true,
+        "userConfirmedBundleSwitch": false,
+        "packNpmManually": true,
+        "packNpmRelationList": [
+            {
+                "packageJsonPath": "./package.json",
+                "miniprogramNpmDistDir": "./"
+            }
+        ],
+        "minifyWXSS": true,
+        "disableUseStrict": false,
+        "minifyWXML": true,
+        "showES6CompileOption": false,
+        "useCompilerPlugins": false,
+        "ignoreUploadUnusedFiles": true
+    },
+    "editorSetting": {
+        "tabIndent": "insertSpaces",
+        "tabSize": 2
+    },
+    "condition": {
+        "miniprogram": {
+            "list": [
+                {
+                    "name": "登陆页面",
+                    "pathName": "pages/login/login",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "姿态识别demo页面",
+                    "pathName": "pages/test/tensorflow/demo",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "跳绳",
+                    "pathName": "pages/AI/TiaoSheng/TiaoSheng",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "企业tab",
+                    "pathName": "pages/tabBar/work/work",
+                    "query": "a=1",
+                    "scene": null
+                },
+                {
+                    "name": "dialog页面",
+                    "pathName": "pages/dialog/dialog",
+                    "query": "dialogType=isStep&level=3",
+                    "scene": null
+                },
+                {
+                    "name": "历史记录页面",
+                    "pathName": "pages/history/history",
+                    "query": "",
+                    "scene": null
+                }
+            ]
         }
-      ]
     }
-  }
 }
